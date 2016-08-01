@@ -27,4 +27,4 @@ require_once( APPLICATION_PATH . Lib::path('app/core/autoloader.php') );
 
 // All set! Init Application!
 use app\core\Application;
-$app = new Application;
+( new Application() );

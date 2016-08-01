@@ -6,4 +6,57 @@
  * Time: 11:44
  */
 
-echo "login";
+use app\core\Login;
+
+if( $_SERVER['REQUEST_METHOD'] === 'POST' ):
+
+    $email      = (isset($_POST['email']) ? $_POST['email'] : "");
+    $email      = trim($email);
+    $password   = (isset($_POST['password']) ? $_POST['password'] : "");
+
+    if( empty( $email ) && empty( $password ) ):
+
+        $urlData["emailError"]          = "empty";
+        $urlData["passwordError"]       = "empty";
+        $urlData["passwordRepeatError"] = "empty";
+
+        return false;
+
+    else:
+
+        $results = ( new Login( $email, " " ) )->getUserPass();
+
+        foreach( $results as $result ):
+
+            $returnPass = $result[0];
+
+        endforeach;
+
+        $verify = !empty( $returnPass ) ? password_verify( $password, $returnPass ) : "";
+
+        if( $verify ):
+
+            $results = ( new Login( $email, " " ) )->loginId();
+
+            foreach( $results as $result ):
+
+                $userId = $result[0];
+
+            endforeach;
+
+            $_SESSION['login']  = true;
+            $_SESSION['userId'] = isset($userId) ? $userId : "";
+
+            ( new Login( $email, " " ) )->login();
+
+            return true;
+
+        else:
+
+            return false;
+
+        endif;
+
+    endif;
+
+endif;

@@ -1,0 +1,12 @@
+Options -Indexes
+# MME 15-B MM-C Jeffrey Westerkamp
+
+# Enable rewrite engine
+RewriteEngine on
+
+# if request_filename is not a directory
+#RewriteCond %{REQUEST_FILENAME} !-d
+#if request_filename is not a file
+RewriteCond %{REQUEST_FILENAME} !-f
+# go to index.php | Router will translate and load requested content
+RewriteRule ^.*$ index.php [QSA,L]

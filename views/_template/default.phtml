@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="keywords" content="">
+        <meta name="robots" content="nofollow">
+        <meta property="og:title" content="Control Management System">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="">
+        <meta property="og:url" content="">
+        <meta property="og:image" content="">
+        <link href="https://fonts.googleapis.com/css?family=Raleway%7cPassion+One%7cWork+Sans%7cRoboto+Condensed:400" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title>QuaRatio</title>
+    </head>
+    <body>
+
+        <?php
+
+        use app\core\Login;
+        use app\lib\ViewController;
+
+        $controller = ( new ViewController() );
+
+        $controller->header();
+
+        /**
+        * Login
+        */
+        $login = ( new Login( "", "" ) )->isLoggedIn();
+
+        if( !$login ):
+
+            $controller->login();
+
+        /**
+         * Main content
+         */
+        else: ?>
+
+        <div id="main">
+            <?= $controller->content(); ?>
+        </div>
+
+        <?php
+
+        endif;
+
+        /**
+         * Footer
+         */
+        $controller->footer();
+        ?>
+
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <?= $controller->pageScripts( array("login") ); ?>
+
+    </body>
+</html>

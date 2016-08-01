@@ -14,7 +14,7 @@
 
 namespace application\classes\database;
 
-use \application\config;
+use application\config;
 
 if(!class_exists('Database')):
 

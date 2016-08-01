@@ -7,9 +7,9 @@
  * - Gets the users login id.
  * 
  */
-namespace application\classes\login;
+namespace app\core;
 
-use \application\model\service;
+use app\model;
 
 if(!class_exists('Login')):
 

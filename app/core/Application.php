@@ -8,11 +8,15 @@
 
 namespace app\core;
 
-use app\core\Router;
-use app\core\Library as Lib;
+use app\core;
+use app\lib;
+
 class Application
 {
     public function __construct()
     {
+
+        require_once( "views/_template/default.phtml" );
+
     }
 }

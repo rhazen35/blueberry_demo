@@ -1,19 +1,13 @@
 <?php
 
-namespace application\model\service;
+namespace app\model;
 
-use \application\core;
-use application\classes\database;
-use application\model\data\create as dbCreate;
-use application\model\data\read as dbRead;
-use application\model\data\update as dbUpdate;
-use application\model\data\delete as dbDelete;
-
-(new core\Core( "class", "database", "database" ))->request();
-(new core\Core( "model", "create", "create" ))->request();
-(new core\Core( "model", "read", "read" ))->request();
-(new core\Core( "model", "update", "update" ))->request();
-(new core\Core( "model", "delete", "delete" ))->request();
+use app\core;
+use app\Database;
+use app\model\data\create as dbCreate;
+use app\model\data\read as dbRead;
+use app\model\data\update as dbUpdate;
+use app\model\data\delete as dbDelete;
 
 /**
  * Created by PhpStorm.
