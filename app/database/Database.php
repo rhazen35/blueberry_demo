@@ -12,9 +12,9 @@
  *
  */
 
-namespace application\classes\database;
+namespace app\database;
 
-use application\config;
+use app\core\Configuration;
 
 if(!class_exists('Database')):
 
@@ -40,7 +40,7 @@ if(!class_exists('Database')):
         public function dbConnect()
         {
 
-            $dbArray = config\dbCredentials();
+            $dbArray = Configuration::dbCredentials();
 
 			$dbName = ( !empty( $this->dbName ) ? $this->dbName : $dbArray['dbname'] );
 
@@ -60,7 +60,7 @@ if(!class_exists('Database')):
 
 		public function checkDbConnection()
 		{
-			$dbArray = config\dbCredentials();
+			$dbArray = Configuration::dbCredentials();
 
 			try {
 				$mysqli = new \mysqli($dbArray['dbhost'], $dbArray['dbuser'], $dbArray['dbpass']);

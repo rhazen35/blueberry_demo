@@ -6,9 +6,9 @@
  * Time: 16:30
  */
 
-namespace application\model\data\delete;
+namespace app\model\data;
 
-use \application\classes\database;
+use app\database\Database;
 
 /**
  * Created by PhpStorm.
@@ -17,9 +17,9 @@ use \application\classes\database;
  * Time: 15:37
  */
 
-if(!class_exists( "DbDelete" )):
+if(!class_exists( "Delete" )):
 
-    class DbDelete
+    class Delete
     {
 
         protected $sql;
@@ -44,7 +44,7 @@ if(!class_exists( "DbDelete" )):
         public function  dbDelete( $data, $format )
 
         {
-            $mysqli     = ( new database\Database( $this->database ) )->dbConnect();
+            $mysqli     = ( new Database( $this->database ) )->dbConnect();
 
             $stmt       = $mysqli->prepare( $this->sql );
 
@@ -54,7 +54,7 @@ if(!class_exists( "DbDelete" )):
                 $format = str_replace( '%', '', $format );
 
                 array_unshift( $data, $format );
-                call_user_func_array( array( $stmt, 'bind_param' ), ( new database\Database( $this->database ) )->referenceValues( $data ) );
+                call_user_func_array( array( $stmt, 'bind_param' ), ( new Database( $this->database ) )->referenceValues( $data ) );
 
             endif;
 

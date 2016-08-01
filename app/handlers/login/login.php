@@ -15,21 +15,14 @@ if( $_SERVER['REQUEST_METHOD'] === 'POST' ):
     $password   = (isset($_POST['password']) ? $_POST['password'] : "");
 
     if( empty( $email ) && empty( $password ) ):
-
-        $urlData["emailError"]          = "empty";
-        $urlData["passwordError"]       = "empty";
-        $urlData["passwordRepeatError"] = "empty";
-
-        return false;
-
+        /**
+         * TODO: Validation
+         */
     else:
-
         $results = ( new Login( $email, " " ) )->getUserPass();
 
         foreach( $results as $result ):
-
             $returnPass = $result[0];
-
         endforeach;
 
         $verify = !empty( $returnPass ) ? password_verify( $password, $returnPass ) : "";
@@ -49,14 +42,10 @@ if( $_SERVER['REQUEST_METHOD'] === 'POST' ):
 
             ( new Login( $email, " " ) )->login();
 
-            return true;
+            header( "Location: index.php" );
 
         else:
-
-            return false;
-
+            echo "Incorrect username/password combination";
         endif;
-
     endif;
-
 endif;

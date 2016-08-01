@@ -9,9 +9,9 @@
  */
 namespace app\core;
 
-use app\model;
+use app\model\Service;
 
-if(!class_exists('Login')):
+if( !class_exists( 'Login' ) ):
 
     class Login
     {
@@ -58,7 +58,7 @@ if(!class_exists('Login')):
 
             $type       = "read";
 
-            $returnData = ( new service\Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
+            $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
             return( $returnData );
 
@@ -82,7 +82,7 @@ if(!class_exists('Login')):
 
             $type       = "create";
 
-            ( new service\Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
+            ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
         }
 
@@ -101,7 +101,7 @@ if(!class_exists('Login')):
 
             $type       = "read";
 
-            $returnData = ( new service\Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
+            $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
             return( $returnData );
         }
@@ -121,7 +121,7 @@ if(!class_exists('Login')):
 
             $type       = "read";
 
-            $returnData = ( new service\Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
+            $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
             foreach( $returnData as $data ):
                 $previousLogin = $data['previous'];
@@ -147,7 +147,7 @@ if(!class_exists('Login')):
 
             $type       = "update";
 
-            ( new service\Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
+            ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
         }
 
         /**
@@ -176,7 +176,7 @@ if(!class_exists('Login')):
 
             $type       = "read";
 
-            $returnData = ( new service\Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
+            $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
             if( !empty( $returnData ) ):
                 return( $returnData );
@@ -199,7 +199,7 @@ if(!class_exists('Login')):
 
             $type       = "read";
 
-            $returnData = ( new service\Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
+            $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
             if( !empty( $returnData ) ):
                 return( $returnData );
@@ -218,7 +218,7 @@ if(!class_exists('Login')):
 
             $type       = "read";
 
-            $returnData = ( new service\Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
+            $returnData = ( new Service( $type, "litening" ) )->dbAction( $sql, $data, $format );
 
             if( !empty( $returnData ) ):
 

@@ -9,12 +9,23 @@
 ?>
 
 <div class="login">
-
+    <div class="title">Login</div>
     <form action="" method="POST" id="login">
         <input type="email" name="email" value="" title="Enter your email address." placeholder="Email address">
         <input type="password" name="password" value="" title="Enter your password." placeholder="Password">
         <input type="submit" name="loginSubmit" value="Login">
     </form>
 
-</div>
 
+    <div class="message"></div>
+
+<?php
+
+if( $_SERVER['REQUEST_METHOD'] === "POST" ):
+    require_once $_SERVER['DOCUMENT_ROOT']."/app/handlers/login/login.php";
+    header("Location : ". APPLICATION_HOME ."");
+endif;
+
+?>
+
+</div>

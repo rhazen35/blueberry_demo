@@ -13,35 +13,20 @@ use app\core\Library as Lib;
 class ViewController
 {
 
-    public function login()
+    protected $page;
+    protected $directory;
+    protected $root = "web";
+
+    public function __construct( $page, $directory )
     {
-        include "views/_template/login.phtml";
+        $this->page      = $page;
+        $this->directory = $directory;
     }
 
-    public function header()
+
+    public function request()
     {
-        include "views/_template/header.phtml";
-    }
-
-    public function content()
-    {
-
-    }
-
-    public function footer()
-    {
-        include "views/_template/footer.phtml";
-    }
-
-    public function pageScripts( array $pageScripts = array() )
-    {
-
-        foreach( $pageScripts as $pageScript ):
-
-            require_once APPLICATION_PATH . Lib::path( "views/pageScripts/" . $pageScript . ".phtml" );
-
-        endforeach;
-
+        include $this->root . DIRECTORY_SEPARATOR . $this->directory . DIRECTORY_SEPARATOR . $this->page . ".phtml";
     }
 
 }

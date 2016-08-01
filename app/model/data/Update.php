@@ -1,8 +1,8 @@
 <?php
 
-namespace application\model\data\update;
+namespace app\model\data;
 
-use \application\classes\database;
+use app\database\Database;
 
 /**
  * Created by PhpStorm.
@@ -11,9 +11,9 @@ use \application\classes\database;
  * Time: 20:51
  */
 
-if(!class_exists( "DbUpdate" )):
+if(!class_exists( "Update" )):
 
-    class DbUpdate
+    class Update
     {
         protected $sql;
 
@@ -37,7 +37,7 @@ if(!class_exists( "DbUpdate" )):
         public function  dbUpdate( $data, $format )
 
         {
-            $mysqli     = (new database\Database( $this->database ))->dbConnect();
+            $mysqli     = (new Database( $this->database ))->dbConnect();
             $stmt       = $mysqli->prepare( $this->sql );
 
             if(!empty( $format ) && !empty( $data )):
@@ -46,7 +46,7 @@ if(!class_exists( "DbUpdate" )):
                 $format = str_replace( '%', '', $format );
 
                 array_unshift( $data, $format );
-                call_user_func_array( array( $stmt, 'bind_param' ), (new database\Database( $this->database ))->referenceValues( $data ) );
+                call_user_func_array( array( $stmt, 'bind_param' ), (new Database( $this->database ))->referenceValues( $data ) );
 
             endif;
 

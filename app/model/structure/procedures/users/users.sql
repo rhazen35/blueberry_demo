@@ -1,5 +1,3 @@
-DELIMITER $$
-
 CREATE PROCEDURE
 `proc_newUser`(
     INOUT id INT(11),

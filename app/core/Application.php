@@ -16,7 +16,11 @@ class Application
     public function __construct()
     {
 
-        require_once( "views/_template/default.phtml" );
+    }
+
+    public function applicate(){
+
+        include( "web/common/default.phtml" );
 
     }
 }

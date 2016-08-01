@@ -1,5 +1,3 @@
-DELIMITER $$
-
 CREATE PROCEDURE
   `proc_getMatchingModelHash`(
   IN fileHash VARCHAR(256)

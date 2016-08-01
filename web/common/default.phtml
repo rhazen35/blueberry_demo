@@ -20,10 +20,6 @@
         use app\core\Login;
         use app\lib\ViewController;
 
-        $controller = ( new ViewController() );
-
-        $controller->header();
-
         /**
         * Login
         */
@@ -31,15 +27,15 @@
 
         if( !$login ):
 
-            $controller->login();
+            ( new ViewController( "login", "login" ) )->request();
 
         /**
          * Main content
          */
-        else: ?>
+        else: ( new ViewController( "header", "common" ) )->request(); ?>
 
         <div id="main">
-            <?= $controller->content(); ?>
+            <?php ( new ViewController( "home", "common" ) )->request(); ?>
         </div>
 
         <?php
@@ -49,13 +45,8 @@
         /**
          * Footer
          */
-        $controller->footer();
+        ( new ViewController( "footer", "common" ) )->request();
         ?>
-
-
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/functions.js"></script>
-    <?= $controller->pageScripts( array("login") ); ?>
 
     </body>
 </html>

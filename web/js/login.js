@@ -4,20 +4,16 @@
 
 $('#login').submit(function(e) {
 
-    e.preventDefault();
+    // e.preventDefault();
 
-    var url = 'ajax/login/login.php';
+    var url = '/ajax/login/login.php';
 
     $.ajax({
         type: 'post',
         url: url,
         data: $('#login').serialize(),
         success: function (response) {
-            if( response == true ){
-                alert("loggedin");
-            } else {
-                alert("nope");
-            }
+           alert(response);
         }
     });
 

@@ -3,11 +3,39 @@ header
     width:100%;
     height:auto;
     margin: 0 auto;
-    background: seagreen;
 }
 
 header .title
 {
     padding:1em;
     font-size:110%;
+}
+
+header nav
+{
+
+}
+
+header nav ul
+{
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+header nav ul li
+{
+    margin: 0 0 1em 1em;
+    list-style-type: none;
+}
+
+header nav ul li a
+{
+    color:#000000;
+    text-decoration:none;
+}
+
+header nav ul li a:hover
+{
+    text-decoration:underline;
 }

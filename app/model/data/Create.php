@@ -1,8 +1,8 @@
 <?php
 
-namespace application\model\data\create;
+namespace app\model\data;
 
-use \application\classes\database;
+use app\database\Database;
 
 /**
  * Created by PhpStorm.
@@ -11,9 +11,9 @@ use \application\classes\database;
  * Time: 15:37
  */
 
-if(!class_exists( "DbCreate" )):
+if(!class_exists( "Create" )):
 
-    class DbCreate
+    class Create
     {
 
         protected $sql;
@@ -38,7 +38,7 @@ if(!class_exists( "DbCreate" )):
         public function  dbInsert( $data, $format )
 
         {
-            $mysqli     = ( new database\Database( $this->database ) )->dbConnect();
+            $mysqli     = ( new Database( $this->database ) )->dbConnect();
 
             $stmt       = $mysqli->prepare( $this->sql );
 
@@ -48,7 +48,7 @@ if(!class_exists( "DbCreate" )):
                 $format = str_replace( '%', '', $format );
                 
                 array_unshift( $data, $format );
-                call_user_func_array( array( $stmt, 'bind_param' ), ( new database\Database( $this->database ) )->referenceValues( $data ) );
+                call_user_func_array( array( $stmt, 'bind_param' ), ( new Database( $this->database ) )->referenceValues( $data ) );
 
             endif;
 
@@ -61,7 +61,7 @@ if(!class_exists( "DbCreate" )):
         public function  dbInsertOut( $data, $format )
 
         {
-            $mysqli     = ( new database\Database( $this->database ) )->dbConnect();
+            $mysqli     = ( new Database( $this->database ) )->dbConnect();
 
             $stmt       = $mysqli->prepare( $this->sql );
 
@@ -71,7 +71,7 @@ if(!class_exists( "DbCreate" )):
                 $format = str_replace( '%', '', $format );
 
                 array_unshift( $data, $format );
-                call_user_func_array( array( $stmt, 'bind_param' ), ( new database\Database( $this->database ) )->referenceValues( $data ) );
+                call_user_func_array( array( $stmt, 'bind_param' ), ( new Database( $this->database ) )->referenceValues( $data ) );
 
             endif;
 

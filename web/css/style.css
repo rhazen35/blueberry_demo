@@ -1,2 +1,12 @@
 @import "common/header.css";
+
 @import "login/login.css";
+
+@import "common/footer.css";
+
+#main
+{
+    width:98%;
+    margin: 0 auto;
+    margin-bottom: 10em;
+}
