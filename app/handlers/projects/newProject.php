@@ -11,9 +11,6 @@ use app\lib\Project;
 $name        = ( $_POST['name'] ? $_POST['name'] : "" );
 $description = ( $_POST['description'] ? $_POST['description'] : "" );
 
-if( empty( $name ) ): echo 'Please enter a name.'; exit(); endif;
-if( empty( $description ) ): echo 'Please enter a Description.'; exit(); endif;
-
 if( !empty( $name ) && !empty( $description ) ):
     $params       = array( "name" => $name, "description" => $description );
     $lastInsertId = ( new Project( "newProject" ) )->request( $params );

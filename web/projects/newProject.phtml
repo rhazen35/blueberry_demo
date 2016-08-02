@@ -17,4 +17,8 @@
         <input type="hidden" name="attr" value="newProject">
         <input type="submit" name="newProjectSubmit" value="Create project">
     </form>
+
+    <?php if( isset( $_GET['newProjectFailed'] ) ): ?>
+        <div class="message">Something went wrong while creating the project.</div>
+    <?php endif; ?>
 </div>

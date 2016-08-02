@@ -8,10 +8,9 @@
 
 use app\lib\Project;
 
-$projectId   = ( isset( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "" );
-$params      = array( "project_id" => $projectId );
-$projectData = ( new Project( "getProjectById" ) )->request( $params );
-
+$projectId              = ( isset( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "" );
+$params                 = array( "project_id" => $projectId );
+$projectData            = ( new Project( "getProjectById" ) )->request( $params );
 ?>
 
 <div class="newModel-head">
@@ -26,4 +25,8 @@ $projectData = ( new Project( "getProjectById" ) )->request( $params );
         <input type="hidden" name="attr" value="modelUpload">
         <input type="submit" name="xmlFileUploadSubmit" value="Uploaden" title="Upload an xml file.">
     </form>
+
+    <?php if( isset( $_GET['modelUploadFailed'] ) ): ?>
+        <div class="message">The uploaded file could not be processed</div>
+    <?php endif; ?>
 </div>

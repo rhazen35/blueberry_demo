@@ -12,7 +12,7 @@ use app\lib\Project;
 
 $validationStartTime = microtime(true);
 
-if( !empty( $_FILES ) ):
+if( isset($_FILES) && !empty( $_FILES ) ):
 
     if( isset( $_FILES['xmlFile'] ) && ( $_FILES['xmlFile']['error'] === UPLOAD_ERR_OK ) ):
 
@@ -90,13 +90,19 @@ if( !empty( $_FILES ) ):
         }
 
         $validationEndTime = microtimeFormat( $validationStartTime );
-
         $report['validationDuration'] = $validationEndTime;
-
         $_SESSION['xmlValidatorReport'] = serialize( $report );
 
         header("Location: index.php?xmlEAValidatorReport");
+        exit();
+
+    else:
+        header("Location: index.php?modelUploadFailed");
+        exit();
 
     endif;
 
+else:
+    header("Location: index.php?modelUploadFailed");
+    exit();
 endif;

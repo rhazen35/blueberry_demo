@@ -45,14 +45,14 @@ class ViewController
                 $args = array("projects", "projects");
                 ( new ViewController( ...$args ) )->request();
                 break;
-            case (isset($get["newProject"])):
+            case (isset($get["newProject"]) || isset($get['newProjectFailed'])):
                 $args = array("newProject", "projects");
                 ( new ViewController( ...$args ) )->request();
                 break;
             /**
              * Models
              */
-            case (isset($get["newModel"])):
+            case (isset($get["newModel"]) || isset($get['modelUploadFailed'])):
                 $args = array("newModel", "models");
                 ( new ViewController( ...$args ) )->request();
                 break;
