@@ -1,0 +1,116 @@
+.projects
+{
+    width:100%;
+    margin: 0 auto;
+    display:flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+
+.projects-item
+{
+    clear:both;
+    font-size:80%;
+    border-bottom:1px solid #404040;
+}
+
+.projects-head
+{
+    background-color:#404040;
+    color:#FFFFFF;
+}
+
+.projects-item-name,
+.projects-item-descr,
+.projects-item-date,
+.projects-item-model,
+.projects-item-calculator,
+.projects-item-active,
+.projects-item-edit
+{
+    float:left;
+    padding:0.5em;
+}
+
+.projects-item-name
+{
+    width:22%;
+    font-weight:bold;
+}
+
+.projects-item-descr
+{
+    width:35%;
+}
+
+.projects-item-date
+{
+    width:20%;
+}
+
+.projects-item-model
+{
+    width:5%;
+}
+
+.projects-item-calculator
+{
+    width:5%;
+}
+
+.projects-item-active
+{
+    width:5%;
+}
+
+.projects-item-edit
+{
+    width:5%;
+}
+
+.projects-item-control
+{
+    width:225px;
+    display:flex;
+    flex-flow:row wrap;
+    justify-content: center;
+    margin-right:0.5em;
+    padding:0.25em;
+    text-align:right;
+    border-bottom:1px solid #404040;
+    border-right:1px solid #404040;
+    background-color:#707070;
+}
+
+.projects-item-control button
+{
+    padding: 0 0.5em 0 0.5em;
+    color:#FFFFFF;
+    background-color:#707070;
+    border:none;
+}
+
+.projects-item-modelLink:hover,
+.projects-item-control button:hover
+{
+    cursor:pointer;
+    background-color:#404040;
+}
+
+.projects-item-modelLink
+{
+    width:auto;
+    height:1.5em;
+    line-height:1.5em;
+    margin-left:0.5em;
+    font-size:80%;
+}
+
+.projects-item-modelLink a
+{
+    width:100%;
+    height:100%;
+    padding:0.25em;
+    color:#FFFFFF;
+    text-decoration:none;
+}

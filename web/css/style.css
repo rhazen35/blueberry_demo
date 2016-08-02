@@ -1,12 +1,40 @@
 @import "common/header.css";
+@import "common/dashboard.css";
+@import "common/pageMenu.css";
+@import "common/pageInfo.css";
+
+@import "projects/projects.css";
+
+@import "models/newModel.css";
 
 @import "login/login.css";
 
 @import "common/footer.css";
 
+
+*
+{
+    padding: 0;
+    margin: 0;
+}
+
+html, body
+{
+    clear:both;
+    padding: 0;
+    margin: 0;
+}
+
 #main
 {
-    width:98%;
+    float:left;
+    width:70%;
+    min-height:850px;
     margin: 0 auto;
     margin-bottom: 10em;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    box-shadow: inset 0px 0px 17px 1px #949292;
+    -webkit-box-shadow: inset 0px 0px 17px 1px #949292;
+    -moz-box-shadow: inset 0px 0px 17px 1px #949292;
+    -o-box-shadow: inset 0px 0px 17px 1px #949292;
 }

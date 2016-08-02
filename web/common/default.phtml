@@ -17,28 +17,44 @@
 
         <?php
 
-        use app\core\Login;
+        use app\lib\Login;
         use app\lib\ViewController;
 
         /**
-        * Login
+         * Header
+         */
+        ( new ViewController( "header", "common" ) )->request();
+
+        /**
+        * Login check
         */
         $login = ( new Login( "", "" ) )->isLoggedIn();
 
-        if( !$login ):
-
+        if( $login === false ):
             ( new ViewController( "login", "login" ) )->request();
+        else:
 
-        /**
-         * Main content
-         */
-        else: ( new ViewController( "header", "common" ) )->request(); ?>
+            /**
+             * Menu
+             */
+                ( new ViewController( "dashboard", "common" ) )->request();
 
-        <div id="main">
-            <?php ( new ViewController( "home", "common" ) )->request(); ?>
-        </div>
+            /**
+             * Main content
+             */
+            ?>
 
-        <?php
+            <div id="main">
+                <?php
+                    if( !empty( $_GET ) ):
+                        ( new ViewController( "", "" ) )->getRequest( $_GET );
+                    else:
+                        ( new ViewController( "home", "common" ) )->request();
+                    endif;
+                ?>
+            </div>
+
+            <?php
 
         endif;
 

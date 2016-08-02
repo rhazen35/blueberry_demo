@@ -13,14 +13,33 @@ use app\lib;
 
 class Application
 {
-    public function __construct()
-    {
 
+    /**
+     * Launches the application
+     *
+     * Checks for post method first.
+     */
+    public function applicator()
+    {
+        if( $_SERVER['REQUEST_METHOD'] === "POST"):
+           require $this->handlePost();
+        else:
+            require $this->loadApp();
+        endif;
     }
 
-    public function applicate(){
+    private function loadApp()
+    {
+        return "web/common/default.phtml";
+    }
 
-        include( "web/common/default.phtml" );
+    private function handlePost()
+    {
+        $prefix = "app". DIRECTORY_SEPARATOR ."handlers". DIRECTORY_SEPARATOR;
+        $path   = (isset($_POST['path']) ? $_POST['path'] : "");
+        $attr   = (isset($_POST['attr']) ? $_POST['attr'] : "");
+        $ext    = ".php";
 
+        return $prefix.$path.DIRECTORY_SEPARATOR.$attr.$ext;
     }
 }

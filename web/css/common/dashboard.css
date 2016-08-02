@@ -1,0 +1,53 @@
+menu
+{
+    float:left;
+    width:29.5%;
+    height:auto;
+    min-height:850px;
+    font-family: "Verdana", "serif";
+    box-shadow: inset 0px 0px 17px 1px #949292;
+    -webkit-box-shadow: inset 0px 0px 17px 1px #949292;
+    -moz-box-shadow: inset 0px 0px 17px 1px #949292;
+    -o-box-shadow: inset 0px 0px 17px 1px #949292;
+}
+
+menu nav
+{
+    margin-top:1em;
+}
+
+menu nav ul
+{
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+menu nav ul li
+{
+    margin: 0 0 1em 1em;
+    list-style-type: none;
+}
+
+menu nav ul li a
+{
+    padding:0.25em 1em 0.25em 1em;
+    color:#FFFFFF;
+    font-size:80%;
+    text-decoration:none;
+    background-color:#3498DB;
+}
+
+menu nav ul li a:hover
+{
+
+}
+
+.border
+{
+    float:left;
+    width:0.5%;
+    height:100%;
+    min-height:850px;
+    background-color:#4F86F7;
+}

@@ -1,0 +1,36 @@
+<menu>
+    <nav>
+        <ul>
+            <li><a href="<?= APPLICATION_HOME; ?>">Home</a></li>
+            <li><a href="<?= APPLICATION_HOME; ?>?projects">Projects</a></li>
+        </ul>
+    </nav>
+
+    <?php if( isset( $_GET ) && !empty( $_GET ) ): ?>
+        <div class="pageMenu">
+        <?php switch( $_GET ):
+            case (isset($_GET['projects'])
+                || isset($_GET['newProject'])):
+                require_once "web/pageMenus/projects.phtml";
+                break;
+            case (isset($_GET['models'])
+                || isset($_GET['newModel'])
+                || isset( $_GET['xmlEAValidatorReport'] )):
+                require_once "web/pageMenus/models.phtml";
+                break;
+        endswitch; ?>
+        </div>
+        <div class="pageInfo">
+            <?php switch( $_GET ):
+                case (isset($_GET['newModel'])):
+                    require_once "web/pageInfo/newModel.phtml";
+                    break;
+                case (isset( $_GET['xmlEAValidatorReport'] )):
+                    require_once "web/pageInfo/validatorReport.phtml";
+                    break;
+            endswitch; ?>
+        </div>
+    <?php endif; ?>
+
+</menu>
+<div class="border"></div>

@@ -1,6 +1,3 @@
-/**********************************************/
-/* User table structure. */
-/**********************************************/
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(150) NOT NULL,
@@ -10,9 +7,7 @@ CREATE TABLE `users` (
   `timestamp` DATETIME,
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/**********************************************/
-/* Login table structure */
-/**********************************************/
+
 CREATE TABLE `user_login` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `user_id` int(11) NOT NULL,
