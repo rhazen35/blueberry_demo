@@ -1,0 +1,29 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ruben Hazenbosch
+ * Date: 2-8-2016
+ * Time: 18:54
+ */
+
+use app\lib\Project;
+
+$projectId   = ( isset( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "" );
+$params      = array( "project_id" => $projectId );
+$projectData = ( new Project( "getProjectById" ) )->request( $params );
+
+?>
+
+<div class="newModel-head">
+    <div class="title">Model Upload for <?= $projectData['name']; ?></div>
+</div>
+
+<div class="login">
+    <div class="image"><img src="images/icons/xml_file_icon.png"></div>
+    <form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data" id="newModel">
+        <input type="file" name="xmlFile" id="xmlFile" value="" title="Kies een xml bestand.">
+        <input type="hidden" name="path" value="models">
+        <input type="hidden" name="attr" value="modelUpload">
+        <input type="submit" name="xmlFileUploadSubmit" value="Uploaden" title="Upload an xml file.">
+    </form>
+</div>

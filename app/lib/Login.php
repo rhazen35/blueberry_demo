@@ -7,7 +7,7 @@
  * - Gets the users login id.
  * 
  */
-namespace app\core;
+namespace app\lib;
 
 use app\model\Service;
 

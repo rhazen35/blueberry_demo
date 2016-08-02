@@ -1,0 +1,21 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ruben Hazenbosch
+ * Date: 2-8-2016
+ * Time: 15:07
+ */
+
+?>
+
+<div class="login">
+    <div class="title">Register</div>
+    <form action="<?= APPLICATION_HOME; ?>" method="post">
+        <input type="email" name="email" value="" title="Enter your email address" placeholder="Email address">
+        <input type="password" name="password" value="" title="Enter your password" placeholder="Password">
+        <input type="password" name="passwordRepeat" value="" title="Repeat your password, please" placeholder="Password repeat">
+        <input type="hidden" name="path" value="login">
+        <input type="hidden" name="attr" value="register">
+        <input type="submit" name="registerSubmit" value="Register">
+    </form>
+</div>

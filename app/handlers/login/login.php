@@ -6,7 +6,7 @@
  * Time: 11:44
  */
 
-use app\core\Login;
+use app\lib\Login;
 
 if( $_SERVER['REQUEST_METHOD'] === 'POST' ):
 
@@ -18,6 +18,8 @@ if( $_SERVER['REQUEST_METHOD'] === 'POST' ):
         /**
          * TODO: Validation
          */
+        header("Location: index.php?loginFailed");
+        exit();
     else:
         $results = ( new Login( $email, " " ) )->getUserPass();
 
@@ -42,10 +44,14 @@ if( $_SERVER['REQUEST_METHOD'] === 'POST' ):
 
             ( new Login( $email, " " ) )->login();
 
-            header( "Location: index.php" );
+            header("Location: index.php");
+            exit();
 
         else:
-            echo "Incorrect username/password combination";
+            header("Location: index.php?loginFailed");
+            exit();
         endif;
     endif;
 endif;
+
+?>

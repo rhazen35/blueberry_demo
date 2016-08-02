@@ -1,10 +1,9 @@
 <header>
     <div class="title">Blueberry</div>
-    <nav>
-        <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="<?= APPLICATION_PROJECTS; ?>">Projects</a></li>
-            <li><a href="<?= APPLICATION_LOGOUT; ?>">Logout</a></li>
-        </ul>
-    </nav>
+    <?php if( isset( $_SESSION['userId'] ) ): ?>
+        <a href="<?= APPLICATION_LOGOUT; ?>">Logout</a>
+        <?php if( $_SESSION['userId'] === 22 ): ?>
+            <a href="<?= APPLICATION_REGISTER; ?>">Register</a>
+        <?php endif; ?>
+    <?php endif; ?>
 </header>

@@ -6,8 +6,71 @@
  * Time: 22:54
  */
 
+use app\lib\Project;
+use app\enterpriseArchitecture\IOXMLEAModel;
+
+$projects = ( new Project( "getAllProjectsByUser" ) )->request( $params = null );
+
 ?>
 
 <div class="projects">
-    Welcome to the projects - projectpage
+
+    <div class="projects-item projects-head">
+        <div class="projects-item-name">Project</div>
+        <div class="projects-item-descr">Description</div>
+        <div class="projects-item-date">Date</div>
+        <div class="projects-item-model">Model</div>
+        <div class="projects-item-calculator">Calc</div>
+        <div class="projects-item-active">Active</div>
+    </div>
+
+    <?php foreach( $projects as $project ): ?>
+        <?php
+
+        $params    = array( "project_id" => $project['id'] );
+        $urlDataProjectDelete['projectId'] = $project['id'];
+        $modelData = ( new Project( "getModelIdByProjectId" ) )->request( $params );
+
+        if( !empty( $modelData ) ):
+            $hasModel = true;
+            $modelId = $modelData['model_id'];
+            $urlDataPreview['xmlModelId'] = $modelId;
+            $model = ( new IOXMLEAModel( $modelId ) )->getModel();
+        else:
+            $hasModel = false;
+        endif;
+
+        ?>
+        <div class="projects-item">
+            <div class="projects-item-name"><?= $project['name']; ?></div>
+            <div class="projects-item-descr"><?= $project['description']; ?></div>
+            <div class="projects-item-date"><?= $project['date'].$project['time']; ?></div>
+            <div class="projects-item-model"><?= ( $hasModel === true ? "yes" : "no" ); ?></div>
+            <div class="projects-item-calculator">no</div>
+            <div class="projects-item-active">no</div>
+        </div>
+        <div class="projects-item-control">
+            <div id="ajaxResponse" class="project-form-message"></div>
+            <div class="projects-item-modelLink">
+                <form id="deleteProject" action="<?= APPLICATION_HOME; ?>" method="POST">
+                    <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
+                    <input type="hidden" name="path" value="models">
+                    <input type="hidden" name="attr" value="model">
+                    <button name="modelProjectSubmit" type="submit">model</button>
+                </form>
+            </div>
+            <div class="projects-item-modelLink"><a href="">calculator</a></div>
+            <div class="projects-item-modelLink"><a href="">edit</a></div>
+            <div class="projects-item-modelLink">
+                <form id="deleteProject" action="<?= APPLICATION_HOME; ?>" method="POST">
+                    <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
+                    <input type="hidden" name="path" value="projects">
+                    <input type="hidden" name="attr" value="delProject">
+                    <button name="delProjectSubmit" type="submit">delete</button>
+                </form>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
 </div>
+

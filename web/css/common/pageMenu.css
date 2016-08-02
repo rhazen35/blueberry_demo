@@ -1,0 +1,10 @@
+.pageMenu
+{
+    padding-top:0.25em;
+    border-top:1px solid #CCCCCC;
+}
+
+.pageMenu .title
+{
+    margin-left:1em;
+}

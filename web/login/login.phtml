@@ -9,23 +9,19 @@
 ?>
 
 <div class="login">
-    <div class="title">Login</div>
-    <form action="" method="POST" id="login">
+    <div class="title"><h1>Login</h1></div>
+    <form action="<?= APPLICATION_HOME; ?>" method="post" id="login">
         <input type="email" name="email" value="" title="Enter your email address." placeholder="Email address">
+        <br>
         <input type="password" name="password" value="" title="Enter your password." placeholder="Password">
+        <br>
+        <input type="hidden" name="path" value="login">
+        <input type="hidden" name="attr" value="login">
         <input type="submit" name="loginSubmit" value="Login">
     </form>
 
-
-    <div class="message"></div>
-
-<?php
-
-if( $_SERVER['REQUEST_METHOD'] === "POST" ):
-    require_once $_SERVER['DOCUMENT_ROOT']."/app/handlers/login/login.php";
-    header("Location : ". APPLICATION_HOME ."");
-endif;
-
-?>
-
+    <?php if( isset( $_GET['loginFailed'] ) ): ?>
+        <div class="message">Incorrect username/password combination</div>
+    <?php endif; ?>
 </div>
+
