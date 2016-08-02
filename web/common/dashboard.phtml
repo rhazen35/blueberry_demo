@@ -22,6 +22,9 @@
         </div>
         <div class="pageInfo">
             <?php switch( $_GET ):
+                case (isset( $_GET['newProject'] )):
+                    require_once "web/pageInfo/newProject.phtml";
+                    break;
                 case (isset($_GET['newModel'])):
                     require_once "web/pageInfo/newModel.phtml";
                     break;

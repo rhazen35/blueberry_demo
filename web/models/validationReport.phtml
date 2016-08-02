@@ -6,5 +6,247 @@
  * Time: 21:11
  */
 
-echo'<pre>';
-print_r( unserialize( $_SESSION['xmlValidatorReport'] ) );
+/**
+ * Get the last inserted model id
+ * The model id is passed to the preview
+ */
+$xmlModelId = ( !empty( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
+/**
+ * Get the report session and unserialize it
+ */
+$report = unserialize( $_SESSION['xmlValidatorReport'] );
+/**
+ * Check if the report has a file exists flag, if so validation failed.
+ */
+$session_validation_severe = ( isset( $_SESSION['xmlModelErrorSevere'] ) ? $_SESSION['xmlModelErrorSevere'] : "" );
+if( isset( $report['file_exists'] ) && $report['file_exists'] === true ):
+    $fileExists = true;
+    $validationMessage = "Model exists";
+    $report['totalErrorTypes']['severe'] += 1;
+endif;
+?>
+
+<div class="modelReport">
+
+    <div class="modelReport-Title">XML Validation Report - Enterprise Architect Model</div>
+
+    <div class="modelReport-container">
+
+        <div class="modelReport-totalValidation <?= ( $report['validation']['valid'] === true && isset( $fileExists) !== true ? "totalValidationGreen" : "totalValidationRed" ) ?>">
+            <?= ( isset( $fileExists ) && $fileExists === true ? $validationMessage : $report['validation']['message'] ); ?>
+        </div>
+
+        <div class="modelReport-validationInfo">
+            <div class="modelReport-FileName"><strong>Validated file:</strong> <?= $report['originalFileName']; ?></div>
+
+            <?php if( isset( $report['validationDuration'] ) && $report['validationDuration'] !== 0 ): ?>
+                <div class="modelReport-validationDuration">
+                    <strong>Validation duration:</strong> <?= $report['validationDuration'].' seconds'; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="modelReport-totalErrorTypes">
+
+            <div class="modelReport-totalErrorType">
+                <form action="" method="POST">
+                    <img src="./images/icons/checkgreen_icon.png">
+                    <div class="modelReport-ErrorCount">
+                        - <?= $report['totalErrorTypes']['valid']; ?> -
+                    </div>
+                    <?php if( isset( $_SESSION['xmlModelErrorValid'] ) && $_SESSION['xmlModelErrorValid'] === "hide" ): ?>
+                        <input type="hidden" name="type" value="valid">
+                        <input type="hidden" name="display" value="show">
+                        <button type="submit" name="submitTypeVisibility" value="show" title="Show">
+                            <img src="images/icons/show_icon.png" alt="submit" title="Show" />
+                        </button>
+                    <?php else: ?>
+                        <input type="hidden" name="type" value="valid">
+                        <input type="hidden" name="display" value="hide">
+                        <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
+                            <img src="images/icons/hide_icon.png" alt="submit" title="Hide" />
+                        </button>
+                    <?php endif; ?>
+                </form>
+            </div>
+
+            <div class="modelReport-totalErrorType">
+                <form action="" method="POST">
+                    <img src="./images/icons/severe_icon.png">
+                    <div class="modelReport-ErrorCount">
+                        - <?= $report['totalErrorTypes']['severe']; ?> -
+                    </div>
+                    <?php if( isset( $_SESSION['xmlModelErrorSevere'] ) && $_SESSION['xmlModelErrorSevere'] === "hide" ): ?>
+                        <input type="hidden" name="type" value="severe">
+                        <input type="hidden" name="display" value="show">
+                        <button type="submit" name="submitTypeVisibility" value="show" title="Show">
+                            <img src="images/icons/show_icon.png" alt="submit" title="Show" />
+                        </button>
+                    <?php else: ?>
+                        <input type="hidden" name="type" value="severe">
+                        <input type="hidden" name="display" value="hide">
+                        <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
+                            <img src="images/icons/hide_icon.png" alt="submit" title="Hide" />
+                        </button>
+                    <?php endif; ?>
+                </form>
+            </div>
+
+            <div class="modelReport-totalErrorType">
+                <div class="modelReport-totalErrorType-box">
+                    <form action="" method="POST">
+                        <img src="./images/icons/red_cross_icon.png">
+                        <div class="modelReport-ErrorCount">
+                            -  <?= $report['totalErrorTypes']['error']; ?> -
+                        </div>
+                        <?php if( isset( $_SESSION['xmlModelErrorError'] ) && $_SESSION['xmlModelErrorError'] === "hide" ): ?>
+                            <input type="hidden" name="type" value="error">
+                            <input type="hidden" name="display" value="show">
+                            <button type="submit" name="submitTypeVisibility" value="show" title="Show">
+                                <img src="images/icons/show_icon.png" alt="submit" title="Show" />
+                            </button>
+                        <?php else: ?>
+                            <input type="hidden" name="type" value="error">
+                            <input type="hidden" name="display" value="hide">
+                            <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
+                                <img src="images/icons/hide_icon.png" alt="submit" title="Hide" />
+                            </button>
+                        <?php endif; ?>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modelReport-totalErrorType">
+                <form action="" method="POST">
+                    <img src="./images/icons/warning_icon.png">
+                    <div class="modelReport-ErrorCount">
+                        - <?= $report['totalErrorTypes']['warning']; ?> -
+                    </div>
+                    <?php if( isset( $_SESSION['xmlModelErrorWarning'] ) && $_SESSION['xmlModelErrorWarning'] === "hide" ): ?>
+                        <input type="hidden" name="type" value="warning">
+                        <input type="hidden" name="display" value="show">
+                        <button type="submit" name="submitTypeVisibility" value="show" title="Show">
+                            <img src="images/icons/show_icon.png" alt="submit" title="Show" />
+                        </button>
+                    <?php else: ?>
+                        <input type="hidden" name="type" value="warning">
+                        <input type="hidden" name="display" value="hide">
+                        <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
+                            <img src="images/icons/hide_icon.png" alt="submit" title="Hide"/>
+                        </button>
+                    <?php endif; ?>
+                </form>
+            </div>
+
+            <div class="modelReport-totalErrorType">
+                <form action="" method="POST">
+                    <img src="./images/icons/info_icon_blue.png">
+                    <div class="modelReport-ErrorCount">
+                        - <?= $report['totalErrorTypes']['info']; ?> -
+                    </div>
+                    <?php if( isset( $_SESSION['xmlModelErrorInfo'] ) && $_SESSION['xmlModelErrorInfo'] === "hide" ): ?>
+                        <input type="hidden" name="type" value="info">
+                        <input type="hidden" name="display" value="show">
+                        <button type="submit" name="submitTypeVisibility" value="show" title="Show">
+                            <img src="images/icons/show_icon.png" alt="submit" title="Show" />
+                        </button>
+                    <?php else: ?>
+                        <input type="hidden" name="type" value="info">
+                        <input type="hidden" name="display" value="hide">
+                        <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
+                            <img src="images/icons/hide_icon.png" alt="submit" title="Hide" />
+                        </button>
+                    <?php endif; ?>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="modelReport-item modelReport-grayBack">
+            <div class="modelReport-item-img">
+                &nbsp;Type
+            </div>
+            <div class="modelReport-item-name">Subject</div>
+            <div class="modelReport-item-value">Information</div>
+            <div class="modelReport-item-message">Description</div>
+        </div>
+
+        <?php if( isset( $fileExists ) && $fileExists === true && $session_validation_severe !== "hide" ): ?>
+            <div class="modelReport-item">
+                <div class="modelReport-item-img">
+                    <img src="./images/icons/severe_icon.png"">
+                    <div class="modelReport-item-type"> severe</div>
+                </div>
+                <div class="modelReport-item-name">Model already exists</div>
+                <div class="modelReport-item-value">exists</div>
+                <div class="modelReport-item-message">Duplicate model found.</div>
+            </div>
+
+            <div class="modelReport-item">
+                <div class="modelReport-item-img"></div>
+                <div class="modelReport-item-info">
+                    <img src="./images/icons/arrow_right_up.png">
+                    <div class="">
+                        Duplicate model: the uploaded model already exists, could not process the model.
+                    </div>
+                </div>
+            </div>
+
+        <?php endif; ?>
+
+        <?php
+
+        /**
+         * Show all report items, excluding the validation array.
+         */
+        if( !empty( $report ) ):
+
+            foreach( $report as $key => $v ):
+
+                if( !empty( $report[$key]['type'] ) && $key !== "validation" && $key !== 'totalErrorTypes' ):
+
+                    $sessionType = ( isset( $_SESSION['xmlModelError'.( ucfirst( $report[$key]['type'] ) )] ) ? $_SESSION['xmlModelError'.( ucfirst( $report[$key]['type'] ) )] : "");
+                    if( !empty( $sessionType && $sessionType === "hide" ) ):
+
+                    else:
+
+                        ?>
+                        <?php $type = $report[$key]['type']; ?>
+                        <div class="modelReport-item">
+                            <div class="modelReport-item-img">
+                                <img src="./images/icons/<?= ( $type === "warning" ? "warning_icon.png" : ( $type === "info" ? "info_icon_blue.png" : ( $type === "severe" ? "severe_icon.png" : ( $type === "error" ? "red_cross_icon.png" : "checkgreen_icon.png") ) ) ); ?>">
+                                <div class="modelReport-item-type"> <?= $report[$key]['type']; ?></div>
+                            </div>
+                            <div class="modelReport-item-name"><?= $report[$key]['name']; ?></div>
+                            <div class="modelReport-item-value"><?= $report[$key]['value']; ?></div>
+                            <div class="modelReport-item-message"><?= $report[$key]['message']; ?></div>
+                        </div>
+
+                        <?php if( $report[$key]['valid'] === false ): ?>
+                        <div class="modelReport-item">
+                            <div class="modelReport-item-img"></div>
+                            <div class="modelReport-item-info">
+                                <img src="./images/icons/arrow_right_up.png">
+                                <div class="">
+                                    <?= $report[$key]['info']; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                        <?php
+
+                    endif;
+
+                endif;
+
+            endforeach;
+
+        endif;
+
+        ?>
+
+    </div>
+
+</div>
+

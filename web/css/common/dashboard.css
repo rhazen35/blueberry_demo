@@ -1,9 +1,7 @@
 menu
 {
-    float:left;
-    width:29.5%;
-    height:auto;
-    min-height:850px;
+    width:25.5%;
+    min-height:900px;
     font-family: "Verdana", "serif";
     box-shadow: inset 0px 0px 17px 1px #949292;
     -webkit-box-shadow: inset 0px 0px 17px 1px #949292;
@@ -47,7 +45,6 @@ menu nav ul li a:hover
 {
     float:left;
     width:0.5%;
-    height:100%;
     min-height:850px;
     background-color:#4F86F7;
 }

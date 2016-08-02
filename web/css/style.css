@@ -6,6 +6,7 @@
 @import "projects/projects.css";
 
 @import "models/newModel.css";
+@import "models/report.css";
 
 @import "login/login.css";
 
@@ -27,9 +28,16 @@ html, body
 
 #main
 {
-    float:left;
-    width:70%;
-    min-height:850px;
+    display:flex;
+    flex-flow:row wrap;
+    justify-content:flex-start;
+}
+
+#application
+{
+    width:74%;
+    height:100%;
+    min-height:900px;
     margin: 0 auto;
     margin-bottom: 10em;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;

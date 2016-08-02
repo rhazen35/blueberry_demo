@@ -91,7 +91,7 @@ if( !empty( $_FILES ) ):
 
         $validationEndTime = microtimeFormat( $validationStartTime );
 
-        $report['startTime'] = $validationEndTime;
+        $report['validationDuration'] = $validationEndTime;
 
         $_SESSION['xmlValidatorReport'] = serialize( $report );
 

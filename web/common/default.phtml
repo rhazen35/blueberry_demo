@@ -32,8 +32,9 @@
 
         if( $login === false ):
             ( new ViewController( "login", "login" ) )->request();
-        else:
-
+        else: ?>
+        <div id="main">
+            <?php
             /**
              * Menu
              */
@@ -43,8 +44,7 @@
              * Main content
              */
             ?>
-
-            <div id="main">
+            <div id="application">
                 <?php
                     if( !empty( $_GET ) ):
                         ( new ViewController( "", "" ) )->getRequest( $_GET );
@@ -53,6 +53,7 @@
                     endif;
                 ?>
             </div>
+        </div>
 
             <?php
 
