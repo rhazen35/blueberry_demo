@@ -11,23 +11,24 @@ CREATE PROCEDURE
   IN `modelId` INT(11),
   IN `userId` INT(11),
   IN `modelHash` VARCHAR(256),
+  IN `modelStatus` VARCHAR(15),
   IN `modelDate` DATE,
   IN `modelTime` TIME,
   OUT `InsertId` INT(11)
 )
   BEGIN
-    INSERT INTO xml_models (id, user_id, hash, date, time)
-    VALUES(modelId, userId, modelHash, modelDate, modelTime);
+    INSERT INTO xml_models (id, user_id, hash, model_status, date, time)
+    VALUES(modelId, userId, modelHash, modelStatus, modelDate, modelTime);
     SET InsertId = last_insert_id();
     SELECT InsertId;
-  END$$
+  END $$
 
 CREATE PROCEDURE
   `proc_getModel`(
   IN modelId INT(11)
 )
   BEGIN
-    SELECT user_id, hash, date, time FROM xml_models WHERE id = modelId;
+    SELECT user_id, hash, model_status, date, time FROM xml_models WHERE id = modelId;
   END $$
 
 CREATE PROCEDURE
@@ -43,7 +44,7 @@ CREATE PROCEDURE
   IN userId INT(11)
 )
   BEGIN
-    SELECT id, hash, date, time FROM xml_models WHERE user_id = userId;
+    SELECT id, hash, model_status, date, time FROM xml_models WHERE user_id = userId;
   END $$
 
 CREATE PROCEDURE
@@ -68,4 +69,12 @@ CREATE PROCEDURE
 )
   BEGIN
     INSERT INTO xml_models_arrays VALUES(id, modelId, array, date, time);
+  END $$
+
+CREATE PROCEDURE
+`proc_getModelArray`(
+  IN modelId INT(11)
+)
+  BEGIN
+    SELECT array FROM xml_models_arrays WHERE model_id = modelId;
   END $$

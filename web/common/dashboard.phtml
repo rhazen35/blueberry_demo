@@ -14,23 +14,30 @@
                 || isset($_GET['newProject']) || isset($_GET['newProjectFailed'])):
                 require_once "web/pageMenus/projects.phtml";
                 break;
-            case (isset($_GET['models']) || isset($_GET['modelUploadFailed']))
+            case (isset($_GET['models'])
+                || isset($_GET['modelUploadFailed'])
                 || isset($_GET['newModel'])
-                || isset( $_GET['xmlEAValidatorReport'] ):
+                || isset($_GET['xmlEAValidatorReport'])
+                || isset($_GET['model'])):
                 require_once "web/pageMenus/models.phtml";
                 break;
         endswitch; ?>
         </div>
         <div class="pageInfo">
             <?php switch( $_GET ):
-                case (isset( $_GET['newProject'] ) || isset($_GET['newProjectFailed'])):
+                case (isset( $_GET['newProject'] )
+                    || isset($_GET['newProjectFailed'])):
                     require_once "web/pageInfo/newProject.phtml";
                     break;
-                case (isset($_GET['newModel']) || isset($_GET['modelUploadFailed'])):
+                case (isset($_GET['newModel'])
+                    || isset($_GET['modelUploadFailed'])):
                     require_once "web/pageInfo/newModel.phtml";
                     break;
                 case (isset( $_GET['xmlEAValidatorReport'] )):
                     require_once "web/pageInfo/validatorReport.phtml";
+                    break;
+                case (isset( $_GET['model'] )):
+                    require_once "web/pageInfo/model.phtml";
                     break;
             endswitch; ?>
         </div>

@@ -43,13 +43,16 @@ endif;
                 <div class="modelReport-validationDuration">
                     <strong>Validation duration:</strong> <?= $report['validationDuration'].' seconds'; ?>
                 </div>
+                <div class="modelReport-validationDuration">
+                    <a href="<?= APPLICATION_HOME; ?>?model">go to the preview</a>
+                </div>
             <?php endif; ?>
         </div>
 
         <div class="modelReport-totalErrorTypes">
 
             <div class="modelReport-totalErrorType">
-                <form action="" method="POST">
+                <form action="" method="post">
                     <img src="./images/icons/checkgreen_icon.png">
                     <div class="modelReport-ErrorCount">
                         - <?= $report['totalErrorTypes']['valid']; ?> -

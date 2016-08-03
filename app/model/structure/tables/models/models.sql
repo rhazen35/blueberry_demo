@@ -2,6 +2,7 @@ CREATE TABLE `xml_models` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `hash` varchar(256) NOT NULL,
+  `model_status` varchar(15) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
   PRIMARY KEY(id)

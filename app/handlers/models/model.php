@@ -14,7 +14,7 @@ $params                 = array("project_id" => $projectId);
 $modelId                = ( new Project( "getModelIdByProjectId" ) )->request( $params );
 
 if( isset( $modelId['model_id'] ) ):
-    $_SESSION['model_id']   = $modelId['model_id'];
+    $_SESSION['model_id'] = $modelId['model_id'];
     header("Location: index.php?model");
     exit();
 else:

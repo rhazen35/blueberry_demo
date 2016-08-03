@@ -14,7 +14,7 @@ if( !class_exists( "IOXMLEAModel" ) ):
 
     class IOXMLEAModel
     {
-        protected $modelType;
+        protected $modelId;
         protected $database = "blueberry";
 
         public function __construct( $modelId )
@@ -84,6 +84,19 @@ if( !class_exists( "IOXMLEAModel" ) ):
 
             endif;
 
+        }
+
+        public function getModelArray()
+        {
+            $sql        = "CALL proc_getModelArray(?)";
+            $data       = array("model_id" => $this->modelId);
+            $format     = array('i');
+
+            $type       = "read";
+
+            $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            return($returnData);
         }
 
 

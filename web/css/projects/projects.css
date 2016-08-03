@@ -40,7 +40,7 @@
 
 .projects-item-descr
 {
-    width:35%;
+    width:30%;
 }
 
 .projects-item-date
@@ -70,29 +70,27 @@
 
 .projects-item-control
 {
-    width:300px;
+    width:98%;
     display:flex;
     flex-flow:row wrap;
-    justify-content: center;
-    margin-right:0.5em;
+    justify-content: flex-end;
+    margin: 0 auto;
     padding:0.25em;
-    text-align:right;
-    border-bottom:1px solid #404040;
-    border-right:1px solid #404040;
-    background-color:#707070;
 }
 
 .projects-item-control button
 {
-    padding: 0 0.5em 0 0.5em;
-    color:#FFFFFF;
-    background-color:#707070;
+    padding:0.25em;
+    color:#000000;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    background-color:#CCCCCC;
     border:none;
 }
 
-.projects-item-modelLink:hover,
+.projects-item-modelLink a:hover,
 .projects-item-control button:hover
 {
+    color:#FFFFFF;
     cursor:pointer;
     background-color:#404040;
 }
@@ -100,19 +98,18 @@
 .projects-item-modelLink
 {
     width:auto;
-    height:1.5em;
-    line-height:1.5em;
     margin-left:0.5em;
-    font-size:80%;
 }
 
 .projects-item-modelLink a
 {
     width:100%;
     height:100%;
+    line-height:2em;
     padding:0.25em;
-    color:#FFFFFF;
+    color:#000000;
     text-decoration:none;
+    background-color:#CCCCCC;
 }
 
 .projects-message

@@ -90,7 +90,7 @@
       <routine id="35" parent="1" name="proc_getAllModelsByUser">
         <routine-kind>PROCEDURE</routine-kind>
       </routine>
-      <routine id="36" parent="1" name="proc_getProjectNameByModelId">
+      <routine id="36" parent="1" name="proc_saveModelArray">
         <routine-kind>PROCEDURE</routine-kind>
       </routine>
       <column id="37" parent="7" name="id">
@@ -237,272 +237,296 @@
         <mandatory>1</mandatory>
         <data-type>varchar(256)|0</data-type>
       </column>
-      <column id="72" parent="11" name="date">
+      <column id="72" parent="11" name="status">
+        <mandatory>1</mandatory>
+        <data-type>varchar(15)|0</data-type>
+      </column>
+      <column id="73" parent="11" name="date">
         <mandatory>1</mandatory>
         <data-type>date|0</data-type>
       </column>
-      <column id="73" parent="11" name="time">
+      <column id="74" parent="11" name="time">
         <mandatory>1</mandatory>
         <data-type>time|0</data-type>
       </column>
-      <key id="74" parent="11" name="PRIMARY">
+      <key id="75" parent="11" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="75" parent="12" name="id">
+      <column id="76" parent="12" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)|0</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="76" parent="12" name="model_id">
+      <column id="77" parent="12" name="model_id">
         <mandatory>1</mandatory>
         <data-type>int(11)|0</data-type>
       </column>
-      <column id="77" parent="12" name="array">
+      <column id="78" parent="12" name="array">
         <mandatory>1</mandatory>
         <data-type>longtext|0</data-type>
       </column>
-      <column id="78" parent="12" name="date">
+      <column id="79" parent="12" name="date">
         <mandatory>1</mandatory>
         <data-type>date|0</data-type>
       </column>
-      <column id="79" parent="12" name="time">
+      <column id="80" parent="12" name="time">
         <mandatory>1</mandatory>
         <data-type>time|0</data-type>
       </column>
-      <index id="80" parent="12" name="model_id">
+      <index id="81" parent="12" name="model_id">
         <columns>model_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="81" parent="12" name="PRIMARY">
+      <key id="82" parent="12" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="82" parent="12" name="xml_models_arrays_ibfk_1">
+      <foreign-key id="83" parent="12" name="xml_models_arrays_ibfk_1">
         <columns>model_id</columns>
         <ref-key>~.xml_models.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <argument id="83" parent="13">
+      <argument id="84" parent="13">
         <direction>RETURN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="84" parent="13" name="input">
+      <argument id="85" parent="13" name="input">
         <direction>IN</direction>
         <data-type>varchar(150)|0</data-type>
       </argument>
-      <argument id="85" parent="14">
+      <argument id="86" parent="14">
         <direction>RETURN</direction>
         <data-type>varchar(256)|0</data-type>
       </argument>
-      <argument id="86" parent="14" name="input">
+      <argument id="87" parent="14" name="input">
         <direction>IN</direction>
         <data-type>varchar(150)|0</data-type>
       </argument>
-      <argument id="87" parent="15">
+      <argument id="88" parent="15">
         <direction>RETURN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="88" parent="15" name="input">
+      <argument id="89" parent="15" name="input">
         <direction>IN</direction>
         <data-type>varchar(150)|0</data-type>
       </argument>
-      <argument id="89" parent="16">
+      <argument id="90" parent="16">
         <direction>RETURN</direction>
         <data-type>varchar(25)|0</data-type>
       </argument>
-      <argument id="90" parent="16" name="input">
+      <argument id="91" parent="16" name="input">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="91" parent="17" name="userId">
+      <argument id="92" parent="17" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="92" parent="18" name="projectId">
+      <argument id="93" parent="18" name="projectId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="93" parent="18" name="modelId">
+      <argument id="94" parent="18" name="modelId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="94" parent="19" name="userID">
+      <argument id="95" parent="19" name="userID">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="95" parent="20" name="userId">
+      <argument id="96" parent="20" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="96" parent="21" name="fileHash">
+      <argument id="97" parent="21" name="fileHash">
         <direction>IN</direction>
         <data-type>varchar(256)|0</data-type>
       </argument>
-      <argument id="97" parent="22" name="modelId">
+      <argument id="98" parent="22" name="modelId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="98" parent="23" name="modelHash">
+      <argument id="99" parent="23" name="modelHash">
         <direction>IN</direction>
         <data-type>varchar(256)|0</data-type>
       </argument>
-      <argument id="99" parent="24" name="projectId">
+      <argument id="100" parent="24" name="projectId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="100" parent="25" name="userId">
+      <argument id="101" parent="25" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="101" parent="26" name="projectId">
+      <argument id="102" parent="26" name="projectId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="102" parent="27" name="userId">
+      <argument id="103" parent="27" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="103" parent="28" name="userEmail">
+      <argument id="104" parent="28" name="userEmail">
         <direction>IN</direction>
         <data-type>varchar(125)|0</data-type>
       </argument>
-      <argument id="104" parent="29" name="id">
+      <argument id="105" parent="29" name="id">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="105" parent="29" name="user_id">
+      <argument id="106" parent="29" name="user_id">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="106" parent="29" name="previous">
+      <argument id="107" parent="29" name="previous">
         <direction>IN</direction>
         <data-type>datetime|0</data-type>
       </argument>
-      <argument id="107" parent="29" name="current">
+      <argument id="108" parent="29" name="current">
         <direction>IN</direction>
         <data-type>datetime|0</data-type>
       </argument>
-      <argument id="108" parent="29" name="first">
+      <argument id="109" parent="29" name="first">
         <direction>IN</direction>
         <data-type>datetime|0</data-type>
       </argument>
-      <argument id="109" parent="29" name="count">
+      <argument id="110" parent="29" name="count">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="110" parent="30" name="modelId">
+      <argument id="111" parent="30" name="modelId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="111" parent="30" name="userId">
+      <argument id="112" parent="30" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="112" parent="30" name="modelHash">
+      <argument id="113" parent="30" name="modelHash">
         <direction>IN</direction>
         <data-type>varchar(256)|0</data-type>
       </argument>
-      <argument id="113" parent="30" name="modelDate">
+      <argument id="114" parent="30" name="modelDate">
         <direction>IN</direction>
         <data-type>date|0</data-type>
       </argument>
-      <argument id="114" parent="30" name="modelTime">
+      <argument id="115" parent="30" name="modelTime">
         <direction>IN</direction>
         <data-type>time|0</data-type>
       </argument>
-      <argument id="115" parent="30" name="InsertId">
+      <argument id="116" parent="30" name="modelStatus">
+        <direction>IN</direction>
+        <data-type>varchar(15)|0</data-type>
+      </argument>
+      <argument id="117" parent="30" name="InsertId">
         <direction>OUT</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="116" parent="31" name="projectId">
+      <argument id="118" parent="31" name="projectId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="117" parent="31" name="userId">
+      <argument id="119" parent="31" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="118" parent="31" name="projectName">
+      <argument id="120" parent="31" name="projectName">
         <direction>IN</direction>
         <data-type>varchar(150)|0</data-type>
       </argument>
-      <argument id="119" parent="31" name="projectDescription">
+      <argument id="121" parent="31" name="projectDescription">
         <direction>IN</direction>
         <data-type>varchar(200)|0</data-type>
       </argument>
-      <argument id="120" parent="31" name="projectDate">
+      <argument id="122" parent="31" name="projectDate">
         <direction>IN</direction>
         <data-type>date|0</data-type>
       </argument>
-      <argument id="121" parent="31" name="projectTime">
+      <argument id="123" parent="31" name="projectTime">
         <direction>IN</direction>
         <data-type>time|0</data-type>
       </argument>
-      <argument id="122" parent="31" name="InsertId">
+      <argument id="124" parent="31" name="InsertId">
         <direction>OUT</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="123" parent="32" name="id">
+      <argument id="125" parent="32" name="id">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="124" parent="32" name="userId">
+      <argument id="126" parent="32" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="125" parent="32" name="projectId">
+      <argument id="127" parent="32" name="projectId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="126" parent="32" name="modelId">
+      <argument id="128" parent="32" name="modelId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="127" parent="33" name="id">
+      <argument id="129" parent="33" name="id">
         <direction>INOUT</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="128" parent="33" name="email">
+      <argument id="130" parent="33" name="email">
         <direction>INOUT</direction>
         <data-type>varchar(150)|0</data-type>
       </argument>
-      <argument id="129" parent="33" name="email_code">
+      <argument id="131" parent="33" name="email_code">
         <direction>INOUT</direction>
         <data-type>varchar(256)|0</data-type>
       </argument>
-      <argument id="130" parent="33" name="password">
+      <argument id="132" parent="33" name="password">
         <direction>INOUT</direction>
         <data-type>varchar(256)|0</data-type>
       </argument>
-      <argument id="131" parent="33" name="type">
+      <argument id="133" parent="33" name="type">
         <direction>INOUT</direction>
         <data-type>varchar(25)|0</data-type>
       </argument>
-      <argument id="132" parent="33" name="timestamp">
+      <argument id="134" parent="33" name="timestamp">
         <direction>INOUT</direction>
         <data-type>datetime|0</data-type>
       </argument>
-      <argument id="133" parent="34" name="userId">
+      <argument id="135" parent="34" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="134" parent="34" name="previousDate">
+      <argument id="136" parent="34" name="previousDate">
         <direction>IN</direction>
         <data-type>datetime|0</data-type>
       </argument>
-      <argument id="135" parent="34" name="currentDate">
+      <argument id="137" parent="34" name="currentDate">
         <direction>IN</direction>
         <data-type>datetime|0</data-type>
       </argument>
-      <argument id="136" parent="35" name="userId">
+      <argument id="138" parent="35" name="userId">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
       </argument>
-      <argument id="137" parent="36" name="modelId">
+      <argument id="139" parent="36" name="id">
         <direction>IN</direction>
         <data-type>int(11)|0</data-type>
+      </argument>
+      <argument id="140" parent="36" name="modelId">
+        <direction>IN</direction>
+        <data-type>int(11)|0</data-type>
+      </argument>
+      <argument id="141" parent="36" name="array">
+        <direction>IN</direction>
+        <data-type>longtext|0</data-type>
+      </argument>
+      <argument id="142" parent="36" name="date">
+        <direction>IN</direction>
+        <data-type>date|0</data-type>
+      </argument>
+      <argument id="143" parent="36" name="time">
+        <direction>IN</direction>
+        <data-type>time|0</data-type>
       </argument>
     </database-model>
   </data-source>
