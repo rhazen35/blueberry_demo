@@ -30,6 +30,55 @@ if( !class_exists( "IOXMLModelParser" ) ):
         /**
          * @return array
          */
+        public function parseModelExtensionInfo()
+        {
+
+            /**
+             * Set xml path, xml object and pass it trough the controller to get a specific node
+             */
+            $xmiPath             = "//xmi:Extension"; // Path for extender information
+            $xmlObject           = ( new XMLController( $this->xmlFile, "fileToSimpleXmlObject", "" ) )->request(); // Convert model to simple xml object
+            $extensionAttributes = ( new XMLController( $xmlObject, "getNode", $xmiPath ) )->request(); // Get the extension attributes
+
+            $xmiVersionPath      = "//xmi:XMI"; // Path for extender information
+            $xmiVersions         = ( new XMLController( $xmlObject, "getNode", $xmiVersionPath ) )->request(); // Get the extension attributes
+
+            $modelExtensionInfo = array();
+
+            foreach ( $xmiVersions as $xmiVersion ):
+
+                $namespaces   = $xmiVersion->getNameSpaces( true );
+                $xmiNamespace = $namespaces['xmi'];
+                $version      = (string) $xmiVersion->attributes( $xmiNamespace )->version;
+
+                $modelExtensionInfo['model']['xmi_version'] = $version;
+
+            endforeach;
+
+            /**
+             * Collect the model's extension information
+             */
+
+            foreach ( $extensionAttributes as $extensionAttribute ):
+
+                /** Get the node attribute */
+                $extender   = ( new XMLController( $extensionAttribute, "getNodeAttribute", "extender" ) )->request();
+                $extenderID = ( new XMLController( $extensionAttribute, "getNodeAttribute", "extenderID" ) )->request();
+
+                /** Add the extender and extender id to the model array */
+                $modelExtensionInfo['model']['extender_info']['extender']   = $extender;
+                $modelExtensionInfo['model']['extender_info']['extenderID'] = $extenderID;
+
+            endforeach;
+
+            /** Return the model extension info array */
+            return( $modelExtensionInfo );
+
+        }
+
+        /**
+         * @return array
+         */
         public function parseXMLClasses()
         {
 
@@ -350,52 +399,9 @@ if( !class_exists( "IOXMLModelParser" ) ):
 
         }
 
-        public function parseModelExtensionInfo()
-        {
-
-            /**
-             * Set xml path, xml object and pass it trough the controller to get a specific node
-             */
-            $xmiPath             = "//xmi:Extension"; // Path for extender information
-            $xmlObject           = ( new XMLController( $this->xmlFile, "fileToSimpleXmlObject", "" ) )->request(); // Convert model to simple xml object
-            $extensionAttributes = ( new XMLController( $xmlObject, "getNode", $xmiPath ) )->request(); // Get the extension attributes
-
-            $xmiVersionPath      = "//xmi:XMI"; // Path for extender information
-            $xmiVersions         = ( new XMLController( $xmlObject, "getNode", $xmiVersionPath ) )->request(); // Get the extension attributes
-
-            $modelExtensionInfo = array();
-
-            foreach ( $xmiVersions as $xmiVersion ):
-
-                $namespaces   = $xmiVersion->getNameSpaces( true );
-                $xmiNamespace = $namespaces['xmi'];
-                $version      = (string) $xmiVersion->attributes( $xmiNamespace )->version;
-
-                $modelExtensionInfo['model']['xmi_version'] = $version;
-
-            endforeach;
-
-            /**
-             * Collect the model's extension information
-             */
-
-            foreach ( $extensionAttributes as $extensionAttribute ):
-
-                /** Get the node attribute */
-                $extender   = ( new XMLController( $extensionAttribute, "getNodeAttribute", "extender" ) )->request();
-                $extenderID = ( new XMLController( $extensionAttribute, "getNodeAttribute", "extenderID" ) )->request();
-
-                /** Add the extender and extender id to the model array */
-                $modelExtensionInfo['model']['extender_info']['extender']   = $extender;
-                $modelExtensionInfo['model']['extender_info']['extenderID'] = $extenderID;
-
-            endforeach;
-
-            /** Return the model extension info array */
-            return( $modelExtensionInfo );
-
-        }
-
+        /**
+         * @return mixed
+         */
         public function parseConnectors()
         {
 

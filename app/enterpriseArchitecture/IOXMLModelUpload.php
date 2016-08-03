@@ -9,6 +9,7 @@
 namespace app\enterpriseArchitecture;
 
 use app\model\Service;
+use app\enterpriseArchitecture\IOXMLModelParser;
 use app\enterpriseArchitecture\IOXMLEAValidator;
 
 if( !class_exists( "IOXMLModelUpload" ) ):
@@ -39,6 +40,12 @@ if( !class_exists( "IOXMLModelUpload" ) ):
                     break;
                 case"matchHash":
                     return( $this->matchHash() );
+                    break;
+                case"getModelArray":
+                    return( $this->getModelArray() );
+                    break;
+                case"saveModelArray":
+                    $this->saveModelArray();
                     break;
             endswitch;
         }
@@ -90,6 +97,36 @@ if( !class_exists( "IOXMLModelUpload" ) ):
             $lastInsertedId = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
             return( $lastInsertedId );
+        }
+
+        private function getModelArray()
+        {
+            $extensionInfo  = ( new IOXMLModelParser( $this->xmlFile ) )->parseXMLClasses();
+            $elements       = ( new IOXMLModelParser( $this->xmlFile ) )->parseModelExtensionInfo();
+            $connectors     = ( new IOXMLModelParser( $this->xmlFile ) )->parseConnectors();
+
+            $modelArray     = array_merge( $extensionInfo, $elements, $connectors );
+            return($modelArray);
+        }
+
+        private function saveModelArray()
+        {
+            $date        = date('Y-m-d');
+            $time        = date('H:i:s');
+            $id          = "";
+
+            $sql         = "CALL proc_saveModelArray(?,?,?,?,?)";
+            $data        = array(
+                "id"            => $id,
+                "model_id"      => $this->uploadedAt,
+                "array"         => serialize( $this->xmlFile ),
+                "date"          => $date,
+                "time"          => $time
+            );
+            $format      = array("iisss");
+            $type        = "create";
+
+            ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
         }
 
     }

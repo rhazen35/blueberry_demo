@@ -57,6 +57,7 @@ CREATE PROCEDURE
 )
   BEGIN
     DELETE FROM projects_models WHERE project_id = projectId;
+    DELETE FROM xml_models_arrays WHERE model_id = modelId;
     DELETE FROM projects WHERE id = projectId;
-    DELETE FROM xmi_models WHERE id = modelId;
+    DELETE FROM xml_models WHERE id = modelId;
   END $$

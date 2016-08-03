@@ -38,7 +38,8 @@ if( isset($_FILES) && !empty( $_FILES ) ):
          * Pass the xml file with the new model command and the timestamp
          * XML will be validated and a report is returned
          */
-        $report = ( new IOXMLModelUpload( "newModel", $xmlFile, $uploadedAt ) )->request();
+        $report     = ( new IOXMLModelUpload( "newModel", $xmlFile, $uploadedAt ) )->request();
+        $modelArray = ( new IOXMLModelUpload( "getModelArray", $xmlFile, $uploadedAt ) )->request();
 
         /**
          * Add the original file name to the report array
@@ -53,6 +54,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
              * Save the model in the database and in the files/xml_models_tmp directory
              */
             $lastInsertedID = ( new IOXMLModelUpload( "saveModel", $newFile, $uploadedAt ) )->request();
+            ( new IOXMLModelUpload( "saveModelArray", $modelArray, $lastInsertedID ) )->request();
 
             /**
              * Store the project id, model id, and user id in the projects_models join table

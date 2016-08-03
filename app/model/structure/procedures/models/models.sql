@@ -3,7 +3,7 @@ CREATE PROCEDURE
   IN fileHash VARCHAR(256)
 )
   BEGIN
-    SELECT hash FROM xmi_models WHERE hash = fileHash;
+    SELECT hash FROM xml_models WHERE hash = fileHash;
   END $$
 
 CREATE PROCEDURE
@@ -16,7 +16,7 @@ CREATE PROCEDURE
   OUT `InsertId` INT(11)
 )
   BEGIN
-    INSERT INTO xmi_models (id, user_id, hash, date, time)
+    INSERT INTO xml_models (id, user_id, hash, date, time)
     VALUES(modelId, userId, modelHash, modelDate, modelTime);
     SET InsertId = last_insert_id();
     SELECT InsertId;
@@ -27,7 +27,7 @@ CREATE PROCEDURE
   IN modelId INT(11)
 )
   BEGIN
-    SELECT user_id, hash, date, time FROM xmi_models WHERE id = modelId;
+    SELECT user_id, hash, date, time FROM xml_models WHERE id = modelId;
   END $$
 
 CREATE PROCEDURE
@@ -35,7 +35,7 @@ CREATE PROCEDURE
   IN modelHash VARCHAR(256)
 )
   BEGIN
-    SELECT id FROM xmi_models WHERE hash = modelHash;
+    SELECT id FROM xml_models WHERE hash = modelHash;
   END $$
 
 CREATE PROCEDURE
@@ -43,7 +43,7 @@ CREATE PROCEDURE
   IN userId INT(11)
 )
   BEGIN
-    SELECT id, hash, date, time FROM xmi_models WHERE user_id = userId;
+    SELECT id, hash, date, time FROM xml_models WHERE user_id = userId;
   END $$
 
 CREATE PROCEDURE
@@ -56,4 +56,16 @@ CREATE PROCEDURE
       FROM projects_models
       WHERE model_id = modelId
     );
+  END $$
+
+CREATE PROCEDURE
+`proc_saveModelArray`(
+  IN id INT(11),
+  IN modelId INT(11),
+  IN array LONGTEXT,
+  IN date DATE,
+  IN time TIME
+)
+  BEGIN
+    INSERT INTO xml_models_arrays VALUES(id, modelId, array, date, time);
   END $$
