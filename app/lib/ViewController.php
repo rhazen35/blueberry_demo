@@ -56,6 +56,10 @@ class ViewController
                 $args = array("newModel", "models");
                 ( new ViewController( ...$args ) )->request();
                 break;
+            case (isset($get["models"])):
+                $args = array("models", "models");
+                ( new ViewController( ...$args ) )->request();
+                break;
             case (isset($_GET["xmlEAValidatorReport"])):
                 $args = array("validationReport", "models");
                 ( new ViewController( ...$args ) )->request();

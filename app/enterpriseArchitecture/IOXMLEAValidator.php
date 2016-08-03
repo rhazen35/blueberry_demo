@@ -309,18 +309,22 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                     $duplicateClassOrderNames   = array();
                     $totalClassTags             = count( $classTags );
 
-                    for( $i = 0; $i < $totalClassTags; $i++ ):
-                        $order                  = $classTags[$i]['QR-Volgorde']['order'];
-                        $name                   = $classTags[$i]['QR-Volgorde']['className'];
-                        $classOrderArray[]      = $order;
-                        if( !in_array( $order, $uniqueClassOrders ) ):
-                            $uniqueClassOrders['order'] = $order;
-                            $uniqueClassOrders['name']  = $name;
-                        else:
-                            $duplicateClassOrders += 1;
-                            $duplicateClassOrderNames[] = $name;
-                        endif;
-                    endfor;
+                    if( !empty( $classTags ) ):
+                        for( $i = 0; $i < $totalClassTags; $i++ ):
+                            if(isset($classTags[$i]['QR-PrintOrder'])):
+                            $order                  = $classTags[$i]['QR-PrintOrder']['order'];
+                            $name                   = $classTags[$i]['QR-PrintOrder']['className'];
+                            $classOrderArray[]      = $order;
+                            if( !in_array( $order, $uniqueClassOrders ) ):
+                                $uniqueClassOrders['order'] = $order;
+                                $uniqueClassOrders['name']  = $name;
+                            else:
+                                $duplicateClassOrders += 1;
+                                $duplicateClassOrderNames[] = $name;
+                            endif;
+                            endif;
+                        endfor;
+                    endif;
 
 
                     if( count( $classOrderArray ) !== count( array_unique( $classOrderArray ) ) ):
@@ -532,11 +536,11 @@ if( !class_exists( "IOXMLEAValidator" ) ):
 
                                     $tagsArray      = array();
                                     foreach($operation['tags'] as $tag):
-                                        if( !empty( $tag['name'] ) && $tag['name'] === "QR-Volgorde" ):
+                                        if( !empty( $tag['name'] ) && $tag['name'] === "QR-PrintOrder" ):
                                             /**
                                              * Add print order name to the tags array
                                              */
-                                            $tagsArray[] = "QR-Volgorde";
+                                            $tagsArray[] = "QR-PrintOrder";
                                             /**
                                              * Add print order number to tags order array
                                              */
@@ -544,7 +548,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                                 $tagsOrderArray[] = $tag['cell'];
                                             else:
                                                 $name     = "Duplicate operation order";
-                                                $type     = "error";
+                                                $type     = "warning";
                                                 $value    = "empty";
                                                 $s_valid  = false;
                                                 $message  = "<strong>Class: </strong>".$operation['className']." <strong>Operation:</strong> ".$operation['name']. " <strong>Attribute:</strong> Tags->cell";
@@ -580,7 +584,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                         /**
                                          * Check if an operation has a file specified
                                          */
-                                        if( empty( $tag['file'] ) && $tag['name'] !== "QR-Volgorde" ):
+                                        if( empty( $tag['file'] ) && $tag['name'] !== "QR-PrintOrder" ):
                                             $name      = "Operation has no file";
                                             $type      = "warning";
                                             $value     = "empty";
@@ -598,7 +602,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                         /**
                                          * Check if an operation has a tab specified
                                          */
-                                        if( empty( $tag['tab'] ) && $tag['name'] !== "QR-Volgorde" ):
+                                        if( empty( $tag['tab'] ) && $tag['name'] !== "QR-PrintOrder" ):
                                             $name      = "No operation tab specified";
                                             $type      = "error";
                                             $value     = "empty";
@@ -623,7 +627,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                             $value     = "empty";
                                             $s_valid   = false;
                                             $message   = "<strong>Class: </strong>".$operation['className']." <strong>Operation:</strong> ".$operation['name']. " <strong>Attribute:</strong> Tags->cell";
-                                            $s_info    = ( $tag['name'] === "QR-Volgorde" ? "Without an order operations can not be handled properly." : "Without a cell input and output can not be handled properly." );
+                                            $s_info    = ( $tag['name'] === "QR-PrintOrder" ? "Without an order operations can not be handled properly." : "Without a cell input and output can not be handled properly." );
 
                                             $operationCellSpecifiedArray[$m] = array();
                                             $operationCellSpecifiedArray[$m] = $this->generateArray( "OperationCellSpecified".$m, $name, $type, $value, $s_valid, $message, $s_info );
@@ -634,9 +638,12 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                         /**
                                          * Check if the operation cell has the right format
                                          */
-                                        elseif( !empty( $tag['cell'] && $tag['name'] !== "QR-Volgorde" ) ):
+                                        elseif( !empty( $tag['cell'] && $tag['name'] !== "QR-PrintOrder" ) ):
 
-                                            if( !preg_match( $this->matchExcelFormat , $tag['cell']) ):
+                                            $excelCell = str_replace( $tag['cell'], " ", "" );
+                                            var_dump($excelCell);
+
+                                            if( !preg_match( $this->matchExcelFormat , $excelCell) ):
 
                                                 $name     = "Operation cell format";
                                                 $type     = "error";
@@ -658,7 +665,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                         /**
                                          * Check if operation order is numeric
                                          */
-                                        if( $tag['name'] === "QR-Volgorde" && !empty( $tag['cell'] && !is_numeric( $tag['cell'] ) ) ):
+                                        if( $tag['name'] === "QR-PrintOrder" && !empty( $tag['cell'] && !is_numeric( $tag['cell'] ) ) ):
                                             $name      = "Operation order tag not numeric";
                                             $type      = "error";
                                             $value     = "not numeric";
@@ -679,7 +686,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                     /**
                                      * Check if a print order is specified
                                      */
-                                    if( !in_array( "QR-Volgorde", $tagsArray ) ):
+                                    if( !in_array( "QR-PrintOrder", $tagsArray ) ):
                                         $name      = "No operation print order";
                                         $type      = "info";
                                         $value     = "empty";

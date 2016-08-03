@@ -70,7 +70,7 @@
 
 .projects-item-control
 {
-    width:225px;
+    width:300px;
     display:flex;
     flex-flow:row wrap;
     justify-content: center;

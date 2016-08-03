@@ -1,0 +1,42 @@
+.models
+{
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+
+.model-item
+{
+    clear:both;
+    font-size:80%;
+    border-bottom:1px solid #404040;
+}
+
+.model-item-model,
+.model-item-project,
+.model-item-status,
+.model-item-date
+{
+    float:left;
+    padding:0.5em;
+}
+
+.model-item-model
+{
+    width:8%;
+}
+
+.model-item-project
+{
+    width:28%;
+}
+
+.model-item-status
+{
+    width:28%;
+}
+
+.model-item-date
+{
+    width:28%;
+}

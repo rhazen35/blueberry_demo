@@ -1,0 +1,46 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ruben Hazenbosch
+ * Date: 03-Aug-16
+ * Time: 10:48
+ */
+
+use app\lib\Models;
+
+$models = ( new Models( "getAllModelsByUser" ) )->request( $params = null );
+
+?>
+<div class="models">
+    <div class="model-item projects-head">
+        <div class="model-item-model">Model</div>
+        <div class="model-item-project">Project</div>
+        <div class="model-item-status">Status</div>
+        <div class="model-item-date">Date</div>
+    </div>
+    <?php
+        if( !empty( $models ) ):
+            foreach($models as $model):
+                $projectName = ( new Models( "getProjectNameByModelId" ) )->request( $params = array("model_id" => $model['id']) );
+                ?>
+                <div class="model-item">
+                    <div class="model-item-model"><?= $model['id']; ?></div>
+                    <div class="model-item-project"><?= $projectName[0]['name'] ?></div>
+                    <div class="model-item-status">
+                        <form action="" method="post">
+                            <select name="status">
+                                <option>Preview</option>
+                                <option>Testing</option>
+                                <option>Acceptation</option>
+                                <option>Production</option>
+                            </select>
+                            <input type="submit" name="modelStatusSubmit" value="save">
+                        </form>
+                    </div>
+                    <div class="model-item-date"><?= $model['date'].$model['time']; ?></div>
+                </div>
+                <?php
+            endforeach;
+        endif;
+    ?>
+</div>

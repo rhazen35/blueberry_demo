@@ -37,3 +37,23 @@ CREATE PROCEDURE
   BEGIN
     SELECT id FROM xmi_models WHERE hash = modelHash;
   END $$
+
+CREATE PROCEDURE
+`proc_getAllModelsByUser`(
+  IN userId INT(11)
+)
+  BEGIN
+    SELECT id, hash, date, time FROM xmi_models WHERE user_id = userId;
+  END $$
+
+CREATE PROCEDURE
+`proc_getProjectNameByModelId`(
+  IN modelId INT(11)
+)
+  BEGIN
+    SELECT name FROM projects WHERE id = (
+      SELECT project_id
+      FROM projects_models
+      WHERE model_id = modelId
+    );
+  END $$
