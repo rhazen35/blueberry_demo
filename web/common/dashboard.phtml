@@ -23,7 +23,8 @@
                 || isset($_GET['model'])):
                 require_once "web/pageMenus/models.phtml";
                 break;
-            case (isset($_GET['newCalculator'])):
+            case (isset($_GET['newCalculator'])
+                || isset($_GET['calculators'])):
                 require_once "web/pageMenus/calculators.phtml";
                 break;
         endswitch; ?>
@@ -52,6 +53,9 @@
                     break;
                 case (isset($_GET['newCalculator'])):
                     require_once "web/pageInfo/newCalculator.phtml";
+                    break;
+                case (isset($_GET['calculators'])):
+                    require_once "web/pageInfo/calculators.phtml";
                     break;
             endswitch; ?>
         </div>

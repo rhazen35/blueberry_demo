@@ -40,7 +40,7 @@
 
 .projects-item-name
 {
-    width:22%;
+    width:32%;
     font-weight:bold;
 }
 
@@ -62,7 +62,7 @@
 
 .projects-item-descr
 {
-    width:15%;
+    width:12%;
 }
 
 .projects-item-date
@@ -72,17 +72,17 @@
 
 .projects-item-model
 {
-    width:10%;
+    width:8%;
 }
 
 .projects-item-calculator
 {
-    width:10%;
+    width:8%;
 }
 
 .projects-item-active
 {
-    width:10%;
+    width:8%;
 }
 
 .projects-item-edit
