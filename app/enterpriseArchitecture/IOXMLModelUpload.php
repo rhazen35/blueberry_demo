@@ -29,14 +29,14 @@ if( !class_exists( "IOXMLModelUpload" ) ):
             $this->uploadedAt   = $uploadedAt;
         }
 
-        public function request()
+        public function request( $params )
         {
             switch( $this->type ):
-                case"newModel":
-                    return( $this->newModel() );
+                case"validateModel":
+                    return( $this->validateModel() );
                     break;
                 case"saveModel":
-                    return( $this->saveModel() );
+                    return( $this->saveModel( $params ) );
                     break;
                 case"matchHash":
                     return( $this->matchHash() );
@@ -44,15 +44,12 @@ if( !class_exists( "IOXMLModelUpload" ) ):
                 case"getModelArray":
                     return( $this->getModelArray() );
                     break;
-                case"saveModelArray":
-                    $this->saveModelArray();
-                    break;
             endswitch;
         }
 
-        private function newModel()
+        private function validateModel()
         {
-            $validateXMLFile    = ( new IOXMLEAValidator( $this->xmlFile ) )->validate();
+            $validateXMLFile = ( new IOXMLEAValidator( $this->xmlFile ) )->validate();
             return( $validateXMLFile );
         }
 
@@ -74,26 +71,26 @@ if( !class_exists( "IOXMLModelUpload" ) ):
             endif;
         }
 
-        private function saveModel()
+        private function saveModel( $params )
         {
             $datetime    = new \DateTime( $this->uploadedAt );
             $upload_date = $datetime->format('Y-m-d');
             $upload_time = $datetime->format('H:i:s');
             $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
             $id          = $output = "";
-            $status      = "validate";
 
-            $sql        = "CALL proc_newModel(?,?,?,?,?,?,?)";
+            $sql        = "CALL proc_newModel(?,?,?,?,?,?,?,?)";
             $data       = array(
                                 "id"            => $id,
                                 "user_id"       => $userId,
+                                "name"          => $params['name'],
                                 "hash"          => $this->xmlFile,
-                                "model_status"  => $status,
+                                "valid"         => $params['valid'],
                                 "date"          => $upload_date,
                                 "time"          => $upload_time,
                                 "output"        => $output
                                 );
-            $format     = array("iissssi");
+            $format     = array("iisssssi");
             $type       = "createWithOutput";
 
             $lastInsertedId = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
@@ -109,27 +106,6 @@ if( !class_exists( "IOXMLModelUpload" ) ):
 
             $modelArray     = array_merge( $extensionInfo, $elements, $connectors );
             return($modelArray);
-        }
-
-        private function saveModelArray()
-        {
-            $date        = date('Y-m-d');
-            $time        = date('H:i:s');
-            $id          = "";
-            $array       = json_encode( $this->xmlFile );
-
-            $sql         = "CALL proc_saveModelArray(?,?,?,?,?)";
-            $data        = array(
-                "id"            => $id,
-                "model_id"      => $this->uploadedAt,
-                "array"         => $array,
-                "date"          => $date,
-                "time"          => $time
-            );
-            $format      = array("iisss");
-            $type        = "create";
-
-            ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
         }
 
     }

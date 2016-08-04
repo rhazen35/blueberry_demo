@@ -17,10 +17,10 @@ $projects = ( new Project( "getAllProjectsByUser" ) )->request( $params = null )
 
     <div class="projects-item projects-head">
         <div class="projects-item-name">Project</div>
-        <div class="projects-item-descr">Description</div>
+        <div class="projects-item-descr">Status</div>
         <div class="projects-item-date">Date</div>
         <div class="projects-item-model">Model</div>
-        <div class="projects-item-calculator">Calc</div>
+        <div class="projects-item-calculator">Calculator</div>
         <div class="projects-item-active">Active</div>
     </div>
 
@@ -28,47 +28,66 @@ $projects = ( new Project( "getAllProjectsByUser" ) )->request( $params = null )
         if( !empty( $projects ) ):
             foreach( $projects as $project ):
 
-            $params    = array( "project_id" => $project['id'] );
-            $urlDataProjectDelete['projectId'] = $project['id'];
-            $modelData = ( new Project( "getModelIdByProjectId" ) )->request( $params );
+            $params       = array( "project_id" => $project['id'] );
+            $modelData    = ( new Project( "getModelIdByProjectId" ) )->request( $params );
+            $calculator   = ( new Project( "getCalculatorIdByProjectId" ) )->request( $params );
+            $calculatorId =  ( !empty( $calculator['calculator_id'] ) ? $calculator['calculator_id'] : "" );
 
             if( !empty( $modelData ) ):
-                $hasModel = true;
-                $modelId = $modelData['model_id'];
-                $urlDataPreview['xmlModelId'] = $modelId;
-                $model = ( new IOXMLEAModel( $modelId ) )->getModel();
+                $hasModel   = true;
+                $modelId    = $modelData['model_id'];
+                $model      = ( new IOXMLEAModel( $modelId ) )->getModel();
             else:
                 $hasModel = false;
             endif;
 
             ?>
             <div class="projects-item">
-                <div class="projects-item-name"><?= $project['name']; ?></div>
-                <div class="projects-item-descr"><?= $project['description']; ?></div>
-                <div class="projects-item-date"><?= $project['date'].$project['time']; ?></div>
+                <div class="projects-item-name">
+                    <div class="projects-item-img"><img src="./images/icons/project_icon.png"></div>
+                    <div class="projects-item-project"><?= $project['name']; ?></div>
+                </div>
+                <div class="projects-item-descr"><?= $project['status']; ?></div>
+                <div class="projects-item-date"><?= $project['date']." ".$project['time']; ?></div>
                 <div class="projects-item-model"><?= ( $hasModel === true ? "yes" : "no" ); ?></div>
-                <div class="projects-item-calculator">no</div>
+                <div class="projects-item-calculator"><?= ( !empty( $calculatorId ) ? "yes" : "no" ); ?></div>
                 <div class="projects-item-active">no</div>
 
                 <div class="projects-item-control">
+                    <?php if( $hasModel === false ): $modelValue = "model upload"; else: $modelValue = "model preview"; endif; ?>
                     <div class="projects-item-modelLink">
                         <form action="<?= APPLICATION_HOME; ?>" method="POST">
                             <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
                             <input type="hidden" name="path" value="models">
                             <input type="hidden" name="attr" value="model">
-                            <button name="modelProjectSubmit" type="submit">model</button>
+                            <input type="submit" name="modelProjectSubmit" class="button" value="<?= $modelValue; ?>">
                         </form>
                     </div>
-                    <div class="projects-item-modelLink"><a href="">calculator</a></div>
-                    <div class="projects-item-modelLink"><a href="">edit</a></div>
+                    <?php if( empty( $calculatorId ) ): $calculatorValue = "calculator upload"; else: $calculatorValue = "calculator preview"; endif; ?>
+                    <div class="projects-item-modelLink">
+                        <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                            <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
+                            <input type="hidden" name="path" value="calculators">
+                            <input type="hidden" name="attr" value="calculator">
+                            <input type="submit" name="calculatorProjectSubmit" class="button" value="<?= $calculatorValue; ?>">
+                        </form>
+                    </div>
+                    <div class="projects-item-modelLink"><a href="" class="button">edit project</a></div>
                     <div class="projects-item-modelLink">
                         <form action="<?= APPLICATION_HOME; ?>" method="POST">
                             <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
                             <input type="hidden" name="path" value="projects">
                             <input type="hidden" name="attr" value="delProject">
-                            <button name="delProjectSubmit" type="submit">delete</button>
+                            <input type="submit" name="delProjectSubmit" class="button" value="delete project">
                         </form>
                     </div>
+                    <?php if( $hasModel === false && empty( $calculator ) ): ?>
+                        <div class="project-itemNoModel">This project has no model and no calculator</div>
+                    <?php elseif( $hasModel === false ): ?>
+                        <div class="project-itemNoModel">This project has no model</div>
+                    <?php elseif( empty( $calculator ) ): ?>
+                        <div class="project-itemNoModel">This project has no calculator</div>
+                    <?php endif; ?>
                 </div>
             </div>
 

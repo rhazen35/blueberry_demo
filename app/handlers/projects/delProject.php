@@ -8,6 +8,7 @@
 
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAModel;
+use app\enterpriseArchitecture\IOEAExcelCalculator;
 
 $projectId   = ( !empty( $_POST['projectId'] ) ? $_POST['projectId'] : "" );
 
@@ -18,16 +19,23 @@ if( empty( $projectId ) ):
 
 else:
 
-    $params    = array( "project_id" => $projectId );
-    $modelId   = ( new Project( "getModelIdByProjectId" ) )->request( $params );
+    $params         = array( "project_id" => $projectId );
+    $modelId        = ( new Project( "getModelIdByProjectId" ) )->request( $params );
+    $calculatorId   = ( new Project( "getCalculatorIdByProjectId" ) )->request( $params );
+    $modelId        = ( isset( $modelId['model_id'] ) ? $modelId['model_id'] : "" );
+    $calculatorId   = ( isset( $calculatorId['calculator_id'] ) ? $calculatorId['calculator_id'] : "" );
 
     if( !empty( $modelId ) ):
-        $model     = ( new IOXMLEAModel( $modelId['model_id'] ))->getModel();
-        $modelHash = $model['hash'];
+        $model          = ( new IOXMLEAModel( $modelId ))->getModel();
+        $calculator     = ( new IOEAExcelCalculator( $calculatorId ))->getCalculator();
+        $modelHash      = $model['hash'];
+        $calculatorHash = $calculator['hash'];
 
-        $params['model_id'] = $modelId['model_id'];
+        $params['model_id']      = $modelId;
+        $params['calculator_id'] = $calculatorId;
 
         unlink( $_SERVER['DOCUMENT_ROOT'].'/web/files/xml_models_tmp/'.$modelHash.'.xml');
+        unlink( $_SERVER['DOCUMENT_ROOT'].'/web/files/excel_calculators_tmp/'.$calculatorHash.'.xlsx');
 
     endif;
 

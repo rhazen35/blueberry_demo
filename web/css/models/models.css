@@ -3,27 +3,35 @@
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
+    width:100%;
+    min-width:700px;
+    margin: 0 auto;
 }
 
 .model-item
 {
     clear:both;
+    height: 6em;
     font-size:80%;
-    border-bottom:1px solid #404040;
+    border-bottom:1px solid #CCCCCC;
+    overflow:hidden;
 }
 
 .model-item-model,
 .model-item-project,
 .model-item-status,
+.model-item-valid,
 .model-item-date
 {
     float:left;
+    line-height:2em;
     padding:0.5em;
 }
 
 .model-item-model
 {
-    width:8%;
+    width:25%;
+    font-weight:bold;
 }
 
 .model-item-project
@@ -31,12 +39,12 @@
     width:28%;
 }
 
-.model-item-status
+.model-item-valid
 {
-    width:28%;
+    width:10%;
 }
 
 .model-item-date
 {
-    width:28%;
+    width:10%;
 }

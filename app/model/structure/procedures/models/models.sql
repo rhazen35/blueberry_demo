@@ -10,15 +10,16 @@ CREATE PROCEDURE
   `proc_newModel`(
   IN `modelId` INT(11),
   IN `userId` INT(11),
+  IN `modelName` VARCHAR(100),
   IN `modelHash` VARCHAR(256),
-  IN `modelStatus` VARCHAR(15),
+  IN `modelValid` VARCHAR(3),
   IN `modelDate` DATE,
   IN `modelTime` TIME,
   OUT `InsertId` INT(11)
 )
   BEGIN
-    INSERT INTO xml_models (id, user_id, hash, model_status, date, time)
-    VALUES(modelId, userId, modelHash, modelStatus, modelDate, modelTime);
+    INSERT INTO xml_models (id, user_id, name, hash, valid, date, time)
+    VALUES(modelId, userId, modelName, modelHash, modelValid, modelDate, modelTime);
     SET InsertId = last_insert_id();
     SELECT InsertId;
   END $$
@@ -28,7 +29,7 @@ CREATE PROCEDURE
   IN modelId INT(11)
 )
   BEGIN
-    SELECT user_id, hash, model_status, date, time FROM xml_models WHERE id = modelId;
+    SELECT user_id, name, hash, valid, date, time FROM xml_models WHERE id = modelId;
   END $$
 
 CREATE PROCEDURE
@@ -44,37 +45,5 @@ CREATE PROCEDURE
   IN userId INT(11)
 )
   BEGIN
-    SELECT id, hash, model_status, date, time FROM xml_models WHERE user_id = userId;
-  END $$
-
-CREATE PROCEDURE
-`proc_getProjectNameByModelId`(
-  IN modelId INT(11)
-)
-  BEGIN
-    SELECT name FROM projects WHERE id = (
-      SELECT project_id
-      FROM projects_models
-      WHERE model_id = modelId
-    );
-  END $$
-
-CREATE PROCEDURE
-`proc_saveModelArray`(
-  IN id INT(11),
-  IN modelId INT(11),
-  IN array LONGTEXT,
-  IN date DATE,
-  IN time TIME
-)
-  BEGIN
-    INSERT INTO xml_models_arrays VALUES(id, modelId, array, date, time);
-  END $$
-
-CREATE PROCEDURE
-`proc_getModelArray`(
-  IN modelId INT(11)
-)
-  BEGIN
-    SELECT array FROM xml_models_arrays WHERE model_id = modelId;
+    SELECT id, hash, name, valid, date, time FROM xml_models WHERE user_id = userId;
   END $$

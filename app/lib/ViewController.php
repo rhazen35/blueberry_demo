@@ -68,6 +68,17 @@ class ViewController
                 $args = array("validationReport", "models");
                 ( new ViewController( ...$args ) )->request();
                 break;
+            /**
+             * Calculators
+             */
+            case (isset($_GET["newCalculator"])):
+                $args = array("newCalculator", "calculators");
+                ( new ViewController( ...$args ) )->request();
+                break;
+            case (isset($_GET["calculators"])):
+                $args = array("calculators", "calculators");
+                ( new ViewController( ...$args ) )->request();
+                break;
         endswitch;
     }
 

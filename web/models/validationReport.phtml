@@ -24,7 +24,13 @@ if( isset( $report['file_exists'] ) && $report['file_exists'] === true ):
     $validationMessage = "Model exists";
     $report['totalErrorTypes']['severe'] += 1;
 endif;
+/**
+ * Check if there is an original file name
+ */
+if( isset( $report['originalFileName'] ) ): $originalFileName = $report['originalFileName']; else: $originalFileName = ""; endif;
+
 ?>
+
 
 <div class="modelReport">
 
@@ -37,7 +43,7 @@ endif;
         </div>
 
         <div class="modelReport-validationInfo">
-            <div class="modelReport-FileName"><strong>Validated file:</strong> <?= $report['originalFileName']; ?></div>
+            <div class="modelReport-FileName"><strong>Validated file:</strong> <?= $originalFileName; ?></div>
 
             <?php if( isset( $report['validationDuration'] ) && $report['validationDuration'] !== 0 ): ?>
                 <div class="modelReport-validationDuration">

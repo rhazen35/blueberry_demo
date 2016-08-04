@@ -7,37 +7,60 @@
  */
 
 use app\lib\Models;
+use app\lib\Project;
 
 $models = ( new Models( "getAllModelsByUser" ) )->request( $params = null );
 
 ?>
 <div class="models">
-    <div class="model-item projects-head">
+    <div class="projects-item projects-head">
         <div class="model-item-model">Model</div>
         <div class="model-item-project">Project</div>
-        <div class="model-item-status">Status</div>
+        <div class="model-item-valid">Valid</div>
         <div class="model-item-date">Date</div>
     </div>
     <?php
         if( !empty( $models ) ):
             foreach($models as $model):
-                $projectName = ( new Models( "getProjectNameByModelId" ) )->request( $params = array("model_id" => $model['id']) );
+                $modelId = $model['id'];
+                $project = ( new Project( "getProjectByModelId" ) )->request( $params = array("model_id" => $modelId) );
+                $projectName = $project['name'];
                 ?>
-                <div class="model-item">
-                    <div class="model-item-model"><?= $model['id']; ?></div>
-                    <div class="model-item-project"><?= $projectName[0]['name'] ?></div>
-                    <div class="model-item-status">
-                        <form action="" method="post">
-                            <select name="status">
-                                <option>Preview</option>
-                                <option>Testing</option>
-                                <option>Acceptation</option>
-                                <option>Production</option>
-                            </select>
-                            <input type="submit" name="modelStatusSubmit" value="save">
-                        </form>
+                <div class="projects-item">
+                    <div class="model-item-model">
+                        <div class="projects-item-img"><img src="./images/icons/model_icon.png"></div>
+                        <div class="projects-item-project"><?= $model['name']; ?></div>
                     </div>
-                    <div class="model-item-date"><?= $model['date'].$model['time']; ?></div>
+                    <div class="model-item-project"><?= $projectName; ?></div>
+                    <div class="model-item-valid"><?= $model['valid']; ?></div>
+                    <div class="model-item-date"><?= $model['date']." ".$model['time']; ?></div>
+
+                    <div class="projects-item-control">
+                        <div class="projects-item-modelLink">
+                            <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                                <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
+                                <input type="hidden" name="path" value="models">
+                                <input type="hidden" name="attr" value="model">
+                                <button name="modelProjectSubmit" type="submit" class="button">preview</button>
+                            </form>
+                        </div>
+                        <div class="projects-item-modelLink">
+                            <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                                <input type="hidden" name="modelId" value="<?= $model['id']; ?>">
+                                <input type="hidden" name="path" value="models">
+                                <input type="hidden" name="attr" value="validateModel">
+                                <button name="modelProjectSubmit" type="submit" class="button">validation report</button>
+                            </form>
+                        </div>
+                        <div class="projects-item-modelLink">
+                            <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                                <input type="hidden" name="modelId" value="<?= $model['id']; ?>">
+                                <input type="hidden" name="path" value="models">
+                                <input type="hidden" name="attr" value="changeModel">
+                                <button name="modelProjectSubmit" type="submit" class="button">change</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <?php
             endforeach;

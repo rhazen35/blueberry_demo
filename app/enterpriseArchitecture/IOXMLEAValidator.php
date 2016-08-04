@@ -212,6 +212,10 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                          */
                         if( !empty( $parsedClass['Root'] ) ):
                             $roots[] = $parsedClass['Root'];
+                            if( $parsedClass['Root'] === "true" ):
+                                $trueRootClassName = $parsedClass['name'];
+                                $report['trueRootClassName'] = $trueRootClassName;
+                            endif;
                         endif;
 
                         /**

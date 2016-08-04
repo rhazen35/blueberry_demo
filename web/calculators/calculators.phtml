@@ -1,0 +1,57 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ruben Hazenbosch
+ * Date: 4-8-2016
+ * Time: 16:42
+ */
+
+use app\lib\Calculator;
+use app\lib\Project;
+
+$calculators = ( new Calculator( "getAllCalculatorsByUser" ) )->request( $params = null );
+
+?>
+<div class="models">
+    <div class="model-item projects-head">
+        <div class="model-item-model">Calculator</div>
+        <div class="model-item-project">Project</div>
+        <div class="model-item-date">Date</div>
+    </div>
+    <?php
+    if( !empty( $calculators ) ):
+        foreach( $calculators as $calculator ):
+            $calculatorId = $calculator['id'];
+            $project = ( new Project( "getProjectByCalculatorId" ) )->request( $params = array("calculator_id" => $calculatorId ) );
+            $projectName = $project['name'];
+            ?>
+            <div class="model-item">
+                <div class="model-item-model"><?= $calculator['id']; ?></div>
+                <div class="model-item-project"><?= $projectName; ?></div>
+
+                <div class="model-item-date"><?= $calculator['date']." ".$calculator['time']; ?></div>
+
+                <div class="projects-item-control">
+                    <div class="projects-item-modelLink">
+                        <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                            <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
+                            <input type="hidden" name="path" value="calculators">
+                            <input type="hidden" name="attr" value="calculator">
+                            <button name="modelProjectSubmit" type="submit">calculator</button>
+                        </form>
+                    </div>
+                    <div class="projects-item-modelLink">
+                        <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                            <input type="hidden" name="modelId" value="<?= $calculator['id']; ?>">
+                            <input type="hidden" name="path" value="calculators">
+                            <input type="hidden" name="attr" value="newCalculator">
+                            <button name="modelProjectSubmit" type="submit">change calculator</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+        endforeach;
+    endif;
+    ?>
+</div>

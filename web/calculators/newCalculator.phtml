@@ -1,0 +1,32 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ruben Hazenbosch
+ * Date: 4-8-2016
+ * Time: 15:25
+ */
+
+use app\lib\Project;
+
+$projectId   = ( isset( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "" );
+$params      = array( "project_id" => $projectId );
+$projectData = ( new Project( "getProjectById" ) )->request( $params );
+?>
+
+<div class="newModel-head">
+    <div class="title">Calculator Upload for <?= $projectData['name']; ?></div>
+</div>
+
+<div class="login">
+    <div class="image"><img src="images/icons/excel_icon.jpg"></div>
+    <form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data">
+        <input type="file" name="excelFile" value="" title="Kies een calculator bestand. (Excel)">
+        <input type="hidden" name="path" value="calculators">
+        <input type="hidden" name="attr" value="calculatorUpload">
+        <input type="submit" name="calculatorFileUploadSubmit" value="Uploaden" title="Upload an calculator file. (Excel)">
+    </form>
+
+    <?php if( isset( $_GET['calculatorUploadFailed'] ) ): ?>
+        <div class="message">The uploaded file could not be processed</div>
+    <?php endif; ?>
+</div>

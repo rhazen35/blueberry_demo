@@ -4,6 +4,7 @@
             <li><a href="<?= APPLICATION_HOME; ?>">Home</a></li>
             <li><a href="<?= APPLICATION_HOME; ?>?projects">Projects</a></li>
             <li><a href="<?= APPLICATION_HOME; ?>?models">Models</a></li>
+            <li><a href="<?= APPLICATION_HOME; ?>?calculators">Calculators</a></li>
         </ul>
     </nav>
 
@@ -11,7 +12,8 @@
         <div class="pageMenu">
         <?php switch( $_GET ):
             case (isset($_GET['projects'])
-                || isset($_GET['newProject']) || isset($_GET['newProjectFailed'])):
+                || isset($_GET['newProject'])
+                || isset($_GET['newProjectFailed'])):
                 require_once "web/pageMenus/projects.phtml";
                 break;
             case (isset($_GET['models'])
@@ -20,6 +22,9 @@
                 || isset($_GET['xmlEAValidatorReport'])
                 || isset($_GET['model'])):
                 require_once "web/pageMenus/models.phtml";
+                break;
+            case (isset($_GET['newCalculator'])):
+                require_once "web/pageMenus/calculators.phtml";
                 break;
         endswitch; ?>
         </div>
@@ -36,8 +41,14 @@
                 case (isset( $_GET['xmlEAValidatorReport'] )):
                     require_once "web/pageInfo/validatorReport.phtml";
                     break;
+                case (isset( $_GET['models'] )):
+                    require_once "web/pageInfo/models.phtml";
+                    break;
                 case (isset( $_GET['model'] )):
                     require_once "web/pageInfo/model.phtml";
+                    break;
+                case (isset($_GET['newCalculator'])):
+                    require_once "web/pageInfo/newCalculator.phtml";
                     break;
             endswitch; ?>
         </div>

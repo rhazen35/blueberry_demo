@@ -1,0 +1,113 @@
+CREATE PROCEDURE
+`proc_newProject`(
+  IN `projectId` INT(11),
+  IN `userId` INT(11),
+  IN `projectName` VARCHAR(150),
+  IN `projectDescription` VARCHAR(200),
+  IN `projectStatus` VARCHAR(15),
+  IN `projectDate` DATE,
+  IN `projectTime` TIME,
+  OUT `InsertId` INT(11)
+)
+BEGIN
+  INSERT INTO projects (id, user_id, name, description, status, date, time)
+  VALUES(projectId, userId, projectName, projectDescription, projectStatus, projectDate, projectTime);
+  SET InsertId = last_insert_id();
+  SELECT InsertId;
+END $$
+
+CREATE PROCEDURE
+`proc_getProjectById`(
+  IN projectId INT(11)
+)
+  BEGIN
+    SELECT name, description, status, date, time FROM projects WHERE id = projectID;
+  END $$
+
+CREATE PROCEDURE
+  `proc_getProjectByModelId`(
+  IN modelId INT(11)
+)
+  BEGIN
+    SELECT id, name, description, status, date, time
+    FROM projects
+    WHERE id = (
+      SELECT project_id
+      FROM projects_models
+      WHERE model_id = modelId
+    );
+  END $$
+
+CREATE PROCEDURE
+  `proc_getProjectByCalculatorId`(
+  IN calculatorId INT(11)
+)
+  BEGIN
+    SELECT id, name, description, status, date, time
+    FROM projects
+    WHERE id = (
+      SELECT project_id
+      FROM projects_calculators
+      WHERE calculator_id = calculatorId
+    );
+  END $$
+
+CREATE PROCEDURE
+`proc_newProjectModel`(
+  IN `id` INT(11),
+  IN `userId` INT(11),
+  IN `projectId` INT(11),
+  IN `modelId` INT(11)
+)
+  BEGIN
+    INSERT INTO projects_models VALUES(id, userId, projectId, modelId);
+  END $$
+
+CREATE PROCEDURE
+  `proc_newProjectCalculator`(
+  IN `id` INT(11),
+  IN `userId` INT(11),
+  IN `projectId` INT(11),
+  IN `calculatorId` INT(11)
+)
+  BEGIN
+    INSERT INTO projects_calculators VALUES(id, userId, projectId, calculatorId);
+  END $$
+
+CREATE PROCEDURE
+`proc_getAllProjectsByUser`(
+  IN userID INT(11)
+)
+  BEGIN
+    SELECT id, name, description, status, date, time FROM projects WHERE user_id = userID;
+END $$
+
+CREATE PROCEDURE
+`proc_getModelIdByProjectId`(
+  IN projectId INT(11)
+)
+  BEGIN
+    SELECT model_id FROM projects_models WHERE project_id = projectId;
+  END $$
+
+CREATE PROCEDURE
+  `proc_getCalculatorIdByProjectId`(
+  IN projectId INT(11)
+)
+  BEGIN
+    SELECT calculator_id FROM projects_calculators WHERE project_id = projectId;
+  END $$
+
+CREATE PROCEDURE
+`proc_deleteProject`(
+  IN projectId INT(11),
+  IN modelId INT(11),
+  IN calculatorId INT(11)
+)
+  BEGIN
+    DELETE FROM projects_models WHERE project_id = projectId;
+    DELETE FROM projects_calculators WHERE project_id = projectId;
+    DELETE FROM calculators WHERE id = calculatorId;
+    DELETE FROM xml_models WHERE id = modelId;
+    DELETE FROM projects WHERE id = projectId;
+  END $$
