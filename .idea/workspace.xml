@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="128c66c2-8882-4b07-a84f-eaf6881864b7" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/31c11537684b14c79af6557bbdfc1f0c3c7a9dc2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/8d6fbeaccb9679c0ca5b8e660e4b0e771c822410.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelParser.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelParser.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/models/modelUpload.php" afterPath="$PROJECT_DIR$/app/handlers/models/modelUpload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/project/project.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/project/project.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/tables/xmlModel/xmlModel.sql" afterPath="$PROJECT_DIR$/app/model/structure/tables/xmlModel/xmlModel.sql" />
-    </list>
+    <list default="true" id="128c66c2-8882-4b07-a84f-eaf6881864b7" name="Default" comment="" />
     <ignored path="blueberry.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -66,8 +54,8 @@
       <file leaf-file-name="modelUpload.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/handlers/models/modelUpload.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="41" column="100" selection-start-line="41" selection-start-column="100" selection-end-line="41" selection-end-column="100" />
+            <state relative-caret-position="784">
+              <caret line="71" column="30" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -782,16 +770,16 @@
       <workItem from="1470122892282" duration="798000" />
       <workItem from="1470123742298" duration="46422000" />
       <workItem from="1470227314849" duration="634000" />
-      <workItem from="1470238893598" duration="3523000" />
+      <workItem from="1470238893598" duration="3581000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85828000" />
+    <option name="totallyTimeSpent" value="85886000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18923241" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1216,8 +1204,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/handlers/models/modelUpload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="41" column="100" selection-start-line="41" selection-start-column="100" selection-end-line="41" selection-end-column="100" />
+        <state relative-caret-position="784">
+          <caret line="71" column="30" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
           <folding />
         </state>
       </provider>
