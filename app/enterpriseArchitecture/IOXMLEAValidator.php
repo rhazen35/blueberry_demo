@@ -399,7 +399,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                      * Get the last modified date and add it to the report array
                      */
                     $maxDate           = max(array_map('strtotime', $modifiedDates));
-                    $maxDate           = date('Y-m-j H:i:s', $maxDate);
+                    $maxDate           = date('Y-m-d H:i:s', $maxDate);
                     $modifiedClassName = "";
 
                     foreach( $parsedClasses as $parsedClass):
@@ -562,7 +562,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                                 $duplicateOperationOrderArray[$q] = $this->generateArray( "duplicateOperationOrder".$q, $name, $type, $value, $s_valid, $message, $s_info );
                                                 $report = array_merge($report, $duplicateOperationOrderArray[$q]);
 
-                                                $error += 1;
+                                                $warning += 1;
                                                 $q++;
                                             endif;
                                         endif;
@@ -645,7 +645,6 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                         elseif( !empty( $tag['cell'] && $tag['name'] !== "QR-PrintOrder" ) ):
 
                                             $excelCell = str_replace( $tag['cell'], " ", "" );
-                                            var_dump($excelCell);
 
                                             if( !preg_match( $this->matchExcelFormat , $excelCell) ):
 

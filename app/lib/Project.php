@@ -152,7 +152,7 @@ if( !class_exists( "Project" ) ):
         private function saveModelJoinTable( $params )
         {
             $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
-            $projectId   = !empty( $_SESSION['projectId'] ) ? $_SESSION['projectId'] : "";
+            $projectId   = !empty( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "";
             $id          = "";
             $sql         = "CALL proc_newProjectModel(?,?,?,?)";
             $data        = array(
@@ -170,7 +170,7 @@ if( !class_exists( "Project" ) ):
         private function saveCalculatorJoinTable( $params )
         {
             $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
-            $projectId   = !empty( $_SESSION['projectId'] ) ? $_SESSION['projectId'] : "";
+            $projectId   = !empty( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "";
             $id          = "";
             $sql         = "CALL proc_newProjectCalculator(?,?,?,?)";
             $data        = array(

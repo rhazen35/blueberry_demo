@@ -19,7 +19,7 @@ $modelHash              = ( isset( $model['hash'] ) ? $model['hash'] : "" );
 
 if( !empty( $modelHash ) ):
 
-    echo $xmlFile = 'web/files/xml_models_tmp/'.$modelHash.'.xml';
+    $xmlFile = 'web/files/xml_models_tmp/'.$modelHash.'.xml';
     $report  = ( new IOXMLModelUpload( "validateModel", $xmlFile, $uploadedAt = null ) )->request( $params = null );
 
     $validationEndTime              = Library::microtimeFormat( $validationStartTime );

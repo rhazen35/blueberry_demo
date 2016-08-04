@@ -48,3 +48,23 @@
 {
     width:10%;
 }
+
+.model-noPreview
+{
+    width:100%;
+    height:auto;
+    margin: 0 auto;
+}
+
+.model-noPreview-title
+{
+    padding:1em;
+    color: #FFFFFF;
+    background-color: firebrick;
+}
+
+.model-noPreview-message
+{
+    margin-top:2em;
+    padding:1em;
+}

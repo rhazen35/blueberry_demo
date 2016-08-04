@@ -34,6 +34,9 @@
                     || isset($_GET['newProjectFailed'])):
                     require_once "web/pageInfo/newProject.phtml";
                     break;
+                case (isset( $_GET['projects'] )):
+                    require_once "web/pageInfo/projects.phtml";
+                    break;
                 case (isset($_GET['newModel'])
                     || isset($_GET['modelUploadFailed'])):
                     require_once "web/pageInfo/newModel.phtml";

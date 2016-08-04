@@ -66,12 +66,18 @@ if( isset( $report['originalFileName'] ) ): $originalFileName = $report['origina
                     <?php if( isset( $_SESSION['xmlModelErrorValid'] ) && $_SESSION['xmlModelErrorValid'] === "hide" ): ?>
                         <input type="hidden" name="type" value="valid">
                         <input type="hidden" name="display" value="show">
+                        <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                         <button type="submit" name="submitTypeVisibility" value="show" title="Show">
                             <img src="images/icons/show_icon.png" alt="submit" title="Show" />
                         </button>
                     <?php else: ?>
                         <input type="hidden" name="type" value="valid">
                         <input type="hidden" name="display" value="hide">
+                        <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                         <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
                             <img src="images/icons/hide_icon.png" alt="submit" title="Hide" />
                         </button>
@@ -88,12 +94,18 @@ if( isset( $report['originalFileName'] ) ): $originalFileName = $report['origina
                     <?php if( isset( $_SESSION['xmlModelErrorSevere'] ) && $_SESSION['xmlModelErrorSevere'] === "hide" ): ?>
                         <input type="hidden" name="type" value="severe">
                         <input type="hidden" name="display" value="show">
+                        <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                         <button type="submit" name="submitTypeVisibility" value="show" title="Show">
                             <img src="images/icons/show_icon.png" alt="submit" title="Show" />
                         </button>
                     <?php else: ?>
                         <input type="hidden" name="type" value="severe">
                         <input type="hidden" name="display" value="hide">
+                        <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                         <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
                             <img src="images/icons/hide_icon.png" alt="submit" title="Hide" />
                         </button>
@@ -111,12 +123,18 @@ if( isset( $report['originalFileName'] ) ): $originalFileName = $report['origina
                         <?php if( isset( $_SESSION['xmlModelErrorError'] ) && $_SESSION['xmlModelErrorError'] === "hide" ): ?>
                             <input type="hidden" name="type" value="error">
                             <input type="hidden" name="display" value="show">
+                            <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                             <button type="submit" name="submitTypeVisibility" value="show" title="Show">
                                 <img src="images/icons/show_icon.png" alt="submit" title="Show" />
                             </button>
                         <?php else: ?>
                             <input type="hidden" name="type" value="error">
                             <input type="hidden" name="display" value="hide">
+                            <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                             <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
                                 <img src="images/icons/hide_icon.png" alt="submit" title="Hide" />
                             </button>
@@ -134,12 +152,18 @@ if( isset( $report['originalFileName'] ) ): $originalFileName = $report['origina
                     <?php if( isset( $_SESSION['xmlModelErrorWarning'] ) && $_SESSION['xmlModelErrorWarning'] === "hide" ): ?>
                         <input type="hidden" name="type" value="warning">
                         <input type="hidden" name="display" value="show">
+                        <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                         <button type="submit" name="submitTypeVisibility" value="show" title="Show">
                             <img src="images/icons/show_icon.png" alt="submit" title="Show" />
                         </button>
                     <?php else: ?>
                         <input type="hidden" name="type" value="warning">
                         <input type="hidden" name="display" value="hide">
+                        <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                         <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
                             <img src="images/icons/hide_icon.png" alt="submit" title="Hide"/>
                         </button>
@@ -156,12 +180,18 @@ if( isset( $report['originalFileName'] ) ): $originalFileName = $report['origina
                     <?php if( isset( $_SESSION['xmlModelErrorInfo'] ) && $_SESSION['xmlModelErrorInfo'] === "hide" ): ?>
                         <input type="hidden" name="type" value="info">
                         <input type="hidden" name="display" value="show">
+                        <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                         <button type="submit" name="submitTypeVisibility" value="show" title="Show">
                             <img src="images/icons/show_icon.png" alt="submit" title="Show" />
                         </button>
                     <?php else: ?>
                         <input type="hidden" name="type" value="info">
                         <input type="hidden" name="display" value="hide">
+                        <input type="hidden" name="model_id" value="<?= $xmlModelId; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="modelErrorControl">
                         <button type="submit" name="submitTypeVisibility" value="hide" title="Hide">
                             <img src="images/icons/hide_icon.png" alt="submit" title="Hide" />
                         </button>

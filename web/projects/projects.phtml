@@ -9,6 +9,8 @@
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAModel;
 
+unset($_SESSION['xmlModelId']);
+
 $projects = ( new Project( "getAllProjectsByUser" ) )->request( $params = null );
 
 ?>
@@ -39,6 +41,7 @@ $projects = ( new Project( "getAllProjectsByUser" ) )->request( $params = null )
                 $model      = ( new IOXMLEAModel( $modelId ) )->getModel();
             else:
                 $hasModel = false;
+                $modelId  = "";
             endif;
 
             ?>
@@ -57,7 +60,7 @@ $projects = ( new Project( "getAllProjectsByUser" ) )->request( $params = null )
                     <?php if( $hasModel === false ): $modelValue = "model upload"; else: $modelValue = "model preview"; endif; ?>
                     <div class="projects-item-modelLink">
                         <form action="<?= APPLICATION_HOME; ?>" method="POST">
-                            <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
+                            <input type="hidden" name="projectId" value="<?= $project['id']; ?>">
                             <input type="hidden" name="path" value="models">
                             <input type="hidden" name="attr" value="model">
                             <input type="submit" name="modelProjectSubmit" class="button" value="<?= $modelValue; ?>">
@@ -81,11 +84,11 @@ $projects = ( new Project( "getAllProjectsByUser" ) )->request( $params = null )
                             <input type="submit" name="delProjectSubmit" class="button" value="delete project">
                         </form>
                     </div>
-                    <?php if( $hasModel === false && empty( $calculator ) ): ?>
+                    <?php if( $hasModel === false && empty( $calculatorId ) ): ?>
                         <div class="project-itemNoModel">This project has no model and no calculator</div>
                     <?php elseif( $hasModel === false ): ?>
                         <div class="project-itemNoModel">This project has no model</div>
-                    <?php elseif( empty( $calculator ) ): ?>
+                    <?php elseif( empty( $calculatorId ) ): ?>
                         <div class="project-itemNoModel">This project has no calculator</div>
                     <?php endif; ?>
                 </div>

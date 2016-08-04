@@ -1,0 +1,1395 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://www.omg.org/spec/UML/20090901" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:thecustomprofile="http://www.sparxsystems.com/profiles/thecustomprofile/1.0">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+	<uml:Model xmi:type="uml:Model" name="EA_Model">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_BCF6CD47_304C_4638_934A_692F0D1435DE" name="Planner">
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPK_C042F071_ED9F_430e_8CF7_BD6213E0A99B" name="Data Types">
+				<packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_26DEA39C_CFC3_457c_B8B1_92B9D1229A0D" name="Geslachten">
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_3CA93444_1F66_419a_A0D7_377E24AD2013" name="Man"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_F220EB4C_6D25_47e7_AD82_20F21AC591ED" name="Vrouw"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_57BE1AF5_3221_476b_AA42_23526153EEB4" name="Onbekend"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_0B8CF73D_AED1_460f_9A99_87774D89B8ED" name="Uitgavensoorten">
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_633A6CDF_1DC2_4163_B50E_2C2CB8AA09EF" name="Woonlasten" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_76BD3484_7CA7_4fc8_BF57_E8D99BEDC9A2" name="Vervoer" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_A6B25B26_0D76_4afd_8E25_66B238AF2B2B" name="Levensonderhoud" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_7DBF1A9B_D8BB_4970_986D_06E4701FA5DD" name="Verzekeringen" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_9E2F7833_90C9_4c73_B168_36D694E437A4" name="Gas, Water, Electra" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_42C8B7C3_74C8_4685_BD8D_13AED1E518CC" name="Kleding" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_C59E6FC2_91BA_4a3c_8A8A_84B49BC48C97" name="Grote uitgaven" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_7C67D51F_D901_444f_B1DC_FB6D8E22A3FE" name="Kinderen" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_D598016A_BF2F_4bc5_9040_12F8AF33CE85" name="Hobbies" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+					<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_55D95AF1_2928_4fb2_9562_78F430DA316C" name="Alimentatie" classifier="{6CB11486-230B-4eb4-8451-426BAAE21F8B}"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Package" xmi:id="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" name="Standard Datatypes">
+					<packagedElement xmi:type="uml:DataType" xmi:id="EAID_78899BCE_8291_4534_AC0C_79D77295A318" name="Amount">
+						<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_76BFED23_6146_4dce_8A2B_B34A9DA4D932" name="Currency" visibility="private">
+							<type xmi:idref="EAID_5038F5E0_5BB0_4fc3_9E82_DC32D3825AB3"/>
+							<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000001_6146_4dce_8A2B_B34A9DA4D932" value="1"/>
+							<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000002_6146_4dce_8A2B_B34A9DA4D932" value="1"/>
+						</ownedAttribute>
+						<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_664CE4D8_014D_4c03_AAAE_EC65604446E4" name="Value" visibility="private">
+							<type xmi:idref="EAID_F66CD902_9101_40da_9727_9A611F3D314F"/>
+							<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000003_014D_4c03_AAAE_EC65604446E4" value="1"/>
+							<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000004_014D_4c03_AAAE_EC65604446E4" value="1"/>
+						</ownedAttribute>
+					</packagedElement>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_725C32F1_F1D2_40d8_B037_D6F365BFC5E4" name="Char"/>
+					<packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_5038F5E0_5BB0_4fc3_9E82_DC32D3825AB3" name="Currencies">
+						<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_E0885C5E_84A0_46eb_989C_CB1173388CD8" name="Euro"/>
+						<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_D515A2B8_4991_466f_8298_AC7E6ED6C402" name="Dollar"/>
+						<ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="EAID_5F38DF1C_047C_4542_A38A_B784F80D3C22" name="Pond"/>
+					</packagedElement>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_782229ED_A6EA_4109_9CDB_0FDD39B5FB0F" name="Date"/>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_E9A80923_1619_4a0a_90D6_5A8641498CD6" name="DateTime"/>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_F66CD902_9101_40da_9727_9A611F3D314F" name="Decimal"/>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_3471EEC0_10E5_42cc_8F46_0A6569821F3D" name="Integer"/>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_6CB11486_230B_4eb4_8451_426BAAE21F8B" name="String"/>
+				</packagedElement>
+			</packagedElement>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" name="Structuur">
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_EF43ED64_B383_4d6f_9C1E_885BA60616D2" name="AOW" isAbstract="true">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_32C39A31_9946_4b09_8223_899B13CCD24D" name="Pensioenleeftijd" visibility="private">
+						<type xmi:idref="EAID_F66CD902_9101_40da_9727_9A611F3D314F"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000005_9946_4b09_8223_899B13CCD24D" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000006_9946_4b09_8223_899B13CCD24D" value="1"/>
+						<defaultValue xmi:type="uml:LiteralString" xmi:id="EAID_LI000007_9946_4b09_8223_899B13CCD24D" value="66,25"/>
+					</ownedAttribute>
+					<generalization xmi:type="uml:Generalization" xmi:id="EAID_D2F1A6BB_25E3_45ff_BF3D_D6151DC78E97" general="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901" name="Financieel Planner">
+					<ownedOperation xmi:id="EAID_065820D3_62C8_44ac_9D52_FB91BF5E8682" name="Uw Pensioen">
+						<ownedParameter xmi:id="EAID_RT000000_62C8_44ac_9D52_FB91BF5E8682" name="return" direction="return" type="EAJava_int"/>
+					</ownedOperation>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Association" xmi:id="EAID_4148D380_D030_413e_B3F3_E8CAC5C55E8B">
+					<memberEnd xmi:idref="EAID_dst48D380_D030_413e_B3F3_E8CAC5C55E8B"/>
+					<memberEnd xmi:idref="EAID_src48D380_D030_413e_B3F3_E8CAC5C55E8B"/>
+					<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src48D380_D030_413e_B3F3_E8CAC5C55E8B" association="EAID_4148D380_D030_413e_B3F3_E8CAC5C55E8B" aggregation="shared">
+						<type xmi:idref="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000007__D030_413e_B3F3_E8CAC5C55E8B" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000008__D030_413e_B3F3_E8CAC5C55E8B" value="1"/>
+					</ownedEnd>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090" name="Inkomen" isAbstract="true">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_6D342CC2_F40B_433c_8218_24968F78AD5E" name="Bedrag" visibility="private">
+						<type xmi:idref="EAID_78899BCE_8291_4534_AC0C_79D77295A318"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000009_F40B_433c_8218_24968F78AD5E" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000010_F40B_433c_8218_24968F78AD5E" value="1"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_dst1566AA_67B9_4d95_BBD3_8B6D7D6E3081" association="EAID_A31566AA_67B9_4d95_BBD3_8B6D7D6E3081">
+						<type xmi:idref="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000011__67B9_4d95_BBD3_8B6D7D6E3081" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000012__67B9_4d95_BBD3_8B6D7D6E3081" value="1"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Association" xmi:id="EAID_A31566AA_67B9_4d95_BBD3_8B6D7D6E3081">
+					<memberEnd xmi:idref="EAID_dst1566AA_67B9_4d95_BBD3_8B6D7D6E3081"/>
+					<memberEnd xmi:idref="EAID_src1566AA_67B9_4d95_BBD3_8B6D7D6E3081"/>
+					<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src1566AA_67B9_4d95_BBD3_8B6D7D6E3081" association="EAID_A31566AA_67B9_4d95_BBD3_8B6D7D6E3081" aggregation="composite">
+						<type xmi:idref="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000029__67B9_4d95_BBD3_8B6D7D6E3081" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000030__67B9_4d95_BBD3_8B6D7D6E3081" value="*"/>
+					</ownedEnd>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_84C2569D_4E78_4c52_A7C8_840D7F1B2EAF" name="Lijfrentes">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_F5752D94_D24C_4e5d_9FCF_DD96CA78E574" name="Tot Datum" visibility="private">
+						<type xmi:idref="EAID_782229ED_A6EA_4109_9CDB_0FDD39B5FB0F"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000013_D24C_4e5d_9FCF_DD96CA78E574" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000014_D24C_4e5d_9FCF_DD96CA78E574" value="1"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_D6AADC23_7A63_4462_A2A6_C31E3514B6A2" name="Vanaf Datum" visibility="private">
+						<type xmi:idref="EAID_782229ED_A6EA_4109_9CDB_0FDD39B5FB0F"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000015_7A63_4462_A2A6_C31E3514B6A2" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000016_7A63_4462_A2A6_C31E3514B6A2" value="1"/>
+					</ownedAttribute>
+					<generalization xmi:type="uml:Generalization" xmi:id="EAID_76E2555B_3CDD_48dd_B74C_84DBC350ACB9" general="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_A8A1A240_85EB_45ff_8163_E4B286DBFD9C" name="Loon uit werk">
+					<generalization xmi:type="uml:Generalization" xmi:id="EAID_ADFD39C5_1739_4a57_9737_5184D81DD10B" general="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_4D78C3FA_9D1B_4ccf_9AA4_18AA7FFA70B7" name="Pensioenuitkering">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_5EAB9F7C_AFBC_4859_8753_330EE9A8A82C" name="Pensioenleeftijd" visibility="private">
+						<type xmi:idref="EAID_F66CD902_9101_40da_9727_9A611F3D314F"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000017_AFBC_4859_8753_330EE9A8A82C" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000018_AFBC_4859_8753_330EE9A8A82C" value="1"/>
+						<defaultValue xmi:type="uml:LiteralString" xmi:id="EAID_LI000019_AFBC_4859_8753_330EE9A8A82C" value="67"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_C8B63185_1F16_4615_A4A5_9D1077FF4A97" name="Werkgever" visibility="private">
+						<type xmi:idref="EAID_6CB11486_230B_4eb4_8451_426BAAE21F8B"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000019_1F16_4615_A4A5_9D1077FF4A97" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000020_1F16_4615_A4A5_9D1077FF4A97" value="1"/>
+					</ownedAttribute>
+					<generalization xmi:type="uml:Generalization" xmi:id="EAID_F83F36A1_3114_4c1f_878E_4E6ABBE01A9E" general="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42" name="Persoon">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_3B130559_212B_4811_BA46_124509DBFAFD" name="Geboortedatum" visibility="private">
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000021_212B_4811_BA46_124509DBFAFD" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000022_212B_4811_BA46_124509DBFAFD" value="1"/>
+						<type xmi:idref="EAJava_Date"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_D1FF15B9_9BB8_4091_848A_8777BB1D5FA2" name="Geslacht" visibility="private">
+						<type xmi:idref="EAID_26DEA39C_CFC3_457c_B8B1_92B9D1229A0D"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000023_9BB8_4091_848A_8777BB1D5FA2" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000024_9BB8_4091_848A_8777BB1D5FA2" value="1"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_3ABFFB07_C429_4945_8794_06A17256AFF6" name="Naam" visibility="private">
+						<type xmi:idref="EAID_6CB11486_230B_4eb4_8451_426BAAE21F8B"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000025_C429_4945_8794_06A17256AFF6" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000026_C429_4945_8794_06A17256AFF6" value="1"/>
+						<defaultValue xmi:type="uml:LiteralString" xmi:id="EAID_LI000027_C429_4945_8794_06A17256AFF6" value="Cees en Carla"/>
+					</ownedAttribute>
+					<ownedOperation xmi:id="EAID_726C976F_D647_40cd_9672_E55757662D54" name="AOW">
+						<ownedParameter xmi:id="EAID_RT000000_D647_40cd_9672_E55757662D54" name="return" type="EAID_78899BCE_8291_4534_AC0C_79D77295A318" direction="return"/>
+					</ownedOperation>
+					<ownedOperation xmi:id="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" name="Leeftijd in gebroken jaren">
+						<ownedParameter xmi:id="EAID_RT000000_7FE7_47b1_BDAD_632913525D18" name="return" type="EAID_78899BCE_8291_4534_AC0C_79D77295A318" direction="return"/>
+					</ownedOperation>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_dst48D380_D030_413e_B3F3_E8CAC5C55E8B" association="EAID_4148D380_D030_413e_B3F3_E8CAC5C55E8B">
+						<type xmi:idref="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000027__D030_413e_B3F3_E8CAC5C55E8B" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000028__D030_413e_B3F3_E8CAC5C55E8B" value="1"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Association" xmi:id="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948">
+					<memberEnd xmi:idref="EAID_dstC49492_EC07_4334_95BB_3E6DCB348948"/>
+					<memberEnd xmi:idref="EAID_srcC49492_EC07_4334_95BB_3E6DCB348948"/>
+					<ownedEnd xmi:type="uml:Property" xmi:id="EAID_srcC49492_EC07_4334_95BB_3E6DCB348948" association="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948" aggregation="composite">
+						<type xmi:idref="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000031__EC07_4334_95BB_3E6DCB348948" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000032__EC07_4334_95BB_3E6DCB348948" value="*"/>
+					</ownedEnd>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406" name="Uitgaven">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_05BBB8A5_F61A_42c2_A751_5A806617B1AD" name="Bedrag" visibility="private">
+						<type xmi:idref="EAID_78899BCE_8291_4534_AC0C_79D77295A318"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000033_F61A_42c2_A751_5A806617B1AD" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000034_F61A_42c2_A751_5A806617B1AD" value="1"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_5F4247FB_65EA_4159_AA15_B4BDC829431F" name="Soort" visibility="private">
+						<type xmi:idref="EAID_0B8CF73D_AED1_460f_9A99_87774D89B8ED"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000035_65EA_4159_AA15_B4BDC829431F" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000036_65EA_4159_AA15_B4BDC829431F" value="1"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_D399AF34_E00B_4f3f_B853_22EDBDD3D660" name="Tot Datum" visibility="private">
+						<type xmi:idref="EAID_782229ED_A6EA_4109_9CDB_0FDD39B5FB0F"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000037_E00B_4f3f_B853_22EDBDD3D660" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000038_E00B_4f3f_B853_22EDBDD3D660" value="1"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_080262C2_536C_4294_A54D_397EC5E0A8A7" name="Vanaf Datum" visibility="private">
+						<type xmi:idref="EAID_782229ED_A6EA_4109_9CDB_0FDD39B5FB0F"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000039_536C_4294_A54D_397EC5E0A8A7" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000040_536C_4294_A54D_397EC5E0A8A7" value="1"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_dstC49492_EC07_4334_95BB_3E6DCB348948" association="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948">
+						<type xmi:idref="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42"/>
+						<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000041__EC07_4334_95BB_3E6DCB348948" value="1"/>
+						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000042__EC07_4334_95BB_3E6DCB348948" value="1"/>
+					</ownedAttribute>
+				</packagedElement>
+			</packagedElement>
+		</packagedElement>
+		<profileApplication xmi:type="uml:ProfileApplication" xmi:id="profileap_thecustomprofile">
+			<appliedProfile xmi:type="uml:Profile" href="http://www.sparxsystems.com/profiles/thecustomprofile/1.0#thecustomprofile"/>
+		</profileApplication>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAPK_BCF6CD47_304C_4638_934A_692F0D1435DE" xmi:type="uml:Package" name="Planner" scope="public">
+				<model package2="EAID_BCF6CD47_304C_4638_934A_692F0D1435DE" tpos="0" ea_localid="1" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="bvdbu" version="EA uml2.1" phase="1.0" created="2016-07-13 11:19:54" modified="2016-07-13 11:19:54" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0"/>
+				<packageproperties version="EA uml2.1" owner="bvdbu" xmiver="Enterprise Architect XMI 2.1/UML 2.1"/>
+				<paths xmlpath="C:\Users\bvdbu\Dropbox\QuaRatio Development\Generator Development\Planner\Planner XMI2.1 w EAextensions.xml"/>
+				<times created="2012-04-17 00:00:00" modified="2012-04-17 00:00:00" lastsavedate="2016-07-13 11:32:36"/>
+				<flags iscontrolled="TRUE" isprotected="FALSE" batchsave="0" batchload="0" usedtd="FALSE" logxml="TRUE" packageFlags="Recurse=1;isModel=1;"/>
+			</element>
+			<element xmi:idref="EAPK_C042F071_ED9F_430e_8CF7_BD6213E0A99B" xmi:type="uml:Package" name="Data Types" scope="public">
+				<model package2="EAID_C042F071_ED9F_430e_8CF7_BD6213E0A99B" package="EAPK_BCF6CD47_304C_4638_934A_692F0D1435DE" tpos="0" ea_localid="3" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-07 16:24:53" modified="2016-07-07 16:24:53" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Planner"/>
+				<packageproperties version="1.0"/>
+				<paths/>
+				<times created="2016-07-07 00:00:00" modified="2016-07-07 00:00:00" lastloaddate="2016-07-07 16:40:27"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" usedtd="FALSE" logxml="FALSE" packageFlags="isModel=1;VICON=3;"/>
+			</element>
+			<element xmi:idref="EAID_26DEA39C_CFC3_457c_B8B1_92B9D1229A0D" xmi:type="uml:Enumeration" name="Geslachten" scope="public">
+				<model package="EAPK_C042F071_ED9F_430e_8CF7_BD6213E0A99B" tpos="0" ea_localid="17" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Enumeration" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-07 16:30:23" modified="2016-07-07 16:31:07" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Data Types" ea_attsclassified="{D1FF15B9-9BB8-4091-848A-8777BB1D5FA2}"/>
+				<attributes>
+					<attribute xmi:idref="EAID_3CA93444_1F66_419a_A0D7_377E24AD2013" name="Man" scope="Public">
+						<initial/>
+						<documentation/>
+						<model ea_localid="1" ea_guid="{3CA93444-1F66-419a-A0D7-377E24AD2013}"/>
+						<properties collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_F220EB4C_6D25_47e7_AD82_20F21AC591ED" name="Vrouw" scope="Public">
+						<initial/>
+						<documentation/>
+						<model ea_localid="2" ea_guid="{F220EB4C-6D25-47e7-AD82-20F21AC591ED}"/>
+						<properties collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="1"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_57BE1AF5_3221_476b_AA42_23526153EEB4" name="Onbekend" scope="Public">
+						<initial/>
+						<documentation/>
+						<model ea_localid="3" ea_guid="{57BE1AF5-3221-476b-AA42-23526153EEB4}"/>
+						<properties collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="2"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+				</attributes>
+			</element>
+			<element xmi:idref="EAID_0B8CF73D_AED1_460f_9A99_87774D89B8ED" xmi:type="uml:Enumeration" name="Uitgavensoorten" scope="public">
+				<model package="EAPK_C042F071_ED9F_430e_8CF7_BD6213E0A99B" tpos="0" ea_localid="62" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Enumeration" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 13:47:33" modified="2016-07-25 14:00:11" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Data Types" ea_attsclassified="{5F4247FB-65EA-4159-AA15-B4BDC829431F}"/>
+				<attributes>
+					<attribute xmi:idref="EAID_633A6CDF_1DC2_4163_B50E_2C2CB8AA09EF" name="Woonlasten" scope="Public">
+						<initial/>
+						<documentation value="Vaste lasten uit huur of hypotheek, inclusief service bijdragen. Vul het netto bedrag (na belastting) in. "/>
+						<model ea_localid="33" ea_guid="{633A6CDF-1DC2-4163-B50E-2C2CB8AA09EF}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_76BD3484_7CA7_4fc8_BF57_E8D99BEDC9A2" name="Vervoer" scope="Public">
+						<initial/>
+						<documentation value="Gemiddelde maandelijkse lasten voor vervoer. Bijvoorbeeld voor uw auto, openbaar vervoer, fiets, etc. "/>
+						<model ea_localid="34" ea_guid="{76BD3484-7CA7-4fc8-BF57-E8D99BEDC9A2}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="1"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_A6B25B26_0D76_4afd_8E25_66B238AF2B2B" name="Levensonderhoud" scope="Public">
+						<initial/>
+						<documentation value="Gemiddelde maandelijkse lasten voor uw dagelijkse primaire levensbehoeften, zoals eten en drinken. Hieronder vallen niet de kosten voor uitgaan, restaurants en vermaak. "/>
+						<model ea_localid="35" ea_guid="{A6B25B26-0D76-4afd-8E25-66B238AF2B2B}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="2"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_7DBF1A9B_D8BB_4970_986D_06E4701FA5DD" name="Verzekeringen" scope="Public">
+						<initial/>
+						<documentation value="Hieronder vallen de vaste lasten van uw verzekeringen. "/>
+						<model ea_localid="36" ea_guid="{7DBF1A9B-D8BB-4970-986D-06E4701FA5DD}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="3"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_9E2F7833_90C9_4c73_B168_36D694E437A4" name="Gas, Water, Electra" scope="Public">
+						<initial/>
+						<documentation value="De gemiddelde maandelijkse lasten voor gas, water en electra. "/>
+						<model ea_localid="37" ea_guid="{9E2F7833-90C9-4c73-B168-36D694E437A4}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="4"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_42C8B7C3_74C8_4685_BD8D_13AED1E518CC" name="Kleding" scope="Public">
+						<initial/>
+						<documentation value="De gemiddelde maandelijkse uitgaven aan kleding en andere spullen, zoals electronica. "/>
+						<model ea_localid="38" ea_guid="{42C8B7C3-74C8-4685-BD8D-13AED1E518CC}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="5"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_C59E6FC2_91BA_4a3c_8A8A_84B49BC48C97" name="Grote uitgaven" scope="Public">
+						<initial/>
+						<documentation value="De kosten voor grote uitgaven. Hieronder vallen de niet-periodieke uitgaven boven de 500 euro. Bijvoorbeeld: aanschaf auto, wasmachine, droger, televisie, etc. "/>
+						<model ea_localid="39" ea_guid="{C59E6FC2-91BA-4a3c-8A8A-84B49BC48C97}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="6"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_7C67D51F_D901_444f_B1DC_FB6D8E22A3FE" name="Kinderen" scope="Public">
+						<initial/>
+						<documentation value="Gemiddelde maandelijkse kosten voor kinderen"/>
+						<model ea_localid="40" ea_guid="{7C67D51F-D901-444f-B1DC-FB6D8E22A3FE}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="7"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_D598016A_BF2F_4bc5_9040_12F8AF33CE85" name="Hobbies" scope="Public">
+						<initial/>
+						<documentation value="Uw maandelijkse kosten voor uw hobbies. "/>
+						<model ea_localid="41" ea_guid="{D598016A-BF2F-4bc5-9040-12F8AF33CE85}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="8"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_55D95AF1_2928_4fb2_9562_78F430DA316C" name="Alimentatie" scope="Public">
+						<initial/>
+						<documentation value="Uitgaven aan kinder- of partner alimentatie. "/>
+						<model ea_localid="55" ea_guid="{55D95AF1-2928-4fb2-9562-78F430DA316C}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="9"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+				</attributes>
+			</element>
+			<element xmi:idref="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" xmi:type="uml:Package" name="Standard Datatypes" scope="public">
+				<model package2="EAID_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" package="EAPK_C042F071_ED9F_430e_8CF7_BD6213E0A99B" tpos="0" ea_localid="18" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 13:19:14" modified="2016-07-25 13:19:14" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Data Types"/>
+				<packageproperties version="1.0"/>
+				<paths/>
+				<times created="2016-07-25 13:19:14" modified="2016-07-25 13:19:14"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" usedtd="FALSE" logxml="FALSE"/>
+			</element>
+			<element xmi:idref="EAID_78899BCE_8291_4534_AC0C_79D77295A318" xmi:type="uml:DataType" name="Amount" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="42" ea_eleType="element"/>
+				<properties documentation="An amount in a currency. E.g. $ 1.234,56. &#xA;" isSpecification="false" sType="DataType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 15:34:16" modified="2016-07-25 13:34:52" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes" ea_attsclassified="{05BBB8A5-F61A-42c2-A751-5A806617B1AD},{6D342CC2-F40B-433c-8218-24968F78AD5E}" ea_oprsclassified="{DE72033D-7FE7-47b1-BDAD-632913525D18},{726C976F-D647-40cd-9672-E55757662D54}"/>
+				<attributes>
+					<attribute xmi:idref="EAID_76BFED23_6146_4dce_8A2B_B34A9DA4D932" name="Currency" scope="Private">
+						<initial/>
+						<documentation/>
+						<model ea_localid="16" ea_guid="{76BFED23-6146-4dce-8A2B-B34A9DA4D932}"/>
+						<properties type="Currencies" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="1"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_664CE4D8_014D_4c03_AAAE_EC65604446E4" name="Value" scope="Private">
+						<initial/>
+						<documentation/>
+						<model ea_localid="15" ea_guid="{664CE4D8-014D-4c03-AAAE-EC65604446E4}"/>
+						<properties type="Decimal" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+				</attributes>
+			</element>
+			<element xmi:idref="EAID_725C32F1_F1D2_40d8_B037_D6F365BFC5E4" xmi:type="uml:PrimitiveType" name="Char" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="64" ea_eleType="element"/>
+				<properties documentation="A single character, text or a number. " isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 14:21:18" modified="2016-07-25 14:22:11" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes"/>
+			</element>
+			<element xmi:idref="EAID_5038F5E0_5BB0_4fc3_9E82_DC32D3825AB3" xmi:type="uml:Enumeration" name="Currencies" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="43" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Enumeration" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 15:35:19" modified="2016-07-25 13:28:08" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes" ea_attsclassified="{76BFED23-6146-4dce-8A2B-B34A9DA4D932}"/>
+				<attributes>
+					<attribute xmi:idref="EAID_E0885C5E_84A0_46eb_989C_CB1173388CD8" name="Euro" scope="Public">
+						<initial/>
+						<documentation/>
+						<model ea_localid="17" ea_guid="{E0885C5E-84A0-46eb-989C-CB1173388CD8}"/>
+						<properties collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_D515A2B8_4991_466f_8298_AC7E6ED6C402" name="Dollar" scope="Public">
+						<initial/>
+						<documentation/>
+						<model ea_localid="18" ea_guid="{D515A2B8-4991-466f-8298-AC7E6ED6C402}"/>
+						<properties collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="1"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_5F38DF1C_047C_4542_A38A_B784F80D3C22" name="Pond" scope="Public">
+						<initial/>
+						<documentation/>
+						<model ea_localid="19" ea_guid="{5F38DF1C-047C-4542-A38A-B784F80D3C22}"/>
+						<properties collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="2"/>
+						<stereotype stereotype="enum"/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="IsLiteral=1;volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+				</attributes>
+			</element>
+			<element xmi:idref="EAID_782229ED_A6EA_4109_9CDB_0FDD39B5FB0F" xmi:type="uml:PrimitiveType" name="Date" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="60" ea_eleType="element"/>
+				<properties documentation="Date of format dd-mm-yyyy. " isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 13:26:32" modified="2016-07-25 13:27:04" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes" ea_attsclassified="{D6AADC23-7A63-4462-A2A6-C31E3514B6A2},{D399AF34-E00B-4f3f-B853-22EDBDD3D660},{F5752D94-D24C-4e5d-9FCF-DD96CA78E574},{080262C2-536C-4294-A54D-397EC5E0A8A7}"/>
+			</element>
+			<element xmi:idref="EAID_E9A80923_1619_4a0a_90D6_5A8641498CD6" xmi:type="uml:PrimitiveType" name="DateTime" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="61" ea_eleType="element"/>
+				<properties documentation="Date and time of format: dd-mm-yyyy hh:mm:ss" isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 13:26:37" modified="2016-07-25 13:27:51" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes"/>
+			</element>
+			<element xmi:idref="EAID_F66CD902_9101_40da_9727_9A611F3D314F" xmi:type="uml:PrimitiveType" name="Decimal" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="59" ea_eleType="element"/>
+				<properties documentation="A real number with high precision. E.g. -1,23456 or 3,14159265. " isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 13:25:14" modified="2016-07-25 13:26:20" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes" ea_attsclassified="{5EAB9F7C-AFBC-4859-8753-330EE9A8A82C},{32C39A31-9946-4b09-8223-899B13CCD24D},{664CE4D8-014D-4c03-AAAE-EC65604446E4}"/>
+			</element>
+			<element xmi:idref="EAID_3471EEC0_10E5_42cc_8F46_0A6569821F3D" xmi:type="uml:PrimitiveType" name="Integer" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="65" ea_eleType="element"/>
+				<properties documentation="Any (positive or negative) whole number. E.g. ..., -2, -1, 0, 1, 2, ..., etc. " isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 14:21:29" modified="2016-07-25 14:22:54" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes"/>
+			</element>
+			<element xmi:idref="EAID_6CB11486_230B_4eb4_8451_426BAAE21F8B" xmi:type="uml:PrimitiveType" name="String" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="40" ea_eleType="element"/>
+				<properties documentation="Text of undetermined length of char(s). " isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 15:32:58" modified="2016-07-25 13:21:57" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes" ea_attsclassified="{55D95AF1-2928-4fb2-9562-78F430DA316C},{42C8B7C3-74C8-4685-BD8D-13AED1E518CC},{C59E6FC2-91BA-4a3c-8A8A-84B49BC48C97},{7C67D51F-D901-444f-B1DC-FB6D8E22A3FE},{D598016A-BF2F-4bc5-9040-12F8AF33CE85},{C8B63185-1F16-4615-A4A5-9D1077FF4A97},{3ABFFB07-C429-4945-8794-06A17256AFF6},{633A6CDF-1DC2-4163-B50E-2C2CB8AA09EF},{76BD3484-7CA7-4fc8-BF57-E8D99BEDC9A2},{A6B25B26-0D76-4afd-8E25-66B238AF2B2B},{7DBF1A9B-D8BB-4970-986D-06E4701FA5DD},{9E2F7833-90C9-4c73-B168-36D694E437A4}"/>
+			</element>
+			<element xmi:idref="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" xmi:type="uml:Package" name="Structuur" scope="public">
+				<model package2="EAID_9A3E306B_DAE2_401b_BC64_40E1D04748C9" package="EAPK_BCF6CD47_304C_4638_934A_692F0D1435DE" tpos="0" ea_localid="4" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-07 16:27:45" modified="2016-07-07 16:33:19" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Planner"/>
+				<packageproperties version="1.0"/>
+				<paths/>
+				<times created="2016-07-07 00:00:00" modified="2016-07-07 16:33:19"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" usedtd="FALSE" logxml="FALSE" packageFlags="isModel=1;VICON=3;"/>
+			</element>
+			<element xmi:idref="EAID_EF43ED64_B383_4d6f_9C1E_885BA60616D2" xmi:type="uml:Class" name="AOW" scope="public">
+				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="69" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="true" isActive="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 09:51:03" modified="2016-07-26 09:51:17" complexity="1" status="Proposed"/>
+				<code product_name="Java" gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Structuur"/>
+				<attributes>
+					<attribute xmi:idref="EAID_32C39A31_9946_4b09_8223_899B13CCD24D" name="Pensioenleeftijd" scope="Private">
+						<initial body="66,25"/>
+						<documentation value="Dit is leeftijd waarop uw AOW ingaat. De AOW pensioenleeftijd varieert, afhankelijk van uw geboortedatum. Uw AOW pensioenleeftijd is ook niet hetzelfde als de leeftijd waarop het pensioen van de pensioenregeling van uw werkgever in gaat. "/>
+						<model ea_localid="49" ea_guid="{32C39A31-9946-4b09-8223-899B13CCD24D}"/>
+						<properties type="Decimal" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+				</attributes>
+				<links>
+					<Generalization xmi:id="EAID_D2F1A6BB_25E3_45ff_BF3D_D6151DC78E97" start="EAID_EF43ED64_B383_4d6f_9C1E_885BA60616D2" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901" xmi:type="uml:Class" name="Financieel Planner" scope="public">
+				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="63" ea_eleType="element"/>
+				<properties documentation="De discussie rondom uw pensioen is de laatste tijd flink opgelaaid. Sommige pensioenfondsen dreigen te moeten gaan korten. De media staan er bol van. Uw pensioen zou niet voldoende zijn en het Nederlandsche pensioenstelsel zou uitgehold worden. &#xA;&#xA;Heeft u wel genoeg pensioen? &#xA;&#xA;WIj denken van wel. En we tonen dat aan door uit te rekenen wat u nu heeft opgebouwd en waar u behoefte aan heeft als uw pensioen ingaat. &#xA;&#xA;Pas als dan blijkt dat er een gat is, gaan we kijken naar mogelijkheden om dat op te lossen. Daarbij kijken we niet naar de geijkte paden, zoals een verzekering of bankspaarproduct. Nee, wij kijken nadrukkelijk ook naar andere mogelijkheden. Zoals het verhuren van uw huis, kleiner wonen, slim beleggen, etc. &#xA;" isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 14:08:16" modified="2016-07-26 09:44:58" complexity="1" status="Proposed"/>
+				<code product_name="Java" gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags>
+					<tag xmi:id="EAID_E2BB821C_FE9A_45de_A12D_BF80803C9E32" name="QR-Volgorde" value="0.5" modelElement="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901"/>
+				</tags>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Structuur"/>
+				<operations>
+					<operation xmi:idref="EAID_065820D3_62C8_44ac_9D52_FB91BF5E8682" name="Uw Pensioen" scope="Public">
+						<properties position="0"/>
+						<stereotype/>
+						<model ea_guid="{065820D3-62C8-44ac-9D52-FB91BF5E8682}" ea_localid="7"/>
+						<type type="int" const="false" static="false" isAbstract="false" synchronised="0" concurrency="Sequential" pure="0" isQuery="false"/>
+						<behaviour/>
+						<code/>
+						<style/>
+						<styleex/>
+						<documentation value="Uiteindelijk maken we een projectie van uw financiele situatie. &#xA;&#xA;Wij denken dat uw pensioen prima in orde is en dat u zich nergens zorgen om hoeft te maken. Uit deze financiele projectie moet dat blijken. &#xA;&#xA;In deze planner beginnen we met een simpele berekening om aan te tonen dat uw pensioen straks prima in orde is. &#xA;Pas als blijkt dat uw pensioen toch te laag is, praten we pas over mogelijkheden voor later. &#xA;&#xA;&#xA;"/>
+						<tags>
+							<tag xmi:id="EAID_E16AD5C2_8C4E_4d45_A600_9FCD2AC28E4B" name="QR-Volgorde" value="1"/>
+						</tags>
+						<parameters>
+							<parameter xmi:idref="EAID_RETURNID_62C8_44ac_9D52_FB91BF5E8682" visibility="public">
+								<properties pos="0" type="int" const="false" ea_guid="{RETURNID-62C8-44ac-9D52-FB91BF5E8682}"/>
+								<style/>
+								<styleex/>
+								<documentation/>
+								<tags/>
+								<xrefs/>
+							</parameter>
+						</parameters>
+						<xrefs/>
+					</operation>
+				</operations>
+				<links>
+					<Aggregation xmi:id="EAID_4148D380_D030_413e_B3F3_E8CAC5C55E8B" start="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42" end="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090" xmi:type="uml:Class" name="Inkomen" scope="public">
+				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="35" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="true" isActive="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 14:59:17" modified="2016-07-26 09:55:19" complexity="1" status="Proposed"/>
+				<code product_name="Java" gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags>
+					<tag xmi:id="EAID_930DBCFA_1112_4e35_B470_9B1CBA033666" name="QR-Volgorde" value="2" modelElement="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</tags>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Structuur"/>
+				<attributes>
+					<attribute xmi:idref="EAID_6D342CC2_F40B_433c_8218_24968F78AD5E" name="Bedrag" scope="Private">
+						<initial/>
+						<documentation value="Het netto, maandelijkse bedrag als inkomen. "/>
+						<model ea_localid="6" ea_guid="{6D342CC2-F40B-433c-8218-24968F78AD5E}"/>
+						<properties type="Amount" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+				</attributes>
+				<links>
+					<Aggregation xmi:id="EAID_A31566AA_67B9_4d95_BBD3_8B6D7D6E3081" start="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090" end="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42"/>
+					<Generalization xmi:id="EAID_76E2555B_3CDD_48dd_B74C_84DBC350ACB9" start="EAID_84C2569D_4E78_4c52_A7C8_840D7F1B2EAF" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+					<Generalization xmi:id="EAID_ADFD39C5_1739_4a57_9737_5184D81DD10B" start="EAID_A8A1A240_85EB_45ff_8163_E4B286DBFD9C" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+					<Generalization xmi:id="EAID_D2F1A6BB_25E3_45ff_BF3D_D6151DC78E97" start="EAID_EF43ED64_B383_4d6f_9C1E_885BA60616D2" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+					<Generalization xmi:id="EAID_F83F36A1_3114_4c1f_878E_4E6ABBE01A9E" start="EAID_4D78C3FA_9D1B_4ccf_9AA4_18AA7FFA70B7" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_84C2569D_4E78_4c52_A7C8_840D7F1B2EAF" xmi:type="uml:Class" name="Lijfrentes" scope="public">
+				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="71" ea_eleType="element"/>
+				<properties documentation="Inkomen uit lijfrentes.&#xA;Een lijfrente is een verzekering die bedoeld is om voor een extra stuk inkomen te zorgen. Lijfrentes kunnen direct ingaan, of op een vooraf afgesproken moment ingaan. De duur van de lijfrente uitkering kan tijdelijk zijn of tot aan uw overlijden duren (levenslang). &#xA;Lijfrentes vallen in de zogenaamde derde pijler van het pensioensysteem in Nederland. " isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 10:16:27" modified="2016-07-26 10:20:21" complexity="1" status="Proposed"/>
+				<code product_name="Java" gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Structuur"/>
+				<attributes>
+					<attribute xmi:idref="EAID_F5752D94_D24C_4e5d_9FCF_DD96CA78E574" name="Tot Datum" scope="Private">
+						<initial/>
+						<documentation value="Datum tot wanneer u uw lijfrente uitkering ontvangt. Indien hier niets wordt ingevuld, wordt verondersteld dat de uitkering tot aan uw overlijden doorloopt (een zogenaamde levenslange uitkering). "/>
+						<model ea_localid="54" ea_guid="{F5752D94-D24C-4e5d-9FCF-DD96CA78E574}"/>
+						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="1"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_D6AADC23_7A63_4462_A2A6_C31E3514B6A2" name="Vanaf Datum" scope="Private">
+						<initial/>
+						<documentation value="Datum vanaf wanneer het inkomen uit uw lijfrenteverzekering tot uitkering komt. Indien niets wordt ingevuld, wordt gerekend met een uitkering die reeds van start is gegaan. "/>
+						<model ea_localid="53" ea_guid="{D6AADC23-7A63-4462-A2A6-C31E3514B6A2}"/>
+						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+				</attributes>
+				<links>
+					<Generalization xmi:id="EAID_76E2555B_3CDD_48dd_B74C_84DBC350ACB9" start="EAID_84C2569D_4E78_4c52_A7C8_840D7F1B2EAF" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_A8A1A240_85EB_45ff_8163_E4B286DBFD9C" xmi:type="uml:Class" name="Loon uit werk" scope="public">
+				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="68" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 09:47:28" modified="2016-07-26 09:47:40" complexity="1" status="Proposed"/>
+				<code product_name="Java" gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Structuur"/>
+				<links>
+					<Generalization xmi:id="EAID_ADFD39C5_1739_4a57_9737_5184D81DD10B" start="EAID_A8A1A240_85EB_45ff_8163_E4B286DBFD9C" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_4D78C3FA_9D1B_4ccf_9AA4_18AA7FFA70B7" xmi:type="uml:Class" name="Pensioenuitkering" scope="public">
+				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="70" ea_eleType="element"/>
+				<properties documentation="Met pensioenuitkering wordt de uitkering uit de pensioenregeling(en) bedoeld die u heeft opgebouwd via de pensioenregelingen van uw werkgevers. Dit zijn pensioenuitkeringen in de zogenaamde '2e pijler'." isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 10:03:48" modified="2016-07-26 10:14:12" complexity="1" status="Proposed"/>
+				<code product_name="Java" gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Structuur"/>
+				<attributes>
+					<attribute xmi:idref="EAID_5EAB9F7C_AFBC_4859_8753_330EE9A8A82C" name="Pensioenleeftijd" scope="Private">
+						<initial body="67"/>
+						<documentation value="Ingangsdatum van de pensioenregeling. Deze kan varieren voor iedere pensioenregeling. "/>
+						<model ea_localid="50" ea_guid="{5EAB9F7C-AFBC-4859-8753-330EE9A8A82C}"/>
+						<properties type="Decimal" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_C8B63185_1F16_4615_A4A5_9D1077FF4A97" name="Werkgever" scope="Private">
+						<initial/>
+						<documentation value="Naam van de werkgever van de pensioenregeling. "/>
+						<model ea_localid="52" ea_guid="{C8B63185-1F16-4615-A4A5-9D1077FF4A97}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="1"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags/>
+						<xrefs/>
+					</attribute>
+				</attributes>
+				<links>
+					<Generalization xmi:id="EAID_F83F36A1_3114_4c1f_878E_4E6ABBE01A9E" start="EAID_4D78C3FA_9D1B_4ccf_9AA4_18AA7FFA70B7" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42" xmi:type="uml:Class" name="Persoon" scope="public">
+				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="34" ea_eleType="element"/>
+				<properties documentation="Iedereen heeft het erover: uw pensioen. Het zou niet voldoende zijn.. Maar is dat ook zo? &#xA;Wij denken dat uw pensioen prima in orde is en dat u zich nergens zorgen om hoeft te maken. &#xA;&#xA;In deze planner beginnen we met een simpele berekening om aan te tonen dat uw pensioen straks prima in orde is. &#xA;Pas als blijkt dat uw pensioen toch te laag is, praten we pas over mogelijkheden voor later. &#xA;&#xA;&#xA;" isSpecification="false" sType="Class" nType="0" scope="public" isRoot="true" isLeaf="false" isAbstract="false" isActive="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 10:11:38" modified="2016-07-25 14:11:49" complexity="1" status="Proposed"/>
+				<code product_name="Java" gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags>
+					<tag xmi:id="EAID_13A07239_87FE_4fe7_9B25_32CC52251ED7" name="QR-Volgorde" value="1" modelElement="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42"/>
+				</tags>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Structuur"/>
+				<attributes>
+					<attribute xmi:idref="EAID_3B130559_212B_4811_BA46_124509DBFAFD" name="Geboortedatum" scope="Private">
+						<initial/>
+						<documentation value="Uw geboortedatum hebben we nodig om een projectie van uw inkomen in de tijd te kunnen maken. "/>
+						<model ea_localid="23" ea_guid="{3B130559-212B-4811-BA46-124509DBFAFD}"/>
+						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="1"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags>
+							<tag xmi:id="EAID_41076E2A_39F1_47ae_B54D_62BE3183B6B5" name="QR-Volgorde" value="1"/>
+							<tag xmi:id="EAID_62AF9583_7D46_48aa_AF5F_BB68FD7BDF85" name="QR-Excel input" value="  B4            , Input, simpel rekenmodel.xlsx"/>
+						</tags>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_D1FF15B9_9BB8_4091_848A_8777BB1D5FA2" name="Geslacht" scope="Private">
+						<initial/>
+						<documentation value="Test of deze tekst in het documentation veld bij het Attribute terecht komt. "/>
+						<model ea_localid="4" ea_guid="{D1FF15B9-9BB8-4091-848A-8777BB1D5FA2}"/>
+						<properties type="Geslachten" derived="0" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags>
+							<tag xmi:id="EAID_D11C8E36_D148_4f7e_B15E_A6EB20ACAF33" name="QR-Volgorde" value="2.1"/>
+							<tag xmi:id="EAID_DCCD55EA_82B5_4472_A2B8_AFE5B218EF32" name="QR-Excel input" value="   B5           , Input, simpel rekenmodel.xlsx"/>
+						</tags>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_3ABFFB07_C429_4945_8794_06A17256AFF6" name="Naam" scope="Private">
+						<initial body="Cees en Carla"/>
+						<documentation/>
+						<model ea_localid="30" ea_guid="{3ABFFB07-C429-4945-8794-06A17256AFF6}"/>
+						<properties type="String" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="2"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags>
+							<tag xmi:id="EAID_4049D157_6911_4fea_95CE_280D18051D00" name="QR-Volgorde" value="0.5"/>
+							<tag xmi:id="EAID_E10EF017_888D_4a6d_8A10_FFED1E65E7C8" name="QR-Excel input" value="   B3           , Input, simpel rekenmodel.xlsx"/>
+						</tags>
+						<xrefs/>
+					</attribute>
+				</attributes>
+				<operations>
+					<operation xmi:idref="EAID_726C976F_D647_40cd_9672_E55757662D54" name="AOW" scope="Public">
+						<properties position="1"/>
+						<stereotype/>
+						<model ea_guid="{726C976F-D647-40cd-9672-E55757662D54}" ea_localid="2"/>
+						<type type="Amount" const="false" static="false" isAbstract="false" synchronised="0" concurrency="Sequential" pure="0" isQuery="false"/>
+						<behaviour/>
+						<code/>
+						<style/>
+						<styleex value="ShowBeh=0;"/>
+						<documentation value="De eerste berekening. Het resultaat hiervan moet uit Excel komen. Er is nog geen Tagged Value of Stereotype gekoppeld. "/>
+						<tags>
+							<tag xmi:id="EAID_03157E6A_D981_4be7_A3AA_4C91E3B63D94" name="QR-Excel output" value="      B8        , Output, simpel rekenmodel.xlsx"/>
+							<tag xmi:id="EAID_29925FDD_ABAD_4608_B964_F25F2223474D" name="QR-Volgorde" value="3"/>
+						</tags>
+						<parameters>
+							<parameter xmi:idref="EAID_RETURNID_D647_40cd_9672_E55757662D54" visibility="public">
+								<properties pos="0" type="Amount" const="false" classifier="EAID_78899BCE_8291_4534_AC0C_79D77295A318" ea_guid="{RETURNID-D647-40cd-9672-E55757662D54}"/>
+								<style/>
+								<styleex/>
+								<documentation/>
+								<tags/>
+								<xrefs/>
+							</parameter>
+						</parameters>
+						<xrefs/>
+					</operation>
+					<operation xmi:idref="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" name="Leeftijd in gebroken jaren" scope="Public">
+						<properties position="2"/>
+						<stereotype/>
+						<model ea_guid="{DE72033D-7FE7-47b1-BDAD-632913525D18}" ea_localid="6"/>
+						<type type="Amount" const="false" static="false" isAbstract="false" synchronised="0" concurrency="Sequential" pure="0" isQuery="false"/>
+						<behaviour/>
+						<code/>
+						<style/>
+						<styleex/>
+						<documentation/>
+						<tags>
+							<tag xmi:id="EAID_A1D83E94_C1E8_4ec6_8C1E_61310EC4DCBC" name="QR-Volgorde" value="3"/>
+							<tag xmi:id="EAID_D40DAE98_8E25_4613_A450_18A5FF31A383" name="QR-Excel input" value="        B6      , Input, simpel rekenmodel.xlsx"/>
+						</tags>
+						<parameters>
+							<parameter xmi:idref="EAID_RETURNID_7FE7_47b1_BDAD_632913525D18" visibility="public">
+								<properties pos="0" type="Amount" const="false" classifier="EAID_78899BCE_8291_4534_AC0C_79D77295A318" ea_guid="{RETURNID-7FE7-47b1-BDAD-632913525D18}"/>
+								<style/>
+								<styleex/>
+								<documentation/>
+								<tags/>
+								<xrefs/>
+							</parameter>
+						</parameters>
+						<xrefs/>
+					</operation>
+				</operations>
+				<links>
+					<Aggregation xmi:id="EAID_4148D380_D030_413e_B3F3_E8CAC5C55E8B" start="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42" end="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901"/>
+					<Aggregation xmi:id="EAID_A31566AA_67B9_4d95_BBD3_8B6D7D6E3081" start="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090" end="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42"/>
+					<Aggregation xmi:id="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948" start="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406" end="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406" xmi:type="uml:Class" name="Uitgaven" scope="public">
+				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="44" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 15:49:34" modified="2016-07-25 14:05:56" complexity="1" status="Proposed"/>
+				<code product_name="Java" gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags>
+					<tag xmi:id="EAID_05D25837_9E29_4f89_A9A1_7F3687AE7CD2" name="QR-Volgorde" value="3" modelElement="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406"/>
+				</tags>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Structuur"/>
+				<attributes>
+					<attribute xmi:idref="EAID_05BBB8A5_F61A_42c2_A751_5A806617B1AD" name="Bedrag" scope="Private">
+						<initial/>
+						<documentation/>
+						<model ea_localid="21" ea_guid="{05BBB8A5-F61A-42c2-A751-5A806617B1AD}"/>
+						<properties type="Amount" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="0"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags>
+							<tag xmi:id="EAID_F35CCED3_03CF_4168_9AAF_8A5CA93E9C63" name="QR-Volgorde" value="2"/>
+						</tags>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_5F4247FB_65EA_4159_AA15_B4BDC829431F" name="Soort" scope="Private">
+						<initial/>
+						<documentation value="Wat voor soort uitgaven betreft het? Bijvoorbeeld: &#xA;- Huis of hypotheek&#xA;- Kleding&#xA;- Huishoudgeld&#xA;- Vervoer&#xA;- Verzekeringen&#xA;- Zorg &#xA;- Hobbies&#xA;- Onvoorzien "/>
+						<model ea_localid="22" ea_guid="{5F4247FB-65EA-4159-AA15-B4BDC829431F}"/>
+						<properties type="Uitgavensoorten" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="1"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags>
+							<tag xmi:id="EAID_1D527EA5_F318_4c1f_9DE9_04C1D03168FC" name="QR-Volgorde" value="1"/>
+						</tags>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_D399AF34_E00B_4f3f_B853_22EDBDD3D660" name="Tot Datum" scope="Private">
+						<initial/>
+						<documentation value="Datum tot waaraan de kosten lopen. &#xA;&#xA;Bijvoorbeeld: hypotheekkosten hebben meestal een looptijd van maximaal 30 jaar. Na die periode is uw hypotheek afgelost en komen deze kosten te vervallen. &#xA;&#xA;Indien u niets invult, wordt er geen einddatum gebruikt voor deze kostensoort en zullen de kosten voor altijd doorlopen. "/>
+						<model ea_localid="43" ea_guid="{D399AF34-E00B-4f3f-B853-22EDBDD3D660}"/>
+						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="3"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags>
+							<tag xmi:id="EAID_89B45726_F40D_4ada_8ADC_5D1E53533C60" name="QR-Volgorde" value="4"/>
+						</tags>
+						<xrefs/>
+					</attribute>
+					<attribute xmi:idref="EAID_080262C2_536C_4294_A54D_397EC5E0A8A7" name="Vanaf Datum" scope="Private">
+						<initial/>
+						<documentation value="Datum vanaf wanneer de uitgaven loopt. &#xA;Indien u niets invult worden deze uitgaven vanaf nu berekend. "/>
+						<model ea_localid="42" ea_guid="{080262C2-536C-4294-A54D-397EC5E0A8A7}"/>
+						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
+						<coords ordered="0"/>
+						<containment containment="Not Specified" position="2"/>
+						<stereotype/>
+						<bounds lower="1" upper="1"/>
+						<options/>
+						<style/>
+						<styleex value="volatile=0;"/>
+						<tags>
+							<tag xmi:id="EAID_18FA7437_2BFC_4004_B4D0_5F03114BF57B" name="QR-Volgorde" value="3"/>
+						</tags>
+						<xrefs/>
+					</attribute>
+				</attributes>
+				<links>
+					<Aggregation xmi:id="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948" start="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406" end="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42"/>
+				</links>
+			</element>
+		</elements>
+		<connectors>
+			<connector xmi:idref="EAID_D2F1A6BB_25E3_45ff_BF3D_D6151DC78E97">
+				<source xmi:idref="EAID_EF43ED64_B383_4d6f_9C1E_885BA60616D2">
+					<model ea_localid="69" type="Class" name="AOW"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090">
+					<model ea_localid="35" type="Class" name="Inkomen"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="29"/>
+				<properties ea_type="Generalization" direction="Source -&gt; Destination"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_4148D380_D030_413e_B3F3_E8CAC5C55E8B">
+				<source xmi:idref="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42">
+					<model ea_localid="34" type="Class" name="Persoon"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type multiplicity="1" aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901">
+					<model ea_localid="63" type="Class" name="Financieel Planner"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type multiplicity="1" aggregation="shared" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="27"/>
+				<properties ea_type="Aggregation" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels lb="1" rb="1"/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_A31566AA_67B9_4d95_BBD3_8B6D7D6E3081">
+				<source xmi:idref="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090">
+					<model ea_localid="35" type="Class" name="Inkomen"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type multiplicity="1..*" aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42">
+					<model ea_localid="34" type="Class" name="Persoon"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type multiplicity="1" aggregation="composite" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="25"/>
+				<properties ea_type="Aggregation" subtype="Strong" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels lb="1..*" rb="1"/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_76E2555B_3CDD_48dd_B74C_84DBC350ACB9">
+				<source xmi:idref="EAID_84C2569D_4E78_4c52_A7C8_840D7F1B2EAF">
+					<model ea_localid="71" type="Class" name="Lijfrentes"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090">
+					<model ea_localid="35" type="Class" name="Inkomen"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="31"/>
+				<properties ea_type="Generalization" direction="Source -&gt; Destination"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_ADFD39C5_1739_4a57_9737_5184D81DD10B">
+				<source xmi:idref="EAID_A8A1A240_85EB_45ff_8163_E4B286DBFD9C">
+					<model ea_localid="68" type="Class" name="Loon uit werk"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090">
+					<model ea_localid="35" type="Class" name="Inkomen"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="28"/>
+				<properties ea_type="Generalization" direction="Source -&gt; Destination"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_F83F36A1_3114_4c1f_878E_4E6ABBE01A9E">
+				<source xmi:idref="EAID_4D78C3FA_9D1B_4ccf_9AA4_18AA7FFA70B7">
+					<model ea_localid="70" type="Class" name="Pensioenuitkering"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090">
+					<model ea_localid="35" type="Class" name="Inkomen"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="30"/>
+				<properties ea_type="Generalization" direction="Source -&gt; Destination"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948">
+				<source xmi:idref="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406">
+					<model ea_localid="44" type="Class" name="Uitgaven"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type multiplicity="1..*" aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42">
+					<model ea_localid="34" type="Class" name="Persoon"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type multiplicity="1" aggregation="composite" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="26"/>
+				<properties ea_type="Aggregation" subtype="Strong" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels lb="1..*" rb="1"/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+		</connectors>
+		<primitivetypes>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package">
+				<packagedElement xmi:type="uml:Package" xmi:id="EAJavaTypesPackage" name="EA_Java_Types_Package">
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAJava_int" name="int">
+						<generalization xmi:type="uml:Generalization" xmi:id="EAJava_int_General">
+							<general href="http://www.omg.org/spec/UML/20090901/UML.xmi#Integer"/>
+						</generalization>
+					</packagedElement>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAJava_Date" name="Date"/>
+				</packagedElement>
+			</packagedElement>
+		</primitivetypes>
+		<profiles>
+			<uml:Profile xmi:version="2.1" xmlns:uml="http://www.omg.org/spec/UML/20090901" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmi:id="thecustomprofile" nsPrefix="thecustomprofile" name="thecustomprofile" metamodelReference="mmref01">
+				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="thecustomprofile">
+					<body> Version:1.0</body>
+				</ownedComment>
+				<packageImport xmi:id="mmref01">
+					<importedPackage href="http://www.omg.org/spec/UML/20090901"/>
+				</packageImport>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="QR-Excel output" name="QR-Excel output">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="QR-Excel output-base_Operation" name="base_Operation" association="Operation_QR-Excel output">
+						<type href="http://www.omg.org/spec/UML/20090901/UML.xmi#Operation"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="QR-Excel output-QR-Excel output" name="QR-Excel output">
+						<type href="http://www.omg.org/spec/UML/20090901/UML.xmi#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Operation_QR-Excel output" name="A_Operation_QR-Excel output" memberEnd="extension_QR-Excel output QR-Excel output-base_Operation">
+					<ownedEnd xmi:id="extension_QR-Excel output" name="extension_QR-Excel output" type="QR-Excel output" isComposite="true" lower="0" upper="1" memberEnd="extension_QR-Excel output QR-Excel output-base_Operation"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="enum" name="enum">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="enum-base_EnumerationLiteral" name="base_EnumerationLiteral" association="EnumerationLiteral_enum">
+						<type href="http://www.omg.org/spec/UML/20090901/UML.xmi#EnumerationLiteral"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="EnumerationLiteral_enum" name="A_EnumerationLiteral_enum" memberEnd="extension_enum enum-base_EnumerationLiteral">
+					<ownedEnd xmi:id="extension_enum" name="extension_enum" type="enum" isComposite="true" lower="0" upper="1" memberEnd="extension_enum enum-base_EnumerationLiteral"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="QR-Excel input" name="QR-Excel input">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="QR-Excel input-base_Property" name="base_Property" association="Property_QR-Excel input">
+						<type href="http://www.omg.org/spec/UML/20090901/UML.xmi#Property"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="QR-Excel input-QR-Excel input" name="QR-Excel input">
+						<type href="http://www.omg.org/spec/UML/20090901/UML.xmi#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Property_QR-Excel input" name="A_Property_QR-Excel input" memberEnd="extension_QR-Excel input QR-Excel input-base_Property">
+					<ownedEnd xmi:id="extension_QR-Excel input" name="extension_QR-Excel input" type="QR-Excel input" isComposite="true" lower="0" upper="1" memberEnd="extension_QR-Excel input QR-Excel input-base_Property"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="QR-Volgorde" name="QR-Volgorde">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="QR-Volgorde-base_Class" name="base_Class" association="Class_QR-Volgorde">
+						<type href="http://www.omg.org/spec/UML/20090901/UML.xmi#Class"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="QR-Volgorde-QR-Volgorde" name="QR-Volgorde">
+						<type href="http://www.omg.org/spec/UML/20090901/UML.xmi#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Class_QR-Volgorde" name="A_Class_QR-Volgorde" memberEnd="extension_QR-Volgorde QR-Volgorde-base_Class">
+					<ownedEnd xmi:id="extension_QR-Volgorde" name="extension_QR-Volgorde" type="QR-Volgorde" isComposite="true" lower="0" upper="1" memberEnd="extension_QR-Volgorde QR-Volgorde-base_Class"/>
+				</packagedElement>
+			</uml:Profile>
+		</profiles>
+	</xmi:Extension>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_3CA93444_1F66_419a_A0D7_377E24AD2013"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_F220EB4C_6D25_47e7_AD82_20F21AC591ED"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_57BE1AF5_3221_476b_AA42_23526153EEB4"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_633A6CDF_1DC2_4163_B50E_2C2CB8AA09EF"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_76BD3484_7CA7_4fc8_BF57_E8D99BEDC9A2"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_A6B25B26_0D76_4afd_8E25_66B238AF2B2B"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_7DBF1A9B_D8BB_4970_986D_06E4701FA5DD"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_9E2F7833_90C9_4c73_B168_36D694E437A4"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_42C8B7C3_74C8_4685_BD8D_13AED1E518CC"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_C59E6FC2_91BA_4a3c_8A8A_84B49BC48C97"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_7C67D51F_D901_444f_B1DC_FB6D8E22A3FE"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_D598016A_BF2F_4bc5_9040_12F8AF33CE85"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_55D95AF1_2928_4fb2_9562_78F430DA316C"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_E0885C5E_84A0_46eb_989C_CB1173388CD8"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_D515A2B8_4991_466f_8298_AC7E6ED6C402"/>
+	<thecustomprofile:enum base_EnumerationLiteral="EAID_5F38DF1C_047C_4542_A38A_B784F80D3C22"/>
+	<thecustomprofile:QR-Volgorde base_Class="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901" QR-Volgorde="0.5"/>
+	<thecustomprofile:QR-Volgorde base_Operation="EAID_065820D3_62C8_44ac_9D52_FB91BF5E8682" QR-Volgorde="1"/>
+	<thecustomprofile:QR-Volgorde base_Class="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090" QR-Volgorde="2"/>
+	<thecustomprofile:QR-Volgorde base_Class="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42" QR-Volgorde="1"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_3B130559_212B_4811_BA46_124509DBFAFD" __EAStereoName="QR-Excel input" QR-Excel_input="  B4            , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Volgorde base_Property="EAID_3B130559_212B_4811_BA46_124509DBFAFD" QR-Volgorde="1"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_D1FF15B9_9BB8_4091_848A_8777BB1D5FA2" __EAStereoName="QR-Excel input" QR-Excel_input="   B5           , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Volgorde base_Property="EAID_D1FF15B9_9BB8_4091_848A_8777BB1D5FA2" QR-Volgorde="2.1"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_3ABFFB07_C429_4945_8794_06A17256AFF6" __EAStereoName="QR-Excel input" QR-Excel_input="   B3           , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Volgorde base_Property="EAID_3ABFFB07_C429_4945_8794_06A17256AFF6" QR-Volgorde="0.5"/>
+	<thecustomprofile:QR-Volgorde base_Operation="EAID_726C976F_D647_40cd_9672_E55757662D54" QR-Volgorde="3"/>
+	<thecustomprofile:QR-Excel_output base_Operation="EAID_726C976F_D647_40cd_9672_E55757662D54" __EAStereoName="QR-Excel output" QR-Excel_output="      B8        , Output, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Operation="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" __EAStereoName="QR-Excel input" QR-Excel_input="        B6      , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Volgorde base_Operation="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" QR-Volgorde="3"/>
+	<thecustomprofile:QR-Volgorde base_Class="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406" QR-Volgorde="3"/>
+	<thecustomprofile:QR-Volgorde base_Property="EAID_05BBB8A5_F61A_42c2_A751_5A806617B1AD" QR-Volgorde="2"/>
+	<thecustomprofile:QR-Volgorde base_Property="EAID_5F4247FB_65EA_4159_AA15_B4BDC829431F" QR-Volgorde="1"/>
+	<thecustomprofile:QR-Volgorde base_Property="EAID_D399AF34_E00B_4f3f_B853_22EDBDD3D660" QR-Volgorde="4"/>
+	<thecustomprofile:QR-Volgorde base_Property="EAID_080262C2_536C_4294_A54D_397EC5E0A8A7" QR-Volgorde="3"/>
+</xmi:XMI>
