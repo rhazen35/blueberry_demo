@@ -49,30 +49,30 @@ $projects = ( new Project( "getAllProjectsByUser" ) )->request( $params = null )
                 <div class="projects-item-model"><?= ( $hasModel === true ? "yes" : "no" ); ?></div>
                 <div class="projects-item-calculator">no</div>
                 <div class="projects-item-active">no</div>
-            </div>
-            <div class="projects-item-control">
-                <div id="ajaxResponse" class="project-form-message"></div>
-                <div class="projects-item-modelLink">
-                    <form id="deleteProject" action="<?= APPLICATION_HOME; ?>" method="POST">
-                        <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
-                        <input type="hidden" name="path" value="models">
-                        <input type="hidden" name="attr" value="model">
-                        <button name="modelProjectSubmit" type="submit">model</button>
-                    </form>
+
+                <div class="projects-item-control">
+                    <div class="projects-item-modelLink">
+                        <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                            <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
+                            <input type="hidden" name="path" value="models">
+                            <input type="hidden" name="attr" value="model">
+                            <button name="modelProjectSubmit" type="submit">model</button>
+                        </form>
+                    </div>
+                    <div class="projects-item-modelLink"><a href="">calculator</a></div>
+                    <div class="projects-item-modelLink"><a href="">edit</a></div>
+                    <div class="projects-item-modelLink">
+                        <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                            <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
+                            <input type="hidden" name="path" value="projects">
+                            <input type="hidden" name="attr" value="delProject">
+                            <button name="delProjectSubmit" type="submit">delete</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="projects-item-modelLink"><a href="">calculator</a></div>
-                <div class="projects-item-modelLink"><a href="">edit</a></div>
-                <div class="projects-item-modelLink">
-                    <form id="deleteProject" action="<?= APPLICATION_HOME; ?>" method="POST">
-                        <input type="hidden" class="projectId" name="projectId" value="<?= $project['id']; ?>">
-                        <input type="hidden" name="path" value="projects">
-                        <input type="hidden" name="attr" value="delProject">
-                        <button name="delProjectSubmit" type="submit">delete</button>
-                    </form>
-                </div>
             </div>
-            <?php
-            endforeach;
+
+            <?php endforeach;
         else: ?>
             <div class="projects-message">No projects available, create a new project in the left panel.</div>
         <?php endif; ?>

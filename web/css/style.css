@@ -7,7 +7,10 @@
 
 @import "models/models.css";
 @import "models/newModel.css";
+
 @import "models/report.css";
+
+@import "screenFactory/screenFactory.css";
 
 @import "login/login.css";
 
@@ -27,11 +30,17 @@ html, body
     margin: 0;
 }
 
+a
+{
+    padding:0;
+}
+
 #main
 {
     display:flex;
     flex-flow:row wrap;
     justify-content:flex-start;
+    min-width:800px;
 }
 
 #application

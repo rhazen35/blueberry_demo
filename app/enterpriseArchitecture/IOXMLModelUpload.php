@@ -81,17 +81,19 @@ if( !class_exists( "IOXMLModelUpload" ) ):
             $upload_time = $datetime->format('H:i:s');
             $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
             $id          = $output = "";
+            $status      = "validate";
 
-            $sql        = "CALL proc_newModel(?,?,?,?,?,?)";
+            $sql        = "CALL proc_newModel(?,?,?,?,?,?,?)";
             $data       = array(
                                 "id"            => $id,
                                 "user_id"       => $userId,
                                 "hash"          => $this->xmlFile,
+                                "model_status"  => $status,
                                 "date"          => $upload_date,
                                 "time"          => $upload_time,
                                 "output"        => $output
                                 );
-            $format     = array("iisssi");
+            $format     = array("iissssi");
             $type       = "createWithOutput";
 
             $lastInsertedId = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
@@ -101,8 +103,8 @@ if( !class_exists( "IOXMLModelUpload" ) ):
 
         private function getModelArray()
         {
-            $extensionInfo  = ( new IOXMLModelParser( $this->xmlFile ) )->parseXMLClasses();
-            $elements       = ( new IOXMLModelParser( $this->xmlFile ) )->parseModelExtensionInfo();
+            $extensionInfo  = ( new IOXMLModelParser( $this->xmlFile ) )->parseModelExtensionInfo();
+            $elements       = ( new IOXMLModelParser( $this->xmlFile ) )->parseXMLClasses();
             $connectors     = ( new IOXMLModelParser( $this->xmlFile ) )->parseConnectors();
 
             $modelArray     = array_merge( $extensionInfo, $elements, $connectors );
@@ -114,12 +116,13 @@ if( !class_exists( "IOXMLModelUpload" ) ):
             $date        = date('Y-m-d');
             $time        = date('H:i:s');
             $id          = "";
+            $array       = json_encode( $this->xmlFile );
 
             $sql         = "CALL proc_saveModelArray(?,?,?,?,?)";
             $data        = array(
                 "id"            => $id,
                 "model_id"      => $this->uploadedAt,
-                "array"         => serialize( $this->xmlFile ),
+                "array"         => $array,
                 "date"          => $date,
                 "time"          => $time
             );
