@@ -11,6 +11,19 @@ use app\enterpriseArchitecture\IOXMLEAModel;
 use app\lib\Project;
 use app\core\Library;
 
+/**
+ * Check if a project has been posted.
+ * If a projects has been posted, but is empty, redirect back to upload.
+ */
+if( isset( $_POST['project'] ) ):
+    if(!empty( $_POST['project'] )):
+        $_SESSION['project_id'] = $_POST['project'];
+    else:
+        header("Location: index.php?modelUploadNoProject");
+        exit();
+    endif;
+endif;
+
 $validationStartTime = microtime(true);
 
 if( isset($_FILES) && !empty( $_FILES ) ):
@@ -24,73 +37,88 @@ if( isset($_FILES) && !empty( $_FILES ) ):
         $path_parts         = pathinfo($_FILES["xmlFile"]["name"]);
         $extension          = $path_parts['extension'];
         $newFile            = sha1_file($file);
+
         /**
-         * Check if the model already exists
+         * TODO: Validate the file.
          */
-        $returnData = ( new IOXMLModelUpload( "matchHash", $newFile, $uploadedAt ) )->request( $params = null );
-        if( !empty( $returnData ) ):
-            $matchHash = $returnData[0];
+
+        /**
+         * Check if the extensions are valid
+         */
+        $allowedExtensions = array("xml");
+        if( in_array( $extension, $allowedExtensions ) ):
+
+            /**
+             * Check if the model already exists
+             */
+            $returnData = ( new IOXMLModelUpload( "matchHash", $newFile, $uploadedAt ) )->request( $params = null );
+            if( !empty( $returnData ) ):
+                $matchHash = $returnData[0];
+            else:
+                $matchHash = "";
+            endif;
+            /**
+             * Pass the xml file with the new model command and the timestamp
+             * XML will be validated and a report is returned
+             */
+            $report = ( new IOXMLModelUpload( "validateModel", $xmlFile, $uploadedAt ) )->request( $params = null );
+            /**
+             * Add the original file name to the report array
+             */
+            $report['originalFileName'] = $fileName;
+
+            if( !hash_equals( $newFile, $matchHash ) ):
+
+                $report['file_exists'] = false;
+                /**
+                 * Save the model in the database and in the files/xml_models_tmp directory
+                 */
+                $name           = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
+                $valid          = ( $report['validation']['valid'] === true ? "yes" : "no" );
+                $params         = array( "name" => $name, "valid" => $valid, "extension" => $extension );
+                $lastInsertedID = ( new IOXMLModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
+
+                /**
+                 * Store the project id, model id, and user id in the projects_models join table
+                 */
+                $params = array( "model_id" => $lastInsertedID );
+                ( new Project( "saveModelJoinTable" ) )->request( $params );
+                /**
+                 * Hash and save the file
+                 */
+                move_uploaded_file(
+                    $_FILES['xmlFile']['tmp_name'],
+                    sprintf(APPLICATION_ROOT.'/web/files/xml_models_tmp/%s.%s',
+                        sha1_file($_FILES['xmlFile']['tmp_name']),
+                        $extension
+                    )) ;
+
+                $_SESSION['xmlModelId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
+
+            else:
+                $report['file_exists']  = true;
+                $returnData             = ( new IOXMLEAModel( $matchHash ) )->getModelIdByHash();
+                $_SESSION['xmlModelId'] = ( !empty( $returnData['model_id'] ) ? $returnData['model_id'] : "" );
+            endif;
+
+
+            $validationEndTime              = Library::microtimeFormat( $validationStartTime );
+            $report['validationDuration']   = $validationEndTime;
+            $_SESSION['xmlValidatorReport'] = serialize( $report );
+
+            header("Location: index.php?xmlEAValidatorReport");
+            exit();
+
         else:
-            $matchHash = "";
+            header("Location: index.php?modelUploadInvalidFileExtension");
+            exit();
         endif;
-        /**
-         * Pass the xml file with the new model command and the timestamp
-         * XML will be validated and a report is returned
-         */
-        $report = ( new IOXMLModelUpload( "validateModel", $xmlFile, $uploadedAt ) )->request( $params = null );
-        /**
-         * Add the original file name to the report array
-         */
-        $report['originalFileName'] = $fileName;
-
-        if( !hash_equals( $newFile, $matchHash ) ):
-
-            $report['file_exists'] = false;
-            /**
-             * Save the model in the database and in the files/xml_models_tmp directory
-             */
-            $name           = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
-            $valid          = ( $report['validation']['valid'] === true ? "yes" : "no" );
-            $params         = array( "name" => $name, "valid" => $valid, "extension" => $extension );
-            $lastInsertedID = ( new IOXMLModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
-            /**
-             * Store the project id, model id, and user id in the projects_models join table
-             */
-            $params = array( "model_id" => $lastInsertedID );
-            ( new Project( "saveModelJoinTable" ) )->request( $params );
-            /**
-             * Hash and save the file
-             */
-            move_uploaded_file(
-                $_FILES['xmlFile']['tmp_name'],
-                sprintf(APPLICATION_ROOT.'/web/files/xml_models_tmp/%s.%s',
-                    sha1_file($_FILES['xmlFile']['tmp_name']),
-                    $extension
-                )) ;
-
-            $_SESSION['xmlModelId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
-
-        else:
-            $report['file_exists']  = true;
-            $returnData             = ( new IOXMLEAModel( $matchHash ) )->getModelIdByHash();
-            $_SESSION['xmlModelId'] = ( !empty( $returnData['model_id'] ) ? $returnData['model_id'] : "" );
-        endif;
-
-
-        $validationEndTime              = Library::microtimeFormat( $validationStartTime );
-        $report['validationDuration']   = $validationEndTime;
-        $_SESSION['xmlValidatorReport'] = serialize( $report );
-
-        header("Location: index.php?xmlEAValidatorReport");
-        exit();
 
     else:
-        header("Location: index.php?modelUploadFailed");
-        exit();
-
+        header("Location: index.php?modelUploadNoFile");
     endif;
 
 else:
-    header("Location: index.php?modelUploadFailed");
+    header("Location: index.php?modelUploadNoFile");
     exit();
 endif;

@@ -8,25 +8,109 @@
 
 use app\lib\Project;
 
-$projectId   = ( isset( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "" );
-$params      = array( "project_id" => $projectId );
-$projectData = ( new Project( "getProjectById" ) )->request( $params );
+/**
+ * Get the project data to display the project name
+ */
+$projectId      = ( isset( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "" );
+$params         = array( "project_id" => $projectId );
+$projectData    = ( new Project( "getProjectById" ) )->request( $params );
+$projectName    = ( isset( $projectData['name'] ) ? $projectData['name'] : "" );
+
+/**
+ * Setup arrays to populate with projects and projects models.
+ * Compare both array's and check if there are projects without a model
+ * Store all projects without a model in the project select array.
+ */
+$projectsArray       = array();
+$projectsModelsArray = array();
+$projectSelectArray  = array();
+
+$projects       = ( new Project( "getAllProjectsByUser" ) )->request( $params = null );
+$projectsModels = ( new Project( "getAllProjectsModelsByUser" ) )->request( $params = null );
+
+$i = 0;
+foreach( $projects as $project ):
+    $projectsArray[$i]['id']   = $project['id'];
+    $projectsArray[$i]['name'] = $project['name'];
+    $i++;
+endforeach;
+
+$j = 0;
+foreach( $projectsModels as $projectsModel ):
+    $projectsModelsArray[] = $projectsModel['project_id'];
+    $j++;
+endforeach;
+
+$k = 0;
+foreach( $projectsArray as $projectArray ):
+    if( !in_array( $projectArray['id'], $projectsModelsArray ) ):
+
+        $projectSelectArray[$k]['id'] = $projectArray['id'];
+        $projectSelectArray[$k]['name'] = $projectArray['name'];
+        $k++;
+    endif;
+endforeach;
+
+/**
+ * Display the project name when available
+ */
 ?>
-
 <div class="newModel-head">
-    <div class="title">Model Upload for <?= $projectData['name']; ?></div>
+    <div class="title">Model Upload <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
 </div>
-
 <div class="login">
     <div class="image"><img src="images/icons/xml_file_icon.png"></div>
-    <form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data" id="newModel">
-        <input type="file" name="xmlFile" id="xmlFile" value="" title="Kies een xml bestand.">
-        <input type="hidden" name="path" value="models">
-        <input type="hidden" name="attr" value="modelUpload">
-        <input type="submit" name="xmlFileUploadSubmit" value="Uploaden" title="Upload an xml file.">
+    <?php
+    /**
+     * Display a message when all projects have a model and disable the form
+     */
+        if( empty( $projectSelectArray ) && empty( $projectName ) ):
+            ?><div class="login">All projects have a model, go to projects to start a new one.</div><?php
+        endif;
+    ?>
+    <form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data">
+        <?php
+        /**
+         * Only show file select when a project is without a model
+         */
+            if( !empty( $projectSelectArray )  ): ?>
+            <input type="file" name="xmlFile" id="xmlFile" value="" title="Kies een xml bestand.">
+            <input type="hidden" name="path" value="models">
+            <input type="hidden" name="attr" value="modelUpload">
+        <?php
+            endif;
+            /**
+             * Only show project select when a project name is empty and when a project is without a model
+             */
+            if( empty( $projectName ) && !empty( $projectSelectArray ) ): ?>
+                <select name="project">
+                    <option name="projectId" value="">Choose a project</option>
+                <?php
+                    foreach( $projectsArray as $projectArray ):
+                        if( !in_array( $projectArray['id'], $projectsModelsArray ) ):
+                            ?>
+                            <option name="projectId" value="<?= $projectArray['id']; ?>"><?= $projectArray['name']; ?></option>
+                            <?php
+                        endif;
+                    endforeach;
+                ?>
+                </select>
+                <?php
+            endif;
+        /**
+         * Only show submit when a project name isn't empty and when a project is without a model
+         */
+        if( !empty( $projectName ) || !empty( $projectSelectArray ) ): ?>
+            <input type="submit" name="xmlFileUploadSubmit" value="Uploaden" title="Upload an xml file.">
+        <?php endif; ?>
+
     </form>
 
-    <?php if( isset( $_GET['modelUploadFailed'] ) ): ?>
-        <div class="message">The uploaded file could not be processed</div>
+    <?php if( isset( $_GET['modelUploadNoFile'] ) ): ?>
+        <div class="message">Please choose a file.</div>
+    <?php else:
+        if( isset( $_GET['modelUploadNoProject'] ) ): ?>
+            <div class="message">Please choose a project.</div>
+        <?php endif; ?>
     <?php endif; ?>
 </div>

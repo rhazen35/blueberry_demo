@@ -1,6 +1,10 @@
 <div class="title">Models</div>
 <nav>
-    <ul>
-        <li><a href="<?= APPLICATION_HOME; ?>?models">Models</a></li>
-    </ul>
+    <?php if( !isset( $_GET['newModel'] )
+            && !isset( $_GET['modelUploadNoProject'] )
+            && !isset( $_GET['modelUploadNoFile'] ) ): ?>
+        <ul>
+            <li><a href="<?= APPLICATION_HOME; ?>?newModel">New model</a></li>
+        </ul>
+    <?php endif; ?>
 </nav>

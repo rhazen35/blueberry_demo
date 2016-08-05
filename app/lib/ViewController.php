@@ -41,7 +41,8 @@ class ViewController
             /**
              * Projects
              */
-            case (isset($get["projects"])):
+            case (isset($get["projects"])
+                || isset($get['deleteProjectAccept'])):
                 $args = array("projects", "projects");
                 ( new ViewController( ...$args ) )->request();
                 break;
@@ -55,7 +56,8 @@ class ViewController
              * Models
              */
             case (isset($get["newModel"])
-                || isset($get['modelUploadFailed'])):
+                || isset($get['modelUploadNoFile'])
+                || isset($get['modelUploadNoProject'])):
                 $args = array("newModel", "models");
                 ( new ViewController( ...$args ) )->request();
                 break;
@@ -77,7 +79,8 @@ class ViewController
              */
             case (isset($_GET["newCalculator"])
                 || isset($_GET['calculatorUploadInvalidFileExtension'])
-                || isset($_GET['calculatorUploadNoFile'])):
+                || isset($_GET['calculatorUploadNoFile'])
+                || isset($_GET['calculatorUploadNoProject'])):
                 $args = array("newCalculator", "calculators");
                 ( new ViewController( ...$args ) )->request();
                 break;

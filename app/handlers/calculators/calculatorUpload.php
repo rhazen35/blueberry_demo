@@ -10,6 +10,19 @@ use app\enterpriseArchitecture\IOExcelCalculatorUpload;
 use app\enterpriseArchitecture\IOEAExcelCalculator;
 use app\lib\Project;
 
+/**
+ * Check if a project has been posted.
+ * If a projects has been posted, but is empty, redirect back to upload.
+ */
+if( isset( $_POST['project'] ) ):
+    if(!empty( $_POST['project'] )):
+        $_SESSION['project_id'] = $_POST['project'];
+    else:
+        header("Location: index.php?calculatorUploadNoProject");
+        exit();
+    endif;
+endif;
+
 if( isset($_FILES) && !empty( $_FILES ) ):
 
     if( isset( $_FILES['excelFile'] ) && ( $_FILES['excelFile']['error'] === UPLOAD_ERR_OK ) ):
@@ -75,17 +88,18 @@ if( isset($_FILES) && !empty( $_FILES ) ):
             endif;
 
             header("Location: index.php?calculators");
-
+            exit();
         else:
             header("Location: index.php?calculatorUploadInvalidFileExtension");
+            exit();
         endif;
 
     else:
         header("Location: index.php?calculatorUploadNoFile");
+        exit();
     endif;
 
 else:
     header("Location: index.php?calculatorUploadNoFile");
+    exit();
 endif;
-
-exit();

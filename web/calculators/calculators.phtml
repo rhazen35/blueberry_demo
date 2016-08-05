@@ -12,6 +12,9 @@ use app\lib\Project;
 $calculators = ( new Calculator( "getAllCalculatorsByUser" ) )->request( $params = null );
 $sessionCalculatorId = ( isset( $_SESSION['calculator_id'] ) ? $_SESSION['calculator_id'] : "" );
 
+unset($_SESSION['project_id']);
+unset($_SESSION['calculator_id']);
+
 ?>
 <div class="models">
     <div class="projects-item projects-head">
@@ -23,10 +26,10 @@ $sessionCalculatorId = ( isset( $_SESSION['calculator_id'] ) ? $_SESSION['calcul
     if( !empty( $calculators ) ):
         foreach( $calculators as $calculator ):
 
-            $calculatorId = $calculator['id'];
+            $calculatorId = ( isset( $calculator['id'] ) ? $calculator['id'] : "" );
             $project      = ( new Project( "getProjectByCalculatorId" ) )->request( $params = array("calculator_id" => $calculatorId ) );
-            $projectName  = $project['name'];
-            $projectId    = $project['id'];
+            $projectName  = ( isset( $project['name'] ) ? $project['name'] : "" );
+            $projectId    = ( isset( $project['id'] ) ? $project['id'] : "" );
 
             ?>
             <div class="projects-item">

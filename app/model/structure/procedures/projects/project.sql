@@ -83,6 +83,22 @@ CREATE PROCEDURE
 END $$
 
 CREATE PROCEDURE
+`proc_getAllProjectsModelsByUser`(
+  IN userId INT(11)
+)
+  BEGIN
+    SELECT id, project_id, model_id FROM projects_models WHERE user_id = userId;
+  END $$
+
+CREATE PROCEDURE
+  `proc_getAllProjectsCalculatorsByUser`(
+  IN userId INT(11)
+)
+  BEGIN
+    SELECT id, project_id, calculator_id FROM projects_calculators WHERE user_id = userId;
+  END $$
+
+CREATE PROCEDURE
 `proc_getModelIdByProjectId`(
   IN projectId INT(11)
 )
@@ -113,7 +129,7 @@ CREATE PROCEDURE
   END $$
 
 CREATE PROCEDURE
-  `checkProjectExists`(
+  `proc_checkProjectExists`(
   IN projectName VARCHAR(100)
 )
     BEGIN

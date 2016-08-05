@@ -2,52 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="128c66c2-8882-4b07-a84f-eaf6881864b7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/handlers/calculators/changeCalculator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/handlers/calculators/validateCalculator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/handlers/models/changeModel.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/calculators/calculator.phtml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/excel_calculators_tmp/1e690d702ad3c1af88ce160dfbaf616ba5276b3b.xlsm" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/excel_calculators_tmp/3f44e1f69603fea262c2c371654b23dd02f8bafa.xlsm" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/excel_calculators_tmp/6a2aeaaa7974b5c115b05aa23b642f6f2415b16a.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/excel_calculators_tmp/c739a61c15c6ae84a3e8b045a90810d33e05fba8.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/2a4d12af898bc9eb2a13ee137848648c85b9ac02.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/31c11537684b14c79af6557bbdfc1f0c3c7a9dc2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/8d6fbeaccb9679c0ca5b8e660e4b0e771c822410.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/eff265fbd8ecb0043d8798d39bfe26e40cc14808.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_storage/Planner XMI2.4.2 w EAextensions.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/4eedb7a36e070788d9a2d3d22bce2c1483a380e1.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOEAExcelCalculator.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOEAExcelCalculator.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOExcelCalculatorUpload.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOExcelCalculatorUpload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/calculators/calculator.php" afterPath="$PROJECT_DIR$/app/handlers/calculators/calculator.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" afterPath="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/models/modelUpload.php" afterPath="$PROJECT_DIR$/app/handlers/models/modelUpload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/models/validateModel.php" afterPath="$PROJECT_DIR$/app/handlers/models/validateModel.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/projects/delProject.php" afterPath="$PROJECT_DIR$/app/handlers/projects/delProject.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/projects/newProject.php" afterPath="$PROJECT_DIR$/app/handlers/projects/newProject.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/Calculator.php" afterPath="$PROJECT_DIR$/app/lib/Calculator.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/Models.php" afterPath="$PROJECT_DIR$/app/lib/Models.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/Project.php" afterPath="$PROJECT_DIR$/app/lib/Project.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/ViewController.php" afterPath="$PROJECT_DIR$/app/lib/ViewController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/tables/calculators/calculators.sql" afterPath="$PROJECT_DIR$/app/model/structure/tables/calculators/calculators.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/tables/models/models.sql" afterPath="$PROJECT_DIR$/app/model/structure/tables/models/models.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/calculators/calculators.phtml" afterPath="$PROJECT_DIR$/web/calculators/calculators.phtml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/calculators/newCalculator.phtml" afterPath="$PROJECT_DIR$/web/calculators/newCalculator.phtml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/common/dashboard.phtml" afterPath="$PROJECT_DIR$/web/common/dashboard.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/models/models.css" afterPath="$PROJECT_DIR$/web/css/models/models.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/models/report.css" afterPath="$PROJECT_DIR$/web/css/models/report.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/projects/projects.css" afterPath="$PROJECT_DIR$/web/css/projects/projects.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/files/xml_storage/Planner XMI2.1 w EAextensions.xml" afterPath="$PROJECT_DIR$/web/files/xml_storage/Planner XMI2.1 w EAextensions.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/models.phtml" afterPath="$PROJECT_DIR$/web/models/models.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/validationReport.phtml" afterPath="$PROJECT_DIR$/web/models/validationReport.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/models.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/models.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/projects/newProject.phtml" afterPath="$PROJECT_DIR$/web/projects/newProject.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/newModel.phtml" afterPath="$PROJECT_DIR$/web/models/newModel.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageMenus/calculators.phtml" afterPath="$PROJECT_DIR$/web/pageMenus/calculators.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageMenus/models.phtml" afterPath="$PROJECT_DIR$/web/pageMenus/models.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/projects/projects.phtml" afterPath="$PROJECT_DIR$/web/projects/projects.phtml" />
     </list>
     <ignored path="blueberry.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,7 +50,116 @@
     <favorites_list name="blueberry" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="modelUpload.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/handlers/models/modelUpload.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="682">
+                  <caret line="112" column="45" selection-start-line="112" selection-start-column="45" selection-end-line="112" selection-end-column="45" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="dashboard.phtml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/web/common/dashboard.phtml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="476">
+                  <caret line="34" column="57" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="57" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="calculatorUpload.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="119">
+                  <caret line="27" column="33" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="33" />
+                  <folding>
+                    <marker date="1470429951497" expanded="true" signature="3276:3356" ph="..." />
+                    <marker date="1470429951497" expanded="true" signature="3402:3464" ph="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="models.phtml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/web/models/models.phtml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-644">
+                  <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="calculators.phtml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/web/calculators/calculators.phtml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="153">
+                  <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="newModel.phtml" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/web/models/newModel.phtml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="750">
+                  <caret line="114" column="19" selection-start-line="108" selection-start-column="3" selection-end-line="114" selection-end-column="19" />
+                  <folding>
+                    <element signature="e#1853#1941#0#PHP" expanded="true" />
+                    <element signature="e#2250#2332#0#PHP" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ViewController.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/lib/ViewController.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="549">
+                  <caret line="81" column="57" selection-start-line="81" selection-start-column="57" selection-end-line="81" selection-end-column="57" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="calculatorUpload.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="549">
+                  <caret line="92" column="79" selection-start-line="92" selection-start-column="11" selection-end-line="92" selection-end-column="79" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="newCalculator.phtml" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/web/calculators/newCalculator.phtml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="648">
+                  <caret line="111" column="36" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="36" />
+                  <caret line="108" column="38" selection-start-line="108" selection-start-column="38" selection-end-line="108" selection-end-column="38" />
+                  <folding>
+                    <element signature="e#1925#2018#0#PHP" expanded="true" />
+                    <element signature="e#2320#2407#0#PHP" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -96,16 +175,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAValidator.php" />
         <option value="$PROJECT_DIR$/web/pageInfo/newProject.phtml" />
         <option value="$PROJECT_DIR$/web/pageInfo/newModel.phtml" />
         <option value="$PROJECT_DIR$/web/common/default.phtml" />
         <option value="$PROJECT_DIR$/web/css/common/dashboard.css" />
-        <option value="$PROJECT_DIR$/web/models/newModel.phtml" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelParser.php" />
         <option value="$PROJECT_DIR$/app/model/structure/tables/xmlModel/xmlModel.sql" />
         <option value="$PROJECT_DIR$/app/model/structure/procedures/project/project.sql" />
-        <option value="$PROJECT_DIR$/web/pageMenus/models.phtml" />
         <option value="$PROJECT_DIR$/app/handlers/models/modelPreview.php" />
         <option value="$PROJECT_DIR$/web/css/style.css" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/iOXMLEAScreenFactory.php" />
@@ -113,40 +189,43 @@
         <option value="$PROJECT_DIR$/web/models/modelPreview.phtml" />
         <option value="$PROJECT_DIR$/web/css/screenFactory/screenFactory.css" />
         <option value="$PROJECT_DIR$/app/handlers/models/model.php" />
-        <option value="$PROJECT_DIR$/web/projects/projects.phtml" />
         <option value="$PROJECT_DIR$/web/models/model.phtml" />
-        <option value="$PROJECT_DIR$/app/lib/Project.php" />
-        <option value="$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql" />
         <option value="$PROJECT_DIR$/app/handlers/projects/newProject.php" />
         <option value="$PROJECT_DIR$/web/projects/newProject.phtml" />
         <option value="$PROJECT_DIR$/web/pageInfo/models.phtml" />
         <option value="$PROJECT_DIR$/app/lib/Models.php" />
         <option value="$PROJECT_DIR$/app/model/structure/tables/models/models.sql" />
         <option value="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" />
-        <option value="$PROJECT_DIR$/app/handlers/models/modelUpload.php" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" />
         <option value="$PROJECT_DIR$/app/model/structure/tables/calculators/calculators.sql" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOExcelCalculatorUpload.php" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOEAExcelCalculator.php" />
         <option value="$PROJECT_DIR$/app/handlers/models/changeModel.php" />
-        <option value="$PROJECT_DIR$/app/handlers/projects/delProject.php" />
         <option value="$PROJECT_DIR$/app/handlers/models/validateModel.php" />
         <option value="$PROJECT_DIR$/web/models/validationReport.phtml" />
         <option value="$PROJECT_DIR$/web/css/models/models.css" />
         <option value="$PROJECT_DIR$/web/css/models/report.css" />
-        <option value="$PROJECT_DIR$/web/models/models.phtml" />
         <option value="$PROJECT_DIR$/web/css/projects/projects.css" />
-        <option value="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" />
-        <option value="$PROJECT_DIR$/web/calculators/newCalculator.phtml" />
         <option value="$PROJECT_DIR$/app/handlers/calculators/validationReport.php" />
-        <option value="$PROJECT_DIR$/app/lib/ViewController.php" />
-        <option value="$PROJECT_DIR$/web/common/dashboard.phtml" />
         <option value="$PROJECT_DIR$/app/lib/Calculator.php" />
         <option value="$PROJECT_DIR$/app/handlers/calculators/changeCalculator.php" />
         <option value="$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql" />
-        <option value="$PROJECT_DIR$/web/calculators/calculators.phtml" />
         <option value="$PROJECT_DIR$/app/handlers/calculators/calculator.php" />
+        <option value="$PROJECT_DIR$/app/handlers/projects/delProject.php" />
+        <option value="$PROJECT_DIR$/web/projects/projects.phtml" />
+        <option value="$PROJECT_DIR$/web/pageMenus/models.phtml" />
+        <option value="$PROJECT_DIR$/app/lib/Project.php" />
+        <option value="$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql" />
+        <option value="$PROJECT_DIR$/web/models/models.phtml" />
+        <option value="$PROJECT_DIR$/web/calculators/calculators.phtml" />
+        <option value="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" />
+        <option value="$PROJECT_DIR$/app/handlers/models/modelUpload.php" />
+        <option value="$PROJECT_DIR$/web/models/newModel.phtml" />
+        <option value="$PROJECT_DIR$/web/common/dashboard.phtml" />
+        <option value="$PROJECT_DIR$/web/pageMenus/calculators.phtml" />
+        <option value="$PROJECT_DIR$/app/lib/ViewController.php" />
+        <option value="$PROJECT_DIR$/web/calculators/newCalculator.phtml" />
       </list>
     </option>
   </component>
@@ -238,7 +317,61 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pageMenus" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blueberry" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blueberry" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blueberry" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blueberry" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blueberry" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blueberry" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -334,16 +467,16 @@
       <workItem from="1470244196396" duration="15167000" />
       <workItem from="1470263555729" duration="968000" />
       <workItem from="1470382938728" duration="9000" />
-      <workItem from="1470383598677" duration="17237000" />
+      <workItem from="1470383598677" duration="30125000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103132000" />
+    <option name="totallyTimeSpent" value="116020000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19936034" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -351,7 +484,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20575693" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -399,64 +532,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/images/diagrams/diagram.png" />
-    <entry file="uml://PHP/\app\enterpriseArchitecture\IOXMLParser">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>PHP</ID>
-          <OriginalElement>\app\enterpriseArchitecture\IOXMLParser</OriginalElement>
-          <nodes>
-            <node x="0.0" y="548.0">\app\enterpriseArchitecture\IOXMLModelParser</node>
-            <node x="0.0" y="318.0">\app\enterpriseArchitecture\IOXMLParser</node>
-            <node x="364.0" y="0.0">\app\enterpriseArchitecture\IOXMLEAScreenFactory</node>
-            <node x="257.0" y="318.0">\app\enterpriseArchitecture\IOXMLEAModel</node>
-            <node x="0.0" y="0.0">\app\enterpriseArchitecture\IOXMLModelUpload</node>
-            <node x="235.0" y="548.0">\app\enterpriseArchitecture\XMLController</node>
-            <node x="457.0" y="548.0">\app\enterpriseArchitecture\IOXMLPrimitiveTypes</node>
-            <node x="521.0" y="318.0">\app\enterpriseArchitecture\IOXMLEAValidator</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="0.8293370944992948" x="40.0" y="279.0" />
-          <SelectedNodes>
-            <node>\app\enterpriseArchitecture\IOXMLParser</node>
-          </SelectedNodes>
-          <Categories>
-            <Category>Fields</Category>
-            <Category>Constants</Category>
-            <Category>Constructors</Category>
-            <Category>Methods</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://PHP/\app\core\Library">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>PHP</ID>
-          <OriginalElement>\app\core\Library</OriginalElement>
-          <nodes>
-            <node x="-8.0" y="0.0">\app\core\Application</node>
-            <node x="-8.0" y="236.0">\app\core\Configuration</node>
-            <node x="-8.0" y="140.0">\app\core\Library</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="-234.0" y="35.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Fields</Category>
-            <Category>Constants</Category>
-            <Category>Constructors</Category>
-            <Category>Methods</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
     <entry file="uml://PHP/\app\lib\Login">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -578,14 +653,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/projects/newProject.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="21" column="66" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/handlers/projects/newProject.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
@@ -593,14 +660,6 @@
           <folding>
             <element signature="e#6#96#0#PHP" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="120" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -624,14 +683,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/lib/Project.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2633">
-          <caret line="64" column="54" selection-start-line="64" selection-start-column="25" selection-end-line="64" selection-end-column="54" />
           <folding />
         </state>
       </provider>
@@ -686,14 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/handlers/models/modelUpload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="581">
-          <caret line="56" column="92" selection-start-line="56" selection-start-column="92" selection-end-line="56" selection-end-column="92" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOExcelCalculatorUpload.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
@@ -728,14 +771,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/projects/projects.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="98" column="110" selection-start-line="98" selection-start-column="12" selection-end-line="98" selection-end-column="110" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/css/models/report.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
@@ -749,16 +784,6 @@
         <state relative-caret-position="629">
           <caret line="57" column="58" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="58" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/handlers/projects/delProject.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="40" column="143" selection-start-line="40" selection-start-column="143" selection-end-line="40" selection-end-column="143" />
-          <folding>
-            <element signature="e#98#119#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -788,38 +813,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="83" column="58" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/lib/ViewController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="699">
-          <caret line="84" column="54" selection-start-line="84" selection-start-column="54" selection-end-line="84" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/models/newModel.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="10" column="47" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/calculators/newCalculator.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOEAExcelCalculator.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
@@ -828,34 +821,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/common/dashboard.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="57" selection-start-line="31" selection-start-column="57" selection-end-line="31" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/lib/Models.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="716">
           <caret line="72" column="84" selection-start-line="66" selection-start-column="7" selection-end-line="72" selection-end-column="84" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/models/models.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="82" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/calculators/calculators.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="45" column="78" selection-start-line="45" selection-start-column="68" selection-end-line="45" selection-end-column="78" />
           <folding />
         </state>
       </provider>
@@ -884,25 +853,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/lib/Calculator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
-          <caret line="71" column="51" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/handlers/models/changeModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
-          <folding>
-            <element signature="e#6#96#0#PHP" expanded="true" />
-            <element signature="e#98#142#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/handlers/calculators/changeCalculator.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -922,11 +872,165 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/projects/newProject.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="21" column="66" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/models/changeModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="true" />
+            <element signature="e#98#142#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/projects/delProject.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/projects/projects.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
           <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/lib/Calculator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="657">
+          <caret line="71" column="51" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/lib/Project.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="56" column="68" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/calculators/calculators.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/models/models.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-644">
+          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="92" column="79" selection-start-line="92" selection-start-column="11" selection-end-line="92" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/models/modelUpload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="112" column="45" selection-start-line="112" selection-start-column="45" selection-end-line="112" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="98" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pageMenus/projects.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pageMenus/models.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="19" selection-start-line="2" selection-start-column="4" selection-end-line="8" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pageMenus/calculators.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="79" selection-start-line="6" selection-start-column="79" selection-end-line="6" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/common/dashboard.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="34" column="57" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/lib/ViewController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="81" column="57" selection-start-line="81" selection-start-column="57" selection-end-line="81" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/models/newModel.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="114" column="19" selection-start-line="108" selection-start-column="3" selection-end-line="114" selection-end-column="19" />
+          <folding>
+            <element signature="e#1853#1941#0#PHP" expanded="true" />
+            <element signature="e#2250#2332#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/calculators/newCalculator.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="111" column="36" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="36" />
+          <caret line="108" column="38" selection-start-line="108" selection-start-column="38" selection-end-line="108" selection-end-column="38" />
+          <folding>
+            <element signature="e#1925#2018#0#PHP" expanded="true" />
+            <element signature="e#2320#2407#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

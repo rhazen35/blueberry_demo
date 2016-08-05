@@ -50,6 +50,12 @@ if( !class_exists( "Project" ) ):
                 case"getAllProjectsByUser":
                     return( $this->getAllProjectsByUser() );
                     break;
+                case"getAllProjectsModelsByUser":
+                    return( $this->getAllProjectsModelsByUser() );
+                    break;
+                case"getAllProjectsCalculatorsByUser":
+                    return( $this->getAllProjectsCalculatorsByUser() );
+                    break;
                 case"getModelIdByProjectId":
                     return( $this->getModelIdByProjectId( $params ) );
                     break;
@@ -64,7 +70,7 @@ if( !class_exists( "Project" ) ):
 
         private function checkProjectExists( $params )
         {
-            $sql         = "CALL checkProjectExists(?)";
+            $sql         = "CALL proc_checkProjectExists(?)";
             $data        = array("name" => $params['name']);
             $format      = array("s");
             $type        = "read";
@@ -206,6 +212,32 @@ if( !class_exists( "Project" ) ):
         {
             $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
             $sql        = "CALL proc_getAllProjectsByUser(?)";
+            $data       = array( "user_id" => $userId );
+            $format     = array("i");
+            $type       = "read";
+
+            $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            return( $returnData );
+        }
+
+        private function getAllProjectsModelsByUser()
+        {
+            $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
+            $sql        = "CALL proc_getAllProjectsModelsByUser(?)";
+            $data       = array( "user_id" => $userId );
+            $format     = array("i");
+            $type       = "read";
+
+            $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            return( $returnData );
+        }
+
+        private function getAllProjectsCalculatorsByUser()
+        {
+            $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
+            $sql        = "CALL proc_getAllProjectsCalculatorsByUser(?)";
             $data       = array( "user_id" => $userId );
             $format     = array("i");
             $type       = "read";

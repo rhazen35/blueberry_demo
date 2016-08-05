@@ -2,35 +2,115 @@
 /**
  * Created by PhpStorm.
  * User: Ruben Hazenbosch
- * Date: 4-8-2016
- * Time: 15:25
+ * Date: 2-8-2016
+ * Time: 18:54
  */
 
 use app\lib\Project;
 
-$projectId   = ( isset( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "" );
-$params      = array( "project_id" => $projectId );
-$projectData = ( new Project( "getProjectById" ) )->request( $params );
+/**
+ * Get the project data to display the project name
+ */
+$projectId      = ( isset( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "" );
+$params         = array( "project_id" => $projectId );
+$projectData    = ( new Project( "getProjectById" ) )->request( $params );
+$projectName    = ( isset( $projectData['name'] ) ? $projectData['name'] : "" );
+
+/**
+ * Setup arrays to populate with projects and projects calculators.
+ * Compare both array's and check if there are projects without a calculator
+ * Store all projects without a calculator in the project select array.
+ */
+$projectsArray            = array();
+$projectSelectArray       = array();
+$projectsCalculatorsArray = array();
+
+$projects            = ( new Project( "getAllProjectsByUser" ) )->request( $params = null );
+$projectsCalculators = ( new Project( "getAllProjectsCalculatorsByUser" ) )->request( $params = null );
+
+$i = 0;
+foreach( $projects as $project ):
+    $projectsArray[$i]['id']   = $project['id'];
+    $projectsArray[$i]['name'] = $project['name'];
+    $i++;
+endforeach;
+
+$j = 0;
+foreach( $projectsCalculators as $projectsCalculator ):
+    $projectsCalculatorsArray[] = $projectsCalculator['project_id'];
+    $j++;
+endforeach;
+
+$k = 0;
+foreach( $projectsArray as $projectArray ):
+    if( !in_array( $projectArray['id'], $projectsCalculatorsArray ) ):
+
+        $projectSelectArray[$k]['id'] = $projectArray['id'];
+        $projectSelectArray[$k]['name'] = $projectArray['name'];
+        $k++;
+    endif;
+endforeach;
+
+/**
+ * Display the project name when available
+ */
 ?>
-
 <div class="newModel-head">
-    <div class="title">Calculator Upload for <?= $projectData['name']; ?></div>
+    <div class="title">Calculator Upload <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
 </div>
-
 <div class="login">
     <div class="image"><img src="images/icons/excel_icon.jpg"></div>
+    <?php
+    /**
+     * Display a message when all projects have a calculator and disable the form
+     */
+    if( empty( $projectSelectArray ) && empty( $projectName ) ):
+        ?><div class="login">All projects have a calculator, go to projects to start a new one.</div><?php
+    endif;
+    ?>
     <form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data">
-        <input type="file" name="excelFile" value="" title="Kies een calculator bestand. (Excel)">
-        <input type="hidden" name="path" value="calculators">
-        <input type="hidden" name="attr" value="calculatorUpload">
-        <input type="submit" name="calculatorFileUploadSubmit" value="Uploaden" title="Upload an calculator file. (Excel)">
+        <?php
+        /**
+         * Only show file select when a project is without a calculator
+         */
+        if( !empty( $projectSelectArray )  ): ?>
+            <input type="file" name="excelFile" id="excelFile" value="" title="Kies een excel bestand.">
+            <input type="hidden" name="path" value="calculators">
+            <input type="hidden" name="attr" value="calculatorUpload">
+            <?php
+        endif;
+        /**
+         * Only show project select when a project name is empty and when a project is without a calculator
+         */
+        if( empty( $projectName ) && !empty( $projectSelectArray ) ): ?>
+            <select name="project">
+                <option name="projectId" value="">Choose a project</option>
+                <?php
+                foreach( $projectsArray as $projectArray ):
+                    if( !in_array( $projectArray['id'], $projectsCalculatorsArray ) ):
+                        ?>
+                        <option name="projectId" value="<?= $projectArray['id']; ?>"><?= $projectArray['name']; ?></option>
+                        <?php
+                    endif;
+                endforeach;
+                ?>
+            </select>
+            <?php
+        endif;
+        /**
+         * Only show submit when a project name isn't empty and when a project is without a calculator
+         */
+        if( !empty( $projectName ) || !empty( $projectSelectArray ) ): ?>
+            <input type="submit" name="excelFileUploadSubmit" value="Uploaden" title="Upload an excel file.">
+        <?php endif; ?>
+
     </form>
 
-    <?php if( isset( $_GET['calculatorUploadInvalidFileExtension'] ) ): ?>
-        <div class="message">Invalid extension. Allowed: .xls and .xlsx</div>
+    <?php if( isset( $_GET['calculatorUploadNoFile'] ) ): ?>
+        <div class="message">Please choose a file.</div>
     <?php else:
-        if( isset( $_GET['calculatorUploadNoFile'] ) ): ?>
-            <div class="message">No file detected, please choose a file.</div>
+        if( isset( $_GET['calculatorUploadNoProject'] ) ): ?>
+            <div class="message">Please choose a project.</div>
         <?php endif; ?>
     <?php endif; ?>
 </div>

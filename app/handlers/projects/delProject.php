@@ -12,13 +12,9 @@ use app\enterpriseArchitecture\IOXMLEAModel;
 use app\enterpriseArchitecture\IOEAExcelCalculator;
 
 $projectId   = ( !empty( $_POST['projectId'] ) ? $_POST['projectId'] : "" );
+$deleteCheck = ( isset( $_POST['deleteCheck'] ) ? $_POST['deleteCheck'] : "" );
 
-if( empty( $projectId ) ):
-
-    header("Location: index.php?delProjectFailed");
-    exit();
-
-else:
+if( !empty( $projectId ) && $deleteCheck === "accepted" ):
 
     $params         = array( "project_id" => $projectId );
     $modelId        = ( new Project( "getModelIdByProjectId" ) )->request( $params );
@@ -44,6 +40,13 @@ else:
 
     ( new Project( "deleteProject" ) )->request( $params );
     header("Location: index.php?projects");
-    exit();
 
+elseif( $deleteCheck === "declined" ):
+    unset($_SESSION['delProjectId']);
+    header("Location: index.php?projects");
+else:
+    $_SESSION['delProjectId'] = $projectId;
+    header("Location: index.php?deleteProjectAccept");
 endif;
+
+exit();

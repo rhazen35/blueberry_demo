@@ -1,6 +1,10 @@
 <div class="title">Calculators</div>
 <nav>
-    <ul>
-        <li><a href="<?= APPLICATION_HOME; ?>?calculators">Calculators</a></li>
-    </ul>
+    <?php if( !isset( $_GET['newCalculator'] )
+        && !isset( $_GET['calculatorUploadNoProject'] )
+        && !isset( $_GET['calculatorUploadNoFile'] ) ): ?>
+        <ul>
+            <li><a href="<?= APPLICATION_HOME; ?>?newCalculator">New calculator</a></li>
+        </ul>
+    <?php endif; ?>
 </nav>
