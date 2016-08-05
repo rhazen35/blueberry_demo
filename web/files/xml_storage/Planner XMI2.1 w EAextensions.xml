@@ -32,8 +32,8 @@
 					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_997236DA_46A9_4290_9E72_A615980D5328" name="Constant DateTime"/>
 					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_980916A6_F012_4781_8168_854D1EFDBCE7" name="Constant Decimal"/>
 					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_3E5300E5_A001_404d_84AE_B696B624BD6D" name="Constant Integer"/>
-					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_8B775652_E698_425f_A86B_FB0EB329AC6C" name="Constant Y/N"/>
 					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_7782B83C_38E4_4699_A8C7_A6C1429B0A3D" name="Constant String"/>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_8B775652_E698_425f_A86B_FB0EB329AC6C" name="Constant Y/N"/>
 				</packagedElement>
 				<packagedElement xmi:type="uml:Package" xmi:id="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" name="Standard Datatypes">
 					<packagedElement xmi:type="uml:DataType" xmi:id="EAID_78899BCE_8291_4534_AC0C_79D77295A318" name="Amount">
@@ -58,8 +58,8 @@
 					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_E9A80923_1619_4a0a_90D6_5A8641498CD6" name="DateTime"/>
 					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_F66CD902_9101_40da_9727_9A611F3D314F" name="Decimal"/>
 					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_3471EEC0_10E5_42cc_8F46_0A6569821F3D" name="Integer"/>
-					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_3F11FC3E_B723_4d14_9004_DCCFB7148AA4" name="Y/N"/>
 					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_6CB11486_230B_4eb4_8451_426BAAE21F8B" name="String"/>
+					<packagedElement xmi:type="uml:PrimitiveType" xmi:id="EAID_3F11FC3E_B723_4d14_9004_DCCFB7148AA4" name="Y/N"/>
 				</packagedElement>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Package" xmi:id="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" name="Structuur">
@@ -190,7 +190,7 @@
 						<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000036__EC07_4334_95BB_3E6DCB348948" value="1"/>
 					</ownedAttribute>
 				</packagedElement>
-				<packagedElement xmi:type="uml:Association" xmi:id="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948">
+				<packagedElement xmi:type="uml:Association" xmi:id="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948" name="Overzicht Uitgaven">
 					<memberEnd xmi:idref="EAID_dstC49492_EC07_4334_95BB_3E6DCB348948"/>
 					<memberEnd xmi:idref="EAID_srcC49492_EC07_4334_95BB_3E6DCB348948"/>
 					<ownedEnd xmi:type="uml:Property" xmi:id="EAID_srcC49492_EC07_4334_95BB_3E6DCB348948" association="EAID_ECC49492_EC07_4334_95BB_3E6DCB348948" aggregation="composite">
@@ -666,20 +666,20 @@
 				<xrefs/>
 				<extendedProperties tagged="0" package_name="Constant Datatypes"/>
 			</element>
-			<element xmi:idref="EAID_8B775652_E698_425f_A86B_FB0EB329AC6C" xmi:type="uml:PrimitiveType" name="Constant Y/N" scope="public">
-				<model package="EAPK_0D67121E_3985_4de7_9397_D2EC5B7C73FF" tpos="0" ea_localid="87" ea_eleType="element"/>
+			<element xmi:idref="EAID_7782B83C_38E4_4699_A8C7_A6C1429B0A3D" xmi:type="uml:PrimitiveType" name="Constant String" scope="public">
+				<model package="EAPK_0D67121E_3985_4de7_9397_D2EC5B7C73FF" tpos="0" ea_localid="88" ea_eleType="element"/>
 				<properties isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
-				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-29 10:35:41" modified="2016-08-01 10:02:52" complexity="1" status="Proposed"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-29 10:35:55" modified="2016-07-29 10:35:55" complexity="1" status="Proposed"/>
 				<code gentype="Java"/>
 				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
 				<tags/>
 				<xrefs/>
 				<extendedProperties tagged="0" package_name="Constant Datatypes"/>
 			</element>
-			<element xmi:idref="EAID_7782B83C_38E4_4699_A8C7_A6C1429B0A3D" xmi:type="uml:PrimitiveType" name="Constant String" scope="public">
-				<model package="EAPK_0D67121E_3985_4de7_9397_D2EC5B7C73FF" tpos="0" ea_localid="88" ea_eleType="element"/>
+			<element xmi:idref="EAID_8B775652_E698_425f_A86B_FB0EB329AC6C" xmi:type="uml:PrimitiveType" name="Constant Y/N" scope="public">
+				<model package="EAPK_0D67121E_3985_4de7_9397_D2EC5B7C73FF" tpos="0" ea_localid="87" ea_eleType="element"/>
 				<properties isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
-				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-29 10:35:55" modified="2016-07-29 10:35:55" complexity="1" status="Proposed"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-29 10:35:41" modified="2016-08-01 10:02:52" complexity="1" status="Proposed"/>
 				<code gentype="Java"/>
 				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
 				<tags/>
@@ -849,16 +849,6 @@
 				<xrefs/>
 				<extendedProperties tagged="0" package_name="Standard Datatypes"/>
 			</element>
-			<element xmi:idref="EAID_3F11FC3E_B723_4d14_9004_DCCFB7148AA4" xmi:type="uml:PrimitiveType" name="Y/N" scope="public">
-				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="79" ea_eleType="element"/>
-				<properties documentation="JA of NEE" isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
-				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 12:33:02" modified="2016-08-01 10:02:42" complexity="1" status="Proposed"/>
-				<code gentype="Java"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="Standard Datatypes" ea_attsclassified="{B50D7A68-6AAD-4023-BFE1-D36876F4A414}"/>
-			</element>
 			<element xmi:idref="EAID_6CB11486_230B_4eb4_8451_426BAAE21F8B" xmi:type="uml:PrimitiveType" name="String" scope="public">
 				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="40" ea_eleType="element"/>
 				<properties documentation="Text of undetermined length of char(s). " isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
@@ -868,6 +858,16 @@
 				<tags/>
 				<xrefs/>
 				<extendedProperties tagged="0" package_name="Standard Datatypes" ea_attsclassified="{C59E6FC2-91BA-4a3c-8A8A-84B49BC48C97},{7C67D51F-D901-444f-B1DC-FB6D8E22A3FE},{76BD3484-7CA7-4fc8-BF57-E8D99BEDC9A2},{A6B25B26-0D76-4afd-8E25-66B238AF2B2B},{7DBF1A9B-D8BB-4970-986D-06E4701FA5DD},{9E2F7833-90C9-4c73-B168-36D694E437A4},{C8B63185-1F16-4615-A4A5-9D1077FF4A97},{D598016A-BF2F-4bc5-9040-12F8AF33CE85},{F99C3F53-1920-469d-9BFF-B85C42180ED7},{633A6CDF-1DC2-4163-B50E-2C2CB8AA09EF},{72E05856-DF33-4ff0-933E-FAE10C2B61B6},{42C8B7C3-74C8-4685-BD8D-13AED1E518CC},{32E0B05D-0E74-44f9-B1FD-72F654898F0A},{B6260F5B-0AB8-441c-BB69-79F7ADFB4ABE},{DAB313F8-1458-4f38-B7BA-44259ED5E1C9},{F0931E21-DE2B-4c3b-8B2B-E16BE1425287}" ea_oprsclassified="{0D1B1E93-F9F0-495f-8E17-C873DAE4D80E},{244E3153-62FC-4e7f-ACA9-B08CE98CE897},{065820D3-62C8-44ac-9D52-FB91BF5E8682}"/>
+			</element>
+			<element xmi:idref="EAID_3F11FC3E_B723_4d14_9004_DCCFB7148AA4" xmi:type="uml:PrimitiveType" name="Y/N" scope="public">
+				<model package="EAPK_D9CDAA93_1C4F_4aa4_B56E_226FF665FFFC" tpos="0" ea_localid="79" ea_eleType="element"/>
+				<properties documentation="JA of NEE" isSpecification="false" sType="PrimitiveType" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 12:33:02" modified="2016-08-01 10:02:42" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Standard Datatypes" ea_attsclassified="{B50D7A68-6AAD-4023-BFE1-D36876F4A414}"/>
 			</element>
 			<element xmi:idref="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" xmi:type="uml:Package" name="Structuur" scope="public">
 				<model package2="EAID_9A3E306B_DAE2_401b_BC64_40E1D04748C9" package="EAPK_BCF6CD47_304C_4638_934A_692F0D1435DE" tpos="0" ea_localid="4" ea_eleType="package"/>
@@ -886,7 +886,7 @@
 			<element xmi:idref="EAID_EF43ED64_B383_4d6f_9C1E_885BA60616D2" xmi:type="uml:Class" name="AOW" scope="public">
 				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="69" ea_eleType="element"/>
 				<properties isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="true" isActive="false"/>
-				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 09:51:03" modified="2016-07-26 09:51:17" complexity="1" status="Proposed"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 09:51:03" modified="2016-08-03 12:16:55" complexity="1" status="Proposed"/>
 				<code product_name="Java" gentype="Java"/>
 				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
 				<tags/>
@@ -1045,7 +1045,7 @@
 			<element xmi:idref="EAID_84C2569D_4E78_4c52_A7C8_840D7F1B2EAF" xmi:type="uml:Class" name="Lijfrentes" scope="public">
 				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="71" ea_eleType="element"/>
 				<properties documentation="Inkomen uit lijfrentes.&#xA;Een lijfrente is een verzekering die bedoeld is om voor een extra stuk inkomen te zorgen. Lijfrentes kunnen direct ingaan, of op een vooraf afgesproken moment ingaan. De duur van de lijfrente uitkering kan tijdelijk zijn of tot aan uw overlijden duren (levenslang). &#xA;Lijfrentes vallen in de zogenaamde derde pijler van het pensioensysteem in Nederland. " isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"/>
-				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 10:16:27" modified="2016-07-26 10:20:21" complexity="1" status="Proposed"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-26 10:16:27" modified="2016-08-03 12:16:55" complexity="1" status="Proposed"/>
 				<code product_name="Java" gentype="Java"/>
 				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
 				<tags/>
@@ -1437,7 +1437,7 @@
 						<documentation value="De eerste berekening. Het resultaat hiervan moet uit Excel komen. Er is nog geen Tagged Value of Stereotype gekoppeld. "/>
 						<tags>
 							<tag xmi:id="EAID_52B0C21B_F0B4_47fa_A84D_1B3184E3400A" name="QR-Excel output" value=" b8      :        , Output, simpel rekenmodel.xlsx"/>
-							<tag xmi:id="EAID_745CF1A9_79FA_46e5_B3FE_BAED43ABB4FA" name="QR-PrintOrder" value="3"/>
+							<tag xmi:id="EAID_745CF1A9_79FA_46e5_B3FE_BAED43ABB4FA" name="QR-PrintOrder" value="5"/>
 						</tags>
 						<parameters>
 							<parameter xmi:idref="EAID_RETURNID_D647_40cd_9672_E55757662D54" visibility="public">
@@ -1463,7 +1463,7 @@
 						<documentation/>
 						<tags>
 							<tag xmi:id="EAID_6EA02EE6_0034_461b_B461_F3DC1A0C6448" name="QR-Excel output" value="    b4   :        , Output, simpel rekenmodel.xlsx"/>
-							<tag xmi:id="EAID_D62DA064_AACE_4dd9_96BB_25A8D643F701" name="QR-PrintOrder" value="3"/>
+							<tag xmi:id="EAID_D62DA064_AACE_4dd9_96BB_25A8D643F701" name="QR-PrintOrder" value="4"/>
 						</tags>
 						<parameters>
 							<parameter xmi:idref="EAID_RETURNID_7FE7_47b1_BDAD_632913525D18" visibility="public">
@@ -1862,8 +1862,8 @@
 				<modifiers isRoot="false" isLeaf="false"/>
 				<documentation/>
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels lb="1..*" rb="1"/>
-				<extendedProperties virtualInheritance="0"/>
+				<labels lb="1..*" mt="Overzicht Uitgaven" rb="1"/>
+				<extendedProperties/>
 				<style/>
 				<xrefs/>
 				<tags/>
@@ -2151,9 +2151,9 @@
 	<thecustomprofile:QR-PrintOrder base_Property="EAID_B50D7A68_6AAD_4023_BFE1_D36876F4A414" QR-PrintOrder="4"/>
 	<thecustomprofile:QR-Excel_input base_Property="EAID_B50D7A68_6AAD_4023_BFE1_D36876F4A414" __EAStereoName="QR-Excel input" QR-Excel_input="   f3    :  F5    , Input, simpel rekenmodel.xlsx"/>
 	<thecustomprofile:QR-PrintOrder base_Class="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42" QR-PrintOrder="2"/>
-	<thecustomprofile:QR-PrintOrder base_Operation="EAID_726C976F_D647_40cd_9672_E55757662D54" QR-PrintOrder="3"/>
+	<thecustomprofile:QR-PrintOrder base_Operation="EAID_726C976F_D647_40cd_9672_E55757662D54" QR-PrintOrder="5"/>
 	<thecustomprofile:QR-Excel_output base_Operation="EAID_726C976F_D647_40cd_9672_E55757662D54" __EAStereoName="QR-Excel output" QR-Excel_output=" b8      :        , Output, simpel rekenmodel.xlsx"/>
-	<thecustomprofile:QR-PrintOrder base_Operation="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" QR-PrintOrder="3"/>
+	<thecustomprofile:QR-PrintOrder base_Operation="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" QR-PrintOrder="4"/>
 	<thecustomprofile:QR-Excel_output base_Operation="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" __EAStereoName="QR-Excel output" QR-Excel_output="    b4   :        , Output, simpel rekenmodel.xlsx"/>
 	<thecustomprofile:QR-PrintOrder base_Class="EAID_12551458_DFD9_49d3_9935_968806A1C98B" QR-PrintOrder="5"/>
 	<thecustomprofile:QR-PrintOrder base_Property="EAID_1A3885C9_4984_46d8_ACC4_2D246711F28E" QR-PrintOrder="4"/>

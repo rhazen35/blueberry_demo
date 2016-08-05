@@ -9,7 +9,8 @@
 use app\lib\Models;
 use app\lib\Project;
 
-$models = ( new Models( "getAllModelsByUser" ) )->request( $params = null );
+$models         = ( new Models( "getAllModelsByUser" ) )->request( $params = null );
+$sessionModelId = ( isset( $_SESSION['model_id'] ) ? $_SESSION['model_id'] : "" );
 
 ?>
 <div class="models">
@@ -22,14 +23,16 @@ $models = ( new Models( "getAllModelsByUser" ) )->request( $params = null );
     <?php
         if( !empty( $models ) ):
             foreach($models as $model):
-                $modelId = $model['id'];
-                $project = ( new Project( "getProjectByModelId" ) )->request( $params = array("model_id" => $modelId) );
-                $projectName = $project['name'];
+
+                $modelId        = $model['id'];
+                $project        = ( new Project( "getProjectByModelId" ) )->request( $params = array("model_id" => $modelId) );
+                $projectName    = ( !empty( $project['name'] ) ? $project['name'] : "<span>Name not found</span>" );
+                $modelName      = ( !empty( $model['name'] ) ? $model['name'] : "<span>Name not found</span>" );
                 ?>
                 <div class="projects-item">
                     <div class="model-item-model">
                         <div class="projects-item-img"><img src="./images/icons/model_icon.png"></div>
-                        <div class="projects-item-project"><?= $model['name']; ?></div>
+                        <div class="projects-item-project"><?= $modelName; ?></div>
                     </div>
                     <div class="model-item-project"><?= $projectName; ?></div>
                     <div class="model-item-valid"><?= $model['valid']; ?></div>
@@ -46,24 +49,57 @@ $models = ( new Models( "getAllModelsByUser" ) )->request( $params = null );
                         </div>
                         <div class="projects-item-modelLink">
                             <form action="<?= APPLICATION_HOME; ?>" method="POST">
-                                <input type="hidden" name="modelId" value="<?= $model['id']; ?>">
+                                <input type="hidden" name="modelId" value="<?= $modelId; ?>">
                                 <input type="hidden" name="path" value="models">
                                 <input type="hidden" name="attr" value="validateModel">
                                 <button name="modelProjectSubmit" type="submit" class="button">validation report</button>
                             </form>
                         </div>
+
+                        <?php if( $modelId != $sessionModelId ): ?>
                         <div class="projects-item-modelLink">
                             <form action="<?= APPLICATION_HOME; ?>" method="POST">
-                                <input type="hidden" name="modelId" value="<?= $model['id']; ?>">
+                                <input type="hidden" name="modelId" value="<?= $modelId; ?>">
+                                <input type="hidden" name="projectId" value="<?= $project['id']; ?>">
+                                <input type="hidden" name="changeCheck" value="changeCheck">
                                 <input type="hidden" name="path" value="models">
                                 <input type="hidden" name="attr" value="changeModel">
                                 <button name="modelProjectSubmit" type="submit" class="button">change</button>
                             </form>
                         </div>
+
+                        <?php elseif( $modelId == $sessionModelId ): ?>
+                            <div class="projects-item-modelLink"><b>Delete this model?</b></div>
+                            <div class="projects-item-modelLink">
+                                <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                                    <input type="hidden" name="modelId" value="<?= $modelId; ?>">
+                                    <input type="hidden" name="projectId" value="<?= $project['id']; ?>">
+                                    <input type="hidden" name="changeCheck" value="accepted">
+                                    <input type="hidden" name="path" value="models">
+                                    <input type="hidden" name="attr" value="changeModel">
+                                    <button name="modelProjectSubmit" type="submit" class="button">yes</button>
+                                </form>
+                            </div>
+                            <div class="projects-item-modelLink">
+                                <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                                    <input type="hidden" name="modelId" value="<?= $modelId; ?>">
+                                    <input type="hidden" name="projectId" value="<?= $project['id']; ?>">
+                                    <input type="hidden" name="changeCheck" value="declined">
+                                    <input type="hidden" name="path" value="models">
+                                    <input type="hidden" name="attr" value="changeModel">
+                                    <button name="modelProjectSubmit" type="submit" class="button">no</button>
+                                </form>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
+
                 <?php
+
             endforeach;
-        endif;
+
+        else: ?>
+            <div class="projects-message">No models available, create a new model in the left panel.</div>
+        <?php endif;
     ?>
 </div>

@@ -26,7 +26,11 @@ $projectData = ( new Project( "getProjectById" ) )->request( $params );
         <input type="submit" name="calculatorFileUploadSubmit" value="Uploaden" title="Upload an calculator file. (Excel)">
     </form>
 
-    <?php if( isset( $_GET['calculatorUploadFailed'] ) ): ?>
-        <div class="message">The uploaded file could not be processed</div>
+    <?php if( isset( $_GET['calculatorUploadInvalidFileExtension'] ) ): ?>
+        <div class="message">Invalid extension. Allowed: .xls and .xlsx</div>
+    <?php else:
+        if( isset( $_GET['calculatorUploadNoFile'] ) ): ?>
+            <div class="message">No file detected, please choose a file.</div>
+        <?php endif; ?>
     <?php endif; ?>
 </div>

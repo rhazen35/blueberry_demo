@@ -26,6 +26,8 @@ if( !class_exists( "Project" ) ):
         public function request( $params )
         {
             switch( $this->type ):
+                case"checkProjectExists":
+                    return( $this->checkProjectExists( $params ) );
                 case"newProject":
                     return( $this->newProject( $params ) );
                     break;
@@ -58,6 +60,21 @@ if( !class_exists( "Project" ) ):
                     $this->deleteProject( $params );
                     break;
             endswitch;
+        }
+
+        private function checkProjectExists( $params )
+        {
+            $sql         = "CALL checkProjectExists(?)";
+            $data        = array("name" => $params['name']);
+            $format      = array("s");
+            $type        = "read";
+            $returnData  = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            foreach( $returnData as $returnDat ):
+                $id      = $returnDat['id'];
+            endforeach;
+
+            return( empty( $id ) ? false : true );
         }
 
         private function newProject( $params )

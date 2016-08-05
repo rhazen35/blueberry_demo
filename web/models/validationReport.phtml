@@ -6,11 +6,15 @@
  * Time: 21:11
  */
 
+use app\enterpriseArchitecture\IOXMLEAModel;
+
 /**
  * Get the last inserted model id
  * The model id is passed to the preview
  */
 $xmlModelId = ( !empty( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
+$model      = ( new IOXMLEAModel( $xmlModelId ) )->getModel();
+$modelName  = ( isset( $model['name'] ) ? $model['name'] : "No name found" );
 /**
  * Get the report session and unserialize it
  */
@@ -27,7 +31,7 @@ endif;
 /**
  * Check if there is an original file name
  */
-if( isset( $report['originalFileName'] ) ): $originalFileName = $report['originalFileName']; else: $originalFileName = ""; endif;
+$originalFileName = ( !empty( $report['originalFileName'] ) ? $report['originalFileName'] : "" );
 
 ?>
 
@@ -43,14 +47,16 @@ if( isset( $report['originalFileName'] ) ): $originalFileName = $report['origina
         </div>
 
         <div class="modelReport-validationInfo">
-            <div class="modelReport-FileName"><strong>Validated file:</strong> <?= $originalFileName; ?></div>
+            <div class="modelReport-FileName">
+                <strong>Validated model:</strong> <?= $modelName; ?>
+            </div>
 
             <?php if( isset( $report['validationDuration'] ) && $report['validationDuration'] !== 0 ): ?>
                 <div class="modelReport-validationDuration">
                     <strong>Validation duration:</strong> <?= $report['validationDuration'].' seconds'; ?>
                 </div>
                 <div class="modelReport-validationDuration">
-                    <a href="<?= APPLICATION_HOME; ?>?model">go to the preview</a>
+                    <a href="<?= APPLICATION_HOME; ?>?model" class="button">go to the preview</a>
                 </div>
             <?php endif; ?>
         </div>

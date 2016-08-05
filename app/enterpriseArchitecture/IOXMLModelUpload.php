@@ -79,18 +79,19 @@ if( !class_exists( "IOXMLModelUpload" ) ):
             $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
             $id          = $output = "";
 
-            $sql        = "CALL proc_newModel(?,?,?,?,?,?,?,?)";
+            $sql        = "CALL proc_newModel(?,?,?,?,?,?,?,?,?)";
             $data       = array(
                                 "id"            => $id,
                                 "user_id"       => $userId,
                                 "name"          => $params['name'],
                                 "hash"          => $this->xmlFile,
+                                "ext"           => $params['extension'],
                                 "valid"         => $params['valid'],
                                 "date"          => $upload_date,
                                 "time"          => $upload_time,
                                 "output"        => $output
                                 );
-            $format     = array("iisssssi");
+            $format     = array("iissssssi");
             $type       = "createWithOutput";
 
             $lastInsertedId = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );

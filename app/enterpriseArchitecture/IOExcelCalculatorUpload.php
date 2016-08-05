@@ -24,11 +24,11 @@ class IOExcelCalculatorUpload
         $this->uploadedAt     = $uploadedAt;
     }
 
-    public function request()
+    public function request( $params )
     {
         switch( $this->type ):
             case"saveCalculator":
-                return( $this->saveCalculator() );
+                return( $this->saveCalculator( $params ) );
                 break;
             case"matchHash":
                 return( $this->matchHash() );
@@ -54,7 +54,7 @@ class IOExcelCalculatorUpload
         endif;
     }
 
-    private function saveCalculator()
+    private function saveCalculator( $params )
     {
         $datetime    = new \DateTime( $this->uploadedAt );
         $upload_date = $datetime->format('Y-m-d');
@@ -62,16 +62,17 @@ class IOExcelCalculatorUpload
         $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
         $id          = $output = "";
 
-        $sql        = "CALL proc_newCalculator(?,?,?,?,?,?)";
+        $sql        = "CALL proc_newCalculator(?,?,?,?,?,?,?)";
         $data       = array(
             "id"            => $id,
             "user_id"       => $userId,
             "hash"          => $this->calculatorFile,
+            "ext"           => $params['extension'],
             "date"          => $upload_date,
             "time"          => $upload_time,
             "output"        => $output
         );
-        $format     = array("iisssi");
+        $format     = array("iissssi");
         $type       = "createWithOutput";
 
         $lastInsertedId = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );

@@ -30,6 +30,9 @@ class Models
             case"getProjectNameByModelId":
                 return( $this->getProjectNameByModelId( $params ) );
                 break;
+            case"deleteModel":
+                ( $this->deleteModel( $params ) );
+                break;
         endswitch;
     }
 
@@ -39,7 +42,6 @@ class Models
         $sql        = "CALL proc_getAllModelsByUser(?)";
         $data       = array( "user_id" => $userId );
         $format     = array("i");
-
         $type       = "read";
 
         $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
@@ -47,18 +49,28 @@ class Models
         return( $returnData );
     }
 
-    public function getProjectNameByModelId( $params )
+    private function getProjectNameByModelId( $params )
     {
         $modelId    = !empty( $params['model_id'] ) ?$params['model_id'] : "";
         $sql        = "CALL proc_getProjectNameByModelId(?)";
         $data       = array( "model_id" => $modelId );
         $format     = array("i");
-
         $type       = "read";
 
         $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
         return( $returnData );
+    }
+
+    private function deleteModel( $params )
+    {
+        $modelId    = !empty( $params['model_id'] ) ?$params['model_id'] : "";
+        $sql        = "CALL proc_deleteModel(?)";
+        $data       = array( "model_id" => $modelId );
+        $format     = array("i");
+        $type       = "delete";
+
+        ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
     }
 
 }

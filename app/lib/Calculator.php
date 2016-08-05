@@ -30,6 +30,9 @@ class Calculator
             case "getAllCalculatorsByUser":
                 return( $this->getAllCalculatorsByUser( $params ) );
                 break;
+            case"deleteCalculator":
+                return( $this->deleteCalculator( $params ) );
+                break;
         endswitch;
     }
 
@@ -61,6 +64,17 @@ class Calculator
         endforeach;
 
         return( $returnArray );
+    }
+
+    private function deleteCalculator( $params )
+    {
+        $calculatorId = !empty( $params['calculator_id'] ) ?$params['calculator_id'] : "";
+        $sql          = "CALL proc_deleteCalculator(?)";
+        $data         = array( "calculator_id" => $calculatorId );
+        $format       = array("i");
+        $type         = "delete";
+
+        ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
     }
 
 }

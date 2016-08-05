@@ -36,10 +36,11 @@ if( !class_exists( "IOXMLEAModel" ) ):
 
                 foreach( $returnData as $data ):
                     $returnArray = array( 'user_id' => $data['user_id'],
-                                          'name' => $data['name'],
-                                          'hash' => $data['hash'],
-                                          'date' => $data['date'],
-                                          'time' => $data['time']
+                                          'name'    => $data['name'],
+                                          'hash'    => $data['hash'],
+                                          'ext'     => $data['ext'],
+                                          'date'    => $data['date'],
+                                          'time'    => $data['time']
                                         );
                 endforeach;
 

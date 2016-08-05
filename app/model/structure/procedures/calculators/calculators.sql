@@ -19,13 +19,14 @@ CREATE PROCEDURE
   IN `calculatorId` INT(11),
   IN `userId` INT(11),
   IN `calculatorHash` VARCHAR(256),
+  IN `calculatorExt` VARCHAR(10),
   IN `calculatorDate` DATE,
   IN `calculatorTime` TIME,
   OUT `InsertId` INT(11)
 )
   BEGIN
-    INSERT INTO calculators (id, user_id, hash, date, time)
-    VALUES(calculatorId, userId, calculatorHash, calculatorDate, calculatorTime);
+    INSERT INTO calculators (id, user_id, hash, ext, date, time)
+    VALUES(calculatorId, userId, calculatorHash, calculatorExt, calculatorDate, calculatorTime);
     SET InsertId = last_insert_id();
     SELECT InsertId;
   END $$
@@ -35,7 +36,7 @@ CREATE PROCEDURE
   IN calculatorId INT(11)
 )
   BEGIN
-    SELECT user_id, hash, date, time FROM calculators WHERE id = calculatorId;
+    SELECT user_id, hash, ext, date, time FROM calculators WHERE id = calculatorId;
   END $$
 
 CREATE PROCEDURE
@@ -51,5 +52,14 @@ CREATE PROCEDURE
   IN userId INT(11)
 )
   BEGIN
-    SELECT id, hash, date, time FROM calculators WHERE user_id = userId;
+    SELECT id, hash, ext, date, time FROM calculators WHERE user_id = userId;
+  END $$
+
+CREATE PROCEDURE
+  `proc_deleteCalculator`(
+  IN calculatorId INT(11)
+)
+  BEGIN
+    DELETE FROM projects_calculators WHERE calculator_id = calculatorId;
+    DELETE FROM calculators WHERE id = calculatorId;
   END $$

@@ -18,7 +18,10 @@
         <input type="submit" name="newProjectSubmit" value="Create project">
     </form>
 
-    <?php if( isset( $_GET['newProjectFailed'] ) ): ?>
-        <div class="message">Something went wrong while creating the project.</div>
+    <?php if( isset( $_GET['newProjectEmptyFields'] ) ): ?>
+        <div class="projects-message-title">There are empty fields.</div>
+    <?php endif; ?>
+    <?php if( isset( $_GET['projectExists'] ) ): ?>
+        <div class="projects-message-title">The project name is already in use.</div>
     <?php endif; ?>
 </div>

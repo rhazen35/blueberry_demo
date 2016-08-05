@@ -31,15 +31,15 @@ class IOEAExcelCalculator
 
         $returnArray = "";
         if( !empty( $returnData ) ):
-
             foreach( $returnData as $data ):
-                $returnArray = array( 'user_id' => $data['user_id'],
-                    'hash' => $data['hash'],
-                    'date' => $data['date'],
-                    'time' => $data['time']
+                $returnArray = array(
+                    'user_id' => $data['user_id'],
+                    'hash'    => $data['hash'],
+                    'ext'     => $data['ext'],
+                    'date'    => $data['date'],
+                    'time'    => $data['time']
                 );
             endforeach;
-
             return( $returnArray );
         else:
             return( false );
@@ -57,11 +57,9 @@ class IOEAExcelCalculator
 
         $returnArray = "";
         if( !empty( $returnData ) ):
-
             foreach( $returnData as $data ):
                 $returnArray = array( 'calculator_id' => $data['id']);
             endforeach;
-
             return( $returnArray );
         else:
             return( false );

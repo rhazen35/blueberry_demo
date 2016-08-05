@@ -16,10 +16,11 @@ $modelId                = ( isset( $_POST['modelId'] ) ? $_POST['modelId'] : "" 
 $_SESSION['xmlModelId'] = $modelId;
 $model                  = ( new IOXMLEAModel( $modelId ) )->getModel();
 $modelHash              = ( isset( $model['hash'] ) ? $model['hash'] : "" );
+$modelExtension         = ( isset( $model['ext'] ) ? $model['ext'] : "" );
 
 if( !empty( $modelHash ) ):
 
-    $xmlFile = 'web/files/xml_models_tmp/'.$modelHash.'.xml';
+    $xmlFile = Library::path('web/files/xml_models_tmp/' . $modelHash . '.' . $modelExtension);
     $report  = ( new IOXMLModelUpload( "validateModel", $xmlFile, $uploadedAt = null ) )->request( $params = null );
 
     $validationEndTime              = Library::microtimeFormat( $validationStartTime );

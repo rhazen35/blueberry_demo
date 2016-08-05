@@ -45,6 +45,12 @@
     font-style: italic;
 }
 
+.modelReport-validationDuration a
+{
+    text-decoration:none;
+    font-style: normal;
+}
+
 .modelReport-exists
 {
     padding:1em;

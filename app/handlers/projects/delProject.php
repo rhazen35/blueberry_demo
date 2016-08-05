@@ -6,6 +6,7 @@
  * Time: 17:22
  */
 
+use app\core\Library;
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAModel;
 use app\enterpriseArchitecture\IOEAExcelCalculator;
@@ -26,16 +27,18 @@ else:
     $calculatorId   = ( isset( $calculatorId['calculator_id'] ) ? $calculatorId['calculator_id'] : "" );
 
     if( !empty( $modelId ) ):
-        $model          = ( new IOXMLEAModel( $modelId ))->getModel();
-        $calculator     = ( new IOEAExcelCalculator( $calculatorId ))->getCalculator();
-        $modelHash      = $model['hash'];
-        $calculatorHash = $calculator['hash'];
+        $model               = ( new IOXMLEAModel( $modelId ))->getModel();
+        $calculator          = ( new IOEAExcelCalculator( $calculatorId ))->getCalculator();
+        $modelHash           = $model['hash'];
+        $calculatorHash      = $calculator['hash'];
+        $modelExtension      = $model['ext'];
+        $calculatorExtension = $calculator['ext'];
 
         $params['model_id']      = $modelId;
         $params['calculator_id'] = $calculatorId;
 
-        unlink( $_SERVER['DOCUMENT_ROOT'].'/web/files/xml_models_tmp/'.$modelHash.'.xml');
-        unlink( $_SERVER['DOCUMENT_ROOT'].'/web/files/excel_calculators_tmp/'.$calculatorHash.'.xlsx');
+        unlink( Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models_tmp/' . $modelHash . '.' . $modelExtension));
+        unlink( Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/excel_calculators_tmp/' . $calculatorHash . '.' . $calculatorExtension));
 
     endif;
 

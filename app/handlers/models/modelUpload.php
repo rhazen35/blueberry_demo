@@ -51,7 +51,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
              */
             $name           = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
             $valid          = ( $report['validation']['valid'] === true ? "yes" : "no" );
-            $params         = array( "name" => $name, "valid" => $valid );
+            $params         = array( "name" => $name, "valid" => $valid, "extension" => $extension );
             $lastInsertedID = ( new IOXMLModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
             /**
              * Store the project id, model id, and user id in the projects_models join table

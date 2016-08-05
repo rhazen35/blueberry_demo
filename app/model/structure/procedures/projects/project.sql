@@ -111,3 +111,11 @@ CREATE PROCEDURE
     DELETE FROM xml_models WHERE id = modelId;
     DELETE FROM projects WHERE id = projectId;
   END $$
+
+CREATE PROCEDURE
+  `checkProjectExists`(
+  IN projectName VARCHAR(100)
+)
+    BEGIN
+      SELECT id FROM projects WHERE name = projectName;
+    END $$

@@ -11,7 +11,7 @@
 .projects-item
 {
     clear:both;
-    height:6em;
+    height:7em;
     font-size:80%;
     border-bottom:1px solid #CCCCCC;
     overflow:hidden;
@@ -54,10 +54,15 @@
     line-height:1em;
 }
 
+.projects-item-project span
+{
+    color:firebrick;
+}
+
 .projects-item-img img
 {
-    width:30px;
-    height:30px;
+    width:40px;
+    height:40px;
 }
 
 .projects-item-descr
@@ -118,6 +123,11 @@
     text-decoration:none;
 }
 
+.projects-item-modelLink b
+{
+    line-height:2em;
+}
+
 .button
 {
     line-height:1.25em;
@@ -145,4 +155,11 @@
 .projects-message
 {
     padding:1em;
+}
+
+.projects-message-title
+{
+    padding:1em;
+    color:firebrick;
+    font-weight:bold;
 }

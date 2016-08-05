@@ -1,13 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="128c66c2-8882-4b07-a84f-eaf6881864b7" name="Default" comment="" />
-=======
     <list default="true" id="128c66c2-8882-4b07-a84f-eaf6881864b7" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/handlers/calculators/changeCalculator.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/handlers/calculators/validateCalculator.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/handlers/models/changeModel.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/calculators/calculator.phtml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/excel_calculators_tmp/1e690d702ad3c1af88ce160dfbaf616ba5276b3b.xlsm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/excel_calculators_tmp/3f44e1f69603fea262c2c371654b23dd02f8bafa.xlsm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/excel_calculators_tmp/6a2aeaaa7974b5c115b05aa23b642f6f2415b16a.xlsx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/excel_calculators_tmp/c739a61c15c6ae84a3e8b045a90810d33e05fba8.docx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/2a4d12af898bc9eb2a13ee137848648c85b9ac02.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/31c11537684b14c79af6557bbdfc1f0c3c7a9dc2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/8d6fbeaccb9679c0ca5b8e660e4b0e771c822410.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/eff265fbd8ecb0043d8798d39bfe26e40cc14808.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_storage/Planner XMI2.4.2 w EAextensions.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOEAExcelCalculator.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOEAExcelCalculator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOExcelCalculatorUpload.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOExcelCalculatorUpload.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/calculators/calculator.php" afterPath="$PROJECT_DIR$/app/handlers/calculators/calculator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" afterPath="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/models/modelUpload.php" afterPath="$PROJECT_DIR$/app/handlers/models/modelUpload.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/models/validateModel.php" afterPath="$PROJECT_DIR$/app/handlers/models/validateModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/projects/delProject.php" afterPath="$PROJECT_DIR$/app/handlers/projects/delProject.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/projects/newProject.php" afterPath="$PROJECT_DIR$/app/handlers/projects/newProject.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/Calculator.php" afterPath="$PROJECT_DIR$/app/lib/Calculator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/Models.php" afterPath="$PROJECT_DIR$/app/lib/Models.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/Project.php" afterPath="$PROJECT_DIR$/app/lib/Project.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/ViewController.php" afterPath="$PROJECT_DIR$/app/lib/ViewController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/tables/calculators/calculators.sql" afterPath="$PROJECT_DIR$/app/model/structure/tables/calculators/calculators.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/tables/models/models.sql" afterPath="$PROJECT_DIR$/app/model/structure/tables/models/models.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/calculators/calculators.phtml" afterPath="$PROJECT_DIR$/web/calculators/calculators.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/calculators/newCalculator.phtml" afterPath="$PROJECT_DIR$/web/calculators/newCalculator.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/common/dashboard.phtml" afterPath="$PROJECT_DIR$/web/common/dashboard.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/models/models.css" afterPath="$PROJECT_DIR$/web/css/models/models.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/models/report.css" afterPath="$PROJECT_DIR$/web/css/models/report.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/projects/projects.css" afterPath="$PROJECT_DIR$/web/css/projects/projects.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/files/xml_storage/Planner XMI2.1 w EAextensions.xml" afterPath="$PROJECT_DIR$/web/files/xml_storage/Planner XMI2.1 w EAextensions.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/models.phtml" afterPath="$PROJECT_DIR$/web/models/models.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/validationReport.phtml" afterPath="$PROJECT_DIR$/web/models/validationReport.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/models.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/models.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/projects/newProject.phtml" afterPath="$PROJECT_DIR$/web/projects/newProject.phtml" />
     </list>
->>>>>>> 037713653b60af3a43394eec3b9ef8db992cb264
     <ignored path="blueberry.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -33,76 +74,13 @@
     <option name="SHOW_TABLE_DETAILS" value="true" />
     <option name="SHOW_EMPTY_GROUPS" value="false" />
     <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="MySQL - blueberry@localhost" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="MySQL - blueberry@localhost" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$GroupNode" />
-      </PATH_ELEMENT>
-    </PATH>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="blueberry" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="model.phtml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/models/model.phtml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-              <folding>
-                <element signature="e#6#97#0#PHP" expanded="true" />
-                <element signature="e#99#143#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dashboard.phtml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/common/dashboard.phtml">
-          <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="784">
-              <caret line="71" column="30" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
-=======
-            <state relative-caret-position="340">
-              <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
->>>>>>> 037713653b60af3a43394eec3b9ef8db992cb264
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="screenFactory.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/css/screenFactory/screenFactory.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -118,46 +96,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="C:/UniServerZ/www/quaratio/web/css/project/project.css" />
-        <option value="$PROJECT_DIR$/app/handlers/projects/delProject.php" />
-        <option value="$PROJECT_DIR$/app/lib/Project.php" />
-        <option value="$PROJECT_DIR$/web/css/models/newModel.css" />
-        <option value="$PROJECT_DIR$/web/css/login/login.css" />
-        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/iOXMLEAValidator.php" />
-        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLParser.php" />
-        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/xmlController.php" />
-        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLPrimitiveTypes.php" />
-        <option value="$PROJECT_DIR$/app/core/Application.php" />
-        <option value="$PROJECT_DIR$/web/css/common/pageInfo.css" />
-        <option value="$PROJECT_DIR$/app/lib/definitions.php" />
-        <option value="C:/UniServerZ/www/quaratio/application/classes/iOXMLEAModel/iOXMLEAModel.php" />
-        <option value="C:/UniServerZ/www/quaratio/application/classes/iOXMLModelUpload/iOXMLModelUpload.php" />
-        <option value="C:/UniServerZ/www/quaratio/application/classes/iOXMLEAValidator/iOXMLEAValidator.php" />
-        <option value="$PROJECT_DIR$/web/css/models/validationReport.phtml" />
-        <option value="$PROJECT_DIR$/web/pageInfo/validatorReport.phtml" />
-        <option value="C:/UniServerZ/www/quaratio/web/tmp/xmlModel/xmlModelReport.phtml" />
-        <option value="C:/UniServerZ/www/quaratio/web/css/xmlModel/xmlModelReport.css" />
-        <option value="$PROJECT_DIR$/web/css/models/report.css" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAValidator.php" />
         <option value="$PROJECT_DIR$/web/pageInfo/newProject.phtml" />
         <option value="$PROJECT_DIR$/web/pageInfo/newModel.phtml" />
         <option value="$PROJECT_DIR$/web/common/default.phtml" />
         <option value="$PROJECT_DIR$/web/css/common/dashboard.css" />
         <option value="$PROJECT_DIR$/web/models/newModel.phtml" />
-        <option value="$PROJECT_DIR$/web/projects/newProject.phtml" />
-        <option value="$PROJECT_DIR$/app/handlers/projects/newProject.php" />
-        <option value="$PROJECT_DIR$/web/models/models.phtml" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelParser.php" />
         <option value="$PROJECT_DIR$/app/model/structure/tables/xmlModel/xmlModel.sql" />
         <option value="$PROJECT_DIR$/app/model/structure/procedures/project/project.sql" />
-        <option value="$PROJECT_DIR$/app/handlers/models/modelUpload.php" />
         <option value="$PROJECT_DIR$/web/pageMenus/models.phtml" />
-        <option value="$PROJECT_DIR$/web/css/projects/projects.css" />
-        <option value="$PROJECT_DIR$/app/model/structure/tables/models/models.sql" />
-        <option value="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" />
-        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" />
         <option value="$PROJECT_DIR$/app/handlers/models/modelPreview.php" />
-        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" />
         <option value="$PROJECT_DIR$/web/css/style.css" />
         <option value="$PROJECT_DIR$/app/enterpriseArchitecture/iOXMLEAScreenFactory.php" />
         <option value="$PROJECT_DIR$/web/pageInfo/xmlModelPreview.phtml" />
@@ -165,10 +114,39 @@
         <option value="$PROJECT_DIR$/web/css/screenFactory/screenFactory.css" />
         <option value="$PROJECT_DIR$/app/handlers/models/model.php" />
         <option value="$PROJECT_DIR$/web/projects/projects.phtml" />
-        <option value="$PROJECT_DIR$/web/models/validationReport.phtml" />
-        <option value="$PROJECT_DIR$/app/lib/ViewController.php" />
         <option value="$PROJECT_DIR$/web/models/model.phtml" />
+        <option value="$PROJECT_DIR$/app/lib/Project.php" />
+        <option value="$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql" />
+        <option value="$PROJECT_DIR$/app/handlers/projects/newProject.php" />
+        <option value="$PROJECT_DIR$/web/projects/newProject.phtml" />
+        <option value="$PROJECT_DIR$/web/pageInfo/models.phtml" />
+        <option value="$PROJECT_DIR$/app/lib/Models.php" />
+        <option value="$PROJECT_DIR$/app/model/structure/tables/models/models.sql" />
+        <option value="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" />
+        <option value="$PROJECT_DIR$/app/handlers/models/modelUpload.php" />
+        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php" />
+        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" />
+        <option value="$PROJECT_DIR$/app/model/structure/tables/calculators/calculators.sql" />
+        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOExcelCalculatorUpload.php" />
+        <option value="$PROJECT_DIR$/app/enterpriseArchitecture/IOEAExcelCalculator.php" />
+        <option value="$PROJECT_DIR$/app/handlers/models/changeModel.php" />
+        <option value="$PROJECT_DIR$/app/handlers/projects/delProject.php" />
+        <option value="$PROJECT_DIR$/app/handlers/models/validateModel.php" />
+        <option value="$PROJECT_DIR$/web/models/validationReport.phtml" />
+        <option value="$PROJECT_DIR$/web/css/models/models.css" />
+        <option value="$PROJECT_DIR$/web/css/models/report.css" />
+        <option value="$PROJECT_DIR$/web/models/models.phtml" />
+        <option value="$PROJECT_DIR$/web/css/projects/projects.css" />
+        <option value="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" />
+        <option value="$PROJECT_DIR$/web/calculators/newCalculator.phtml" />
+        <option value="$PROJECT_DIR$/app/handlers/calculators/validationReport.php" />
+        <option value="$PROJECT_DIR$/app/lib/ViewController.php" />
         <option value="$PROJECT_DIR$/web/common/dashboard.phtml" />
+        <option value="$PROJECT_DIR$/app/lib/Calculator.php" />
+        <option value="$PROJECT_DIR$/app/handlers/calculators/changeCalculator.php" />
+        <option value="$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql" />
+        <option value="$PROJECT_DIR$/web/calculators/calculators.phtml" />
+        <option value="$PROJECT_DIR$/app/handlers/calculators/calculator.php" />
       </list>
     </option>
   </component>
@@ -188,8 +166,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1370" />
-    <option name="height" value="772" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -217,6 +195,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -259,39 +238,12 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blueberry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blueberry" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="diagrams" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -377,38 +329,29 @@
       <workItem from="1470122892282" duration="798000" />
       <workItem from="1470123742298" duration="46422000" />
       <workItem from="1470227314849" duration="634000" />
-<<<<<<< HEAD
       <workItem from="1470238893598" duration="3581000" />
-=======
       <workItem from="1470238893598" duration="3523000" />
       <workItem from="1470244196396" duration="15167000" />
       <workItem from="1470263555729" duration="968000" />
->>>>>>> 037713653b60af3a43394eec3b9ef8db992cb264
+      <workItem from="1470382938728" duration="9000" />
+      <workItem from="1470383598677" duration="17237000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-<<<<<<< HEAD
-    <option name="totallyTimeSpent" value="85886000" />
+    <option name="totallyTimeSpent" value="103132000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
-=======
-    <option name="totallyTimeSpent" value="101963000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1370" height="772" extended-state="1" />
-    <editor active="true" />
->>>>>>> 037713653b60af3a43394eec3b9ef8db992cb264
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19541985" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19936034" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20610687" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20575693" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281493" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -456,321 +399,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/UniServerZ/www/quaratio/application/classes/iOXMLEAValidator/iOXMLEAValidator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="611" column="46" selection-start-line="0" selection-start-column="0" selection-end-line="778" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/models/newModel.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/common/pageInfo.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/UniServerZ/www/quaratio/web/tmp/xmlModel/xmlModelReport.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="3" selection-start-line="0" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/UniServerZ/www/quaratio/web/css/xmlModel/xmlModelReport.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="294" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/models/report.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="169" column="28" selection-start-line="169" selection-start-column="28" selection-end-line="169" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/common/dashboard.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/login/login.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="24" column="19" selection-start-line="22" selection-start-column="3" selection-end-line="24" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/pageInfo/newModel.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="71" selection-start-line="11" selection-start-column="71" selection-end-line="11" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/models/newModel.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="30" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/projects/newProject.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="21" column="77" selection-start-line="21" selection-start-column="77" selection-end-line="21" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/handlers/projects/newProject.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="22" column="48" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/lib/Project.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="84" column="43" selection-start-line="84" selection-start-column="43" selection-end-line="84" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/projects/projects.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="76" column="19" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/structure/procedures/project/project.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="51" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/structure/tables/models/models.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/lib/Models.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/models/models.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="42" column="23" selection-start-line="42" selection-start-column="23" selection-end-line="42" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/structure/procedures/models/models.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="79" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="91" column="41" selection-start-line="91" selection-start-column="41" selection-end-line="91" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLParser.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/XMLController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/UniServerZ/www/quaratio/web/tmp/xmlModel/preview.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="59" column="29" selection-start-line="20" selection-start-column="0" selection-end-line="59" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="105" column="100" selection-start-line="105" selection-start-column="100" selection-end-line="105" selection-end-column="100" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelParser.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="414" column="99" selection-start-line="414" selection-start-column="98" selection-end-line="414" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAValidator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="314" column="83" selection-start-line="314" selection-start-column="73" selection-end-line="314" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/handlers/models/modelUpload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="41" column="60" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/files/xml_storage/Planner XMI2.1 w EAextensions.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-18">
-          <caret line="1205" column="27" selection-start-line="1205" selection-start-column="17" selection-end-line="1205" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/Application.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/common/default.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="581">
-          <caret line="46" column="32" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/pageInfo/validatorReport.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/pageInfo/newProject.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/pageInfo/model.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/iOXMLEAScreenFactory.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="239" column="74" selection-start-line="239" selection-start-column="74" selection-end-line="239" selection-end-column="74" />
-          <folding>
-            <element signature="e#138#182#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/projects/projects.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="55" column="82" selection-start-line="55" selection-start-column="73" selection-end-line="55" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/models/validationReport.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="46" column="59" selection-start-line="46" selection-start-column="59" selection-end-line="46" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/pageMenus/models.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="52" selection-start-line="3" selection-start-column="52" selection-end-line="3" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/lib/ViewController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="69" column="22" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/handlers/models/model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/screenFactory/screenFactory.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/common/dashboard.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/models/modelPreview.phtml" />
-    <entry file="file://$PROJECT_DIR$/web/images/diagrams/diagram.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/web/images/diagrams/diagram.png" />
     <entry file="uml://PHP/\app\enterpriseArchitecture\IOXMLParser">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -788,7 +417,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="0.8293370944992948" x="40.387755102040785" y="279.3877551020408" />
+          <settings layout="Hierarchic Group" zoom="0.8293370944992948" x="40.0" y="279.0" />
           <SelectedNodes>
             <node>\app\enterpriseArchitecture\IOXMLParser</node>
           </SelectedNodes>
@@ -798,6 +427,7 @@
             <Category>Constructors</Category>
             <Category>Methods</Category>
           </Categories>
+          <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
@@ -814,7 +444,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="-234.0" y="34.5" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-234.0" y="35.0" />
           <SelectedNodes />
           <Categories>
             <Category>Fields</Category>
@@ -822,6 +452,7 @@
             <Category>Constructors</Category>
             <Category>Methods</Category>
           </Categories>
+          <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
@@ -840,7 +471,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="0.7587096774193548" x="-25.27380952380952" y="306.32653061224494" />
+          <settings layout="Hierarchic Group" zoom="0.7587096774193548" x="-25.0" y="306.0" />
           <SelectedNodes>
             <node>\app\lib\Login</node>
           </SelectedNodes>
@@ -850,6 +481,7 @@
             <Category>Constructors</Category>
             <Category>Methods</Category>
           </Categories>
+          <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
@@ -864,7 +496,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="-188.0" y="16.5" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-188.0" y="17.0" />
           <SelectedNodes>
             <node>\app\database\Database</node>
           </SelectedNodes>
@@ -874,6 +506,7 @@
             <Category>Constructors</Category>
             <Category>Methods</Category>
           </Categories>
+          <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
@@ -888,7 +521,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="-176.0" y="27.5" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-176.0" y="28.0" />
           <SelectedNodes>
             <node>\app\model\Service</node>
           </SelectedNodes>
@@ -898,6 +531,7 @@
             <Category>Constructors</Category>
             <Category>Methods</Category>
           </Categories>
+          <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
@@ -915,7 +549,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="204.5" y="234.5" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="205.0" y="235.0" />
           <SelectedNodes />
           <Categories>
             <Category>Fields</Category>
@@ -923,31 +557,378 @@
             <Category>Constructors</Category>
             <Category>Methods</Category>
           </Categories>
+          <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/screenFactory/screenFactory.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/Service.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/projects/newProject.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="21" column="66" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/projects/newProject.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="49" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="49" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="759">
+          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="120" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/common/default.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="48" column="38" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/models/modelErrorControl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/core/autoloader.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/lib/Project.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2633">
+          <caret line="64" column="54" selection-start-line="64" selection-start-column="25" selection-end-line="64" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/pageInfo/models.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/structure/tables/models/models.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+          <folding>
+            <marker date="1470398057310" expanded="true" signature="0:325" ph="CREATE TABLE... xml_models" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/core/Application.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="26" column="34" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLModelUpload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1116">
+          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/structure/tables/calculators/calculators.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/models/modelUpload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="56" column="92" selection-start-line="56" selection-start-column="92" selection-end-line="56" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOExcelCalculatorUpload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="74" column="33" selection-start-line="74" selection-start-column="33" selection-end-line="74" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/models/models.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-32">
+          <caret line="44" column="27" selection-start-line="44" selection-start-column="27" selection-end-line="44" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/models/validateModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="22" column="59" selection-start-line="22" selection-start-column="59" selection-end-line="22" selection-end-column="59" />
+          <folding>
+            <element signature="e#98#146#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/projects/projects.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="98" column="110" selection-start-line="98" selection-start-column="12" selection-end-line="98" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/models/report.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/models/validationReport.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="57" column="58" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/projects/delProject.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="40" column="143" selection-start-line="40" selection-start-column="143" selection-end-line="40" selection-end-column="143" />
+          <folding>
+            <element signature="e#98#119#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/projects/projects.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/calculators/validateCalculator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/models/model.phtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-          <folding>
-            <element signature="e#6#97#0#PHP" expanded="true" />
-            <element signature="e#99#143#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/app/handlers/models/modelUpload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="784">
-          <caret line="71" column="30" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
+        <state relative-caret-position="442">
+          <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-=======
->>>>>>> 037713653b60af3a43394eec3b9ef8db992cb264
+    <entry file="file://$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="83" column="58" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/lib/ViewController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="699">
+          <caret line="84" column="54" selection-start-line="84" selection-start-column="54" selection-end-line="84" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/models/newModel.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="10" column="47" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/calculators/newCalculator.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/enterpriseArchitecture/IOEAExcelCalculator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/common/dashboard.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="57" selection-start-line="31" selection-start-column="57" selection-end-line="31" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/lib/Models.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="716">
+          <caret line="72" column="84" selection-start-line="66" selection-start-column="7" selection-end-line="72" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/models/models.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-306">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/calculators/calculators.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="45" column="78" selection-start-line="45" selection-start-column="68" selection-end-line="45" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/calculators/calculator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/calculators/calculator.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/models/model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/lib/Calculator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="631">
+          <caret line="71" column="51" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/models/changeModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="true" />
+            <element signature="e#98#142#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/handlers/calculators/changeCalculator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="73" selection-start-line="22" selection-start-column="73" selection-end-line="22" selection-end-column="73" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="true" />
+            <element signature="e#98#149#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/structure/procedures/models/models.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="674">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="58" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

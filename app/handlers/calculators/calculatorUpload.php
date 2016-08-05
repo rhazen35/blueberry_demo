@@ -23,57 +23,69 @@ if( isset($_FILES) && !empty( $_FILES ) ):
         $newFile            = sha1_file($file);
 
         /**
-         * Check if the calculator already exists
+         * TODO: Validate the file.
          */
-        $returnData = ( new IOExcelCalculatorUpload( "matchHash", $newFile, $uploadedAt ) )->request();
-        if( !empty( $returnData ) ):
-            $matchHash = $returnData[0];
+
+        /**
+         * Check if the extensions are valid
+         */
+        $allowedExtensions = array("xls", "xlsx");
+        if( in_array( $extension, $allowedExtensions ) ):
+
+            /**
+             * Check if the calculator already exists
+             */
+            $returnData = ( new IOExcelCalculatorUpload( "matchHash", $newFile, $uploadedAt ) )->request( $params = null );
+            if( !empty( $returnData ) ):
+                $matchHash = $returnData[0];
+            else:
+                $matchHash = "";
+            endif;
+
+            if( !hash_equals( $newFile, $matchHash ) ):
+
+                /**
+                 * Save the calculator in the database and in the files/excel_calculator_tmp directory
+                 */
+                $params = array( "extension" => $extension );
+                $lastInsertedID = ( new IOExcelCalculatorUpload( "saveCalculator", $newFile, $uploadedAt ) )->request( $params );
+
+                /**
+                 * Store the project id, calculator id, and user id in the projects_calculators join table
+                 */
+                $params = array( "calculator_id" => $lastInsertedID );
+                ( new Project( "saveCalculatorJoinTable" ) )->request( $params );
+
+                /**
+                 * Hash and save the file
+                 */
+                move_uploaded_file(
+                    $_FILES['excelFile']['tmp_name'],
+                    sprintf(APPLICATION_ROOT.'/web/files/excel_calculators_tmp/%s.%s',
+                        sha1_file($_FILES['excelFile']['tmp_name']),
+                        $extension
+                    )) ;
+
+                $_SESSION['calculatorId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
+
+            else:
+                $returnData = ( new IOEAExcelCalculator( $matchHash ) )->getCalculatorIdByHash();
+                $_SESSION['calculatorId'] = ( !empty( $returnData['calculator_id'] ) ? $returnData['calculator_id'] : "" );
+
+            endif;
+
+            header("Location: index.php?calculators");
+
         else:
-            $matchHash = "";
+            header("Location: index.php?calculatorUploadInvalidFileExtension");
         endif;
-
-        if( !hash_equals( $newFile, $matchHash ) ):
-
-            /**
-             * Save the calculator in the database and in the files/excel_calculator_tmp directory
-             */
-            $lastInsertedID = ( new IOExcelCalculatorUpload( "saveCalculator", $newFile, $uploadedAt ) )->request();
-
-            /**
-             * Store the project id, calculator id, and user id in the projects_calculators join table
-             */
-            $params = array( "calculator_id" => $lastInsertedID );
-            ( new Project( "saveCalculatorJoinTable" ) )->request( $params );
-
-            /**
-             * Hash and save the file
-             */
-            move_uploaded_file(
-                $_FILES['excelFile']['tmp_name'],
-                sprintf(APPLICATION_ROOT.'/web/files/excel_calculators_tmp/%s.%s',
-                    sha1_file($_FILES['excelFile']['tmp_name']),
-                    $extension
-                )) ;
-
-            $_SESSION['calculatorId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
-
-        else:
-            $returnData = ( new IOEAExcelCalculator( $matchHash ) )->getCalculatorIdByHash();
-            $_SESSION['calculatorId'] = ( !empty( $returnData['calculator_id'] ) ? $returnData['calculator_id'] : "" );
-
-        endif;
-
-
-        header("Location: index.php?calculators");
-        exit();
 
     else:
-        header("Location: index.php?calculatorUploadFailed");
-        exit();
-
+        header("Location: index.php?calculatorUploadNoFile");
     endif;
 
 else:
-    header("Location: index.php?modelUploadFailed");
-    exit();
+    header("Location: index.php?calculatorUploadNoFile");
 endif;
+
+exit();

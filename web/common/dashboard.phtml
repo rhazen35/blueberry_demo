@@ -13,18 +13,23 @@
         <?php switch( $_GET ):
             case (isset($_GET['projects'])
                 || isset($_GET['newProject'])
-                || isset($_GET['newProjectFailed'])):
+                || isset($_GET['newProjectEmptyFields'])
+                || isset($_GET['projectExists'])):
                 require_once "web/pageMenus/projects.phtml";
                 break;
             case (isset($_GET['models'])
                 || isset($_GET['modelUploadFailed'])
                 || isset($_GET['newModel'])
                 || isset($_GET['xmlEAValidatorReport'])
-                || isset($_GET['model'])):
+                || isset($_GET['model'])
+                || isset($_GET['changeModelAccept'])):
                 require_once "web/pageMenus/models.phtml";
                 break;
             case (isset($_GET['newCalculator'])
-                || isset($_GET['calculators'])):
+                || isset($_GET['calculators'])
+                || isset($_GET['calculatorUploadNoFile'])
+                || isset($_GET['calculatorUploadInvalidFileExtension'])
+                || isset($_GET['changeCalculatorAccept'])):
                 require_once "web/pageMenus/calculators.phtml";
                 break;
         endswitch; ?>
@@ -32,7 +37,8 @@
         <div class="pageInfo">
             <?php switch( $_GET ):
                 case (isset( $_GET['newProject'] )
-                    || isset($_GET['newProjectFailed'])):
+                    || isset($_GET['newProjectEmptyFields'])
+                    || isset($_GET['projectExists'])):
                     require_once "web/pageInfo/newProject.phtml";
                     break;
                 case (isset( $_GET['projects'] )):
@@ -45,16 +51,20 @@
                 case (isset( $_GET['xmlEAValidatorReport'] )):
                     require_once "web/pageInfo/validatorReport.phtml";
                     break;
-                case (isset( $_GET['models'] )):
+                case (isset( $_GET['models'] )
+                    || isset( $_GET['changeModelAccept'] )):
                     require_once "web/pageInfo/models.phtml";
                     break;
                 case (isset( $_GET['model'] )):
                     require_once "web/pageInfo/model.phtml";
                     break;
-                case (isset($_GET['newCalculator'])):
+                case (isset($_GET['newCalculator'])
+                    || isset($_GET['calculatorUploadInvalidFileExtension'])
+                    || isset($_GET['calculatorUploadNoFile'])):
                     require_once "web/pageInfo/newCalculator.phtml";
                     break;
-                case (isset($_GET['calculators'])):
+                case (isset($_GET['calculators'])
+                    || isset($_GET['changeCalculatorAccept'])):
                     require_once "web/pageInfo/calculators.phtml";
                     break;
             endswitch; ?>
