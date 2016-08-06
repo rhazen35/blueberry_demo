@@ -1,33 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="128c66c2-8882-4b07-a84f-eaf6881864b7" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/09862ef5208b69e5d6ea8b53518e6634c8b28a0d.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/8d6fbeaccb9679c0ca5b8e660e4b0e771c822410.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/files/xml_models_tmp/eff265fbd8ecb0043d8798d39bfe26e40cc14808.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" afterPath="$PROJECT_DIR$/app/handlers/calculators/calculatorUpload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/ViewController.php" afterPath="$PROJECT_DIR$/app/lib/ViewController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/calculators/calculators.phtml" afterPath="$PROJECT_DIR$/web/calculators/calculators.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/calculators/newCalculator.phtml" afterPath="$PROJECT_DIR$/web/calculators/newCalculator.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/common/dashboard.phtml" afterPath="$PROJECT_DIR$/web/common/dashboard.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/common/dashboard.css" afterPath="$PROJECT_DIR$/web/css/common/dashboard.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/common/pageInfo.css" afterPath="$PROJECT_DIR$/web/css/common/pageInfo.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/common/pageMenu.css" afterPath="$PROJECT_DIR$/web/css/common/pageMenu.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/model.phtml" afterPath="$PROJECT_DIR$/web/models/model.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/newModel.phtml" afterPath="$PROJECT_DIR$/web/models/newModel.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/calculators.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/calculators.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/model.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/model.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/models.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/models.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/newCalculator.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/newCalculator.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/newModel.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/newModel.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/newProject.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/newProject.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/projects.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/projects.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageInfo/validatorReport.phtml" afterPath="$PROJECT_DIR$/web/pageInfo/validatorReport.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageMenus/calculators.phtml" afterPath="$PROJECT_DIR$/web/pageMenus/calculators.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageMenus/models.phtml" afterPath="$PROJECT_DIR$/web/pageMenus/models.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pageMenus/projects.phtml" afterPath="$PROJECT_DIR$/web/pageMenus/projects.phtml" />
-    </list>
+    <list default="true" id="128c66c2-8882-4b07-a84f-eaf6881864b7" name="Default" comment="" />
     <ignored path="blueberry.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -546,12 +520,12 @@
       <workItem from="1470244196396" duration="15167000" />
       <workItem from="1470263555729" duration="968000" />
       <workItem from="1470382938728" duration="9000" />
-      <workItem from="1470383598677" duration="36882000" />
+      <workItem from="1470383598677" duration="36949000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122777000" />
+    <option name="totallyTimeSpent" value="122844000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
