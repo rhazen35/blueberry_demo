@@ -55,7 +55,7 @@ class IOXMLEAScreenFactory
         if( !empty( $modelData ) ):
 
             if( !empty( $modelData['hash'] ) ):
-                $xmlFile          = 'web/files/xml_models_tmp/'.$modelData['hash'].'.xml';
+                $xmlFile          = 'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
                 $parsedElements   = ( new IOXMLModelParser( $xmlFile ) )->parseXMLClasses();
 
                 $elementNames = $this->extractElementNames( $parsedElements );
