@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/app/model/structure/procedures/calculators/calculators.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/app/model/structure/functions/users/userFunc.paf.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/app/model/structure/procedures/projects/project.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/app/model/structure/procedures/users/users.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/app/model/structure/tables/models/models.sql" dialect="MySQL" />
   </component>
 </project>

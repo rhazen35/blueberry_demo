@@ -107,14 +107,6 @@ CREATE PROCEDURE
   END $$
 
 CREATE PROCEDURE
-  `proc_getCalculatorIdByProjectId`(
-  IN projectId INT(11)
-)
-  BEGIN
-    SELECT calculator_id FROM projects_calculators WHERE project_id = projectId;
-  END $$
-
-CREATE PROCEDURE
 `proc_deleteProject`(
   IN projectId INT(11),
   IN modelId INT(11),

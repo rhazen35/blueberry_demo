@@ -3,10 +3,11 @@ menu
     width:25.5%;
     min-height:900px;
     font-family: "Verdana", "serif";
-    box-shadow: inset 0px 0px 17px 1px #949292;
-    -webkit-box-shadow: inset 0px 0px 17px 1px #949292;
-    -moz-box-shadow: inset 0px 0px 17px 1px #949292;
-    -o-box-shadow: inset 0px 0px 17px 1px #949292;
+    font-size:90%;
+    box-shadow: inset 0px 0px 5px 1px #949292;
+    -webkit-box-shadow: inset 0px 0px 5px 1px #949292;
+    -moz-box-shadow: inset 0px 0px 5px 1px #949292;
+    -o-box-shadow: inset 0px 0px 5px 1px #949292;
 }
 
 menu nav
@@ -29,11 +30,12 @@ menu nav ul li
 
 menu nav ul li a
 {
-    padding:0.25em 1em 0.25em 1em;
+    padding:0.25rem 0.5rem;
     color:#FFFFFF;
     font-size:80%;
     text-decoration:none;
-    background-color:#3498DB;
+    background-color:#8597AD;
+    border-radius:3px;
 }
 
 menu nav ul li a:hover
@@ -46,5 +48,5 @@ menu nav ul li a:hover
     float:left;
     width:0.5%;
     min-height:850px;
-    background-color:#4F86F7;
+    background-color:#404B66;
 }

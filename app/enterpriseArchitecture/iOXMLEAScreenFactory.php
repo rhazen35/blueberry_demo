@@ -209,6 +209,7 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
 
             endif;
 
+            $element .= $class['order']['order'];
             $element .= '</div>';
 
             return( $element );
@@ -229,6 +230,7 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
 
             $element .= $this->createForm( $class );
 
+            $element .= $class['order']['order'];
             $element .= '</div>';
 
             return( $element );
@@ -237,10 +239,20 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
         private function createForm( $class )
         {
 
-            $fields = ( isset( $class['attributes'] ) ? $class['attributes'] : "" );
-            $target = ( isset( $class['target'] ) ? $class['target'] : "" );
+            $target       = ( isset( $class['supertype'] ) ? $class['supertype'] : "" );
+            $targetFields = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
+            $fields       = ( isset( $class['attributes'] ) ? $class['attributes'] : "" );
 
             $form = '<form action="" method="POST">';
+
+            if( !empty( $targetFields ) ):
+
+                foreach($targetFields as $targetField):
+                    $form .= '<div class="">'. $targetField['documentation'] .'</div>';
+                    $form .= $targetField['input_name'] .'<input type="text" name="'. $targetField['input_name'] .'" value="'.$targetField['initialValue'].'">';
+                endforeach;
+
+            endif;
 
             if( !empty( $fields ) ):
 

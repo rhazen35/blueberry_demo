@@ -4,5 +4,32 @@
     height:auto;
     margin:1em auto;
     padding:1em;
-    border:1px solid #404040;
+}
+
+.elementIntro-title
+{
+    padding: 1rem 0 1rem 0;
+    font-weight: bold;
+    font-size:110%;
+}
+
+.elementIntro-txt
+{
+
+}
+
+.elementIntro-subTitle
+{
+    padding: 1rem 0 1rem 0;
+    font-weigth:bold;
+}
+
+.elementIntro-subIntro
+{
+
+}
+
+.element-title
+{
+    font-weight:bold;
 }

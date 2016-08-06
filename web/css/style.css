@@ -17,6 +17,23 @@
 @import "common/footer.css";
 
 
+.donkerPaars
+{
+    color:#393547;
+}
+.blueberry{
+    color:#404B66;
+}
+.lichtBlauw{
+    color: #8597AD;
+}
+.heelLichtGrijs{
+    color: #FAFAFB;
+}
+.viesGroen{
+    color:#96C761;
+}
+
 *
 {
     padding: 0;
@@ -51,8 +68,8 @@ a
     margin: 0 auto;
     margin-bottom: 10em;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-    box-shadow: inset 0px 0px 17px 1px #949292;
-    -webkit-box-shadow: inset 0px 0px 17px 1px #949292;
-    -moz-box-shadow: inset 0px 0px 17px 1px #949292;
-    -o-box-shadow: inset 0px 0px 17px 1px #949292;
+    box-shadow: inset 0px 0px 5px 1px #949292;
+    -webkit-box-shadow: inset 0px 0px 5px 1px #949292;
+    -moz-box-shadow: inset 0px 0px 5px 1px #949292;
+    -o-box-shadow: inset 0px 0px 5px 1px #949292;
 }

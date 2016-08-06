@@ -34,8 +34,8 @@
 .login form
 {
     margin: 0 auto;
-    padding:2em;
-    color:#FFFFFF;
+    padding:1em;
+    color:#000000;
 }
 
 .login form input
@@ -54,7 +54,7 @@
 
 .login .message
 {
-    margin-top:1em;
+    margin-top:0.5em;
     color:firebrick;
     font-weight:bold;
 }

@@ -8,7 +8,13 @@
 
 use app\lib\Project;
 
-echo $projectId              = ( isset( $_POST['projectId'] ) ? $_POST['projectId'] : "" );
+/**
+ * Handle the model request.
+ * Send to upload when no model is linked to the project, otherwise send to the preview.
+ */
+
+$projectId              = ( isset( $_POST['projectId'] ) ? $_POST['projectId'] : "" );
+
 $_SESSION['project_id'] = $projectId;
 $params                 = array("project_id" => $projectId);
 $modelId                = ( new Project( "getModelIdByProjectId" ) )->request( $params );
