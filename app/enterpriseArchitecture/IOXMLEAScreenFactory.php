@@ -17,24 +17,30 @@ class IOXMLEAScreenFactory
 
     protected $xmlModelId;
 
-    public function __construct( $xmlModelId )
+    /**
+     * IOXMLEAScreenFactory constructor.
+     * @param $xmlModelId
+     */
+    public function __construct($xmlModelId )
     {
         $this->xmlModelId = $xmlModelId;
     }
 
-    private function extractElementNames( $parsedElements )
+    /**
+     * @param $parsedElements
+     * @return array
+     */
+    private function extractElementNames($parsedElements )
     {
         $elementNames = array();
 
         foreach( $parsedElements as $parsedElement ):
-
             /**
-             * Get all classes names
+             * Get all the classes names
              */
             if( !empty( $parsedElement['name'] ) ):
                 $elementNames[] = $parsedElement['name'];
             endif;
-
         endforeach;
 
         return($elementNames);
@@ -47,19 +53,21 @@ class IOXMLEAScreenFactory
         endif;
     }
 
+    /**
+     * @return array|bool
+     */
     public function extractAndOrderElements()
     {
-
         $modelData = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
 
         if( !empty( $modelData ) ):
 
             if( !empty( $modelData['hash'] ) ):
+
                 $xmlFile          = 'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
                 $parsedElements   = ( new IOXMLModelParser( $xmlFile ) )->parseXMLClasses();
-
-                $elementNames = $this->extractElementNames( $parsedElements );
-                $orderedElements = array();
+                $elementNames     = $this->extractElementNames( $parsedElements );
+                $orderedElements  = array();
 
                 $i = 0;
                 foreach( $elementNames as $elementName ):
@@ -76,7 +84,6 @@ class IOXMLEAScreenFactory
                     $target         = $this->getMatchingConnector( $idref );
 
                     if( !empty( $order ) ):
-
                         $orderedElements[$i]['model_id']      = $this->xmlModelId;
                         $orderedElements[$i]['name']          = $name;
                         $orderedElements[$i]['idref']         = $idref;
@@ -92,7 +99,7 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['supertype']['id']     = $target['id'];
                             $orderedElements[$i]['supertype']['name']   = $target['name'];
 
-                            $targetClass = $parsedElements[$target['name']];
+                            $targetClass    = $parsedElements[$target['name']];
 
                             $tags           = ( isset( $targetClass['tags'] ) ? $targetClass['tags'] : false );
                             $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
@@ -109,7 +116,6 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['supertype']['attributes']['tags'] = $fieldTags;
                             $orderedElements[$i]['supertype']['operations']         = $operations;
 
-
                         endif;
 
                         $i++;
@@ -123,98 +129,88 @@ class IOXMLEAScreenFactory
                 return( $orderedElements );
 
             else:
-
                 return( false );
-
             endif;
 
         else:
-
             return( false );
-
         endif;
 
     }
 
-    private function getMatchingConnector( $idref )
+    /**
+     * @param $idref
+     * @return array
+     */
+    private function getMatchingConnector($idref )
     {
 
-        $modelData = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
-        $xmlFile   =  'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
-
-        $parsedConnectors = ( new IOXMLModelParser( $xmlFile) )->parseConnectors();
-        $totalConnectors  = count( $parsedConnectors['connectors'] );
+        $modelData          = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
+        $xmlFile            =  'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
+        $parsedConnectors   = ( new IOXMLModelParser( $xmlFile) )->parseConnectors();
+        $totalConnectors    = count( $parsedConnectors['connectors'] );
 
         for( $j = 0; $j < $totalConnectors; $j++ ):
-
             if( $idref === $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'] ):
-
                 if( $parsedConnectors['connectors']['connector'.($j+1)]['properties']['ea_type'] === "Generalization" ):
 
-                    $target = $parsedConnectors['connectors']['connector'.($j+1)]['target']['idref'];
-                    $targetName = $parsedConnectors['connectors']['connector'.($j+1)]['target']['model']['name'];
-
+                    $target      = $parsedConnectors['connectors']['connector'.($j+1)]['target']['idref'];
+                    $targetName  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['model']['name'];
                     $targetArray = array( "id" => $target, "name" => $targetName );
+
                     return( $targetArray );
                     break;
 
                 endif;
-
             endif;
-
         endfor;
 
     }
 
 
-    private function extractAndOrderOperations( $operations )
+    /**
+     * @param $operations
+     * @return array
+     */
+    private function extractAndOrderOperations($operations )
     {
-
-        /**
-         * Order the operations
-         */
         $operationsArray = array();
         $totalOperations = count( $operations );
 
         for( $i = 0; $i < $totalOperations; $i++ ):
-
             $operationName          = $operations['operation'.($i+1)]['name'];
             $operationDocumentation = $operations['operation'.($i+1)]['documentation'];
 
-            $operationsArray[$i]['name'] = $operationName;
+            $operationsArray[$i]['name']          = $operationName;
             $operationsArray[$i]['documentation'] = $operationDocumentation;
-
         endfor;
 
         return( $operationsArray );
 
     }
 
+    /**
+     * @return string
+     */
     public function createIntro()
     {
-
         $class   = $this->xmlModelId;
         $title   = ( isset( $class['name'] ) ? $class['name'] : "" );
         $intro   = ( isset( $class['documentation'] ) ? $class['documentation'] : "" );
 
         $element = '<div class="element">';
 
-        /**
-         * Order the operations
-         */
         if( !empty( $class['operations'] ) ):
 
-            $operations = $class['operations'];
+            $operations        = $class['operations'];
             $orderedOperations = $this->extractAndOrderOperations( $operations );
 
             $element .= '<div class="elementIntro-title">'. $title .'</div>';
             $element .= '<div class="elementIntro-txt"><p>'. $intro .'<p></div>';
 
             foreach( $orderedOperations as $orderedOperation ):
-
                 $element .= '<div class="elementIntro-subTitle">'. $orderedOperation['name'] .'</div>';
                 $element .= '<div class="elementIntro-subIntro"><p>'. $orderedOperation['documentation'] .'</p></div>';
-
             endforeach;
 
             $element .= '<div class="elementIntro-next"><a href="" class="button">Next</a></div>';
@@ -228,9 +224,11 @@ class IOXMLEAScreenFactory
 
     }
 
+    /**
+     * @return string
+     */
     public function createElement()
     {
-
         $class           = $this->xmlModelId;
         $title           = $class['name'];
         $documentation   = $class['documentation'];
@@ -240,16 +238,18 @@ class IOXMLEAScreenFactory
             $element .= '<div class="element-documentation"><p>'. $documentation .'</p></div>';
             $element .= $this->createForm( $class );
 
-        $element .= $class['order']['order'];
-
+            $element .= $class['order']['order'];
         $element .= '</div>';
 
         return( $element );
     }
 
-    private function createForm( $class )
+    /**
+     * @param $class
+     * @return string
+     */
+    private function createForm($class )
     {
-
         $target       = ( isset( $class['supertype'] ) ? $class['supertype'] : "" );
         $targetFields = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
         $fields       = ( isset( $class['attributes'] ) ? $class['attributes'] : "" );
@@ -265,7 +265,7 @@ class IOXMLEAScreenFactory
                     $inputPlaceholder = ( isset( $targetField['initialValue'] ) ? $targetField['initialValue'] : "" );
                     $inputDataType    = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
                     $inputFieldType   = ( new IOXMLEAAttributeTypes( $class['model_id'], $inputDataType ) )->fieldType();
-                    //$form .= var_dump($inputFieldType);
+                    $form .= var_dump($inputFieldType);
 
                     $form .= '<div class="element-input-box">';
                         if( !empty( $inputName ) ):
