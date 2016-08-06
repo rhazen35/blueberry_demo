@@ -21,6 +21,13 @@ class Configuration
             "dbname" => 'blueberry'
         );
 
+//        $dbArray = array(
+//            "dbhost" => '172.21.159.197',
+//            "dbuser" => 'dbm',
+//            "dbpass" => 'em2XSp8AowGwC1t2',
+//            "dbname" => 'blueberry'
+//        );
+
         return( $dbArray );
     }
 

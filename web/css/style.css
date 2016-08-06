@@ -68,8 +68,4 @@ a
     margin: 0 auto;
     margin-bottom: 10em;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-    box-shadow: inset 0px 0px 5px 1px #949292;
-    -webkit-box-shadow: inset 0px 0px 5px 1px #949292;
-    -moz-box-shadow: inset 0px 0px 5px 1px #949292;
-    -o-box-shadow: inset 0px 0px 5px 1px #949292;
 }

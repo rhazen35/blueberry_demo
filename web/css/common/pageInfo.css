@@ -17,10 +17,6 @@
 {
     padding:1.25em;
     font-size:80%;
-    box-shadow: inset 0px 0px 5px 1px #949292;
-    -webkit-box-shadow: inset 0px 0px 5px 1px #949292;
-    -moz-box-shadow: inset 0px 0px 5px 1px #949292;
-    -o-box-shadow: inset 0px 0px 5px 1px #949292;
 }
 
 .pageInfo p img

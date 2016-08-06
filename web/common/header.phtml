@@ -1,9 +1,9 @@
 <header>
     <div class="title">Blueberry</div>
     <?php if( isset( $_SESSION['userId'] ) ): ?>
-        <a href="<?= APPLICATION_LOGOUT; ?>">Logout</a>
+        <a href="<?= APPLICATION_LOGOUT; ?>" class="button">Logout</a>
         <?php if( $_SESSION['userId'] === 22 ): ?>
-            <a href="<?= APPLICATION_REGISTER; ?>">Register</a>
+            <a href="<?= APPLICATION_REGISTER; ?>" class="button">Register</a>
         <?php endif; ?>
     <?php endif; ?>
 </header>

@@ -16,7 +16,7 @@ CREATE TABLE `projects_models`(
   `model_id` INT(11) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (project_id) REFERENCES projects(id),
-  FOREIGN KEY (model_id) REFERENCES xmi_models(id)
+  FOREIGN KEY (model_id) REFERENCES xml_models(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `projects_calculators`(

@@ -4,10 +4,6 @@ menu
     min-height:900px;
     font-family: "Verdana", "serif";
     font-size:90%;
-    box-shadow: inset 0px 0px 5px 1px #949292;
-    -webkit-box-shadow: inset 0px 0px 5px 1px #949292;
-    -moz-box-shadow: inset 0px 0px 5px 1px #949292;
-    -o-box-shadow: inset 0px 0px 5px 1px #949292;
 }
 
 menu nav

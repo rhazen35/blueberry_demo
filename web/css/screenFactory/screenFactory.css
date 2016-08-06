@@ -1,6 +1,7 @@
 .element
 {
     width:80%;
+    min-width:600px;
     height:auto;
     margin:1em auto;
     padding:1em;
@@ -15,7 +16,7 @@
 
 .elementIntro-txt
 {
-
+    font-size:90%;
 }
 
 .elementIntro-subTitle
@@ -26,10 +27,104 @@
 
 .elementIntro-subIntro
 {
+    font-size:90%;
+}
 
+.elementIntro-next
+{
+    clear:both;
+    float:right;
+    margin-right:2em;
+}
+
+.elementIntro-next a
+{
+    text-decoration:none;
 }
 
 .element-title
 {
+    padding: 1rem 0 1rem 0;
     font-weight:bold;
 }
+
+.element-documentation
+{
+    font-size:90%;
+}
+
+.element-form
+{
+    width:80%;
+    margin: 1em auto;
+    padding:1em;
+    color:#000000;
+    border:1px solid #CCCCCC;
+}
+
+.element-input-box
+{
+    clear:both;
+    width:100%;
+    padding:1em;
+}
+
+.element-input-name
+{
+    float:left;
+    width:50%;
+    font-size:90%;
+
+}
+
+.element-form input
+{
+    float:left;
+}
+
+.element-input-hoverImg
+{
+    float:left;
+    padding:0.25em;
+}
+
+.element-input-hoverImg img
+{
+    width:20px;
+    height:20px;
+}
+
+.element-input-hover
+{
+    position:absolute;
+    display:none;
+    width:auto;
+    height:auto;
+    right:2em;
+    margin-top:2em;
+    padding:1em;
+    white-space: pre-line;
+    font-size:80%;
+    color:#FFFFFF;
+    background-color: #404B66;
+}
+
+.element-input-hoverImg:hover + .element-input-hover
+{
+    display:block;
+}
+
+.element-input-submit
+{
+    float:right;
+    margin-right:2em;
+}
+
+.element-input-submit a
+{
+    float:left;
+    margin-right:1em;
+    font-size: 80%;
+    text-decoration:none;
+}
+

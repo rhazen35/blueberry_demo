@@ -10,6 +10,7 @@ namespace app\enterpriseArchitecture;
 
 use app\enterpriseArchitecture\IOXMLEAModel;
 use app\enterpriseArchitecture\IOXMLModelParser;
+use app\enterpriseArchitecture\IOXMLEAAttributeTypes;
 
 if( !class_exists( "IOXMLEAScreenFactory" ) ):
 
@@ -207,6 +208,8 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
 
                 endforeach;
 
+                $element .= '<div class="elementIntro-next"><a href="" class="button">Next</a></div>';
+
             endif;
 
             $element .= $class['order']['order'];
@@ -219,18 +222,17 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
         public function createElement()
         {
 
-            $class   = $this->xmlModelId;
-            $title   = $class['name'];
+            $class           = $this->xmlModelId;
+            $title           = $class['name'];
             $documentation   = $class['documentation'];
 
-            $element = '<div class="element">';
-
-            $element .= '<div class="element-title">'. $title .'</div>';
-            $element .= '<div class="element-documentation"><p>'. $documentation .'</p></div>';
-
-            $element .= $this->createForm( $class );
+            $element  = '<div class="element">';
+                $element .= '<div class="element-title">'. $title .'</div>';
+                $element .= '<div class="element-documentation"><p>'. $documentation .'</p></div>';
+                $element .= $this->createForm( $class );
 
             $element .= $class['order']['order'];
+
             $element .= '</div>';
 
             return( $element );
@@ -243,27 +245,71 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
             $targetFields = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
             $fields       = ( isset( $class['attributes'] ) ? $class['attributes'] : "" );
 
-            $form = '<form action="" method="POST">';
+            $form = '<form action="" method="POST" class="element-form">';
 
             if( !empty( $targetFields ) ):
-
                 foreach($targetFields as $targetField):
-                    $form .= '<div class="">'. $targetField['documentation'] .'</div>';
-                    $form .= $targetField['input_name'] .'<input type="text" name="'. $targetField['input_name'] .'" value="'.$targetField['initialValue'].'">';
-                endforeach;
+                    if( !empty( $targetField ) ):
 
+                        $inputName        = ( isset( $targetField['input_name'] ) ? $targetField['input_name'] : "" );
+                        $inputInfo        = ( isset( $targetField['documentation'] ) ? $targetField['documentation'] : "" );
+                        $inputPlaceholder = ( isset( $targetField['initialValue'] ) ? $targetField['initialValue'] : "" );
+                        $inputDataType    = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
+                        $inputFieldType   = ( new IOXMLEAAttributeTypes( $this->xmlModelId, $inputDataType ) )->fieldType();
+                        //$form .= var_dump($inputFieldType);
+
+                        $form .= '<div class="element-input-box">';
+                            if( !empty( $inputName ) ):
+                                $form .= '<div class="element-input-name">' . $inputName . '</div>';
+                                $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
+                            endif;
+                            if( !empty( $inputInfo ) ):
+                                $form .= '<div class="element-input-hoverImg"><img src="images/icons/info_icon_blue.png"></div>';
+                                $form .= '<div class="element-input-hover">' . $inputInfo . '<br>'.$inputDataType.'</div>';
+                            endif;
+                        $form .= '</div>';
+
+                    endif;
+                endforeach;
             endif;
 
             if( !empty( $fields ) ):
-
                 foreach($fields as $field):
-                    $form .= '<div class="">'. $field['documentation'] .'</div>';
-                    $form .= $field['input_name'] .'<input type="text" name="'. $field['input_name'] .'" value="'.$field['initialValue'].'">';
+                    if( !empty( $field ) ):
+                        $inputName        = ( isset( $field['input_name'] ) ? $field['input_name'] : "" );
+                        $inputInfo        = ( isset( $field['documentation'] ) ? $field['documentation'] : "" );
+                        $inputPlaceholder = ( isset( $field['initialValue'] ) ? $field['initialValue'] : "" );
+                        $inputDataType    = ( isset( $field['data_type'] ) ? $field['data_type'] : "" );
+
+                        $form .= '<div class="element-input-box">';
+                        if( !empty( $inputName ) ):
+                            $form .= '<div class="element-input-name">' . $inputName . '</div>';
+                            $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
+                        endif;
+                        if( !empty( $inputInfo ) ):
+                            $form .= '<div class="element-input-hoverImg"><img src="images/icons/info_icon_blue.png"></div>';
+                            $form .= '<div class="element-input-hover">' . $inputInfo . '<br>'.$inputDataType.'</div>';
+                        endif;
+                        $form .= '</div>';
+
+                    endif;
                 endforeach;
-
-                $form .= '<input type="submit" name="submit" value="Next">';
-
             endif;
+
+            $form .= '<div class="element-input-box">';
+                $form .= '<div class="element-input-submit">';
+                $form .= '<input type="hidden" name="elementOrder" value="' . $class['order']['order'] . '">';
+
+                /**
+                 * TODO: Get the highest order to determine the max element to display previous button
+                 * Display previous button if the class order is bigger then one
+                 */
+                if( $class['order']['order'] > 1 ):
+                    $form .= '<a href="" class="button">previous</a>';
+                endif;
+                $form .= '<input type="submit" name="submit" value="next" class="button">';
+                $form .= '</div>';
+            $form .= '</div>';
 
              $form .= '</form>';
 
