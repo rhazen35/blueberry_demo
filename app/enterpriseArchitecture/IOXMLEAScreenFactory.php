@@ -140,8 +140,9 @@ class IOXMLEAScreenFactory
     {
 
         $modelData = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
+        $xmlFile   =  'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
 
-        $parsedConnectors = ( new IOXMLModelParser( 'web/files/xml_models_tmp/'.$modelData['hash'].'.xml' ) )->parseConnectors();
+        $parsedConnectors = ( new IOXMLModelParser( $xmlFile) )->parseConnectors();
         $totalConnectors  = count( $parsedConnectors['connectors'] );
 
         for( $j = 0; $j < $totalConnectors; $j++ ):
