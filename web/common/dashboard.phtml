@@ -32,7 +32,8 @@
                 || isset($_GET['calculatorUploadNoFile'])
                 || isset($_GET['calculatorUploadInvalidFileExtension'])
                 || isset($_GET['changeCalculatorAccept'])
-                || isset($_GET['calculatorUploadNoProject'])):
+                || isset($_GET['calculatorUploadNoProject'])
+                || isset($_GET['calculatorExists'])):
                 require_once "web/pageMenus/calculators.phtml";
                 break;
         endswitch; ?>
@@ -66,7 +67,8 @@
                 case (isset($_GET['newCalculator'])
                     || isset($_GET['calculatorUploadInvalidFileExtension'])
                     || isset($_GET['calculatorUploadNoFile'])
-                    || isset($_GET['calculatorUploadNoProject'])):
+                    || isset($_GET['calculatorUploadNoProject'])
+                    || isset($_GET['calculatorExists'])):
                     require_once "web/pageInfo/newCalculator.phtml";
                     break;
                 case (isset($_GET['calculators'])

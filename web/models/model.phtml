@@ -6,10 +6,14 @@
  * Time: 20:57
  */
 
+use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAModel;
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 
-$modelId = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
+$modelId     = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
+$params      = array( "model_id" => $modelId );
+$project     = ( new Project( "getProjectByModelId" ) )->request( $params );
+$projectName = ( isset( $project['name'] ) ? $project['name'] : "" );
 
 $orderedElements = ( new IOXMLEAScreenFactory( $modelId ) )->extractAndOrderElements();
 $totalElements   = count( $orderedElements );
@@ -39,6 +43,9 @@ else:
             Due to the ammount of (severe) errors the preview was aborted.
             <br>
             Please change the model and re-validate.
+        </div>
+        <div class="model-noPreview-message">
+            <b>Project:</b> <?= $projectName; ?>
         </div>
     </div>
 <?php endif; ?>

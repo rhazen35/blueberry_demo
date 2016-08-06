@@ -106,11 +106,17 @@ endforeach;
 
     </form>
 
-    <?php if( isset( $_GET['calculatorUploadNoFile'] ) ): ?>
-        <div class="message">Please choose a file.</div>
-    <?php else:
-        if( isset( $_GET['calculatorUploadNoProject'] ) ): ?>
-            <div class="message">Please choose a project.</div>
-        <?php endif; ?>
-    <?php endif; ?>
+    <?php
+        if( isset( $_GET['calculatorUploadNoFile'] ) ):
+            ?><div class="message">Please choose a file.</div><?php
+        else:
+            if( isset( $_GET['calculatorUploadNoProject'] ) ):
+                ?><div class="message">Please choose a project.</div> <?php
+            else:
+                if( isset( $_GET['calculatorExists'] ) ):
+                    ?><div class="message">Calculator already exists.</div><?php
+                endif;
+             endif;
+        endif;
+    ?>
 </div>

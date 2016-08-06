@@ -1,10 +1,7 @@
 <div class="title">Calculators</div>
+<div class="pageMenu-image"><img src="./images/icons/calculator_icon.png"></div>
 <nav>
-    <?php if( !isset( $_GET['newCalculator'] )
-        && !isset( $_GET['calculatorUploadNoProject'] )
-        && !isset( $_GET['calculatorUploadNoFile'] ) ): ?>
-        <ul>
-            <li><a href="<?= APPLICATION_HOME; ?>?newCalculator">New calculator</a></li>
-        </ul>
-    <?php endif; ?>
+    <ul>
+        <li><a href="<?= APPLICATION_HOME; ?>?newCalculator">New calculator</a></li>
+    </ul>
 </nav>

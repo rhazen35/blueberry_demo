@@ -106,11 +106,13 @@ endforeach;
 
     </form>
 
-    <?php if( isset( $_GET['modelUploadNoFile'] ) ): ?>
-        <div class="message">Please choose a file.</div>
-    <?php else:
-        if( isset( $_GET['modelUploadNoProject'] ) ): ?>
-            <div class="message">Please choose a project.</div>
-        <?php endif; ?>
-    <?php endif; ?>
+    <?php
+        if( isset( $_GET['modelUploadNoFile'] ) ):
+            ?><div class="message">Please choose a file.</div><?php
+        else:
+            if( isset( $_GET['modelUploadNoProject'] ) ):
+                ?><div class="message">Please choose a project.</div><?php
+            endif;
+        endif;
+    ?>
 </div>

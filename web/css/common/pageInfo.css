@@ -3,6 +3,16 @@
     border-top:1px solid #CCCCCC;
 }
 
+.pageInfo-title
+{
+    padding:0.25em;
+    padding-left:1em;
+    font-size:80%;
+    font-weight:bold;
+    color:#FFFFFF;
+    background-color:#404040;
+}
+
 .pageInfo p
 {
     padding:1.25em;
@@ -13,12 +23,27 @@
     -o-box-shadow: inset 0px 0px 10px 1px #949292;
 }
 
-.pageInfo-title
+.pageInfo p img
 {
-    padding:0.25em;
-    padding-left:1em;
-    font-size:80%;
-    font-weight:bold;
-    color:#FFFFFF;
-    background-color:#404040;
+    width:100px;
+    height:50px;
+}
+
+.eaImage
+{
+    width:115px !important;
+    height:40px !important;
+    margin-bottom:0.75em;
+}
+
+.xmlImage
+{
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.quaratioImage
+{
+    width:150px !important;
+    height:70px !important;
 }

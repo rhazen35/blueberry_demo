@@ -85,6 +85,9 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 $returnData = ( new IOEAExcelCalculator( $matchHash ) )->getCalculatorIdByHash();
                 $_SESSION['calculatorId'] = ( !empty( $returnData['calculator_id'] ) ? $returnData['calculator_id'] : "" );
 
+                header("Location: index.php?calculatorExists");
+                exit();
+
             endif;
 
             header("Location: index.php?calculators");

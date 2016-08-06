@@ -80,7 +80,8 @@ class ViewController
             case (isset($_GET["newCalculator"])
                 || isset($_GET['calculatorUploadInvalidFileExtension'])
                 || isset($_GET['calculatorUploadNoFile'])
-                || isset($_GET['calculatorUploadNoProject'])):
+                || isset($_GET['calculatorUploadNoProject'])
+                || isset($_GET['calculatorExists'])):
                 $args = array("newCalculator", "calculators");
                 ( new ViewController( ...$args ) )->request();
                 break;

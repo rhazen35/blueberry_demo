@@ -33,7 +33,7 @@ unset($_SESSION['calculator_id']);
 
             ?>
             <div class="projects-item">
-                <div class="model-item-model">
+                <div class="projects-item-name">
                     <div class="projects-item-img"><img src="./images/icons/calculator_icon.png"></div>
                     <div class="projects-item-project"><?= $projectName; ?></div>
                 </div>
@@ -73,7 +73,7 @@ unset($_SESSION['calculator_id']);
                         </div>
 
                     <?php elseif( $calculatorId == $sessionCalculatorId ): ?>
-                        <div class="projects-item-modelLink"><b>Delete this calculator?</b></div>
+                        <div class="projects-item-modelLink"><b>Change this calculator?</b></div>
                         <div class="projects-item-modelLink">
                             <form action="<?= APPLICATION_HOME; ?>" method="POST">
                                 <input type="hidden" name="calculatorId" value="<?= $calculatorId; ?>">
