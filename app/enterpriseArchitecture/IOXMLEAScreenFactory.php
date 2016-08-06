@@ -53,71 +53,80 @@ class IOXMLEAScreenFactory
         $modelData = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
 
         if( !empty( $modelData ) ):
-            $parsedElements   = ( new IOXMLModelParser( 'web/files/xml_models_tmp/'.$modelData['hash'].'.xml' ) )->parseXMLClasses();
 
-            $elementNames = $this->extractElementNames( $parsedElements );
-            $orderedElements = array();
+            if( !empty( $modelData['hash'] ) ):
+                $xmlFile          = 'web/files/xml_models_tmp/'.$modelData['hash'].'.xml';
+                $parsedElements   = ( new IOXMLModelParser( $xmlFile ) )->parseXMLClasses();
 
-            $i = 0;
-            foreach( $elementNames as $elementName ):
+                $elementNames = $this->extractElementNames( $parsedElements );
+                $orderedElements = array();
 
-                $class          = ( isset( $parsedElements[$elementName] ) && $parsedElements[$elementName]['type'] === "uml:Class" ? $parsedElements[$elementName] : "" );
-                $fields         = ( isset( $class['attributes'] ) ? $class['attributes'] : false );
-                $root           = ( isset( $class['Root'] ) ? $class['Root'] : false );
-                $name           = ( isset( $class['name'] ) ? $class['name'] : "" );
-                $tags           = ( isset( $class['tags'] ) ? $class['tags'] : false );
-                $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
-                $documentation  = ( isset( $class['documentation'] ) ? $class['documentation'] : "" );
-                $idref          = ( isset( $class['idref'] ) ? $class['idref'] : "" );
-                $operations     = ( isset( $class['operations'] ) ? $class['operations'] : "" );
-                $target         = $this->getMatchingConnector( $idref );
+                $i = 0;
+                foreach( $elementNames as $elementName ):
 
-                if( !empty( $order ) ):
+                    $class          = ( isset( $parsedElements[$elementName] ) && $parsedElements[$elementName]['type'] === "uml:Class" ? $parsedElements[$elementName] : "" );
+                    $fields         = ( isset( $class['attributes'] ) ? $class['attributes'] : false );
+                    $root           = ( isset( $class['Root'] ) ? $class['Root'] : false );
+                    $name           = ( isset( $class['name'] ) ? $class['name'] : "" );
+                    $tags           = ( isset( $class['tags'] ) ? $class['tags'] : false );
+                    $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
+                    $documentation  = ( isset( $class['documentation'] ) ? $class['documentation'] : "" );
+                    $idref          = ( isset( $class['idref'] ) ? $class['idref'] : "" );
+                    $operations     = ( isset( $class['operations'] ) ? $class['operations'] : "" );
+                    $target         = $this->getMatchingConnector( $idref );
 
-                    $orderedElements[$i]['model_id']      = $this->xmlModelId;
-                    $orderedElements[$i]['name']          = $name;
-                    $orderedElements[$i]['idref']         = $idref;
-                    $orderedElements[$i]['order']         = $order;
-                    $orderedElements[$i]['root']          = $root;
-                    $orderedElements[$i]['documentation'] = $documentation;
-                    $orderedElements[$i]['attributes']    = $fields;
-                    $orderedElements[$i]['operations']    = $operations;
+                    if( !empty( $order ) ):
 
-                    if( !empty( $target ) ):
+                        $orderedElements[$i]['model_id']      = $this->xmlModelId;
+                        $orderedElements[$i]['name']          = $name;
+                        $orderedElements[$i]['idref']         = $idref;
+                        $orderedElements[$i]['order']         = $order;
+                        $orderedElements[$i]['root']          = $root;
+                        $orderedElements[$i]['documentation'] = $documentation;
+                        $orderedElements[$i]['attributes']    = $fields;
+                        $orderedElements[$i]['operations']    = $operations;
 
-                        $orderedElements[$i]['supertype']           = array();
-                        $orderedElements[$i]['supertype']['id']     = $target['id'];
-                        $orderedElements[$i]['supertype']['name']   = $target['name'];
+                        if( !empty( $target ) ):
 
-                        $targetClass = $parsedElements[$target['name']];
+                            $orderedElements[$i]['supertype']           = array();
+                            $orderedElements[$i]['supertype']['id']     = $target['id'];
+                            $orderedElements[$i]['supertype']['name']   = $target['name'];
 
-                        $tags           = ( isset( $targetClass['tags'] ) ? $targetClass['tags'] : false );
-                        $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
-                        $documentation  = ( isset( $targetClass['documentation'] ) ? $targetClass['documentation'] : "" );
-                        $idref          = ( isset( $targetClass['idref'] ) ? $targetClass['idref'] : "" );
-                        $operations     = ( isset( $targetClass['operations'] ) ? $targetClass['operations'] : "" );
-                        $fields         = ( isset( $targetClass['attributes'] ) ? $targetClass['attributes'] : false );
-                        $fieldTags      = ( isset( $targetClass['attributes']['tags'] ) ? $targetClass['attributes']['tags'] : false );
+                            $targetClass = $parsedElements[$target['name']];
 
-                        $orderedElements[$i]['supertype']['idref']              = $idref;
-                        $orderedElements[$i]['supertype']['order']              = $order;
-                        $orderedElements[$i]['supertype']['documentation']      = $documentation;
-                        $orderedElements[$i]['supertype']['attributes']         = $fields;
-                        $orderedElements[$i]['supertype']['attributes']['tags'] = $fieldTags;
-                        $orderedElements[$i]['supertype']['operations']         = $operations;
+                            $tags           = ( isset( $targetClass['tags'] ) ? $targetClass['tags'] : false );
+                            $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
+                            $documentation  = ( isset( $targetClass['documentation'] ) ? $targetClass['documentation'] : "" );
+                            $idref          = ( isset( $targetClass['idref'] ) ? $targetClass['idref'] : "" );
+                            $operations     = ( isset( $targetClass['operations'] ) ? $targetClass['operations'] : "" );
+                            $fields         = ( isset( $targetClass['attributes'] ) ? $targetClass['attributes'] : false );
+                            $fieldTags      = ( isset( $targetClass['attributes']['tags'] ) ? $targetClass['attributes']['tags'] : false );
 
+                            $orderedElements[$i]['supertype']['idref']              = $idref;
+                            $orderedElements[$i]['supertype']['order']              = $order;
+                            $orderedElements[$i]['supertype']['documentation']      = $documentation;
+                            $orderedElements[$i]['supertype']['attributes']         = $fields;
+                            $orderedElements[$i]['supertype']['attributes']['tags'] = $fieldTags;
+                            $orderedElements[$i]['supertype']['operations']         = $operations;
+
+
+                        endif;
+
+                        $i++;
 
                     endif;
 
-                    $i++;
+                endforeach;
 
-                endif;
+                usort( $orderedElements, array( $this,'sortElements' ) );
 
-            endforeach;
+                return( $orderedElements );
 
-            usort( $orderedElements, array( $this,'sortElements' ) );
+            else:
 
-            return( $orderedElements );
+                return( false );
+
+            endif;
 
         else:
 
