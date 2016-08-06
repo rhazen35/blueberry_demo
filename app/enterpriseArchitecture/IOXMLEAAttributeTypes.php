@@ -38,16 +38,20 @@ if( !class_exists( "IOXMLEAAttributeTypes" ) ):
                 $parsedClasses  = ( new IOXMLModelParser( $xmlFile ) )->parseXMLClasses();
             endif;
 
-            foreach( $parsedClasses as $parsedClass ):
+            if( !empty( $parsedClasses ) ):
 
-                if( $parsedClass['name'] === $this->attributeType ):
-                    return($parsedClass['type']);
-                    break;
-                endif;
+                foreach( $parsedClasses as $parsedClass ):
 
-            endforeach;
+                    if( $parsedClass['name'] === $this->attributeType ):
+                        return($parsedClass['type']);
+                        break;
+                    endif;
 
-            return ($parsedClasses);
+                endforeach;
+
+                return ($parsedClasses);
+
+            endif;
 
         }
     }

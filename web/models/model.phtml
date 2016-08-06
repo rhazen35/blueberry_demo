@@ -26,8 +26,8 @@ if( !empty( $orderedElements ) ):
         else:
             $element = ( new IOXMLEAScreenFactory( $orderedElements[$i] ) )->createElement();
             print_r($element);
-//            echo '<pre>';
-//            print_r($orderedElements[$i]);
+            echo '<pre>';
+            print_r($orderedElements[$i]);
         endif;
     endfor;
 else:

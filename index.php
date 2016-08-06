@@ -6,4 +6,4 @@
  * Time: 10:34
  */
 
-header("Location: ./blueberry/web/index.php");
+header("Location: ./web/index.php");
