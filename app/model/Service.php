@@ -43,7 +43,7 @@ if(!class_exists( "Service" )):
 
         public function dbAction( $sql, $data, $format )
         {
-            if ( !in_array( $this->type, ['create', 'createWithOutput', 'read', 'update', 'delete'] ) ):
+            if ( !in_array( $this->type, ['create', 'createWithOutput', 'createDatabase', 'read', 'update', 'delete', 'deleteDatabase'] ) ):
 
                 echo 'Error: An invalid $type was passed to Service::dbAction()! Instantiation aborted!';
                 return( false );
@@ -59,6 +59,9 @@ if(!class_exists( "Service" )):
                         $lastInsertedID = ( new DbCreate( $sql, $this->database ) )->dbInsertOut( $data, $format );
                         return( $lastInsertedID );
                         break;
+                    case"createDatabase":
+                        ( new DbCreate( $sql, $this->database ) )->dbCreateDatabase( $data, $format );
+                        break;
                     case"read":
                         $returnData = ( new DbRead( $sql, $this->database ) )->dbSelect( $data, $format );
                         return($returnData);
@@ -69,7 +72,9 @@ if(!class_exists( "Service" )):
                     case"delete":
                         ( new DbDelete( $sql, $this->database ) )->dbDelete( $data, $format );
                         break;
-
+                    case"deleteDatabase":
+                        ( new DbDelete( $sql, $this->database ) )->dbDeleteDatabase( $data, $format );
+                        break;
                 endswitch;
 
             endif;

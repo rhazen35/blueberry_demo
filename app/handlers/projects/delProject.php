@@ -10,6 +10,7 @@ use app\core\Library;
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAModel;
 use app\enterpriseArchitecture\IOEAExcelCalculator;
+use app\enterpriseArchitecture\XMLEATableFactory;
 
 $projectId   = ( !empty( $_POST['projectId'] ) ? $_POST['projectId'] : "" );
 $deleteCheck = ( isset( $_POST['deleteCheck'] ) ? $_POST['deleteCheck'] : "" );
@@ -26,14 +27,23 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
     $calculatorId   = ( isset( $calculatorId['calculator_id'] ) ? $calculatorId['calculator_id'] : "" );
 
     /**
-     * Check if there is a model id and delete the model file
+     * Check if there is a model id and delete the model file, database and table(s)
      */
     if( !empty( $modelId ) ):
         $model               = ( new IOXMLEAModel( $modelId ))->getModel();
+        $modelName           = ( isset( $model['name'] ) ? $model['name'] : "" );
         $modelHash           = ( isset( $model['hash'] ) ? $model['hash'] : "" );
         $modelExtension      = ( isset( $model['ext'] ) ? $model['ext'] : "" );
 
-        $params['model_id']  = $modelId;
+        /**
+         * Delete the model database and it's table(s)
+         * TODO: get this model database and tables from blueberry db and delete everything!!
+         */
+        $dbName                 = strtolower( str_replace( " ", "_", $modelName ) );
+        $params['name']         = $dbName;
+        $params['model_id']     = $modelId;
+
+        ( new XMLEATableFactory( "delete" ) )->request( $params );
 
         if( !empty( $modelHash ) && !empty( $modelExtension ) ):
             unlink( Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models_tmp/' . $modelHash . '.' . $modelExtension));

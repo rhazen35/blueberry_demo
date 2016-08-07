@@ -112,6 +112,8 @@ endforeach;
         else:
             if( isset( $_GET['modelUploadNoProject'] ) ):
                 ?><div class="message">Please choose a project.</div><?php
+            elseif( isset( $_GET['modelUploadNameExists'] ) ):
+                    ?><div class="message">Model name is already in use.</div><?php
             endif;
         endif;
     ?>

@@ -8,11 +8,6 @@
 
 namespace app\enterpriseArchitecture;
 
-use app\enterpriseArchitecture\IOXMLParser;
-use app\enterpriseArchitecture\IOXMLModelParser;
-use app\enterpriseArchitecture\IOXMLPrimitiveTypes;
-
-
 if( !class_exists( "IOXMLEAValidator" ) ):
 
     class IOXMLEAValidator
@@ -48,7 +43,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
             /**
              * Check if the file is a xml
              */
-            $isXML = ( new IOXMLParser( $this->xmlFile ) )->isXML();
+            $isXML = ( new IOXMLEAParser( $this->xmlFile ) )->isXML();
 
             if( $isXML === true ):
                 $type = "valid";
@@ -71,7 +66,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
              */
             if( $isXML === true ):
 
-                $parsedExtensionInfo = ( new IOXMLModelParser( $this->xmlFile ) )->parseModelExtensionInfo();
+                $parsedExtensionInfo = ( new IOXMLEAModelParser( $this->xmlFile ) )->parseModelExtensionInfo();
                 $extension           = $parsedExtensionInfo['model']['extender_info']['extender'];
                 $extensionVersion    = $parsedExtensionInfo['model']['extender_info']['extenderID'];
                 $xmi_version         = $parsedExtensionInfo['model']['xmi_version'];
@@ -146,8 +141,8 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                  * Parse the classes and count them
                  * Check if at least one class can be found
                  */
-                $parsedClasses    = ( new IOXMLModelParser( $this->xmlFile ) )->parseXMLClasses();
-                $parsedConnectors = ( new IOXMLModelParser( $this->xmlFile ) )->parseConnectors();
+                $parsedClasses    = ( new IOXMLEAModelParser( $this->xmlFile ) )->parseXMLClasses();
+                $parsedConnectors = ( new IOXMLEAModelParser( $this->xmlFile ) )->parseConnectors();
 
                 $totalConnectors  = count( $parsedConnectors['connectors'] );
                 $totalClasses     = count( $parsedClasses );
@@ -444,7 +439,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                     /**
                                      * Validate the initial value by matching it with the data type.
                                      */
-                                    $validInitialValue = ( new IOXMLPrimitiveTypes( $attribute['data_type'], $attribute['initialValue'] ) )->validate();
+                                    $validInitialValue = ( new IOXMLEAPrimitiveTypes( $attribute['data_type'], $attribute['initialValue'] ) )->validate();
 
                                     if( isset( $attribute['documentation'] ) && $attribute['documentation'] === ""  ):
 

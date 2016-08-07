@@ -6,7 +6,7 @@
  * Time: 20:19
  */
 
-use app\enterpriseArchitecture\IOXMLModelUpload;
+use app\enterpriseArchitecture\IOXMLEAModelUpload;
 use app\enterpriseArchitecture\IOXMLEAModel;
 use app\core\Library;
 
@@ -21,7 +21,7 @@ $modelExtension         = ( isset( $model['ext'] ) ? $model['ext'] : "" );
 if( !empty( $modelHash ) ):
 
     $xmlFile = Library::path('web/files/xml_models_tmp/' . $modelHash . '.' . $modelExtension);
-    $report  = ( new IOXMLModelUpload( "validateModel", $xmlFile, $uploadedAt = null ) )->request( $params = null );
+    $report  = ( new IOXMLEAModelUpload( "validateModel", $xmlFile, $uploadedAt = null ) )->request( $params = null );
 
     $validationEndTime              = Library::microtimeFormat( $validationStartTime );
     $report['validationDuration']   = $validationEndTime;

@@ -7,6 +7,7 @@
  */
 
 use app\enterpriseArchitecture\IOXMLEAModel;
+use app\enterpriseArchitecture\XMLEATableFactory;
 use app\lib\Models;
 
 $changeCheck = ( isset( $_POST['changeCheck'] ) ? $_POST['changeCheck'] : "" );
@@ -19,11 +20,21 @@ $modelId     = ( isset( $_POST['modelId'] ) ? $_POST['modelId'] : "" );
 if( !empty( $modelId ) && $changeCheck === "accepted" ):
 
     $model                  = ( new IOXMLEAModel( $modelId ))->getModel();
+    $modelName              = ( isset( $model['name'] ) ? $model['name'] : "" );
     $modelHash              = ( isset( $model['hash'] ) ? $model['hash'] : "" );
     $modelExtension         = ( isset( $model['ext'] ) ? $model['ext'] : "" );
     $_SESSION['project_id'] = ( !empty( $projectId ) ? $projectId : "" );
 
+    /**
+     * Delete the model database and it's table(s)
+     * TODO: get this model database and tables from blueberry db and delete everything!!
+     */
+    $dbName                 = strtolower( str_replace( " ", "_", $modelName ) );
+    $params['name']         = $dbName;
     $params['model_id']     = $modelId;
+
+    ( new XMLEATableFactory( "delete" ) )->request( $params );
+
     /**
      * Check if the model hash and extension are available and delete the file
      */

@@ -1018,7 +1018,7 @@
 				<extendedProperties tagged="0" package_name="Structuur"/>
 				<attributes>
 					<attribute xmi:idref="EAID_6D342CC2_F40B_433c_8218_24968F78AD5E" name="Bedrag" scope="Private">
-						<initial/>
+						<initial body="0.00"/>
 						<documentation value="Het netto, maandelijkse bedrag als inkomen. "/>
 						<model ea_localid="6" ea_guid="{6D342CC2-F40B-433c-8218-24968F78AD5E}"/>
 						<properties type="Amount" collection="false" duplicates="0" changeability="changeable"/>
@@ -1242,8 +1242,8 @@
 				<extendedProperties tagged="0" package_name="Structuur"/>
 				<attributes>
 					<attribute xmi:idref="EAID_05BBB8A5_F61A_42c2_A751_5A806617B1AD" name="Bedrag" scope="Private">
-						<initial/>
-						<documentation/>
+						<initial body="0.00"/>
+						<documentation value="Het bestede bedrag"/>
 						<model ea_localid="21" ea_guid="{05BBB8A5-F61A-42c2-A751-5A806617B1AD}"/>
 						<properties type="Amount" collection="false" duplicates="0" changeability="changeable"/>
 						<coords ordered="0"/>
@@ -1278,7 +1278,7 @@
 						<xrefs/>
 					</attribute>
 					<attribute xmi:idref="EAID_D399AF34_E00B_4f3f_B853_22EDBDD3D660" name="Tot Datum" scope="Private">
-						<initial/>
+						<initial body="dd-mm-yyyy"/>
 						<documentation value="Datum tot waaraan de kosten lopen. &#xA;&#xA;Bijvoorbeeld: hypotheekkosten hebben meestal een looptijd van maximaal 30 jaar. Na die periode is uw hypotheek afgelost en komen deze kosten te vervallen. &#xA;&#xA;Indien u niets invult, wordt er geen einddatum gebruikt voor deze kostensoort en zullen de kosten voor altijd doorlopen. "/>
 						<model ea_localid="43" ea_guid="{D399AF34-E00B-4f3f-B853-22EDBDD3D660}"/>
 						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
@@ -1296,7 +1296,7 @@
 						<xrefs/>
 					</attribute>
 					<attribute xmi:idref="EAID_080262C2_536C_4294_A54D_397EC5E0A8A7" name="Vanaf Datum" scope="Private">
-						<initial/>
+						<initial body="dd-mm-yyyy"/>
 						<documentation value="Datum vanaf wanneer de uitgaven loopt. &#xA;Indien u niets invult worden deze uitgaven vanaf nu berekend. "/>
 						<model ea_localid="42" ea_guid="{080262C2-536C-4294-A54D-397EC5E0A8A7}"/>
 						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
@@ -1329,7 +1329,7 @@
 				<extendedProperties tagged="0" package_name="Structuur"/>
 				<attributes>
 					<attribute xmi:idref="EAID_E62161E2_CB59_458e_AC5B_CE1C1B5E5E2A" name="Tot Datum" scope="Private">
-						<initial/>
+						<initial body="dd-mm-yyyy"/>
 						<documentation value="Datum tot wanneer de uitkering loopt. Indien hier niets wordt ingevuld, wordt als uitgangspunt gehanteerd dat de uitkering doorloopt tot aan de pensioendatum van uw AOW. "/>
 						<model ea_localid="60" ea_guid="{E62161E2-CB59-458e-AC5B-CE1C1B5E5E2A}"/>
 						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
@@ -1500,7 +1500,7 @@
 				<extendedProperties tagged="0" package_name="Persoonstructuren"/>
 				<attributes>
 					<attribute xmi:idref="EAID_1A3885C9_4984_46d8_ACC4_2D246711F28E" name="Scheidingsdatum" scope="Private">
-						<initial/>
+						<initial body="dd-mm-yyyy"/>
 						<documentation value="Datum waarop u gescheiden bent, indien u niet gescheiden bent, vult u hier niets in. "/>
 						<model ea_localid="67" ea_guid="{1A3885C9-4984-46d8-ACC4-2D246711F28E}"/>
 						<properties type="Date" collection="false" duplicates="0" changeability="changeable"/>
@@ -1534,7 +1534,7 @@
 				<extendedProperties tagged="0" package_name="Persoonstructuren"/>
 				<attributes>
 					<attribute xmi:idref="EAID_2E63BDEE_F696_4078_ACBE_F0E017947FDB" name="Geboortedatum" scope="Private">
-						<initial/>
+						<initial body="dd-mm-yyyy"/>
 						<documentation value="Uw geboortedatum hebben we nodig om een projectie van uw inkomen in de tijd te kunnen maken. "/>
 						<model ea_localid="61" ea_guid="{2E63BDEE-F696-4078-ACBE-F0E017947FDB}"/>
 						<properties type="Date" derived="0" precision="0" collection="false" length="0" duplicates="0" changeability="changeable"/>

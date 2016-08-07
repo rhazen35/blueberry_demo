@@ -8,12 +8,9 @@
 
 namespace app\enterpriseArchitecture;
 
-use app\enterpriseArchitecture\XMLController;
+if( !class_exists( "IOXMLEAModelParser" ) ):
 
-
-if( !class_exists( "IOXMLModelParser" ) ):
-
-    class IOXMLModelParser
+    class IOXMLEAModelParser
     {
 
         protected $xmlFile;
@@ -166,7 +163,7 @@ if( !class_exists( "IOXMLModelParser" ) ):
                             $type         = (string) $element->attributes( $xmiNamespace )->type;
                             $idref        = (string) $element->attributes( $xmiNamespace )->idref;
 
-                            /** Namespaced type and idref to class array*/
+                            /** Namespaced type and idref to class array */
                             $classArray[$className]['type']  = $type;
                             $classArray[$className]['idref'] = $idref;
 
@@ -190,11 +187,8 @@ if( !class_exists( "IOXMLModelParser" ) ):
                                     $order   = (string) $element->tags->tag[$l]->attributes()->value;
 
                                     if( !empty( $order ) ):
-
                                         $classArray[$className]['tags'][$tagName]['order']      = trim( $order );
                                         $classArray[$className]['tags'][$tagName]['className']   = trim( $className );
-
-
                                     endif;
 
                                 endfor;

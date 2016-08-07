@@ -7,6 +7,14 @@ CREATE PROCEDURE
   END $$
 
 CREATE PROCEDURE
+`proc_checkModelNameExists`(
+  IN modelName VARCHAR(100)
+)
+  BEGIN
+    SELECT name FROM xml_models WHERE name = modelName;
+  END $$
+
+CREATE PROCEDURE
   `proc_newModel`(
   IN `modelId` INT(11),
   IN `userId` INT(11),
@@ -55,5 +63,6 @@ CREATE PROCEDURE
 )
   BEGIN
     DELETE FROM projects_models WHERE model_id = modelId;
+    DELETE FROM xml_models_db WHERE model_id = modelId;
     DELETE FROM xml_models WHERE id = modelId;
   END $$

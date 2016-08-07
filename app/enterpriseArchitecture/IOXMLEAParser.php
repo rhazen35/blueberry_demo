@@ -11,9 +11,9 @@
 
 namespace app\enterpriseArchitecture;
 
-if( !empty( "IOXMLParser" ) ):
+if( !empty( "IOXMLEAParser" ) ):
 
-    class IOXMLParser
+    class IOXMLEAParser
     {
 
         protected $xml;
