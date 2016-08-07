@@ -96,7 +96,7 @@ if(!class_exists( "Create" )):
                 $format = str_replace( '%', '', $format );
 
                 array_unshift( $data, $format );
-                call_user_func_array( array( $stmt, 'bind_param' ), ( new Database( "" ) )->referenceValues( $data ) );
+                call_user_func_array( array( $stmt, 'bind_param' ), ( new Database(  ) )->referenceValues( $data ) );
             endif;
 
             $stmt->execute();

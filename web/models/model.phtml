@@ -15,8 +15,8 @@ $project         = ( new Project( "getProjectByModelId" ) )->request( $params );
 $projectName     = ( isset( $project['name'] ) ? $project['name'] : "" );
 $orderedElements = ( new IOXMLEAScreenFactory( $modelId ) )->extractAndOrderElements();
 $totalElements   = count( $orderedElements );
-echo $highestOrder    = ( !empty( $orderedElements['highestOrder']['order'] ) ? $orderedElements['highestOrder']['order'] : "" );
-echo $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
+$highestOrder    = ( !empty( $orderedElements['highestOrder']['order'] ) ? $orderedElements['highestOrder']['order'] : "" );
+$currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
 
 if( $currentPage <= $highestOrder ):
 

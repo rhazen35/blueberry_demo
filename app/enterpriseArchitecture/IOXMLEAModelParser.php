@@ -187,11 +187,8 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                                     $order   = (string) $element->tags->tag[$l]->attributes()->value;
 
                                     if( !empty( $order ) ):
-
                                         $classArray[$className]['tags'][$tagName]['order']      = trim( $order );
                                         $classArray[$className]['tags'][$tagName]['className']   = trim( $className );
-
-
                                     endif;
 
                                 endfor;

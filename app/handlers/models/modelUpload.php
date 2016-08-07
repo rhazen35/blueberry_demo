@@ -63,6 +63,10 @@ if( isset($_FILES) && !empty( $_FILES ) ):
              * XML will be validated and a report is returned
              */
             $report = ( new IOXMLEAModelUpload( "validateModel", $xmlFile, $uploadedAt ) )->request( $params = null );
+
+            $validationEndTime              = Library::microtimeFormat( $validationStartTime );
+            $report['validationDuration']   = $validationEndTime;
+            $_SESSION['xmlValidatorReport'] = serialize( $report );
             /**
              * Add the original file name to the report array
              */
@@ -101,11 +105,6 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 $returnData             = ( new IOXMLEAModel( $matchHash ) )->getModelIdByHash();
                 $_SESSION['xmlModelId'] = ( !empty( $returnData['model_id'] ) ? $returnData['model_id'] : "" );
             endif;
-
-
-            $validationEndTime              = Library::microtimeFormat( $validationStartTime );
-            $report['validationDuration']   = $validationEndTime;
-            $_SESSION['xmlValidatorReport'] = serialize( $report );
 
             header("Location: index.php?xmlEAValidatorReport");
             exit();
