@@ -163,7 +163,7 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                             $type         = (string) $element->attributes( $xmiNamespace )->type;
                             $idref        = (string) $element->attributes( $xmiNamespace )->idref;
 
-                            /** Namespaced type and idref to class array*/
+                            /** Namespaced type and idref to class array */
                             $classArray[$className]['type']  = $type;
                             $classArray[$className]['idref'] = $idref;
 

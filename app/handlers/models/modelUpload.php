@@ -8,6 +8,7 @@
 
 use app\enterpriseArchitecture\IOXMLEAModelUpload;
 use app\enterpriseArchitecture\IOXMLEAModel;
+use app\enterpriseArchitecture\XMLEATableFactory;
 use app\lib\Project;
 use app\core\Library;
 
@@ -73,11 +74,11 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 /**
                  * Save the model in the database and in the files/xml_models_tmp directory
                  */
-                $name           = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
-                $valid          = ( $report['validation']['valid'] === true ? "yes" : "no" );
-                $params         = array( "name" => $name, "valid" => $valid, "extension" => $extension );
-                $lastInsertedID = ( new IOXMLEAModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
-
+                $name                   = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
+                $valid                  = ( $report['validation']['valid'] === true ? "yes" : "no" );
+                $params                 = array( "name" => $name, "valid" => $valid, "extension" => $extension );
+                $lastInsertedID         = ( new IOXMLEAModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
+                $_SESSION['xmlModelId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
                 /**
                  * Store the project id, model id, and user id in the projects_models join table
                  */
@@ -86,14 +87,14 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 /**
                  * Hash and save the file
                  */
-                move_uploaded_file(
-                    $_FILES['xmlFile']['tmp_name'],
-                    sprintf(APPLICATION_ROOT.'/web/files/xml_models_tmp/%s.%s',
-                        sha1_file($_FILES['xmlFile']['tmp_name']),
-                        $extension
-                    )) ;
-
-                $_SESSION['xmlModelId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
+                move_uploaded_file( $_FILES['xmlFile']['tmp_name'], sprintf( APPLICATION_ROOT.'/web/files/xml_models_tmp/%s.%s', sha1_file( $_FILES['xmlFile']['tmp_name'] ), $extension ) );
+                /**
+                 * Create tables for the elements with the type of uml:Class
+                 */
+                if( !empty( $name ) ):
+                    $params = array( "model_id" => $lastInsertedID, "model_name" => $name );
+                    ( new XMLEATableFactory( "create" ) )->request( $params );
+                endif;
 
             else:
                 $report['file_exists']  = true;

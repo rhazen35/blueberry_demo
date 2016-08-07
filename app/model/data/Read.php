@@ -31,10 +31,9 @@ if(!class_exists( "Read" )):
         /**
          * @param $data
          * @param $format
-         * @return bool|\mysqli_result
+         * @return array|bool
          */
-
-        public function  dbSelect( $data, $format )
+        public function  dbSelect($data, $format )
         {
             $mysqli     = ( new Database( $this->database ) )->dbConnect();
             $stmt       = $mysqli->prepare( $this->sql );

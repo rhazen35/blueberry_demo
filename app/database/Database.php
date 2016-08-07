@@ -77,14 +77,11 @@ if(!class_exists('Database')):
          * @return array
          */
 
-		public function referenceValues($array)
+		public function referenceValues( $array )
         {
 			$refs = array();
-
 			foreach ($array as $key => $value):
-
 				$refs[$key] = &$array[$key];
-
 			endforeach;
 
 			return $refs; 

@@ -64,6 +64,7 @@ class IOXMLEAScreenFactory
                 $parsedElements   = ( new IOXMLEAModelParser( $xmlFile ) )->parseXMLClasses();
                 $elementNames     = $this->extractElementNames( $parsedElements );
                 $orderedElements  = array();
+                $highestOrder     = 0;
 
                 $i = 0;
                 foreach( $elementNames as $elementName ):
@@ -88,6 +89,8 @@ class IOXMLEAScreenFactory
                         $orderedElements[$i]['documentation'] = $documentation;
                         $orderedElements[$i]['attributes']    = $fields;
                         $orderedElements[$i]['operations']    = $operations;
+
+                        $highestOrder =  $order;
 
                         if( !empty( $target ) ):
 
@@ -122,6 +125,7 @@ class IOXMLEAScreenFactory
 
                 usort( $orderedElements, array( $this,'sortElements' ) );
 
+                $orderedElements['highestOrder'] = $highestOrder;
                 return( $orderedElements );
 
             else:

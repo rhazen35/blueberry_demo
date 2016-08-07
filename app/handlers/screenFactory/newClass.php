@@ -10,8 +10,8 @@ use app\enterpriseArchitecture\IOXMLEAModelParser;
 use app\enterpriseArchitecture\IOXMLEAModel;
 
 $elementOrder = ( isset( $_POST['elementOrder'] ) ? $_POST['elementOrder'] : "" );
-echo $elementName  = ( isset( $_POST['elementName'] ) ? $_POST['elementName'] : "" );
-echo $modelId      = ( isset( $_POST['modelId'] ) ? $_POST['modelId'] : "" );
+$elementName  = ( isset( $_POST['elementName'] ) ? $_POST['elementName'] : "" );
+$modelId      = ( isset( $_POST['modelId'] ) ? $_POST['modelId'] : "" );
 
 $model        = ( new IOXMLEAModel( $modelId ) )->getModel();
 $modelHash    = ( isset( $model['hash'] ) ? $model['hash'] : "" );
@@ -24,15 +24,12 @@ if( !empty( $modelHash ) && !empty( $modelExt ) ):
 
     foreach( $parsedClasses as $parsedClass ):
         if( $parsedClass['name'] === $elementName ):
-            var_dump($parsedClass);
+            //var_dump($parsedClass);
             break;
         endif;
     endforeach;
 
 endif;
 
-
-
-
-//header( "Location: " . APPLICATION_HOME . "?model&page=" .$elementOrder );
-//exit();
+header( "Location: " . APPLICATION_HOME . "?model&page=" .$elementOrder );
+exit();
