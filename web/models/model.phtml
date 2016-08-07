@@ -25,19 +25,41 @@ if( $currentPage <= $highestOrder ):
 
             $page = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
 
-            if( $orderedElements[$i] === $orderedElements[($page)] ):
-                if( $orderedElements[$i]['root'] === 'true' ):
-                    $element = ( new IOXMLEAScreenFactory( $orderedElements[$i] ) )->createIntro();
-                    print_r($element);
-                else:
-                    $element = ( new IOXMLEAScreenFactory( $orderedElements[$i] ) )->createElement();
-                    print_r($element);
-        //            echo '<pre>';
-        //            print_r($orderedElements[$i]);
+            if( !empty( $orderedElements[$i] ) ):
+
+                if( $orderedElements[$i] === $orderedElements[($page)] ):
+                    if( $orderedElements[$i]['root'] === 'true' ):
+                        $element = ( new IOXMLEAScreenFactory( $orderedElements[$i] ) )->createIntro();
+                        print_r($element);
+                    else:
+                        $element = ( new IOXMLEAScreenFactory( $orderedElements[$i] ) )->createElement();
+                        print_r($element);
+            //            echo '<pre>';
+            //            print_r($orderedElements[$i]);
+                    endif;
+                    break;
                 endif;
-                break;
+
+            else:
+                ?>
+                <div class="model-noPreview">
+                    <div class="model-noPreview-title">Model preview could not be presented</div>
+                    <div class="model-noPreview-message">
+                        <b>There were complications processing the model:</b>
+                        <br><br>
+                        Due to the ammount of (severe) errors the preview was aborted.
+                        <br>
+                        Please change the model and re-validate.
+                    </div>
+                    <div class="model-noPreview-message">
+                        <b>Project:</b> <?= $projectName; ?>
+                    </div>
+                </div>
+                <?php
             endif;
+
         endfor;
+
     else:
         ?>
         <div class="model-noPreview">

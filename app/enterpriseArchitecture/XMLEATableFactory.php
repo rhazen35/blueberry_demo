@@ -100,7 +100,10 @@ if( !class_exists( "XMLEATableFactory" ) ):
         }
 
 
-        private function createTables( $params )
+        /**
+         * @param $params
+         */
+        private function createTables($params )
         {
             $elements      = ( new IOXMLEAScreenFactory( $params['model_id'] ) )->extractAndOrderElements();
             $totalElements = count( $elements );
@@ -128,7 +131,7 @@ if( !class_exists( "XMLEATableFactory" ) ):
                             /**
                              * * * START OF TABLE * * *
                              */
-                            $sql = "CREATE TABLE IF NOT EXISTS " . $tableName ." ( ";
+                            $sql  = "CREATE TABLE IF NOT EXISTS " . $tableName ." ( ";
                             $sql .= " id INT(11) NOT NULL AUTO_INCREMENT, ";
                             $sql .= " user_id INT(11) NOT NULL, ";
 
@@ -171,7 +174,11 @@ if( !class_exists( "XMLEATableFactory" ) ):
             endif;
         }
 
-        private function getModelDatabaseInfo( $params )
+        /**
+         * @param $params
+         * @return bool|\mysqli_result
+         */
+        private function getModelDatabaseInfo($params )
         {
             $modelId    = ( isset( $params['model_id'] ) ? $params['model_id'] : "" );
 

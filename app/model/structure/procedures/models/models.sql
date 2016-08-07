@@ -7,6 +7,14 @@ CREATE PROCEDURE
   END $$
 
 CREATE PROCEDURE
+`proc_checkModelNameExists`(
+  IN modelName VARCHAR(100)
+)
+  BEGIN
+    SELECT name FROM xml_models WHERE name = modelName;
+  END $$
+
+CREATE PROCEDURE
   `proc_newModel`(
   IN `modelId` INT(11),
   IN `userId` INT(11),

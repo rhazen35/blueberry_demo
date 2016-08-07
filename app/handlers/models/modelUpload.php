@@ -79,25 +79,33 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                  * Save the model in the database and in the files/xml_models_tmp directory
                  */
                 $name                   = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
-                $valid                  = ( $report['validation']['valid'] === true ? "yes" : "no" );
-                $params                 = array( "name" => $name, "valid" => $valid, "extension" => $extension );
-                $lastInsertedID         = ( new IOXMLEAModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
-                $_SESSION['xmlModelId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
-                /**
-                 * Store the project id, model id, and user id in the projects_models join table
-                 */
-                $params = array( "model_id" => $lastInsertedID );
-                ( new Project( "saveModelJoinTable" ) )->request( $params );
-                /**
-                 * Hash and save the file
-                 */
-                move_uploaded_file( $_FILES['xmlFile']['tmp_name'], sprintf( APPLICATION_ROOT.'/web/files/xml_models_tmp/%s.%s', sha1_file( $_FILES['xmlFile']['tmp_name'] ), $extension ) );
-                /**
-                 * Create tables for the elements with the type of uml:Class
-                 */
-                if( !empty( $name ) ):
-                    $params = array( "model_id" => $lastInsertedID, "model_name" => $name );
-                    ( new XMLEATableFactory( "create" ) )->request( $params );
+                $nameExists             = ( new IOXMLEAModel( $name ) )->checkModelNameExists();
+                if( $nameExists === false ):
+
+                    $valid                  = ( $report['validation']['valid'] === true ? "yes" : "no" );
+                    $params                 = array( "name" => $name, "valid" => $valid, "extension" => $extension );
+                    $lastInsertedID         = ( new IOXMLEAModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
+                    $_SESSION['xmlModelId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
+                    /**
+                     * Store the project id, model id, and user id in the projects_models join table
+                     */
+                    $params = array( "model_id" => $lastInsertedID );
+                    ( new Project( "saveModelJoinTable" ) )->request( $params );
+                    /**
+                     * Hash and save the file
+                     */
+                    move_uploaded_file( $_FILES['xmlFile']['tmp_name'], sprintf( APPLICATION_ROOT.'/web/files/xml_models_tmp/%s.%s', sha1_file( $_FILES['xmlFile']['tmp_name'] ), $extension ) );
+                    /**
+                     * Create tables for the elements with the type of uml:Class
+                     */
+                    if( !empty( $name ) ):
+                        $params = array( "model_id" => $lastInsertedID, "model_name" => $name );
+                        ( new XMLEATableFactory( "create" ) )->request( $params );
+                    endif;
+
+                else:
+                    header("Location: index.php?modelUploadNameExists");
+                    exit();
                 endif;
 
             else:

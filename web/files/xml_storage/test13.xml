@@ -913,7 +913,7 @@
 					<Generalization xmi:id="EAID_D2F1A6BB_25E3_45ff_BF3D_D6151DC78E97" start="EAID_EF43ED64_B383_4d6f_9C1E_885BA60616D2" end="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
 				</links>
 			</element>
-			<element xmi:idref="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901" xmi:type="uml:Class" name="Financieel Planner" scope="public">
+			<element xmi:idref="EAID_7452EBD5_AA87_411d_B413_FE0AE8EC6901" xmi:type="uml:Class" name="Financieel Planner 2" scope="public">
 				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="63" ea_eleType="element"/>
 				<properties documentation="De discussie rondom uw pensioen is de laatste tijd flink opgelaaid. Sommige pensioenfondsen dreigen te moeten gaan korten. De media staan er bol van. Uw pensioen zou niet voldoende zijn en het Nederlandsche pensioenstelsel zou uitgehold worden. &#xA;&#xA;Heeft u wel genoeg pensioen? &#xA;&#xA;WIj denken van wel. En we tonen dat aan door uit te rekenen wat u nu heeft opgebouwd en waar u behoefte aan heeft als uw pensioen ingaat. &#xA;&#xA;Pas als dan blijkt dat er een gat is, gaan we kijken naar mogelijkheden om dat op te lossen. Daarbij kijken we niet naar de geijkte paden, zoals een verzekering of bankspaarproduct. Nee, wij kijken nadrukkelijk ook naar andere mogelijkheden. Zoals het verhuren van uw huis, kleiner wonen, slim beleggen, etc. &#xA;" isSpecification="false" sType="Class" nType="0" scope="public" isRoot="true" isLeaf="false" isAbstract="false" isActive="false"/>
 				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-25 14:08:16" modified="2016-07-27 11:35:45" complexity="1" status="Proposed"/>

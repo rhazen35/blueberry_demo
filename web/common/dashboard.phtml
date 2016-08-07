@@ -24,7 +24,8 @@
                 || isset($_GET['xmlEAValidatorReport'])
                 || isset($_GET['model'])
                 || isset($_GET['changeModelAccept'])
-                || isset($_GET['modelUploadNoProject'])):
+                || isset($_GET['modelUploadNoProject'])
+                || isset($_GET['modelUploadNameExists'])):
                 require_once "web/pageMenus/models.phtml";
                 break;
             case (isset($_GET['newCalculator'])
@@ -51,6 +52,7 @@
                     require_once "web/pageInfo/projects.phtml";
                     break;
                 case (isset($_GET['newModel'])
+                    || isset($_GET['modelUploadNameExists'])
                     || isset($_GET['modelUploadNoFile'])):
                     require_once "web/pageInfo/newModel.phtml";
                     break;

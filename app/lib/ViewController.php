@@ -57,7 +57,8 @@ class ViewController
              */
             case (isset($get["newModel"])
                 || isset($get['modelUploadNoFile'])
-                || isset($get['modelUploadNoProject'])):
+                || isset($get['modelUploadNoProject'])
+                || isset($get['modelUploadNameExists'])):
                 $args = array("newModel", "models");
                 ( new ViewController( ...$args ) )->request();
                 break;

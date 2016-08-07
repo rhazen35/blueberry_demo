@@ -22,6 +22,22 @@ if( !class_exists( "IOXMLEAModel" ) ):
             $this->modelId = $modelId;
         }
 
+        public function checkModelNameExists()
+        {
+            $sql        = "CALL proc_checkModelNameExists(?)";
+            $data       = array("name" => $this->modelId);
+            $format     = array('s');
+            $type       = "read";
+
+            $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            if( !empty( $returnData ) ):
+                return( $returnData );
+            else:
+                return( false );
+            endif;
+        }
+
         public function getModel()
         {
             $sql        = "CALL proc_getModel(?)";
