@@ -8,12 +8,9 @@
 
 namespace app\enterpriseArchitecture;
 
-use app\enterpriseArchitecture\XMLController;
+if( !class_exists( "IOXMLEAModelParser" ) ):
 
-
-if( !class_exists( "IOXMLModelParser" ) ):
-
-    class IOXMLModelParser
+    class IOXMLEAModelParser
     {
 
         protected $xmlFile;

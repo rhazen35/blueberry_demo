@@ -8,9 +8,6 @@
 
 namespace app\enterpriseArchitecture;
 
-use app\enterpriseArchitecture\IOXMLParser;
-
-
 class XMLController
 {
 
@@ -29,13 +26,13 @@ class XMLController
         switch( $this->type ):
 
             case"fileToSimpleXmlObject":
-                return( ( new IOXMLParser( $this->model ) )->fileToSimpleXmlObject() );
+                return( ( new IOXMLEAParser( $this->model ) )->fileToSimpleXmlObject() );
                 break;
             case"getNode":
-                return( ( new iOXMLParser( $this->model ) )->getNode( $this->path ) );
+                return( ( new iOXMLEAParser( $this->model ) )->getNode( $this->path ) );
                 break;
             case"getNodeAttribute":
-                return( ( new iOXMLParser( $this->model ) )->getNodeAttribute( $this->path ) );
+                return( ( new iOXMLEAParser( $this->model ) )->getNodeAttribute( $this->path ) );
                 break;
             default:
                 break;

@@ -77,7 +77,8 @@
 
 }
 
-.element-form input
+.element-form input,
+.element-form select
 {
     float:left;
 }

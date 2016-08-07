@@ -6,7 +6,7 @@
  * Time: 19:28
  */
 
-use app\enterpriseArchitecture\IOXMLModelUpload;
+use app\enterpriseArchitecture\IOXMLEAModelUpload;
 use app\enterpriseArchitecture\IOXMLEAModel;
 use app\lib\Project;
 use app\core\Library;
@@ -51,7 +51,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
             /**
              * Check if the model already exists
              */
-            $returnData = ( new IOXMLModelUpload( "matchHash", $newFile, $uploadedAt ) )->request( $params = null );
+            $returnData = ( new IOXMLEAModelUpload( "matchHash", $newFile, $uploadedAt ) )->request( $params = null );
             if( !empty( $returnData ) ):
                 $matchHash = $returnData[0];
             else:
@@ -61,7 +61,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
              * Pass the xml file with the new model command and the timestamp
              * XML will be validated and a report is returned
              */
-            $report = ( new IOXMLModelUpload( "validateModel", $xmlFile, $uploadedAt ) )->request( $params = null );
+            $report = ( new IOXMLEAModelUpload( "validateModel", $xmlFile, $uploadedAt ) )->request( $params = null );
             /**
              * Add the original file name to the report array
              */
@@ -76,7 +76,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 $name           = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
                 $valid          = ( $report['validation']['valid'] === true ? "yes" : "no" );
                 $params         = array( "name" => $name, "valid" => $valid, "extension" => $extension );
-                $lastInsertedID = ( new IOXMLModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
+                $lastInsertedID = ( new IOXMLEAModelUpload( "saveModel", $newFile, $uploadedAt ) )->request( $params );
 
                 /**
                  * Store the project id, model id, and user id in the projects_models join table

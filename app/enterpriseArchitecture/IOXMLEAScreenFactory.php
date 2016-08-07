@@ -8,10 +8,6 @@
 
 namespace app\enterpriseArchitecture;
 
-use app\enterpriseArchitecture\IOXMLEAModel;
-use app\enterpriseArchitecture\IOXMLModelParser;
-use app\enterpriseArchitecture\IOXMLEAAttributeTypes;
-
 class IOXMLEAScreenFactory
 {
 
@@ -65,7 +61,7 @@ class IOXMLEAScreenFactory
             if( !empty( $modelData['hash'] ) ):
 
                 $xmlFile          = 'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
-                $parsedElements   = ( new IOXMLModelParser( $xmlFile ) )->parseXMLClasses();
+                $parsedElements   = ( new IOXMLEAModelParser( $xmlFile ) )->parseXMLClasses();
                 $elementNames     = $this->extractElementNames( $parsedElements );
                 $orderedElements  = array();
 
@@ -147,7 +143,7 @@ class IOXMLEAScreenFactory
 
         $modelData          = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
         $xmlFile            =  'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
-        $parsedConnectors   = ( new IOXMLModelParser( $xmlFile) )->parseConnectors();
+        $parsedConnectors   = ( new IOXMLEAModelParser( $xmlFile) )->parseConnectors();
         $totalConnectors    = count( $parsedConnectors['connectors'] );
 
         for( $j = 0; $j < $totalConnectors; $j++ ):
@@ -213,11 +209,10 @@ class IOXMLEAScreenFactory
                 $element .= '<div class="elementIntro-subIntro"><p>'. $orderedOperation['documentation'] .'</p></div>';
             endforeach;
 
-            $element .= '<div class="elementIntro-next"><a href="" class="button">Next</a></div>';
+            $element .= '<div class="elementIntro-next"><a href="' . APPLICATION_HOME . '?model&page=' . ( $class['order']['order'] ) . '" class="button">Next</a></div>';
 
         endif;
 
-        $element .= $class['order']['order'];
         $element .= '</div>';
 
         return( $element );
@@ -237,8 +232,6 @@ class IOXMLEAScreenFactory
             $element .= '<div class="element-title">'. $title .'</div>';
             $element .= '<div class="element-documentation"><p>'. $documentation .'</p></div>';
             $element .= $this->createForm( $class );
-
-            $element .= $class['order']['order'];
         $element .= '</div>';
 
         return( $element );
@@ -248,16 +241,17 @@ class IOXMLEAScreenFactory
      * @param $class
      * @return string
      */
-    private function createForm($class )
+    private function createForm ( $class )
     {
+        $elementName  = ( isset( $class['name'] ) ? $class['name'] : "" );
         $target       = ( isset( $class['supertype'] ) ? $class['supertype'] : "" );
         $targetFields = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
         $fields       = ( isset( $class['attributes'] ) ? $class['attributes'] : "" );
 
-        $form = '<form action="" method="post" class="element-form">';
+        $form = '<form action="' . APPLICATION_HOME . '" method="post" class="element-form">';
 
         if( !empty( $targetFields ) ):
-            foreach($targetFields as $targetField):
+            foreach( $targetFields as $targetField ):
                 if( !empty( $targetField ) ):
 
                     $inputName        = ( isset( $targetField['input_name'] ) ? $targetField['input_name'] : "" );
@@ -265,17 +259,39 @@ class IOXMLEAScreenFactory
                     $inputPlaceholder = ( isset( $targetField['initialValue'] ) ? $targetField['initialValue'] : "" );
                     $inputDataType    = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
                     $inputFieldType   = ( new IOXMLEAAttributeTypes( $class['model_id'], $inputDataType ) )->fieldType();
-                    $form .= var_dump($inputFieldType);
 
                     $form .= '<div class="element-input-box">';
+
                         if( !empty( $inputName ) ):
                             $form .= '<div class="element-input-name">' . $inputName . '</div>';
-                            $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
+                            if( !empty( $inputFieldType ) ):
+                                switch( $inputFieldType ):
+                                    case"PrimitiveType":
+                                    case"DataType":
+                                        $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
+                                        break;
+                                    case"Enumeration":
+
+                                        $params['model_id'] = $class['model_id'];
+                                        $enumerations       = ( new IOXMLEAEnumerations( "getEnumerations", $inputDataType ) )->request( $params );
+
+                                        $form .= '<select name="' . $inputName . '">';
+
+                                        foreach( $enumerations as $enumeration ):
+                                            $form .= '<option name="enum" value="' . $enumeration['input_name'] . '">' . $enumeration['input_name'] . '</option>';
+                                        endforeach;
+
+                                        $form .= '</select>';
+                                        break;
+                                endswitch;
+                            endif;
                         endif;
+
                         if( !empty( $inputInfo ) ):
                             $form .= '<div class="element-input-hoverImg"><img src="images/icons/info_icon_blue.png"></div>';
-                            $form .= '<div class="element-input-hover">' . $inputInfo . '<br>'.$inputDataType.'</div>';
+                            $form .= '<div class="element-input-hover">' . $inputInfo . '</div>';
                         endif;
+
                     $form .= '</div>';
 
                 endif;
@@ -283,22 +299,45 @@ class IOXMLEAScreenFactory
         endif;
 
         if( !empty( $fields ) ):
-            foreach($fields as $field):
+            foreach( $fields as $field ):
                 if( !empty( $field ) ):
                     $inputName        = ( isset( $field['input_name'] ) ? $field['input_name'] : "" );
                     $inputInfo        = ( isset( $field['documentation'] ) ? $field['documentation'] : "" );
                     $inputPlaceholder = ( isset( $field['initialValue'] ) ? $field['initialValue'] : "" );
                     $inputDataType    = ( isset( $field['data_type'] ) ? $field['data_type'] : "" );
+                    $inputFieldType   = ( new IOXMLEAAttributeTypes( $class['model_id'], $inputDataType ) )->fieldType();
 
                     $form .= '<div class="element-input-box">';
+
                     if( !empty( $inputName ) ):
                         $form .= '<div class="element-input-name">' . $inputName . '</div>';
-                        $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
+                        if( !empty( $inputFieldType ) ):
+                            switch( $inputFieldType ):
+                                case"PrimitiveType":
+                                case"DataType":
+                                    $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
+                                    break;
+                                case"Enumeration":
+                                    $params['model_id'] = $class['model_id'];
+                                    $enumerations       = ( new IOXMLEAEnumerations( "getEnumerations", $inputDataType ) )->request( $params );
+
+                                    $form .= '<select name="' . $inputName . '">';
+
+                                    foreach( $enumerations as $enumeration ):
+                                        $form .= '<option name="enum" value="' . $enumeration['input_name'] . '">' . $enumeration['input_name'] . '</option>';
+                                    endforeach;
+
+                                    $form .= '</select>';
+                                    break;
+                            endswitch;
+                        endif;
                     endif;
+
                     if( !empty( $inputInfo ) ):
                         $form .= '<div class="element-input-hoverImg"><img src="images/icons/info_icon_blue.png"></div>';
-                        $form .= '<div class="element-input-hover">' . $inputInfo . '<br>'.$inputDataType.'</div>';
+                        $form .= '<div class="element-input-hover">' . $inputInfo . '</div>';
                     endif;
+
                     $form .= '</div>';
 
                 endif;
@@ -307,15 +346,18 @@ class IOXMLEAScreenFactory
 
         $form .= '<div class="element-input-box">';
             $form .= '<div class="element-input-submit">';
-            $form .= '<input type="hidden" name="elementOrder" value="' . $class['order']['order'] . '">';
-
             /**
              * TODO: Get the highest order to determine the max element to display previous button
              * Display previous button if the class order is bigger then one
              */
             if( $class['order']['order'] > 1 ):
-                $form .= '<a href="" class="button">previous</a>';
+                $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $class['order']['order'] - 2 ) . '" class="button">previous</a>';
             endif;
+            $form .= '<input type="hidden" name="elementName" value="' . $elementName . '">';
+            $form .= '<input type="hidden" name="modelId" value="' . $class['model_id'] . '">';
+            $form .= '<input type="hidden" name="elementOrder" value="' . $class['order']['order'] . '">';
+            $form .= '<input type="hidden" name="path" value="screenFactory">';
+            $form .= '<input type="hidden" name="attr" value="newClass">';
             $form .= '<input type="submit" name="submit" value="next" class="button">';
             $form .= '</div>';
         $form .= '</div>';

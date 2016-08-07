@@ -9,12 +9,12 @@
 namespace app\enterpriseArchitecture;
 
 use app\model\Service;
-use app\enterpriseArchitecture\IOXMLModelParser;
+use app\enterpriseArchitecture\IOXMLEAModelParser;
 use app\enterpriseArchitecture\IOXMLEAValidator;
 
-if( !class_exists( "IOXMLModelUpload" ) ):
+if( !class_exists( "IOXMLEAModelUpload" ) ):
 
-    class IOXMLModelUpload
+    class IOXMLEAModelUpload
     {
 
         protected $type;
@@ -101,9 +101,9 @@ if( !class_exists( "IOXMLModelUpload" ) ):
 
         private function getModelArray()
         {
-            $extensionInfo  = ( new IOXMLModelParser( $this->xmlFile ) )->parseModelExtensionInfo();
-            $elements       = ( new IOXMLModelParser( $this->xmlFile ) )->parseXMLClasses();
-            $connectors     = ( new IOXMLModelParser( $this->xmlFile ) )->parseConnectors();
+            $extensionInfo  = ( new IOXMLEAModelParser( $this->xmlFile ) )->parseModelExtensionInfo();
+            $elements       = ( new IOXMLEAModelParser( $this->xmlFile ) )->parseXMLClasses();
+            $connectors     = ( new IOXMLEAModelParser( $this->xmlFile ) )->parseConnectors();
 
             $modelArray     = array_merge( $extensionInfo, $elements, $connectors );
             return($modelArray);

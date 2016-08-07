@@ -1534,7 +1534,7 @@
 				<extendedProperties tagged="0" package_name="Persoonstructuren"/>
 				<attributes>
 					<attribute xmi:idref="EAID_2E63BDEE_F696_4078_ACBE_F0E017947FDB" name="Geboortedatum" scope="Private">
-						<initial/>
+						<initial body="dd-mm-yyyy"/>
 						<documentation value="Uw geboortedatum hebben we nodig om een projectie van uw inkomen in de tijd te kunnen maken. "/>
 						<model ea_localid="61" ea_guid="{2E63BDEE-F696-4078-ACBE-F0E017947FDB}"/>
 						<properties type="Date" derived="0" precision="0" collection="false" length="0" duplicates="0" changeability="changeable"/>

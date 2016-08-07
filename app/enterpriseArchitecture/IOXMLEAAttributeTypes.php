@@ -8,8 +8,6 @@
 
 namespace app\enterpriseArchitecture;
 
-use app\enterpriseArchitecture\IOXMLEAModel;
-use app\enterpriseArchitecture\IOXMLModelParser;
 use app\core\Library;
 
 if( !class_exists( "IOXMLEAAttributeTypes" ) ):
@@ -35,22 +33,18 @@ if( !class_exists( "IOXMLEAAttributeTypes" ) ):
 
             if( !empty( $modelHash ) && !empty( $modelExt ) ):
                 $xmlFile        = Library::path( $_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models_tmp/' . $modelHash . '.' . $modelExt );
-                $parsedClasses  = ( new IOXMLModelParser( $xmlFile ) )->parseXMLClasses();
+                $parsedClasses  = ( new IOXMLEAModelParser( $xmlFile ) )->parseXMLClasses();
             endif;
 
             if( !empty( $parsedClasses ) ):
-
                 foreach( $parsedClasses as $parsedClass ):
-
                     if( $parsedClass['name'] === $this->attributeType ):
-                        return($parsedClass['type']);
+                        $parsedClassType = str_replace( "uml:", "", $parsedClass['type'] );
+                        return($parsedClassType);
                         break;
                     endif;
-
                 endforeach;
-
                 return ($parsedClasses);
-
             endif;
 
         }

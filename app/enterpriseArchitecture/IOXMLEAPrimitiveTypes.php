@@ -8,9 +8,9 @@
 
 namespace app\enterpriseArchitecture;
 
-if( !class_exists( "IOXMLPrimitiveTypes" ) ):
+if( !class_exists( "IOXMLEAPrimitiveTypes" ) ):
 
-    class IOXMLPrimitiveTypes
+    class IOXMLEAPrimitiveTypes
     {
 
         protected $dataType;
@@ -30,8 +30,8 @@ if( !class_exists( "IOXMLPrimitiveTypes" ) ):
                 case"String":
                     return( is_string( (string) $this->value ) );
                     break;
-                case"Geslachten":
-
+                case"Date":
+                    return (bool) strtotime( $this->value );
                     break;
 
             endswitch;
