@@ -469,11 +469,13 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                 $modelType      = (string) $target->children()->model->attributes()->type;
                 $modelEALocalId = (string) $target->children()->model->attributes()->ea_localid;
                 $multiplicity   = (string) $target->children()->type->attributes()->multiplicity;
+                $aggregation    = (string) $target->children()->type->attributes()->aggregation;
 
                 $connectorArray['connectors']['connector'.($i+1)]['target']['model']['name']         = $modelName;
                 $connectorArray['connectors']['connector'.($i+1)]['target']['model']['type']         = $modelType;
                 $connectorArray['connectors']['connector'.($i+1)]['target']['model']['ea_localid']   = $modelEALocalId;
                 $connectorArray['connectors']['connector'.($i+1)]['target']['model']['multiplicity'] = $multiplicity;
+                $connectorArray['connectors']['connector'.($i+1)]['target']['model']['aggregation']  = $aggregation;
 
                 /**
                  * Get the connector target and add it as an array to the connectors array

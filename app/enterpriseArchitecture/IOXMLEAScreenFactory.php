@@ -70,50 +70,60 @@ class IOXMLEAScreenFactory
                 foreach( $elementNames as $elementName ):
 
                     $class          = ( isset( $parsedElements[$elementName] ) && $parsedElements[$elementName]['type'] === "uml:Class" ? $parsedElements[$elementName] : "" );
-                    $fields         = ( isset( $class['attributes'] ) ? $class['attributes'] : false );
+                    $idref          = ( isset( $class['idref'] ) ? $class['idref'] : "" );
                     $root           = ( isset( $class['Root'] ) ? $class['Root'] : false );
+                    $abstract       = ( isset( $class['abstract'] ) ? $class['abstract'] : false );
                     $name           = ( isset( $class['name'] ) ? $class['name'] : "" );
                     $tags           = ( isset( $class['tags'] ) ? $class['tags'] : false );
                     $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
                     $documentation  = ( isset( $class['documentation'] ) ? $class['documentation'] : "" );
-                    $idref          = ( isset( $class['idref'] ) ? $class['idref'] : "" );
+                    $attributes     = ( isset( $class['attributes'] ) ? $class['attributes'] : false );
                     $operations     = ( isset( $class['operations'] ) ? $class['operations'] : "" );
-                    $target         = $this->getMatchingConnector( $idref );
+
+                    $source         = $this->getMatchingConnector( $idref, "source" );
+                    $target         = $this->getMatchingConnector( $idref, "target" );
 
                     if( !empty( $order ) ):
                         $orderedElements[$i]['model_id']      = $this->xmlModelId;
-                        $orderedElements[$i]['name']          = $name;
                         $orderedElements[$i]['idref']         = $idref;
-                        $orderedElements[$i]['order']         = $order;
+                        $orderedElements[$i]['name']          = $name;
                         $orderedElements[$i]['root']          = $root;
+                        $orderedElements[$i]['abstract']      = $abstract;
+                        $orderedElements[$i]['order']         = $order;
                         $orderedElements[$i]['documentation'] = $documentation;
-                        $orderedElements[$i]['attributes']    = $fields;
+                        $orderedElements[$i]['attributes']    = $attributes;
                         $orderedElements[$i]['operations']    = $operations;
 
                         $highestOrder =  $order;
 
                         if( !empty( $target ) ):
 
-                            $orderedElements[$i]['supertype']           = array();
-                            $orderedElements[$i]['supertype']['id']     = $target['id'];
-                            $orderedElements[$i]['supertype']['name']   = $target['name'];
+                            $orderedElements[$i]['supertype']                   = array();
+                            $orderedElements[$i]['supertype']['id']             = $target['id'];
+                            $orderedElements[$i]['supertype']['type']           = $target['type'];
+                            $orderedElements[$i]['supertype']['name']           = $target['name'];
+                            $orderedElements[$i]['supertype']['ea_localId']     = $target['ea_localId'];
+                            $orderedElements[$i]['supertype']['multiplicity']   = $target['multiplicity'];
+                            $orderedElements[$i]['supertype']['aggregation']    = $target['aggregation'];
 
                             $targetClass    = $parsedElements[$target['name']];
 
-                            $tags           = ( isset( $targetClass['tags'] ) ? $targetClass['tags'] : false );
-                            $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
-                            $documentation  = ( isset( $targetClass['documentation'] ) ? $targetClass['documentation'] : "" );
                             $idref          = ( isset( $targetClass['idref'] ) ? $targetClass['idref'] : "" );
+                            $tags           = ( isset( $targetClass['tags'] ) ? $targetClass['tags'] : false );
+                            $documentation  = ( isset( $targetClass['documentation'] ) ? $targetClass['documentation'] : "" );
+                            $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
+                            $attributes     = ( isset( $targetClass['attributes'] ) ? $targetClass['attributes'] : false );
+                            $attributesTags = ( isset( $targetClass['attributes']['tags'] ) ? $targetClass['attributes']['tags'] : false );
                             $operations     = ( isset( $targetClass['operations'] ) ? $targetClass['operations'] : "" );
-                            $fields         = ( isset( $targetClass['attributes'] ) ? $targetClass['attributes'] : false );
-                            $fieldTags      = ( isset( $targetClass['attributes']['tags'] ) ? $targetClass['attributes']['tags'] : false );
+                            $labels         = ( isset( $target['labels'] ) ? $target['labels'] : "" );
 
                             $orderedElements[$i]['supertype']['idref']              = $idref;
                             $orderedElements[$i]['supertype']['order']              = $order;
                             $orderedElements[$i]['supertype']['documentation']      = $documentation;
-                            $orderedElements[$i]['supertype']['attributes']         = $fields;
-                            $orderedElements[$i]['supertype']['attributes']['tags'] = $fieldTags;
+                            $orderedElements[$i]['supertype']['attributes']         = $attributes;
+                            $orderedElements[$i]['supertype']['attributes']['tags'] = $attributesTags;
                             $orderedElements[$i]['supertype']['operations']         = $operations;
+                            $orderedElements[$i]['supertype']['labels']             = $labels;
 
                         endif;
 
@@ -142,9 +152,8 @@ class IOXMLEAScreenFactory
      * @param $idref
      * @return array
      */
-    private function getMatchingConnector($idref )
+    private function getMatchingConnector( $idref, $type )
     {
-
         $modelData          = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
         $xmlFile            =  'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
         $parsedConnectors   = ( new IOXMLEAModelParser( $xmlFile) )->parseConnectors();
@@ -154,11 +163,45 @@ class IOXMLEAScreenFactory
             if( $idref === $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'] ):
                 if( $parsedConnectors['connectors']['connector'.($j+1)]['properties']['ea_type'] === "Generalization" ):
 
-                    $target      = $parsedConnectors['connectors']['connector'.($j+1)]['target']['idref'];
-                    $targetName  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['model']['name'];
-                    $targetArray = array( "id" => $target, "name" => $targetName );
+                    $source                  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'];
+                    $sourceName              = $parsedConnectors['connectors']['connector'.($j+1)]['source']['model']['name'];
+                    $sourceModelType         = $parsedConnectors['connectors']['connector'.($j+1)]['source']['model']['type'];
+                    $sourceModelEALocalId    = $parsedConnectors['connectors']['connector'.($j+1)]['source']['model']['ea_localid'];
+                    $sourceModeMultiplicity  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['model']['multiplicity'];
+                    $sourceModelAggregation  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['model']['aggregation'];
+                    $sourceArray             = array(
+                        "id"            => $source,
+                        "name"          => $sourceName,
+                        "type"          => $sourceModelType,
+                        "ea_localId"    => $sourceModelEALocalId,
+                        "multiplicity"  => $sourceModeMultiplicity,
+                        "aggregation"   => $sourceModelAggregation
+                    );
 
-                    return( $targetArray );
+                    $target                  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['idref'];
+                    $targetName              = $parsedConnectors['connectors']['connector'.($j+1)]['target']['model']['name'];
+                    $targetModelType         = $parsedConnectors['connectors']['connector'.($j+1)]['target']['model']['type'];
+                    $targetModelEALocalId    = $parsedConnectors['connectors']['connector'.($j+1)]['target']['model']['ea_localid'];
+                    $targetModeMultiplicity  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['model']['multiplicity'];
+                    $targetModelAggregation  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['model']['aggregation'];
+                    $labels                  = $parsedConnectors['connectors']['connector'.($j+1)]['labels'];
+                    $targetArray             = array(
+                                                "id"            => $target,
+                                                "name"          => $targetName,
+                                                "type"          => $targetModelType,
+                                                "ea_localId"    => $targetModelEALocalId,
+                                                "multiplicity"  => $targetModeMultiplicity,
+                                                "aggregation"   => $targetModelAggregation,
+                                                "labels"        => $labels
+                                                );
+
+                    if( $type === "source" ):
+                        return( $sourceArray );
+                    elseif( $type === "target" ):
+                        return( $targetArray );
+                    endif;
+
+
                     break;
 
                 endif;
