@@ -222,12 +222,14 @@ if( !class_exists( "XMLEATableFactory" ) ):
 
         private function dropTable( $params )
         {
-            $sql        = "DROP TABLE IF EXISTS " . $params['tableName'];
-            $data       = array();
-            $format     = array();
-            $type       = "delete";
+            if( !empty( $params['tableName'] ) ):
+                $sql        = "DROP TABLE IF EXISTS " . $params['tableName'];
+                $data       = array();
+                $format     = array();
+                $type       = "delete";
 
-            ( new Service( $type, "" ) )->dbAction( $sql, $data, $format );
+                ( new Service( $type, "" ) )->dbAction( $sql, $data, $format );
+            endif;
         }
 
         /**
@@ -235,12 +237,14 @@ if( !class_exists( "XMLEATableFactory" ) ):
          */
         private function dropDatabase( $params )
         {
-            $sql        = "DROP DATABASE " . $params['dbName'];
-            $data       = array();
-            $format     = array();
-            $type       = "deleteDatabase";
+            if( !empty( $params['dbName'] ) ):
+                $sql        = "DROP DATABASE " . $params['dbName'];
+                $data       = array();
+                $format     = array();
+                $type       = "deleteDatabase";
 
-            ( new Service( $type, "" ) )->dbAction( $sql, $data, $format );
+                ( new Service( $type, "" ) )->dbAction( $sql, $data, $format );
+            endif;
         }
 
     }

@@ -18,6 +18,12 @@ $totalElements   = count( $orderedElements );
 $highestOrder    = ( !empty( $orderedElements['highestOrder']['order'] ) ? $orderedElements['highestOrder']['order'] : "" );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
 
+?>
+    <div class="newModel-head">
+    <div class="title">Model Preview <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
+    </div>
+<?php
+
 if( $currentPage <= $highestOrder ):
 
     if( !empty( $orderedElements ) ):
