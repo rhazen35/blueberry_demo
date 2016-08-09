@@ -356,27 +356,40 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
 
                         endfor;
 
-                        $links      = $element->children()->links;
-                        $totalLinks = count( $links->Aggregation );
+                        $links                    = $element->children()->links;
+                        $totalAggregationLinks    = count( $links->Aggregation );
+                        $totalGeneralizationLinks = count( $links->Generalization );
 
                         $classArray[$className]['links'] = array();
 
-                        for($i = 0; $i < $totalLinks; $i++):
+                        for($i = 0; $i < $totalAggregationLinks; $i++):
+                            /**
+                             * Aggregation
+                             */
+                            $aggr_id     = (string) $links->Aggregation[$i]->attributes($xmiNamespace)->id;
+                            $aggr_end    = (string) $links->Aggregation[$i]->attributes()->end;
+                            $aggr_start  = (string) $links->Aggregation[$i]->attributes()->start;
 
-                            $id     = (string) $links->Aggregation[$i]->attributes($xmiNamespace)->id;
-                            $end    = (string) $links->Aggregation[$i]->attributes()->end;
-                            $start  = (string) $links->Aggregation[$i]->attributes()->start;
+                            $classArray[$className]['links']['link'.($i+1)]['aggregation']['id']      = $aggr_id;
+                            $classArray[$className]['links']['link'.($i+1)]['aggregation']['end']     = $aggr_end;
+                            $classArray[$className]['links']['link'.($i+1)]['aggregation']['start']   = $aggr_start;
+                        endfor;
 
-                            $classArray[$className]['links']['link'.($i+1)]['id']      = $id;
-                            $classArray[$className]['links']['link'.($i+1)]['end']     = $end;
-                            $classArray[$className]['links']['link'.($i+1)]['start']   = $start;
+                        for($j = 0; $j < $totalGeneralizationLinks; $j++):
+                            /**
+                             * Generalization
+                             */
+                            $gen_id     = (string) $links->Generalization[$j]->attributes($xmiNamespace)->id;
+                            $gen_end    = (string) $links->Generalization[$j]->attributes()->end;
+                            $gen_start  = (string) $links->Generalization[$j]->attributes()->start;
 
+                            $classArray[$className]['links']['link'.($j+1)]['generalization']['id']      = $gen_id;
+                            $classArray[$className]['links']['link'.($j+1)]['generalization']['end']     = $gen_end;
+                            $classArray[$className]['links']['link'.($j+1)]['generalization']['start']   = $gen_start;
                         endfor;
 
                     else:
-
                         $classArray['duplicateNames'] += 1;
-
                     endif;
 
                 endforeach;
