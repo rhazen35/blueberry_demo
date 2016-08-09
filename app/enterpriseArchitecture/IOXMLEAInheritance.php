@@ -16,81 +16,56 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
     {
         protected $type;
         protected $modelId;
+        protected $allowedRequests = ['buildRelations'];
 
-        public function __construct( $type, $modelId )
+        /**
+         * IOXMLEAInheritance constructor.
+         * @param $type
+         * @param $modelId
+         */
+        public function __construct($type, $modelId )
         {
             $this->type    = $type;
             $this->modelId = $modelId;
         }
 
+        /**
+         * @return array
+         */
         public function request()
         {
-            switch( $this->type ):
-                case"buildRelations":
-                    return( $this->buildRelationsStructure() );
-                    break;
-            endswitch;
+            if( !in_array( $this->type, $this->allowedRequests ) ):
+                return("Instantiation aborted! request type no allowed.");
+            else:
+                switch( $this->type ):
+                    case"buildRelations":
+                        return( $this->buildRelationsStructure() );
+                        break;
+                endswitch;
+            endif;
         }
 
-        private function buildRelationsStructure()
+        /**
+         * @param $action
+         * @return array|bool|mixed
+         */
+        private function extractModelDataFromFile($action )
         {
-            $relations         = $this->buildRelations();
-            $elementNames      = $this->extractModelDataFromFile( "elementNames" );
-
-            $totalElementNames = count( $elementNames );
-
-            for( $i = 0; $i < $totalElementNames; $i++ ):
-                foreach( $relations as $relation ):
-                    $aggregations         = ( !empty( $relation['aggregations'] ) ? $relation['aggregations'] : "" );
-                    $generalizations      = ( !empty( $relation['generalizations'] ) ? $relation['generalizations'] : "" );
-                    $totalAggregations    = count( $aggregations );
-                    $totalGeneralizations = count( $generalizations );
-
-                    for( $j = 0; $j < $totalAggregations; $j++ ):
-                        if( !empty( $aggregations['aggregation'.($j+1)] ) ):
-                            if( $relation['name'] === $aggregations['aggregation'.($j+1)]['child'] ):
-                                $relations[$relation['name']]['isChild'] = true;
-                            elseif( $relation['name'] === $aggregations['aggregation'.($j+1)]['parent'] ):
-                                $relations[$relation['name']]['isParent'] = true;
-                            endif;
-                        endif;
-                    endfor;
-
-                    for( $j = 0; $j < $totalGeneralizations; $j++ ):
-                        if( !empty( $generalizations['generalization'.($j+1)] ) ):
-                            if( $relation['name'] === $generalizations['generalization'.($j+1)]['sub_type'] ):
-                                $relations[$relation['name']]['isSubtype'] = true;
-                                $relations[$relation['name']]['super_type'] = $generalizations['generalization'.($j+1)]['super_type'];
-                            elseif( $relation['name'] === $generalizations['generalization'.($j+1)]['super_type'] ):
-                                $relations[$relation['name']]['isSuperType'] = true;
-                            endif;
-                        endif;
-                    endfor;
-
-                endforeach;
-            endfor;
-
-            return( $relations );
-        }
-
-        private function extractModelDataFromFile( $action )
-        {
-
             $model      = ( new IOXMLEAModel( $this->modelId ) )->getModel();
             $modelHash  = ( !empty( $model['hash'] ) ? $model['hash'] : "" );
             $modelExt   = ( !empty( $model['ext'] ) ? $model['ext'] : "" );
 
             if( !empty( $modelHash ) && !empty( $modelExt ) ):
-
                 /**
                  * Get the parsed classes.
                  */
                 $xmlFile = Library::path("web/files/xml_models_tmp/" . $modelHash . '.' . $modelExt);
-
             else:
                 return( false );
             endif;
-
+            /**
+             * Return the right result based on the action.
+             */
             switch( $action ):
                 case"elements":
                     return( $elements = ( new IOXMLEAModelParser( $xmlFile ) )->parseXMLClasses() );
@@ -106,21 +81,23 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                     return( false );
                     break;
             endswitch;
-
-
         }
 
+        /**
+         * @return array
+         *
+         * Determine the relations for each element.
+         * Specify the name, idref and isAbstract.
+         * Specify the relation kind(parent, child or both), sub or super type or both, and super type's name.
+         *
+         */
         private function buildRelations()
         {
             /**
-             * Determine the relations for each class.
-             * Specify the relation kind.
-             *
              * Collect all data and start building relations.
              */
             $elements              = $this->extractModelDataFromFile( "elements" );
             $elementNames          = $this->extractModelDataFromFile( "elementNames" );
-            $connectors            = $this->extractModelDataFromFile( "connectors" );
             $totalElementsNames    = count( $elementNames );
 
             $relationArray = array();
@@ -189,6 +166,61 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
             return( $relationArray );
         }
 
+        /**
+         * @return array
+         */
+        private function buildRelationsStructure()
+        {
+            /**
+             * Get the relations and the element names array
+             */
+            $relations         = $this->buildRelations();
+            $elementNames      = $this->extractModelDataFromFile( "elementNames" );
+
+            $totalElementNames = count( $elementNames );
+
+            for( $i = 0; $i < $totalElementNames; $i++ ):
+                foreach( $relations as $relation ):
+                    /**
+                     * Specify the aggregations and generalizations and count them.
+                     */
+                    $aggregations         = ( !empty( $relation['aggregations'] ) ? $relation['aggregations'] : "" );
+                    $generalizations      = ( !empty( $relation['generalizations'] ) ? $relation['generalizations'] : "" );
+                    $totalAggregations    = count( $aggregations );
+                    $totalGeneralizations = count( $generalizations );
+                    /**
+                     * Aggregation check.
+                     */
+                    for( $j = 0; $j < $totalAggregations; $j++ ):
+                        if( !empty( $aggregations['aggregation'.($j+1)] ) ):
+                            if( $relation['name'] === $aggregations['aggregation'.($j+1)]['child'] ):
+                                $relations[$relation['name']]['isChild'] = true;
+                            elseif( $relation['name'] === $aggregations['aggregation'.($j+1)]['parent'] ):
+                                $relations[$relation['name']]['isParent'] = true;
+                            endif;
+                        endif;
+                    endfor;
+                    /**
+                     * Generalizations check
+                     */
+                    for( $j = 0; $j < $totalGeneralizations; $j++ ):
+                        if( !empty( $generalizations['generalization'.($j+1)] ) ):
+                            if( $relation['name'] === $generalizations['generalization'.($j+1)]['sub_type'] ):
+                                $relations[$relation['name']]['isSubtype'] = true;
+                                $relations[$relation['name']]['super_type'] = $generalizations['generalization'.($j+1)]['super_type'];
+                            elseif( $relation['name'] === $generalizations['generalization'.($j+1)]['super_type'] ):
+                                $relations[$relation['name']]['isSuperType'] = true;
+                            endif;
+                        endif;
+                    endfor;
+
+                endforeach;
+            endfor;
+            /**
+             * Return the relations
+             */
+            return( $relations );
+        }
 
     }
 
