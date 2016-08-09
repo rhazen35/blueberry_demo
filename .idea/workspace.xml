@@ -3,6 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="128c66c2-8882-4b07-a84f-eaf6881864b7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/IOXMLEAModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/enterpriseArchitecture/XMLEATableFactory.php" afterPath="$PROJECT_DIR$/app/enterpriseArchitecture/XMLEATableFactory.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/handlers/models/modelUpload.php" afterPath="$PROJECT_DIR$/app/handlers/models/modelUpload.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/lib/ViewController.php" afterPath="$PROJECT_DIR$/app/lib/ViewController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" afterPath="$PROJECT_DIR$/app/model/structure/procedures/models/models.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/common/dashboard.phtml" afterPath="$PROJECT_DIR$/web/common/dashboard.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/files/xml_storage/test13.xml" afterPath="$PROJECT_DIR$/web/files/xml_storage/test13.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/model.phtml" afterPath="$PROJECT_DIR$/web/models/model.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/models/newModel.phtml" afterPath="$PROJECT_DIR$/web/models/newModel.phtml" />
+>>>>>>> 151648f8aa9896e37b9ec532369c9a1122e043cf
+>>>>>>> 9fdce3b1ee8e485baca161772134ebadcb632b6b
     </list>
     <ignored path="blueberry.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -535,15 +550,33 @@
       <workItem from="1470238893598" duration="3523000" />
       <workItem from="1470244196396" duration="15167000" />
       <workItem from="1470263555729" duration="1449000" />
+<<<<<<< HEAD
+      <workItem from="1470494150015" duration="22774000" />
+      <workItem from="1470522558138" duration="124000" />
+      <workItem from="1470522699688" duration="4481000" />
+=======
       <workItem from="1470494150015" duration="22828000" />
       <workItem from="1470570409377" duration="92000" />
+<<<<<<< HEAD
       <workItem from="1470570532342" duration="37758000" />
       <workItem from="1470609110909" duration="10000" />
+=======
+      <workItem from="1470570532342" duration="37155000" />
+>>>>>>> 151648f8aa9896e37b9ec532369c9a1122e043cf
+>>>>>>> 9fdce3b1ee8e485baca161772134ebadcb632b6b
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="163132000" />
+=======
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="129823000" />
+=======
+    <option name="totallyTimeSpent" value="162519000" />
+>>>>>>> 151648f8aa9896e37b9ec532369c9a1122e043cf
+>>>>>>> 9fdce3b1ee8e485baca161772134ebadcb632b6b
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

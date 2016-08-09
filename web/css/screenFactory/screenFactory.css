@@ -34,11 +34,13 @@
 {
     clear:both;
     float:right;
+    margin-top:1em;
     margin-right:2em;
 }
 
 .elementIntro-next a
 {
+    padding:0.5rem 1rem;
     text-decoration:none;
 }
 
@@ -50,16 +52,21 @@
 
 .element-documentation
 {
+    width:80%;
     font-size:90%;
 }
 
 .element-form
 {
     width:80%;
-    margin: 1em auto;
+    margin-top:2em;
     padding:1em;
+    padding-bottom:3em;
     color:#000000;
     border:1px solid #CCCCCC;
+    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
 }
 
 .element-input-box
@@ -74,17 +81,23 @@
     float:left;
     width:50%;
     font-size:90%;
-
 }
 
 .element-form input,
 .element-form select
 {
     float:left;
+    padding:0.5em;
+    border:none;
+    border:1px solid #CCCCCC;
+    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
 }
 
 .element-input-hoverImg
 {
+    position:relative;
     float:left;
     padding:0.25em;
 }
@@ -97,35 +110,53 @@
 
 .element-input-hover
 {
+    z-index: 800;
     position:absolute;
     display:none;
-    width:auto;
+    width:25rem;
     height:auto;
-    right:2em;
+    left:50%;
     margin-top:2em;
     padding:1em;
     white-space: pre-line;
     font-size:80%;
     color:#FFFFFF;
     background-color: #404B66;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease-out;
+    -moz-transition: opacity 0.3s ease-out;
+    -ms-transition: opacity 0.3s ease-out;
+    -o-transition: opacity 0.3s ease-out;
+    transition: opacity 0.3s ease-out;
 }
 
 .element-input-hoverImg:hover + .element-input-hover
 {
     display:block;
+    opacity: 1;
 }
 
 .element-input-submit
 {
     float:right;
+    margin-top:1em;
     margin-right:2em;
+}
+
+.element-input-submit input[type=submit]
+{
+    padding:0.5rem 1rem;
+    font-size:100%;
+    border:none;
+    box-shadow: none;
 }
 
 .element-input-submit a
 {
     float:left;
     margin-right:1em;
-    font-size: 80%;
+    padding:0.5rem 1rem;
+    font-size:100%;
     text-decoration:none;
 }
 
