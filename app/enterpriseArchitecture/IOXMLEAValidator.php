@@ -27,10 +27,17 @@ if( !class_exists( "IOXMLEAValidator" ) ):
 
         /**
          * @return array
+         *
+         * Validation requirements and interface definitions.
+         *
+         * Each requirement is validated, passed to the generate array function and merged into the report array.
+         * A list of validation types is set at the top of the validation function and is added upon during validation.
+         *
+         * Valid requirements will only be added to the report if they are of any meaning to the conclusion.
+         * - File check first, the validation will be aborted if the file is not an xml.
          */
         public function validate()
         {
-
             $report = array();
 
             $severe     = 0;
@@ -165,6 +172,10 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                 $totalClassesArray = $this->generateArray( "totalClasses", $name, $type, $value, $s_valid, $message, $s_info );
                 $report = array_merge($report, $totalClassesArray);
 
+                /**
+                 * Check for duplicate element names
+                 */
+
                 if( $parsedClasses['duplicateNames'] > 0 ):
 
                     $name     = ( $parsedClasses['duplicateNames'] === 1 ? "Duplicate class" : "Duplicate classes" );
@@ -183,6 +194,8 @@ if( !class_exists( "IOXMLEAValidator" ) ):
 
                 /**
                  * Collect data from the parsed classes
+                 *
+                 * Roots, true roots, modified dates, operations, class names and class tags
                  */
                 $roots            = array();
                 $trueRoots        = array();
@@ -325,7 +338,9 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                         endfor;
                     endif;
 
-
+                    /**
+                     * Check if there are duplicate element orders
+                     */
                     if( count( $classOrderArray ) !== count( array_unique( $classOrderArray ) ) ):
 
                         $name      = ( $duplicateClassOrders === 1 ? "Duplicate class order" : "Duplicate class orders" );
@@ -499,6 +514,9 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                             $i++;
                         endforeach;
 
+                        /**
+                         * TODO: Be careful, we might run out of the alphabet. $jj ?
+                         */
                         $j = 0;
                         $k = 0;
                         $l = 0;
@@ -531,6 +549,9 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                     $j++;
                                 endif;
 
+                                /**
+                                 * Operation tags
+                                 */
                                 if( !empty( $operation['tags'] ) ):
 
                                     $tagsArray      = array();
@@ -716,8 +737,8 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                         $error += 1;
                                         $r++;
                                     endif;
-                                else:
 
+                                else:
                                     $name      = "Operation tags";
                                     $type      = "info";
                                     $value     = "empty";
@@ -784,7 +805,17 @@ if( !class_exists( "IOXMLEAValidator" ) ):
 
         }
 
-        private function generateArray( $arrayName, $subject, $type, $value, $valid, $message, $info )
+        /**
+         * @param $arrayName
+         * @param $subject
+         * @param $type
+         * @param $value
+         * @param $valid
+         * @param $message
+         * @param $info
+         * @return mixed
+         */
+        private function generateArray($arrayName, $subject, $type, $value, $valid, $message, $info )
         {
 
             $parseReport[$arrayName]              = array();
