@@ -26,7 +26,7 @@ class IOXMLEAScreenFactory
      * @param $parsedElements
      * @return array
      */
-    private function extractElementNames($parsedElements )
+    public function extractElementNames( $parsedElements )
     {
         $elementNames = array();
 

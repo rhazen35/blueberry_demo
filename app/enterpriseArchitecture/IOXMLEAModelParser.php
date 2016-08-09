@@ -362,7 +362,7 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
 
                         $classArray[$className]['links'] = array();
 
-                        for($i = 0; $i < $totalAggregationLinks; $i++):
+                        for( $i = 0; $i < $totalAggregationLinks; $i++ ):
                             /**
                              * Aggregation
                              */
@@ -370,12 +370,12 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                             $aggr_end    = (string) $links->Aggregation[$i]->attributes()->end;
                             $aggr_start  = (string) $links->Aggregation[$i]->attributes()->start;
 
-                            $classArray[$className]['links']['link'.($i+1)]['aggregation']['id']      = $aggr_id;
-                            $classArray[$className]['links']['link'.($i+1)]['aggregation']['end']     = $aggr_end;
-                            $classArray[$className]['links']['link'.($i+1)]['aggregation']['start']   = $aggr_start;
+                            $classArray[$className]['links']['aggregation']['link'.($i+1)]['id']      = $aggr_id;
+                            $classArray[$className]['links']['aggregation']['link'.($i+1)]['target']  = $aggr_end;
+                            $classArray[$className]['links']['aggregation']['link'.($i+1)]['source']  = $aggr_start;
                         endfor;
 
-                        for($j = 0; $j < $totalGeneralizationLinks; $j++):
+                        for( $j = 0; $j < $totalGeneralizationLinks; $j++ ):
                             /**
                              * Generalization
                              */
@@ -383,9 +383,9 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                             $gen_end    = (string) $links->Generalization[$j]->attributes()->end;
                             $gen_start  = (string) $links->Generalization[$j]->attributes()->start;
 
-                            $classArray[$className]['links']['link'.($j+1)]['generalization']['id']      = $gen_id;
-                            $classArray[$className]['links']['link'.($j+1)]['generalization']['end']     = $gen_end;
-                            $classArray[$className]['links']['link'.($j+1)]['generalization']['start']   = $gen_start;
+                            $classArray[$className]['links']['generalization']['link'.($j+1)]['id']      = $gen_id;
+                            $classArray[$className]['links']['generalization']['link'.($j+1)]['target']  = $gen_end;
+                            $classArray[$className]['links']['generalization']['link'.($j+1)]['source']  = $gen_start;
                         endfor;
 
                     else:
