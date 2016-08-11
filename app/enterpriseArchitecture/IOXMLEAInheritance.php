@@ -141,6 +141,7 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                             foreach( $elements as $element ):
                                 if( $element['idref'] === $elementLinks['aggregation']['link'.($j+1)]['source'] ):
                                     $relationArray[$elementNames[$i]]['aggregations']['aggregation'.($j+1)]['child'] = $element['name'];
+
                                 endif;
                                 if( $element['idref'] === $elementLinks['aggregation']['link'.($j+1)]['target'] ):
                                     $relationArray[$elementNames[$i]]['aggregations']['aggregation'.($j+1)]['parent'] = $element['name'];
@@ -232,6 +233,12 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                                 $relations[$relation['name']]['super_type'] = $generalizations['generalization'.($j+1)]['super_type'];
                             elseif( $relation['name'] === $generalizations['generalization'.($j+1)]['super_type'] ):
                                 $relations[$relation['name']]['isSuperType'] = true;
+                                if( !empty( $generalizations['generalization'.($j+1)]['super_type'] ) ):
+                                    $relations[$relation['name']]['super_types']['super_type'.($j+1)] = $generalizations['generalization'.($j+1)]['super_type'];
+                                endif;
+                                if( !empty( $generalizations['generalization'.($j+1)]['sub_type'] ) ):
+                                    $relations[$relation['name']]['sub_types']['sub_type'.($j+1)] = $generalizations['generalization'.($j+1)]['sub_type'];
+                                endif;
                             endif;
                         endif;
                     endfor;

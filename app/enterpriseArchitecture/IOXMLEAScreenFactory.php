@@ -24,7 +24,11 @@ class IOXMLEAScreenFactory
         $this->xmlModelId = $xmlModelId;
     }
 
-    public function request( $params )
+    /**
+     * @param $params
+     * @return array|void
+     */
+    public function request($params )
     {
         switch( $this->type ):
             case"extractElementNames":
@@ -33,10 +37,17 @@ class IOXMLEAScreenFactory
             case"extractAndOrderElements":
                 return( $this->extractAndOrderElements() );
                 break;
+            case"buildScreenArray":
+                return( $this->buildScreenArray() );
+                break;
         endswitch;
     }
 
-    private function extractElementNames( $params )
+    /**
+     * @param $params
+     * @return array
+     */
+    private function extractElementNames($params )
     {
         $parsedElements = $params['elements'];
         $elementNames = array();
@@ -53,13 +64,21 @@ class IOXMLEAScreenFactory
         return($elementNames);
     }
 
-    private function sortElements( $a, $b )
+    /**
+     * @param $a
+     * @param $b
+     * @return int
+     */
+    private function sortElements($a, $b )
     {
-        if( !empty( $a['order'] ) && !empty( $b['order'] ) ):
-            return( strnatcmp( $a['order'], $b['order'] ) );
+        if( !empty( $a['printOrder'] ) && !empty( $b['printOrder'] ) ):
+            return( strnatcmp( $a['printOrder'], $b['printOrder'] ) );
         endif;
     }
 
+    /**
+     * @return array
+     */
     public function extractAndOrderElements()
     {
         $modelData          = (new IOXMLEAModel( $this->xmlModelId ) )->getModel();
@@ -79,28 +98,73 @@ class IOXMLEAScreenFactory
 
                 $i = 0;
                 foreach( $elementNames as $elementName ):
-
-                    $element        = ( isset( $parsedElements[$elementName] ) && $parsedElements[$elementName]['type'] === "uml:Class" ? $parsedElements[$elementName] : "" );
-                    $idref          = ( isset( $element['idref'] ) ? $element['idref'] : "" );
-                    $root           = ( isset( $element['root'] ) ? $element['root'] : false );
-                    $abstract       = ( isset( $element['abstract'] ) ? $element['abstract'] : false );
-                    $name           = ( isset( $element['name'] ) ? $element['name'] : "" );
-                    $tags           = ( isset( $element['tags'] ) ? $element['tags'] : false );
-                    $order          = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "");
-                    $documentation  = ( isset( $element['documentation'] ) ? $element['documentation'] : "" );
-                    $attributes     = ( isset( $element['attributes'] ) ? $element['attributes'] : false );
-                    $operations     = ( isset( $element['operations'] ) ? $element['operations'] : "" );
-
+                    /**
+                     * Relation data collection
+                     */
+                    $elementRelations     = ( !empty( $relations[$elementName] ) ? $relations[$elementName] : "" );
+                    $relationName         = ( !empty( $relations[$elementName]['name'] ) ? $relations[$elementName]['name'] : "" );
+                    $relationIsParent     = ( !empty( $relations[$elementName]['isParent'] ) ? $relations[$elementName]['isParent'] : "" );
+                    $relationIsChild      = ( !empty( $relations[$elementName]['isChild'] ) ? $relations[$elementName]['isChild'] : "" );
+                    $relationIsSuperType  = ( !empty( $relations[$elementName]['isSuperType'] ) ? $relations[$elementName]['isSuperType'] : "" );
+                    $relationIsSubType    = ( !empty( $relations[$elementName]['isSubType'] ) ? $relations[$elementName]['isSubType'] : "" );
+                    $relationMultiplicity = ( !empty( $relations[$elementName]['multiplicity'] ) ? $relations[$elementName]['multiplicity'] : "" );
+                    /**
+                     * Super and sub types
+                     */
+                    $superTypes           = ( !empty(  $relations[$elementName]['super_types'] ) ?  $relations[$elementName]['super_types'] : "" );
+                    $subTypes             = ( !empty(  $relations[$elementName]['sub_types'] ) ?  $relations[$elementName]['sub_types'] : "" );
+                    $totalSuperTypes      = ( count( $superTypes ) );
+                    $totalSubTypes        = ( count( $subTypes ) );
+                    /**
+                     * Element data collection
+                     */
+                    $element          = ( isset( $parsedElements[$elementName] ) && $parsedElements[$elementName]['type'] === "uml:Class" ? $parsedElements[$elementName] : "" );
+                    $idref            = ( isset( $element['idref'] ) ? $element['idref'] : "" );
+                    $root             = ( isset( $element['root'] ) ? $element['root'] : false );
+                    $abstract         = ( isset( $element['abstract'] ) ? $element['abstract'] : false );
+                    $name             = ( isset( $element['name'] ) ? $element['name'] : "" );
+                    $tags             = ( isset( $element['tags'] ) ? $element['tags'] : false );
+                    $order            = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "");
+                    /**
+                     * Only create element array if there is an order.
+                     */
                     if( !empty( $order ) ):
 
-                        if( $name === $relations[$elementName]['name'] ):
-                            $orderedElements[$i]['name']    = $name;
-                            $orderedElements[$i]['order']   = $order;
-                            $orderedElements[$i]['root']    = $root;
-                            if( !empty( $relations['isSuperType'] ) ):
-                                $orderElements[$i]['isSuperType'] = true;
+                        if( $name === $relationName ):
+                            $orderedElements[$i]['elementName']          = $name;
+                            $orderedElements[$i]['idref']                = $idref;
+                            $orderedElements[$i]['printOrder']           = $order;
+                            $orderedElements[$i]['isRoot']               = $root;
+                            $orderedElements[$i]['isAbstract']           = $abstract;
+                            /**
+                             * Get element multiplicity, set to 1 if none is provided.
+                             */
+                            $orderedElements[$i]['elementMultiplicity']  = $relationMultiplicity;
+                            /**
+                             * Get the parent, child, super type and sub type
+                             */
+                            $orderedElements[$i]['isParent']             = $relationIsParent;
+                            $orderedElements[$i]['isChild']              = $relationIsChild;
+                            $orderedElements[$i]['isSuperType']          = $relationIsSuperType;
+                            $orderedElements[$i]['isSubType']            = $relationIsSubType;
+
+                            /**
+                             * Select the sub types for each super type.
+                             *
+                             */
+                            if( !empty( $superTypes ) ):
+                                for( $j = 0; $j < $totalSuperTypes; $j++ ):
+                                    /**
+                                     * Select sub types for current element
+                                     */
+                                    if( !empty( $subTypes ) ):
+                                        for( $k = 0; $k < $totalSubTypes; $k++ ):
+                                            $orderedElements[$i]['super_types'][$superTypes['super_type'.($j+1)]]['sub'.($k+1)] = ( !empty( $subTypes['sub_type'.($k+1)] ) ? $subTypes['sub_type'.($k+1)] : "" );
+                                        endfor;
+                                    endif;
+                                endfor;
                             endif;
-                            $orderedElements[$i]['documentation']    = $documentation;
+
                         endif;
 
                     $highestOrder = $order;
@@ -119,5 +183,36 @@ class IOXMLEAScreenFactory
             endif;
 
         endif;
+    }
+
+    private function extractAndOrderSuperTypes( $superTypes )
+    {
+        $extractedandOrderedSuperTypes = array();
+        if ( !empty( $superTypes ) ):
+            foreach( $superTypes as $superType => $value ):
+
+            endforeach;
+        endif;
+    }
+
+    private function buildScreenArray()
+    {
+        /**
+         * Build the screen array which contains all data related to the view.
+         */
+        $orderedElements = $this->extractAndOrderElements();
+
+        $screenArray = array();
+        foreach( $orderedElements as $orderedElement ):
+            /**
+             * Collect all data
+             */
+            $superTypes = ( !empty( $orderedElement['super_types'] ) ? $orderedElement['super_types'] : "" );
+            if( !empty( $superTypes ) ):
+                $extractedAndOrderedSuperTypes = $this->extractAndOrderSuperTypes( $superTypes );
+            endif;
+        endforeach;
+
+        return( $orderedElements );
     }
 }

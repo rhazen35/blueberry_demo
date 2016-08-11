@@ -13,7 +13,7 @@ $modelId         = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] 
 $params          = array( "model_id" => $modelId );
 $project         = ( new Project( "getProjectByModelId" ) )->request( $params );
 $projectName     = ( isset( $project['name'] ) ? $project['name'] : "" );
-$orderedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
+$orderedElements = ( new IOXMLEAScreenFactory( "buildScreenArray", $modelId ) )->request( $params = null );
 $totalElements   = count( $orderedElements );
 $highestOrder    = ( !empty( $orderedElements['highestOrder']['order'] ) ? $orderedElements['highestOrder']['order'] : "" );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
