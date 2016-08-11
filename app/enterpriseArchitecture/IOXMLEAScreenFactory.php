@@ -97,14 +97,11 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['name']    = $name;
                             $orderedElements[$i]['order']   = $order;
                             $orderedElements[$i]['root']    = $root;
-
-
+                            if( !empty( $relations['isSuperType'] ) ):
+                                $orderElements[$i]['isSuperType'] = true;
+                            endif;
                             $orderedElements[$i]['documentation']    = $documentation;
                         endif;
-
-                    if( $abstract === 'true' ):
-
-                    endif;
 
                     $highestOrder = $order;
 

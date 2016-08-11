@@ -228,7 +228,7 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                     for( $j = 0; $j < $totalGeneralizations; $j++ ):
                         if( !empty( $generalizations['generalization'.($j+1)] ) ):
                             if( $relation['name'] === $generalizations['generalization'.($j+1)]['sub_type'] ):
-                                $relations[$relation['name']]['isSubtype'] = true;
+                                $relations[$relation['name']]['isSubType'] = true;
                                 $relations[$relation['name']]['super_type'] = $generalizations['generalization'.($j+1)]['super_type'];
                             elseif( $relation['name'] === $generalizations['generalization'.($j+1)]['super_type'] ):
                                 $relations[$relation['name']]['isSuperType'] = true;
