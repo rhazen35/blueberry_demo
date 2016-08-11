@@ -8,89 +8,24 @@
 
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
-use app\enterpriseArchitecture\IOXMLEAInheritance;
 
 $modelId         = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
 $params          = array( "model_id" => $modelId );
 $project         = ( new Project( "getProjectByModelId" ) )->request( $params );
 $projectName     = ( isset( $project['name'] ) ? $project['name'] : "" );
-$orderedElements = ( new IOXMLEAScreenFactory( $modelId ) )->extractAndOrderElements();
+$orderedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
 $totalElements   = count( $orderedElements );
 $highestOrder    = ( !empty( $orderedElements['highestOrder']['order'] ) ? $orderedElements['highestOrder']['order'] : "" );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
 
-$relations = ( new IOXMLEAInheritance( "buildRelations", $modelId ) )->request();
-echo '<pre>';
-print_r($relations);
-//?>
-<!--    <div class="newModel-head">-->
-<!--    <div class="title">Model Preview --><?//= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?><!--</div>-->
-<!--    </div>-->
+
+?>
+    <div class="newModel-head">
+    <div class="title">Model Preview <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
+    </div>
 <?php
 
-//if( $currentPage <= $highestOrder ):
-//
-//    if( !empty( $orderedElements ) ):
-//        for( $i = 0; $i < $totalElements; $i++ ):
-//
-//            $page = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
-//
-//            if( !empty( $orderedElements[$i] ) ):
-//                /**
-//                 * Check if the current page is the same as the element
-//                 */
-//                $elementPage = ( !empty( $orderedElements[$page] ) ? $orderedElements[$page] : "" );
-//
-//                if( $orderedElements[$i] === $elementPage ):
-//                    if( $orderedElements[$i]['root'] === 'true' ):
-//                        $element = ( new IOXMLEAScreenFactory( $orderedElements[$i] ) )->createIntro();
-//                        print_r($element);
-//                    else:
-//                        $element = ( new IOXMLEAScreenFactory( $orderedElements[$i] ) )->createElement();
-//                        print_r($element);
-//                    endif;
-//                    break;
-//                endif;
-//
-//            else:
-//                ?>
-<!--                <div class="model-noPreview">-->
-<!--                    <div class="model-noPreview-title">Model preview could not be presented</div>-->
-<!--                    <div class="model-noPreview-message">-->
-<!--                        <b>There were complications processing the model:</b>-->
-<!--                        <br><br>-->
-<!--                        Due to the ammount of (severe) errors the preview was aborted.-->
-<!--                        <br>-->
-<!--                        Please change the model and re-validate.-->
-<!--                    </div>-->
-<!--                    <div class="model-noPreview-message">-->
-<!--                        <b>Project:</b> --><?//= $projectName; ?>
-<!--                    </div>-->
-<!--                </div>-->
-<!--                --><?php
-//            endif;
-//
-//        endfor;
-//
-//    else:
-//        ?>
-<!--        <div class="model-noPreview">-->
-<!--            <div class="model-noPreview-title">Model preview could not be presented</div>-->
-<!--            <div class="model-noPreview-message">-->
-<!--                <b>There were complications processing the model:</b>-->
-<!--                <br><br>-->
-<!--                Due to the ammount of (severe) errors the preview was aborted.-->
-<!--                <br>-->
-<!--                Please change the model and re-validate.-->
-<!--            </div>-->
-<!--            <div class="model-noPreview-message">-->
-<!--                <b>Project:</b> --><?//= $projectName; ?>
-<!--            </div>-->
-<!--        </div>-->
-<!--    --><?php //endif; ?>
-<!---->
-<?php //else: ?>
-<!---->
-<!--    End of the line.-->
-<!---->
-<?php //endif; ?>
+echo '<pre>';
+print_r($orderedElements);
+
+?>

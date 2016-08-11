@@ -105,7 +105,7 @@ if( !class_exists( "XMLEATableFactory" ) ):
          */
         private function createTables($params )
         {
-            $elements      = ( new IOXMLEAScreenFactory( $params['model_id'] ) )->extractAndOrderElements();
+            $elements      = ( new IOXMLEAScreenFactory( "extractAndOrderelements", $params['model_id'] ) )->request( $params );
             $totalElements = count( $elements );
 
             if( !empty( $elements ) ):

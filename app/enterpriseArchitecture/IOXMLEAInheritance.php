@@ -72,7 +72,8 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                     break;
                 case"elementNames":
                     $elements = ( new IOXMLEAModelParser( $xmlFile ) )->parseXMLClasses();
-                    return( $elementNames = ( new IOXMLEAScreenFactory( "" ) )->extractElementNames( $elements ) );
+                    $params['elements'] = $elements;
+                    return( $elementNames = ( new IOXMLEAScreenFactory( "extractElementNames", $modelId = null ) )->request( $params ) );
                     break;
                 case"connectors":
                     return( $connectors = ( new IOXMLEAModelParser( $xmlFile ) )->parseConnectors() );
@@ -98,7 +99,9 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
              */
             $elements              = $this->extractModelDataFromFile( "elements" );
             $elementNames          = $this->extractModelDataFromFile( "elementNames" );
+            $connectors            = $this->extractModelDataFromFile( "connectors" );
             $totalElementsNames    = count( $elementNames );
+            $totalConnectors       = count( $connectors['connectors'] );
 
             $relationArray = array();
             if( $totalElementsNames > 0 ):
@@ -109,9 +112,11 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                     /**
                      * Add name, id, and isAbstract.
                      */
+                    $elementType     = $elements[$elementNames[$i]]['type'];
                     $elementName     = $elements[$elementNames[$i]]['name'];
                     $elementID       = $elements[$elementNames[$i]]['idref'];
                     $elementAbstract = $elements[$elementNames[$i]]['abstract'];
+                    $elementRoot     = $elements[$elementNames[$i]]['root'];
                     /**
                      * Get the links and split them up
                      * target, source
@@ -120,9 +125,12 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                     $totalAggregationLinks    = ( !empty( $elementLinks['aggregation'] ) ?  count( $elementLinks['aggregation'] ) : "" );
                     $totalGeneralizationLinks = ( !empty( $elementLinks['generalization'] ) ?  count( $elementLinks['generalization'] ) : "" );
 
+                    $relationArray[$elementNames[$i]]['type']      = $elementType;
                     $relationArray[$elementNames[$i]]['name']      = $elementName;
                     $relationArray[$elementNames[$i]]['id']        = $elementID;
                     $relationArray[$elementNames[$i]]['abstract']  = $elementAbstract;
+                    $relationArray[$elementNames[$i]]['root']      = $elementRoot;
+
                     /**
                      * Aggregation
                      * Add the parent and child
@@ -136,7 +144,21 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                                 endif;
                                 if( $element['idref'] === $elementLinks['aggregation']['link'.($j+1)]['target'] ):
                                     $relationArray[$elementNames[$i]]['aggregations']['aggregation'.($j+1)]['parent'] = $element['name'];
+                                    $parent = $element['name'];
                                 endif;
+                                /**
+                                 * Multiplicity
+                                 */
+                                for( $l = 0; $l < $totalConnectors; $l++ ):
+                                    if( $elementID === $connectors['connectors']['connector'.($l+1)]['source']['idref'] ):
+                                        $parent = ( !empty( $parent ) ? $parent : "" );
+                                        if( $connectors['connectors']['connector'.($l+1)]['target']['name'] === $parent ):
+                                            $relationArray[$elementNames[$i]]['multiplicity'] = $connectors['connectors']['connector'.($l+1)]['labels']['multiplicity_source'];
+                                        endif;
+                                        break;
+                                    endif;
+                                endfor;
+
                             endforeach;
                         endif;
                     endfor;

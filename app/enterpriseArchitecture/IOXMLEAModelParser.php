@@ -139,9 +139,9 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                              */
 
                             if ($isRoot === "true"):
-                                $classArray[$className]['Root'] = "true";
+                                $classArray[$className]['root'] = "true";
                             else:
-                                $classArray[$className]['Root'] = "false";
+                                $classArray[$className]['root'] = "false";
                             endif;
 
                             /**
@@ -442,8 +442,8 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                 $multiplicityEnd    = ( !empty( $labels->attributes()->lb ) ? (string) $labels->attributes()->lb : "" );
                 $multiplicityHead   = ( !empty( $labels->attributes()->mt ) ? (string) $labels->attributes()->mt : "" );
 
-                $connectorArray['connectors']['connector'.($i+1)]['labels']['multiplicity_start'] = $multiplicityStart;
-                $connectorArray['connectors']['connector'.($i+1)]['labels']['multiplicity_end']   = $multiplicityEnd;
+                $connectorArray['connectors']['connector'.($i+1)]['labels']['multiplicity_target'] = $multiplicityStart;
+                $connectorArray['connectors']['connector'.($i+1)]['labels']['multiplicity_source']   = $multiplicityEnd;
                 $connectorArray['connectors']['connector'.($i+1)]['labels']['multiplicity_head']  = $multiplicityHead;
 
                 /**
@@ -462,11 +462,11 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                 $multiplicity   = (string) $source->children()->type->attributes()->multiplicity;
                 $aggregation    = (string) $source->children()->type->attributes()->aggregation;
 
-                $connectorArray['connectors']['connector'.($i+1)]['source']['model']['name']         = $modelName;
-                $connectorArray['connectors']['connector'.($i+1)]['source']['model']['type']         = $modelType;
-                $connectorArray['connectors']['connector'.($i+1)]['source']['model']['ea_localid']   = $modelEALocalId;
-                $connectorArray['connectors']['connector'.($i+1)]['source']['model']['multiplicity'] = $multiplicity;
-                $connectorArray['connectors']['connector'.($i+1)]['source']['model']['aggregation']  = $aggregation;
+                $connectorArray['connectors']['connector'.($i+1)]['source']['name']         = $modelName;
+                $connectorArray['connectors']['connector'.($i+1)]['source']['type']         = $modelType;
+                $connectorArray['connectors']['connector'.($i+1)]['source']['ea_localid']   = $modelEALocalId;
+                $connectorArray['connectors']['connector'.($i+1)]['source']['multiplicity'] = $multiplicity;
+                $connectorArray['connectors']['connector'.($i+1)]['source']['aggregation']  = $aggregation;
 
                 /**
                  * Get the connector target and add it as an array to the connectors array
@@ -484,11 +484,11 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                 $multiplicity   = (string) $target->children()->type->attributes()->multiplicity;
                 $aggregation    = (string) $target->children()->type->attributes()->aggregation;
 
-                $connectorArray['connectors']['connector'.($i+1)]['target']['model']['name']         = $modelName;
-                $connectorArray['connectors']['connector'.($i+1)]['target']['model']['type']         = $modelType;
-                $connectorArray['connectors']['connector'.($i+1)]['target']['model']['ea_localid']   = $modelEALocalId;
-                $connectorArray['connectors']['connector'.($i+1)]['target']['model']['multiplicity'] = $multiplicity;
-                $connectorArray['connectors']['connector'.($i+1)]['target']['model']['aggregation']  = $aggregation;
+                $connectorArray['connectors']['connector'.($i+1)]['target']['name']         = $modelName;
+                $connectorArray['connectors']['connector'.($i+1)]['target']['type']         = $modelType;
+                $connectorArray['connectors']['connector'.($i+1)]['target']['ea_localid']   = $modelEALocalId;
+                $connectorArray['connectors']['connector'.($i+1)]['target']['multiplicity'] = $multiplicity;
+                $connectorArray['connectors']['connector'.($i+1)]['target']['aggregation']  = $aggregation;
 
                 /**
                  * Get the connector target and add it as an array to the connectors array

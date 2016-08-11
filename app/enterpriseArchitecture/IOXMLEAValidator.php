@@ -218,9 +218,9 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                         /**
                          * Get all the roots out of the classes array
                          */
-                        if( !empty( $parsedClass['Root'] ) ):
-                            $roots[] = $parsedClass['Root'];
-                            if( $parsedClass['Root'] === "true" ):
+                        if( !empty( $parsedClass['root'] ) ):
+                            $roots[] = $parsedClass['root'];
+                            if( $parsedClass['root'] === "true" ):
                                 $trueRootClassName = $parsedClass['name'];
                                 $report['trueRootClassName'] = $trueRootClassName;
                             endif;
