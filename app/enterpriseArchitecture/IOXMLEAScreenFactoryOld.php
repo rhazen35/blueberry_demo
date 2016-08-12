@@ -409,7 +409,7 @@ class IOXMLEAScreenFactoryOld
             $form .= '</div>';
         $form .= '</div>';
 
-         $form .= '</form>';
+        $form .= '</form>';
 
         return( $form );
 

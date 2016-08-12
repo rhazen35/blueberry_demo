@@ -13,7 +13,7 @@ $modelId         = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] 
 $params          = array( "model_id" => $modelId );
 $project         = ( new Project( "getProjectByModelId" ) )->request( $params );
 $projectName     = ( isset( $project['name'] ) ? $project['name'] : "" );
-$orderedElements = ( new IOXMLEAScreenFactory( "buildScreenArray", $modelId ) )->request( $params = null );
+$orderedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
 $totalElements   = count( $orderedElements );
 $highestOrder    = ( !empty( $orderedElements['highestOrder']['order'] ) ? $orderedElements['highestOrder']['order'] : "" );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
@@ -24,6 +24,25 @@ $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
     <div class="title">Model Preview <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
     </div>
 <?php
+
+foreach( $orderedElements as $orderedElement ):
+
+    /**
+     * Only print element if there is a print order.
+     */
+    $printOrder = ( isset( $orderedElement['printOrder'] ) ? $orderedElement['printOrder'] : "" );
+    if( $printOrder !== "noPrint" && ctype_digit( $printOrder ) ):
+
+        $root = ( isset( $orderedElement['isRoot'] ) ? $orderedElement['isRoot'] : "" );
+        if( $root === "true" ):
+            print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElement ) )->request( $params = null ) );
+        else:
+            print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElement ) )->request( $params = null ) );
+        endif;
+
+    endif;
+
+endforeach;
 
 echo '<pre>';
 print_r($orderedElements);
