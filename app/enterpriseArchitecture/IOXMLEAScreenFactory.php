@@ -127,17 +127,22 @@ class IOXMLEAScreenFactory
                     $name             = ( isset( $element['name'] ) ? $element['name'] : "" );
                     $tags             = ( isset( $element['tags'] ) ? $element['tags'] : false );
                     $order            = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "noPrint");
-
                     /**
                      * Set the highest order
                      */
                     if( $order !== "noPrint" ):
                         $highestOrder = $order;
                     endif;
-
+                    /**
+                     * Element documentation.\, attributes, operations
+                     */
                     $elementDocumentation  = ( isset( $element['documentation'] ) ? $element['documentation'] : "" );
                     $elementAttributes     = ( isset( $element['attributes'] ) ? $element['attributes'] : false );
                     $elementOperations     = ( isset( $element['operations'] ) ? $element['operations'] : "" );
+                    /**
+                     * Element target i.e. super type
+                     */
+                    $target = $this->getMatchingConnector( $idref, "target" );
                     /**
                      * Only create element array if there is an order.
                      */
@@ -160,6 +165,39 @@ class IOXMLEAScreenFactory
                         $orderedElements[$i]['isChild']              = $relationIsChild;
                         $orderedElements[$i]['isSuperType']          = $relationIsSuperType;
                         $orderedElements[$i]['isSubType']            = $relationIsSubType;
+                        /**
+                         * Add the super type if the target is available
+                         */
+                        if( !empty( $target ) ):
+
+                            $orderedElements[$i]['supertype']                   = array();
+                            $orderedElements[$i]['supertype']['id']             = $target['id'];
+                            $orderedElements[$i]['supertype']['type']           = $target['type'];
+                            $orderedElements[$i]['supertype']['name']           = $target['name'];
+                            $orderedElements[$i]['supertype']['ea_localId']     = $target['ea_localId'];
+                            $orderedElements[$i]['supertype']['multiplicity']   = $target['multiplicity'];
+                            $orderedElements[$i]['supertype']['aggregation']    = $target['aggregation'];
+
+                            $targetClass    = $parsedElements[$target['name']];
+
+                            $idref          = ( isset( $targetClass['idref'] ) ? $targetClass['idref'] : "" );
+                            $tags           = ( isset( $targetClass['tags'] ) ? $targetClass['tags'] : false );
+                            $documentation  = ( isset( $targetClass['documentation'] ) ? $targetClass['documentation'] : "" );
+                            $order          = ( isset( $tags['QR-PrintOrder'] ) ? $tags['QR-PrintOrder'] : "");
+                            $attributes     = ( isset( $targetClass['attributes'] ) ? $targetClass['attributes'] : false );
+                            $attributesTags = ( isset( $targetClass['attributes']['tags'] ) ? $targetClass['attributes']['tags'] : false );
+                            $operations     = ( isset( $targetClass['operations'] ) ? $targetClass['operations'] : "" );
+                            $labels         = ( isset( $target['labels'] ) ? $target['labels'] : "" );
+
+                            $orderedElements[$i]['supertype']['idref']              = $idref;
+                            $orderedElements[$i]['supertype']['order']              = $order;
+                            $orderedElements[$i]['supertype']['documentation']      = $documentation;
+                            $orderedElements[$i]['supertype']['attributes']         = $attributes;
+                            $orderedElements[$i]['supertype']['attributes']['tags'] = $attributesTags;
+                            $orderedElements[$i]['supertype']['operations']         = $operations;
+                            $orderedElements[$i]['supertype']['labels']             = $labels;
+
+                        endif;
 
                         /**
                          * Select the sub types for each super type.
@@ -235,6 +273,68 @@ class IOXMLEAScreenFactory
             endif;
 
         endif;
+    }
+
+    /**
+     * @param $idref
+     * @return array
+     */
+    private function getMatchingConnector( $idref, $type )
+    {
+        $modelData          = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
+        $xmlFile            =  'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
+        $parsedConnectors   = ( new IOXMLEAModelParser( $xmlFile) )->parseConnectors();
+        $totalConnectors    = count( $parsedConnectors['connectors'] );
+
+        for( $j = 0; $j < $totalConnectors; $j++ ):
+            if( $idref === $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'] ):
+                if( $parsedConnectors['connectors']['connector'.($j+1)]['properties']['ea_type'] === "Generalization" ):
+
+                    $source                  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'];
+                    $sourceName              = $parsedConnectors['connectors']['connector'.($j+1)]['source']['name'];
+                    $sourceModelType         = $parsedConnectors['connectors']['connector'.($j+1)]['source']['type'];
+                    $sourceModelEALocalId    = $parsedConnectors['connectors']['connector'.($j+1)]['source']['ea_localid'];
+                    $sourceModeMultiplicity  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['multiplicity'];
+                    $sourceModelAggregation  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['aggregation'];
+                    $sourceArray             = array(
+                        "id"            => $source,
+                        "name"          => $sourceName,
+                        "type"          => $sourceModelType,
+                        "ea_localId"    => $sourceModelEALocalId,
+                        "multiplicity"  => $sourceModeMultiplicity,
+                        "aggregation"   => $sourceModelAggregation
+                    );
+
+                    $target                  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['idref'];
+                    $targetName              = $parsedConnectors['connectors']['connector'.($j+1)]['target']['name'];
+                    $targetModelType         = $parsedConnectors['connectors']['connector'.($j+1)]['target']['type'];
+                    $targetModelEALocalId    = $parsedConnectors['connectors']['connector'.($j+1)]['target']['ea_localid'];
+                    $targetModeMultiplicity  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['multiplicity'];
+                    $targetModelAggregation  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['aggregation'];
+                    $labels                  = $parsedConnectors['connectors']['connector'.($j+1)]['labels'];
+                    $targetArray             = array(
+                        "id"            => $target,
+                        "name"          => $targetName,
+                        "type"          => $targetModelType,
+                        "ea_localId"    => $targetModelEALocalId,
+                        "multiplicity"  => $targetModeMultiplicity,
+                        "aggregation"   => $targetModelAggregation,
+                        "labels"        => $labels
+                    );
+
+                    if( $type === "source" ):
+                        return( $sourceArray );
+                    elseif( $type === "target" ):
+                        return( $targetArray );
+                    endif;
+
+
+                    break;
+
+                endif;
+            endif;
+        endfor;
+
     }
 
     private function extractAndOrderOperations( $operations )
@@ -381,10 +481,83 @@ class IOXMLEAScreenFactory
     private function buildForm ( $element )
     {
         $elementName  = ( isset( $element['name'] ) ? $element['name'] : "" );
+        $target       = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
+        $targetFields = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
         $fields       = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : "" );
+        $superTypes   = ( isset( $element['super_types'] ) ? $element['super_types'] : "" );
 
         $form = '<form action="' . APPLICATION_HOME . '" method="post" class="element-form">';
 
+        /**
+         * Super types drop down
+         */
+        if( !empty( $superTypes ) ):
+            foreach( $superTypes as $superTypeName => $subTypes ):
+
+                $form .= '<div class="element-input-box">';
+                $form .= '<div class="element-input-name">' . $superTypeName . '</div>';
+                $form .= '<select name="' . $superTypeName . '">';
+                foreach( $subTypes as $subType ):
+                    $form .= '<option name=" ' . $subType . '">' . $subType . '</option>';
+                endforeach;
+                $form .= '</select>';
+                $form .= '</div>';
+
+            endforeach;
+        endif;
+        /**
+         * Target
+         */
+        if( !empty( $targetFields ) ):
+            foreach( $targetFields as $targetField ):
+                if( !empty( $targetField ) ):
+
+                    $inputName        = ( isset( $targetField['input_name'] ) ? $targetField['input_name'] : "" );
+                    $inputInfo        = ( isset( $targetField['documentation'] ) ? $targetField['documentation'] : "" );
+                    $inputPlaceholder = ( isset( $targetField['initialValue'] ) ? $targetField['initialValue'] : "" );
+                    $inputDataType    = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
+                    $inputFieldType   = ( new IOXMLEAAttributeTypes( $element['model_id'], $inputDataType ) )->fieldType();
+
+                    $form .= '<div class="element-input-box">';
+
+                    if( !empty( $inputName ) ):
+                        $form .= '<div class="element-input-name">' . $inputName . '</div>';
+                        if( !empty( $inputFieldType ) ):
+                            switch( $inputFieldType ):
+                                case"PrimitiveType":
+                                case"DataType":
+                                    $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
+                                    break;
+                                case"Enumeration":
+
+                                    $params['model_id'] = $element['model_id'];
+                                    $enumerations       = ( new IOXMLEAEnumerations( "getEnumerations", $inputDataType ) )->request( $params );
+
+                                    $form .= '<select name="' . $inputName . '">';
+
+                                    foreach( $enumerations as $enumeration ):
+                                        $form .= '<option name="enum" value="' . $enumeration['input_name'] . '">' . $enumeration['input_name'] . '</option>';
+                                    endforeach;
+
+                                    $form .= '</select>';
+                                    break;
+                            endswitch;
+                        endif;
+                    endif;
+
+                    if( !empty( $inputInfo ) ):
+                        $form .= '<div class="element-input-hoverImg"><img src="images/icons/info_icon_blue.png"></div>';
+                        $form .= '<div class="element-input-hover">' . $inputInfo . '</div>';
+                    endif;
+
+                    $form .= '</div>';
+
+                endif;
+            endforeach;
+        endif;
+        /**
+         * Element
+         */
         if( !empty( $fields ) ):
             foreach( $fields as $field ):
                 if( !empty( $field ) ):
