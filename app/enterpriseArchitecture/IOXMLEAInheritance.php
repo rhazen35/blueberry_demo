@@ -156,7 +156,12 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                                         if( $connectors['connectors']['connector'.($l+1)]['target']['name'] === $parent ):
                                             $relationArray[$elementNames[$i]]['multiplicity'] = $connectors['connectors']['connector'.($l+1)]['labels']['multiplicity_source'];
                                         endif;
-                                        break;
+
+                                        $multiplicity_head = ( !empty( $connectors['connectors']['connector'.($l+1)]['labels']['multiplicity_head'] ) ? $connectors['connectors']['connector'.($l+1)]['labels']['multiplicity_head'] : "" );
+                                        if( !empty( $multiplicity_head ) ):
+                                            $relationArray[$elementNames[$i]]['multiplicity_head'] = $multiplicity_head;
+                                        endif;
+
                                     endif;
                                 endfor;
 
