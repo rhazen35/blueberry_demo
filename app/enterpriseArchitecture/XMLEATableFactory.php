@@ -105,7 +105,7 @@ if( !class_exists( "XMLEATableFactory" ) ):
          */
         private function createTables($params )
         {
-            $elements      = ( new IOXMLEAScreenFactory( "extractAndOrderelements", $params['model_id'] ) )->request( $params );
+            $elements      = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $params['model_id'] ) )->request( $params );
             $totalElements = count( $elements );
 
             if( !empty( $elements ) ):
@@ -114,19 +114,30 @@ if( !class_exists( "XMLEATableFactory" ) ):
                 $format   = array();
                 $type     = "create";
                 $database = ( isset( $params['dbName'] ) ? $params['dbName'] : "" );
+
                 for( $i = 0; $i < $totalElements; $i++ ):
 
                     if( !empty( $elements[$i] ) ):
 
-                        if( $elements[$i]['root'] !== 'true' ):
+                        if( $elements[$i]['isRoot'] !== 'true' ):
 
+                            $elementName    = ( isset( $elements[$i]['name'] ) ? $elements[$i]['name'] : "" );
                             $tableName      = ( isset( $elements[$i]['name'] ) ? $elements[$i]['name'] : "" );
                             $tableName      = strtolower( str_replace( " ", "_", $tableName ) );
                             $params['type'] = "table";
                             $params['name'] = $tableName;
 
                             $columnsSuper   = ( isset( $elements[$i]['supertype']['attributes'] ) ? $elements[$i]['supertype']['attributes'] : "" );
-                            $columns        = ( isset( $elements[$i]['attributes'] ) ? $elements[$i]['attributes'] : "" );
+                            $columns        = array();
+
+                            $elementAttributes      = ( !empty( $elements[$i]['formDetails']['elementAttributes'][$elementName] ) ? $elements[$i]['formDetails']['elementAttributes'][$elementName] : "" );
+                            $totalElementAttributes = count( $elementAttributes );
+
+                            if( !empty( $elementAttributes ) ):
+                                for( $j = 0; $j < $totalElementAttributes; $j++ ):
+                                    $columns[] = $elementAttributes[$j]['name'];
+                                endfor;
+                            endif;
 
                             /**
                              * * * START OF TABLE * * *
@@ -147,11 +158,8 @@ if( !class_exists( "XMLEATableFactory" ) ):
 
                             if( !empty( $columns ) ):
                                 foreach( $columns as $column ):
-                                    $columnName = ( isset( $column['input_name'] ) ? $column['input_name'] : "" );
-                                    if( !empty( $columnName ) ):
-                                        $columnName = strtolower( str_replace( " ", "_", $columnName ) );
-                                        $sql .= " " . $columnName . " VARCHAR(150) NOT NULL, ";
-                                    endif;
+                                    $columnName = strtolower( str_replace( " ", "_", $column ) );
+                                    $sql .= " " . $columnName . " VARCHAR(150) NOT NULL, ";
                                 endforeach;
                             endif;
 
