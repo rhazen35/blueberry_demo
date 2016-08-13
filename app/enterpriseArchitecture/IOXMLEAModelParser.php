@@ -188,7 +188,7 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
 
                                     if( !empty( $order ) ):
                                         $classArray[$className]['tags'][$tagName]['order']      = trim( $order );
-                                        $classArray[$className]['tags'][$tagName]['className']   = trim( $className );
+                                        $classArray[$className]['tags'][$tagName]['className']  = trim( $className );
                                     endif;
 
                                 endfor;

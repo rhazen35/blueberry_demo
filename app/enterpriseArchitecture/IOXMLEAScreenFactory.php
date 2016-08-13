@@ -127,12 +127,7 @@ class IOXMLEAScreenFactory
                     $name             = ( isset( $element['name'] ) ? $element['name'] : "" );
                     $tags             = ( isset( $element['tags'] ) ? $element['tags'] : false );
                     $order            = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "noPrint");
-                    /**
-                     * Set the highest order
-                     */
-                    if( $order !== "noPrint" ):
-                        $highestOrder = $order;
-                    endif;
+                    $highestOrder     = ( $order !== "noPrint" ? $highestOrder + 1 : $highestOrder );
                     /**
                      * Element documentation.\, attributes, operations
                      */
@@ -446,7 +441,7 @@ class IOXMLEAScreenFactory
                 $html .= '<div class="elementIntro-subIntro"><p>'. $formOperations[$i]['documentation'] .'</p></div>';
             endfor;
 
-            $html .= '<div class="elementIntro-next"><a href="' . APPLICATION_HOME . '?model&page=' . ( $element['printOrder'] ) . '" class="button">Next</a></div>';
+            $html .= '<div class="elementIntro-next"><a href="' . APPLICATION_HOME . '?model&page=' . ( ($element['printOrder'] + 1) ) . '" class="button">Next</a></div>';
 
         endif;
 
@@ -611,11 +606,11 @@ class IOXMLEAScreenFactory
          * Display previous button if the class order is bigger then one
          */
         if( $element['printOrder'] > 1 ):
-            $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $element['printOrder'] - 2 ) . '" class="button">previous</a>';
+            $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $element['printOrder'] - 1 ) . '" class="button">previous</a>';
         endif;
         $form .= '<input type="hidden" name="elementName" value="' . $elementName . '">';
         $form .= '<input type="hidden" name="modelId" value="' . $element['model_id'] . '">';
-        $form .= '<input type="hidden" name="elementOrder" value="' . $element['printOrder'] . '">';
+        $form .= '<input type="hidden" name="elementOrder" value="' . ($element['printOrder'] + 1) . '">';
         $form .= '<input type="hidden" name="path" value="screenFactory">';
         $form .= '<input type="hidden" name="attr" value="newClass">';
         $form .= '<input type="submit" name="submit" value="next" class="button">';

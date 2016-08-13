@@ -15,8 +15,8 @@ $project         = ( new Project( "getProjectByModelId" ) )->request( $params );
 $projectName     = ( isset( $project['name'] ) ? $project['name'] : "" );
 $orderedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
 $totalElements   = count( $orderedElements );
-$highestOrder    = ( !empty( $orderedElements['highestOrder']['order'] ) ? $orderedElements['highestOrder']['order'] : "" );
-$currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
+$currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
+$highestOrder    = $orderedElements['highest_order'];
 
 
 ?>
@@ -25,26 +25,55 @@ $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : 0 );
     </div>
 <?php
 
-foreach( $orderedElements as $orderedElement ):
+if( !empty( $orderedElements ) ):
 
-    /**
-     * Only print element if there is a print order.
-     */
-    $printOrder = ( isset( $orderedElement['printOrder'] ) ? $orderedElement['printOrder'] : "" );
-    if( $printOrder !== "noPrint" && ctype_digit( $printOrder ) ):
+    if( $currentPage <= $highestOrder ):
 
-        $root = ( isset( $orderedElement['isRoot'] ) ? $orderedElement['isRoot'] : "" );
-        if( $root === "true" ):
-            print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElement ) )->request( $params = null ) );
-        else:
-            print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElement ) )->request( $params = null ) );
-        endif;
+        for( $i = 0; $i < $totalElements; $i++ ):
+
+            if( !empty( $orderedElements[$i] ) ):
+                /**
+                 * Only print element if there is a print order, if the print order is a digit and if the print order equals the current page.
+                 */
+                $printOrder = ( isset( $orderedElements[$i]['printOrder'] ) ? $orderedElements[$i]['printOrder'] : "" );
+
+                if( $orderedElements[$i]['printOrder'] !== "noPrint" && ctype_digit( $orderedElements[$i]['printOrder'] ) && $printOrder === $currentPage ):
+
+                    /**
+                     * Print root first, always contains the intro element
+                     * Each element printed after the root contains a form.
+                     * TODO: Might want to edit the fact that an element always contains a form!
+                     */
+                    $root = ( isset( $orderedElements[$i]['isRoot'] ) ? $orderedElements[$i]['isRoot'] : "" );
+                    if( $root === "true" ):
+                        print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElements[$i] ) )->request( $params = null ) );
+                    else:
+                        print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params = null ) );
+                    endif;
+
+                endif;
+
+            endif;
+
+        endfor;
+
+    else:
+
+        ?>
+        <div class="model-noPreview">
+            <div class="model-noPreview-title">End of the line</div>
+            <div class="model-noPreview-message">
+                <b>Destination reached.</b>
+            <div class="model-noPreview-message">
+                <b>Project:</b> <?= $projectName; ?>
+            </div>
+        </div>
+        <?php
 
     endif;
 
-endforeach;
+endif;
 
-echo '<pre>';
-print_r($orderedElements);
+//var_dump($orderedElements);
 
 ?>
