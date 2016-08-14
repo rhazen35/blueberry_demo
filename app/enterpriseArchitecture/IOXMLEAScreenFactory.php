@@ -15,21 +15,40 @@ namespace app\enterpriseArchitecture;
  * The screen factory uses to following classes:
  *
  * - IOXMLEAModel --> get basic model information
- * - IOXMLEAInheritance --> create relations for each xml element
  * - IOXMLEAModelParser --> parse the xml into a php array
+ * - IOXMLEAInheritance --> create relations for each xml element
  * - IOXMLEAAttributeTypes --> returns the attribute data type (a.k.a field type)
  * - IOXMLEAEnumerations --> returns a list of all attribute enumerations
  *
- * [EXTRACT AND ORDER]
+ * ##### [EXTRACT AND ORDER] #####
+ * - The extract and order elements function will gather all needed data for screen processing.
+ * - Data without a print order will be marked as noPrint.
+ * - Extracted data will be ordered by the given print order.
+ * - Attributes and operations will also be ordered per element.
+ * - Parent/Super type attributes will be displayed before child/sub type attributes.
  *
- * The extract and order elements function will gather all needed data for screen processing.
+ * TODO: Order element result data by last item added.
+ * TODO: Operations, inheritance, extract and order, handling/display of operations.
+ * TODO: Form validation: which fields are required, what is the maximum multiplicity.
+ * TODO: Handle constants, arrays and lists, display constant in a grayed/unchangeable field.
+ *
+ * ##### [SCREEN FACTORY] #####
+ * - Each model starts with an intro, created by the build element intro function.
+ *  [note:] Each element that is a root is the intro.
+ * - Elements that are of type uml:class and have a print will be created by the build element function.
+ * - The build element function also creates the forms, which are handled based on multiplicity.
+ * ** FORMS **
+ *      - When the multiplicity is equal to 1 a basic (normal) form will be build.
+ *      - When the multiplicity is equal to 1..* or 0..* a basic (normal) form and advanced form(s) will be build.
+ *      - Basic forms will contain input data if the multiplicity is equal to 1 and if any is available.
+ *      - Basic forms will NOT contain input data if the multiplicity is equal to 1..* or 0..* and if any is available.
+ *      - Advanced forms always contain available input data and can be edited/deleted.
  *
  */
 
 class IOXMLEAScreenFactory
 {
     protected $xmlModelId;
-
     /**
      * IOXMLEAScreenFactory constructor.
      * @param $xmlModelId
@@ -40,12 +59,13 @@ class IOXMLEAScreenFactory
         $this->type       = $type;
         $this->xmlModelId = $xmlModelId;
     }
-
     /**
      * @param $params
      * @return array|void
+     *
+     * Request handles the public access and controls function calls.
      */
-    public function request($params )
+    public function request( $params )
     {
         switch( $this->type ):
             case"extractElementNames":
@@ -62,32 +82,29 @@ class IOXMLEAScreenFactory
                 break;
         endswitch;
     }
-
     /**
      * @param $params
      * @return array
+     *
+     * Extract all element names, element names are used to target specific elements in the parsed php array.
      */
-    private function extractElementNames($params )
+    private function extractElementNames( $params )
     {
         $parsedElements = $params['elements'];
-        $elementNames = array();
-
+        $elementNames   = array();
         foreach( $parsedElements as $parsedElement ):
-            /**
-             * Get all the classes names
-             */
             if( !empty( $parsedElement['name'] ) ):
                 $elementNames[] = $parsedElement['name'];
             endif;
         endforeach;
-
         return($elementNames);
     }
-
     /**
      * @param $a
      * @param $b
      * @return int
+     *
+     * Sorts any array that contains a printOrder, sorts compares naturally.
      */
     private function sortByPrintOrder( $a, $b )
     {
@@ -95,9 +112,20 @@ class IOXMLEAScreenFactory
             return( strnatcmp( $a['printOrder'], $b['printOrder'] ) );
         endif;
     }
-
     /**
      * @return array
+     *
+     * Extract and order elements function.
+     *
+     * - Get basic model data.
+     * - Build relations for each element.
+     * - Get the parsed classes array, which contains all xml elements data.
+     * - Extract element names and start extract and order of elements.
+     *
+     * - Get the matching target connector and add the super type if available.
+     * - Add all super and sub types if available.
+     * - Extract and order attributes, super types first, if avilable.
+     * - Extract and order operations, super types first, if available.
      */
     private function extractAndOrderElements()
     {
@@ -107,14 +135,17 @@ class IOXMLEAScreenFactory
         $highestOrder       = 0;
 
         if (!empty($modelData)):
-
             if (!empty($modelData['hash'])):
-
+                /**
+                 * Get the xml file, pass it to the model parser and extract element names.
+                 */
                 $xmlFile        = 'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
                 $parsedElements = ( new IOXMLEAModelParser($xmlFile))->parseXMLClasses();
                 $params         = array( "elements" => $parsedElements );
                 $elementNames   = $this->extractElementNames ( $params );
-
+                /**
+                 * Start extraction.
+                 */
                 $i = 0;
                 foreach( $elementNames as $elementName ):
                     /**
@@ -146,17 +177,17 @@ class IOXMLEAScreenFactory
                     $order            = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "noPrint");
                     $highestOrder     = ( $order !== "noPrint" ? $highestOrder + 1 : $highestOrder );
                     /**
-                     * Element documentation.\, attributes, operations
+                     * Element documentation, attributes, operations, target(collected by the matching connector, if available)
                      */
                     $elementDocumentation  = ( isset( $element['documentation'] ) ? $element['documentation'] : "" );
                     $elementAttributes     = ( isset( $element['attributes'] ) ? $element['attributes'] : false );
                     $elementOperations     = ( isset( $element['operations'] ) ? $element['operations'] : "" );
                     /**
-                     * Element target i.e. super type
+                     * Element target i.e. parent/super type
                      */
                     $target = $this->getMatchingConnector( $idref, "target" );
                     /**
-                     * Only create element array if there is an order.
+                     * Only create element array if the element has a relation.
                      */
                     if( $name === $relationName ):
                         $orderedElements[$i]['model_id']             = $this->xmlModelId;
@@ -181,7 +212,6 @@ class IOXMLEAScreenFactory
                          * Add the super type if the target is available
                          */
                         if( !empty( $target ) ):
-
                             $orderedElements[$i]['supertype']                   = array();
                             $orderedElements[$i]['supertype']['id']             = $target['id'];
                             $orderedElements[$i]['supertype']['type']           = $target['type'];
@@ -191,7 +221,6 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['supertype']['aggregation']    = $target['aggregation'];
 
                             $targetClass    = $parsedElements[$target['name']];
-
                             $idref          = ( isset( $targetClass['idref'] ) ? $targetClass['idref'] : "" );
                             $tags           = ( isset( $targetClass['tags'] ) ? $targetClass['tags'] : false );
                             $documentation  = ( isset( $targetClass['documentation'] ) ? $targetClass['documentation'] : "" );
@@ -208,18 +237,12 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['supertype']['attributes']['tags'] = $attributesTags;
                             $orderedElements[$i]['supertype']['operations']         = $operations;
                             $orderedElements[$i]['supertype']['labels']             = $labels;
-
                         endif;
-
                         /**
                          * Select the sub types for each super type.
-                         *
                          */
                         if( !empty( $superTypes ) ):
                             for( $j = 0; $j < $totalSuperTypes; $j++ ):
-                                /**
-                                 * Select sub types for current element
-                                 */
                                 if( !empty( $subTypes ) ):
                                     for( $k = 0; $k < $totalSubTypes; $k++ ):
                                         $orderedElements[$i]['super_types'][$superTypes['super_type'.($j+1)]]['sub'.($k+1)] = ( !empty( $subTypes['sub_type'.($k+1)] ) ? $subTypes['sub_type'.($k+1)] : "" );
@@ -227,7 +250,6 @@ class IOXMLEAScreenFactory
                                 endif;
                             endfor;
                         endif;
-
                         /**
                          * Add form details
                          */
@@ -270,23 +292,19 @@ class IOXMLEAScreenFactory
                         if( !empty( $elementOperations ) ):
                             $orderedElements[$i]['formDetails']['elementOperations'][$name] = ( !empty( $elementOperations ) ? $this->extractAndOrderOperations( $elementOperations ) : "" );
                         endif;
-
                     endif;
 
                 $i++;
                 endforeach;
-
-                usort( $orderedElements, array( $this,'sortByPrintOrder' ) );
-
-                $orderedElements['highest_order'] = $highestOrder;
-
-                return( $orderedElements );
-
             endif;
-
         endif;
+        /**
+         * Sort all elements by print order, add the highest order and return the extracted and ordered  elements.
+         */
+        usort( $orderedElements, array( $this,'sortByPrintOrder' ) );
+        $orderedElements['highest_order'] = $highestOrder;
+        return( $orderedElements );
     }
-
     /**
      * @param $idref
      * @return array
