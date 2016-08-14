@@ -146,7 +146,7 @@
 {
     float:right;
     margin-top:1em;
-    margin-right:2em;
+    margin-right:1em;
 }
 
 .element-input-submit input[type=submit]
@@ -160,9 +160,16 @@
 .element-input-submit a
 {
     float:left;
-    margin-right:1em;
     padding:0.5rem 1rem;
     font-size:100%;
     text-decoration:none;
+}
+
+.element-input-info
+{
+    float:right;
+    font-size:90%;
+    margin-top:1.5em;
+    margin-right:1em;
 }
 
