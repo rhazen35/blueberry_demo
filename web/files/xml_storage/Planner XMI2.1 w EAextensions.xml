@@ -1436,7 +1436,8 @@
 						<styleex value="ShowBeh=0;"/>
 						<documentation value="De eerste berekening. Het resultaat hiervan moet uit Excel komen. Er is nog geen Tagged Value of Stereotype gekoppeld. "/>
 						<tags>
-							<tag xmi:id="EAID_52B0C21B_F0B4_47fa_A84D_1B3184E3400A" name="QR-Excel output" value=" b8      :        , Output, simpel rekenmodel.xlsx"/>
+							<tag xmi:id="EAID_52B0C21B_F0B4_4Uitgaven
+							7fa_A84D_1B3184E3400A" name="QR-Excel output" value=" b8      :        , Output, simpel rekenmodel.xlsx"/>
 							<tag xmi:id="EAID_745CF1A9_79FA_46e5_B3FE_BAED43ABB4FA" name="QR-PrintOrder" value="5"/>
 						</tags>
 						<parameters>

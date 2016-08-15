@@ -43,7 +43,7 @@ class XMLDBController
         $resultId       = ( !empty( $params['result_id'] ) ? $params['result_id'] : "" );
 
         $userId    = ( isset( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
-        $tableName = strtolower( $elementName );
+        $tableName = strtolower( str_replace( " ", "_", $elementName ) );
         $database  = "";
         $date      = date( "Y-m-d" );
         $time      = date( "H:i:s" );
@@ -79,11 +79,38 @@ class XMLDBController
 
                 if( $parsedElement['name'] === $elementName ):
 
-                    if( !empty( $parsedElement['formDetails']['elementAttributes'][$elementName] ) ):
-                        $attributes      = $parsedElement['formDetails']['elementAttributes'][$elementName];
-                        $totalAttributes = count($attributes);
-                        for( $i = 0; $i < $totalAttributes; $i++ ):
-                            $attributeName  = ( isset( $attributes[$i]['name'] ) ? str_replace( " ", "_", $attributes[$i]['name'] ) : "" );
+                    $elementAttributes      = ( isset( $parsedElement['formDetails']['elementAttributes'][$elementName] ) ? $parsedElement['formDetails']['elementAttributes'][$elementName] : ""  );
+                    $totalElementAttributes = count($elementAttributes);
+                    $superAttributes        = ( isset( $parsedElement['supertype']['attributes'] ) ? $parsedElement['supertype']['attributes'] : "" );
+                    $totalSuperAttributes  = count( $superAttributes );
+
+                    if( !empty( $superAttributes ) ):
+                        $countAttributes = 1;
+                        foreach( $superAttributes as $attribute => $array ):
+                            if( !empty( $array ) ):
+                                $countAttributes++;
+                                $attributeName  = ( isset( $array['input_name'] ) ? str_replace( " ", "_", $array['input_name'] ) : "" );
+                                $attributeValue = ( isset( $_POST[$attributeName] ) ? $_POST[$attributeName] : "" );
+
+                                $attributeName = strtolower( $attributeName );
+                                $data[$attributeName] = $attributeValue;
+                                $format[] = "s";
+                                $sql .= ",?";
+
+                                $checkSql .= ( $countAttributes < $totalSuperAttributes ? $attributeName.", " : ( !empty( $elementAttributes ) ? $attributeName.", " : $attributeName."" ) );
+
+                                $updateSql .= ( $countAttributes < $totalSuperAttributes ? $attributeName." = ?, " : ( !empty( $elementAttributes ) ? $attributeName." = ?," : $attributeName." = ?" ) );
+                                $updateData[$attributeName] = $attributeValue;
+                                $updateFormat[]             = "s";
+
+                            endif;
+                        endforeach;
+
+                    endif;
+
+                    if( !empty( $elementAttributes ) ):
+                        for( $i = 0; $i < $totalElementAttributes; $i++ ):
+                            $attributeName  = ( isset( $elementAttributes[$i]['name'] ) ? str_replace( " ", "_", $elementAttributes[$i]['name'] ) : "" );
                             $attributeValue = ( isset( $_POST[$attributeName] ) ? $_POST[$attributeName] : "" );
 
                             $attributeName        = strtolower( $attributeName );
@@ -91,47 +118,17 @@ class XMLDBController
                             $format[]             = "s";
                             $sql                 .= ",?";
 
-                            $checkSql .= ( ($i+1) < $totalAttributes ? $attributeName.", " : $attributeName."" );
+                            $checkSql .= ( ($i+1) < $totalElementAttributes ? $attributeName.", " : $attributeName."" );
 
-                            $updateSql .= ( ($i+1) < $totalAttributes ? $attributeName." = ?, " : $attributeName." = ?" );
+                            $updateSql .= ( ($i+1) < $totalElementAttributes ? $attributeName." = ?, " : $attributeName." = ?"  );
                             $updateData[$attributeName] = $attributeValue;
                             $updateFormat[]             = "s";
 
                         endfor;
-                        break;
-
-                    else:
-                        if( !empty( $parsedElement['supertype']['attributes'] ) ):
-
-                            $attributes = $parsedElement['supertype']['attributes'];
-                            $totalAttributes = count( $attributes );
-
-                            $countAttributes = 1;
-                            foreach( $attributes as $attribute => $array ):
-                                if( !empty( $array ) ):
-                                    $countAttributes++;
-                                    $attributeName  = ( isset( $array['input_name'] ) ? str_replace( " ", "_", $array['input_name'] ) : "" );
-                                    $attributeValue = ( isset( $_POST[$attributeName] ) ? $_POST[$attributeName] : "" );
-
-                                    $attributeName = strtolower( $attributeName );
-                                    $data[$attributeName] = $attributeValue;
-                                    $format[] = "s";
-                                    $sql .= ",?";
-
-                                    $checkSql .= ( $countAttributes < $totalAttributes ? $attributeName.", " : $attributeName."" );
-
-                                    $updateSql .= ( $countAttributes < $totalAttributes ? $attributeName." = ?, " : $attributeName." = ?" );
-                                    $updateData[$attributeName] = $attributeValue;
-                                    $updateFormat[]             = "s";
-
-                                endif;
-                            endforeach;
-
-                            break;
-                        endif;
 
                     endif;
 
+                    break;
                 endif;
 
             endforeach;
@@ -144,35 +141,49 @@ class XMLDBController
         $format[]     = "s";
         $sql         .= ",?,?)";
 
-        $checkSql            .= " FROM " . $tableName . " WHERE user_id = ? ";
+        $checkSql            .= " FROM " . $tableName . " WHERE user_id = ? ORDER BY date,time DESC ";
         $checkData["user_id"] = $userId;
         $checkFormat[]        = "i";
 
-        $updateSql            .= " WHERE user_id = ? ";
+        $updateSql            .= " WHERE user_id = ?";
         $updateData["user_id"] = $userId;
         $updateFormat[]        = "i";
 
-        $type = "read";
-        $selectArray = ( new Service( $type, $database ) )->dbAction( $checkSql, $checkData, $checkFormat );
+        if( !empty( $resultId ) ):
+            $updateSql .= " AND id = ?";
+            $updateData["id"]      = $resultId;
+            $updateFormat[]        = "i";
+        endif;
 
-        if( $this->type === "create" || $this->type === "update" ):
-            if( empty( $selectArray ) || $multiplicity === "1..*" || $multiplicity === "0..*" ):
-                $type = "create";
-                ( new Service( $type, $database ) )->dbAction( $sql, $data, $format );
-            else:
+        if( $this->type !== "delete" ):
+            $type = "read";
+            $selectArray = ( new Service( $type, $database ) )->dbAction( $checkSql, $checkData, $checkFormat );
+        endif;
+
+        switch( $this->type ):
+
+            case"create":
+                if( empty( $selectArray ) || $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
+                    $type = "create";
+                    ( new Service( $type, $database ) )->dbAction( $sql, $data, $format );
+                else:
+                    $type = "update";
+                    ( new Service( $type, $database ) )->dbAction( $updateSql, $updateData, $updateFormat );
+                endif;
+                break;
+            case"read":
+                return( !empty( $selectArray ) ? $selectArray : false );
+                break;
+            case"update":
                 $type = "update";
                 ( new Service( $type, $database ) )->dbAction( $updateSql, $updateData, $updateFormat );
-            endif;
-        else:
-            if( $this->type === "read" ):
-                return( $selectArray );
-            else:
-                if( $this->type === "delete" ):
-                    $type = "delete";
-                    ( new Service( $type, $database ) )->dbAction( $deleteSql, $deleteData, $deleteFormat );
-                endif;
-            endif;
-        endif;
+                break;
+            case"delete":
+                $type = "delete";
+                ( new Service( $type, $database ) )->dbAction( $deleteSql, $deleteData, $deleteFormat );
+                break;
+
+        endswitch;
     }
 
 }

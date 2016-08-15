@@ -83,6 +83,20 @@
     font-weight:bold;
 }
 
+.element-subTitle
+{
+    font-weight:bold;
+}
+
+.element-submitted
+{
+    width:95%;
+    padding: 1rem 0 1rem 1rem;
+    color:#FFFFFF;
+    font-weight:bold;
+    background-color:#96C761;
+}
+
 .element-documentation
 {
     width:80%;
@@ -94,7 +108,7 @@
     width:90%;
     margin-top:2em;
     padding:2em;
-    padding-bottom:1em;
+    padding-bottom:2em;
     color:#000000;
     border:1px solid #CCCCCC;
     box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
@@ -128,11 +142,12 @@
 {
     float:left;
     width:45%;
-    height:3em;
-    line-height:3em;
+    height:2.5em;
+    line-height:2.5em;
     padding-top:1em;
     font-size:90%;
     border-right:10px solid #96C761;
+    border-bottom:1px solid #96C761;
 }
 
 .element-form input[type=text],
@@ -140,13 +155,20 @@
 {
     float:left;
     width:35%;
-    padding:0.5em;
-    margin-top:1em;
+    height:2.2em;
+    margin-top:1.5em;
+    padding-left:1em;
     border:1px solid #96C761;
     border-left:none;
+    box-sizing: content-box;
     box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
     -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
     -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+}
+
+.element-form select option
+{
+    padding:0.25em;
 }
 
 .element-input-hoverImg
@@ -199,7 +221,7 @@
 .element-input-submit
 {
     float:right;
-    margin-top:1em;
+    margin-top:2em;
     margin-right:1em;
 }
 
@@ -226,7 +248,32 @@
 {
     float:right;
     font-size:90%;
-    margin-top:1.5em;
+    margin-top:2.5em;
     margin-right:1em;
 }
 
+.element-Footer
+{
+    clear:both;
+    position:fixed;
+    bottom:5.5em;
+    width:74%;
+    padding-top:1em;
+    padding-bottom:1em;
+    font-size:90%;
+    background-color:#FFFFFF;
+    border-top:1px solid #96C761;
+}
+
+.element-Footer-copy
+{
+    float:left;
+    line-height:2.5em;
+    margin-left:1em;
+}
+
+.element-Footer-info {
+    float: right;
+    margin-right:1em;
+    font-style: italic;
+}
