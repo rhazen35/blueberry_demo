@@ -1,9 +1,42 @@
+.element-Header
+{
+    clear:both;
+    width:100%;
+    height:3em;
+    padding:0;
+}
+
+.element-Header-link
+{
+    float:left;
+    margin-top:1.5em;
+    margin-left:1em;
+}
+
+.element-Header-link a
+{
+    text-decoration:none;
+}
+
+.element-Header-img
+{
+    float:right;
+    margin-right:1em;
+}
+
+.element-Header-img img
+{
+    width:180px;
+    height:90px;
+}
+
 .element
 {
     width:80%;
     min-width:600px;
     height:auto;
-    margin:1em auto;
+    margin:0 auto;
+    margin-top:2em;
     padding:1em;
 }
 
@@ -58,10 +91,10 @@
 
 .element-form
 {
-    width:80%;
+    width:90%;
     margin-top:2em;
-    padding:1em;
-    padding-bottom:3em;
+    padding:2em;
+    padding-bottom:1em;
     color:#000000;
     border:1px solid #CCCCCC;
     box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
@@ -79,23 +112,38 @@
 {
     clear:both;
     width:100%;
-    padding:1em;
+    height:3em;
+    margin: 0 auto;
+}
+
+.element-input-box-submit
+{
+    clear:both;
+    width:100%;
+    height:3em;
+    margin: 0 auto;
 }
 
 .element-input-name
 {
     float:left;
-    width:50%;
+    width:45%;
+    height:3em;
+    line-height:3em;
+    padding-top:1em;
     font-size:90%;
+    border-right:10px solid #96C761;
 }
 
-.element-form input,
+.element-form input[type=text],
 .element-form select
 {
     float:left;
+    width:35%;
     padding:0.5em;
-    border:none;
-    border:1px solid #CCCCCC;
+    margin-top:1em;
+    border:1px solid #96C761;
+    border-left:none;
     box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
     -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
     -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
@@ -104,8 +152,14 @@
 .element-input-hoverImg
 {
     position:relative;
-    float:left;
-    padding:0.25em;
+    float:right;
+    width:5%;
+    margin-top:1.25em;
+}
+
+.element-input-hoverImg:hover
+{
+    cursor: help;
 }
 
 .element-input-hoverImg img
@@ -116,13 +170,13 @@
 
 .element-input-hover
 {
-    z-index: 800;
+    z-index: 1;
     position:absolute;
     display:none;
     width:25rem;
     height:auto;
-    left:50%;
-    margin-top:2em;
+    right:1em;
+    margin-top:3.5em;
     padding:1em;
     white-space: pre-line;
     font-size:80%;
@@ -151,7 +205,9 @@
 
 .element-input-submit input[type=submit]
 {
-    padding:0.5rem 1rem;
+    display:block;
+    min-width:60px;
+    padding:0.25rem 0.5rem;
     font-size:100%;
     border:none;
     box-shadow: none;
@@ -159,8 +215,9 @@
 
 .element-input-submit a
 {
+    display:inline-block;
     float:left;
-    padding:0.5rem 1rem;
+    padding:0.25rem 0.5rem;
     font-size:100%;
     text-decoration:none;
 }

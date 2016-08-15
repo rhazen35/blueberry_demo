@@ -44,6 +44,16 @@ if( !empty( $orderedElements ) ):
                      * Each element printed after the root contains a form.
                      * TODO: Might want to edit the fact that an element always contains a form!
                      */
+                    ?>
+                    <div class="element-Header">
+                        <div class="element-Header-link">
+                            <a href="http://www.quaratio.com" class="button" title="Go to quaratio.com">www.quaratio.com</a>
+                        </div>
+                        <div class="element-Header-img">
+                            <img src="images/icons/quaratio_logo.png">
+                        </div>
+                    </div>
+                    <?php
                     $root = ( isset( $orderedElements[$i]['isRoot'] ) ? $orderedElements[$i]['isRoot'] : "" );
                     if( $root === "true" ):
                         print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElements[$i] ) )->request( $params = null ) );

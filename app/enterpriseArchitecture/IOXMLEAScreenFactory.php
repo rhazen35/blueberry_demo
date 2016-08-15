@@ -714,7 +714,7 @@ class IOXMLEAScreenFactory
             endforeach;
         endif;
 
-        $form .= '<div class="element-input-box">';
+        $form .= '<div class="element-input-box-submit">';
 
         if( $type === "normal" ):
 
@@ -784,7 +784,7 @@ class IOXMLEAScreenFactory
                 $form .= '</div>';
 
                 $form .= '<div class="element-input-info">';
-                $form .= 'Press delete to remove ' . $elementName . ', press edit to change.';
+                $form .= 'Press delete to remove ' . $elementName . ', press edit to change this ' . $elementName . '.';
                 $form .= '</div>';
 
                 $form .= '</form>';

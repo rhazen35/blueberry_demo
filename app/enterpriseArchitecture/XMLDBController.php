@@ -156,7 +156,7 @@ class XMLDBController
         $selectArray = ( new Service( $type, $database ) )->dbAction( $checkSql, $checkData, $checkFormat );
 
         if( $this->type === "create" || $this->type === "update" ):
-            if( empty( $selectArray ) || $multiplicity === "1..*" ):
+            if( empty( $selectArray ) || $multiplicity === "1..*" || $multiplicity === "0..*" ):
                 $type = "create";
                 ( new Service( $type, $database ) )->dbAction( $sql, $data, $format );
             else:
