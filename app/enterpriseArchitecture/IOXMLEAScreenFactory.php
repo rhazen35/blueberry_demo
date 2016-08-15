@@ -683,7 +683,10 @@ class IOXMLEAScreenFactory
 
         switch( $type ):
             case"normal":
-                $form .= '<div class="">Fill in the form below to add another ' . $elementName . '</div>';
+                $form .= '<div class="element-form-intro">Fill in the form below to add another ' . $elementName . '</div>';
+                break;
+            case"advanced":
+                $form .= '<div class="element-form-intro">Edit or delete this ' . $elementName . '</div>';
                 break;
         endswitch;
 
@@ -902,6 +905,9 @@ class IOXMLEAScreenFactory
         $superTypes   = ( isset( $element['super_types'] ) ? $element['super_types'] : "" );
 
         $form = '<div class="element-form">';
+
+        $form .= '<div class="element-form-intro">Choose and add ' . $elementName . '</div>';
+
         $form .= '<form action="' . APPLICATION_HOME . '" method="post">';
 
         /**
