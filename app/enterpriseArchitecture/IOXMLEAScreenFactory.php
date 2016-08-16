@@ -8,11 +8,56 @@
 
 namespace app\enterpriseArchitecture;
 
+/**
+ * Class IOXMLEAScreenFactory
+ * @package app\enterpriseArchitecture
+ *
+ * The screen factory uses to following classes:
+ *
+ * - IOXMLEAModel --> get basic model information
+ * - IOXMLEAModelParser --> parse the xml into a php array
+ * - IOXMLEAInheritance --> create relations for each xml element
+ * - IOXMLEAAttributeTypes --> returns the attribute data type (a.k.a field type)
+ * - IOXMLEAEnumerations --> returns a list of all attribute enumerations
+ *
+ * ##### [EXTRACT AND ORDER] #####
+ *
+ * - The extract and order elements function will gather all needed data for screen processing.
+ * - Data without a print order will be marked as noPrint.
+ * - Extracted data will be ordered by the given print order.
+ * - Attributes and operations will also be ordered per element.
+ * - Parent/Super type attributes will be displayed before child/sub type attributes.
+ *
+ * TODO: Order element result data by last item added.
+ * TODO: Operations, inheritance, extract and order, handling/display of operations.
+ * TODO: Form validation: which fields are required, what is the maximum multiplicity.
+ * TODO: Handle constants, arrays and lists, display constant in a grayed/unchangeable field.
+ *
+ * ##### [SCREEN FACTORY] #####
+ *
+ * - Each model starts with an intro, created by the build element intro function.
+ *  [note:] Each element that is a root is the intro.
+ * - Elements that are of type uml:class and have a print will be created by the build element function.
+ * - The build element function also creates the forms, which are handled based on multiplicity.
+ * - The build super element function builds a super element sub form.
+ *
+ * ** FORMS **
+ *      - When the multiplicity is equal to 1 a basic (normal) form will be build.
+ *      - When the multiplicity is equal to 1..* or 0..* a basic (normal) form and advanced form(s) will be build.
+ *      - Basic forms will contain input data if the multiplicity is equal to 1 and if any is available.
+ *      - Basic forms will NOT contain input data if the multiplicity is equal to 1..* or 0..* and if any is available.
+ *      - Advanced forms always contain available input data and can be edited/deleted.
+ *
+ * ** SUPER FORMS **
+ *      - When a class is a supertype and has sub types, a super form will be displayed.
+ *      - Super forms only allow for sub type selection.
+ *      - Each selected sub type will be loaded as a form. (normal form)
+ *      - Results of all sub types will be displayed on their super type page, sorted by sub type.
+ */
 
 class IOXMLEAScreenFactory
 {
     protected $xmlModelId;
-
     /**
      * IOXMLEAScreenFactory constructor.
      * @param $xmlModelId
@@ -23,12 +68,13 @@ class IOXMLEAScreenFactory
         $this->type       = $type;
         $this->xmlModelId = $xmlModelId;
     }
-
     /**
      * @param $params
      * @return array|void
+     *
+     * Request handles the public access and controls function calls.
      */
-    public function request($params )
+    public function request( $params )
     {
         switch( $this->type ):
             case"extractElementNames":
@@ -43,34 +89,34 @@ class IOXMLEAScreenFactory
             case"buildElement":
                 return( $this->buildElement() );
                 break;
+            case"buildSuperElement":
+                return( $this->buildSuperElement() );
+                break;
         endswitch;
     }
-
     /**
      * @param $params
      * @return array
+     *
+     * Extract all element names, element names are used to target specific elements in the parsed php array.
      */
-    private function extractElementNames($params )
+    private function extractElementNames( $params )
     {
         $parsedElements = $params['elements'];
-        $elementNames = array();
-
+        $elementNames   = array();
         foreach( $parsedElements as $parsedElement ):
-            /**
-             * Get all the classes names
-             */
             if( !empty( $parsedElement['name'] ) ):
                 $elementNames[] = $parsedElement['name'];
             endif;
         endforeach;
-
         return($elementNames);
     }
-
     /**
      * @param $a
      * @param $b
      * @return int
+     *
+     * Sorts any array that contains a printOrder, sorts compares naturally.
      */
     private function sortByPrintOrder( $a, $b )
     {
@@ -78,9 +124,20 @@ class IOXMLEAScreenFactory
             return( strnatcmp( $a['printOrder'], $b['printOrder'] ) );
         endif;
     }
-
     /**
      * @return array
+     *
+     * Extract and order elements function.
+     *
+     * - Get basic model data.
+     * - Build relations for each element.
+     * - Get the parsed classes array, which contains all xml elements data.
+     * - Extract element names and start extract and order of elements.
+     *
+     * - Get the matching target connector and add the super type if available.
+     * - Add all super and sub types if available.
+     * - Extract and order attributes, super types first, if avilable.
+     * - Extract and order operations, super types first, if available.
      */
     private function extractAndOrderElements()
     {
@@ -90,14 +147,17 @@ class IOXMLEAScreenFactory
         $highestOrder       = 0;
 
         if (!empty($modelData)):
-
             if (!empty($modelData['hash'])):
-
+                /**
+                 * Get the xml file, pass it to the model parser and extract element names.
+                 */
                 $xmlFile        = 'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
                 $parsedElements = ( new IOXMLEAModelParser($xmlFile))->parseXMLClasses();
                 $params         = array( "elements" => $parsedElements );
                 $elementNames   = $this->extractElementNames ( $params );
-
+                /**
+                 * Start extraction.
+                 */
                 $i = 0;
                 foreach( $elementNames as $elementName ):
                     /**
@@ -129,17 +189,17 @@ class IOXMLEAScreenFactory
                     $order            = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "noPrint");
                     $highestOrder     = ( $order !== "noPrint" ? $highestOrder + 1 : $highestOrder );
                     /**
-                     * Element documentation.\, attributes, operations
+                     * Element documentation, attributes, operations, target(collected by the matching connector, if available)
                      */
                     $elementDocumentation  = ( isset( $element['documentation'] ) ? $element['documentation'] : "" );
                     $elementAttributes     = ( isset( $element['attributes'] ) ? $element['attributes'] : false );
                     $elementOperations     = ( isset( $element['operations'] ) ? $element['operations'] : "" );
                     /**
-                     * Element target i.e. super type
+                     * Element target i.e. parent/super type
                      */
                     $target = $this->getMatchingConnector( $idref, "target" );
                     /**
-                     * Only create element array if there is an order.
+                     * Only create element array if the element has a relation.
                      */
                     if( $name === $relationName ):
                         $orderedElements[$i]['model_id']             = $this->xmlModelId;
@@ -164,7 +224,6 @@ class IOXMLEAScreenFactory
                          * Add the super type if the target is available
                          */
                         if( !empty( $target ) ):
-
                             $orderedElements[$i]['supertype']                   = array();
                             $orderedElements[$i]['supertype']['id']             = $target['id'];
                             $orderedElements[$i]['supertype']['type']           = $target['type'];
@@ -174,7 +233,6 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['supertype']['aggregation']    = $target['aggregation'];
 
                             $targetClass    = $parsedElements[$target['name']];
-
                             $idref          = ( isset( $targetClass['idref'] ) ? $targetClass['idref'] : "" );
                             $tags           = ( isset( $targetClass['tags'] ) ? $targetClass['tags'] : false );
                             $documentation  = ( isset( $targetClass['documentation'] ) ? $targetClass['documentation'] : "" );
@@ -191,18 +249,12 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['supertype']['attributes']['tags'] = $attributesTags;
                             $orderedElements[$i]['supertype']['operations']         = $operations;
                             $orderedElements[$i]['supertype']['labels']             = $labels;
-
                         endif;
-
                         /**
                          * Select the sub types for each super type.
-                         *
                          */
                         if( !empty( $superTypes ) ):
                             for( $j = 0; $j < $totalSuperTypes; $j++ ):
-                                /**
-                                 * Select sub types for current element
-                                 */
                                 if( !empty( $subTypes ) ):
                                     for( $k = 0; $k < $totalSubTypes; $k++ ):
                                         $orderedElements[$i]['super_types'][$superTypes['super_type'.($j+1)]]['sub'.($k+1)] = ( !empty( $subTypes['sub_type'.($k+1)] ) ? $subTypes['sub_type'.($k+1)] : "" );
@@ -210,7 +262,6 @@ class IOXMLEAScreenFactory
                                 endif;
                             endfor;
                         endif;
-
                         /**
                          * Add form details
                          */
@@ -253,23 +304,19 @@ class IOXMLEAScreenFactory
                         if( !empty( $elementOperations ) ):
                             $orderedElements[$i]['formDetails']['elementOperations'][$name] = ( !empty( $elementOperations ) ? $this->extractAndOrderOperations( $elementOperations ) : "" );
                         endif;
-
                     endif;
 
                 $i++;
                 endforeach;
-
-                usort( $orderedElements, array( $this,'sortByPrintOrder' ) );
-
-                $orderedElements['highest_order'] = $highestOrder;
-
-                return( $orderedElements );
-
             endif;
-
         endif;
+        /**
+         * Sort all elements by print order, add the highest order and return the extracted and ordered  elements.
+         */
+        usort( $orderedElements, array( $this,'sortByPrintOrder' ) );
+        $orderedElements['highest_order'] = $highestOrder;
+        return( $orderedElements );
     }
-
     /**
      * @param $idref
      * @return array
@@ -457,10 +504,41 @@ class IOXMLEAScreenFactory
     private function buildElement()
     {
         $element         = $this->xmlModelId;
+        $modelId         = ( isset( $element['model_id'] ) ? $element['model_id'] : "" );
+        $parsedElements  = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
+        $elementName     = ( isset( $element['name'] ) ? $element['name'] : "" );
         $title           = ( !empty( $element['header_txt'] ) ? $element['header_txt'] : ( !empty( $element['name'] ) ? $element['name'] : "" ) );
         $documentation   = ( isset( $element['formDetails']['elementDocumentation'] ) ? $element['formDetails']['elementDocumentation'] : "" );
         $multiplicity    = ( isset( $element['multiplicity'] ) ? $element['multiplicity'] : "" );
         $hasSuperTypes   = ( isset( $element['super_types'] ) ? $element['super_types'] : "" );
+
+        $params['element_name'] = $elementName;
+        $params['elements']     = $parsedElements;
+        $params['multiplicity'] = $multiplicity;
+
+        if( !empty( $hasSuperTypes ) ):
+            $data = array();
+            foreach( $hasSuperTypes[$elementName] as $hasSuperType ):
+                $params['element_name'] = $hasSuperType;
+                $params['elements']     = $parsedElements;
+                $params['multiplicity'] = $multiplicity;
+                $results[$hasSuperType] = ( new XMLDBController( "read" ) )->request( $params );
+
+                $totalResults = count($results[$hasSuperType]);
+                for( $i = 0; $i < $totalResults; $i++ ):
+                    if( !empty(  $results[$hasSuperType][$i]['id'] ) ):
+                        $results[$hasSuperType][$i]['name'] = $hasSuperType;
+                        $data[$hasSuperType] =  $results[$hasSuperType];
+                    endif;
+                endfor;
+
+            endforeach;
+        else:
+            $params['element_name'] = $elementName;
+            $params['elements']     = $parsedElements;
+            $params['multiplicity'] = $multiplicity;
+            $data = ( new XMLDBController( "read" ) )->request( $params );
+        endif;
 
         $html  = '<div class="element">';
         $html .= '<div class="element-title">'. $title .'</div>';
@@ -468,8 +546,38 @@ class IOXMLEAScreenFactory
 
         if( !empty( $hasSuperTypes ) ):
             $html .= $this->buildSuperForm( $element, $multiplicity );
+
+            if( $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
+                if( !empty( $data ) ):
+                    $html .= '<br><br><div class="element-submitted"><p>Previously submitted '. $elementName . '</p></div>';
+                    foreach( $hasSuperTypes[$elementName] as $hasSuperType ):
+                        if( !empty( $data[$hasSuperType] ) ):
+                            $totalResults = count( $data[$hasSuperType] );
+                            $subTypeName = $hasSuperType;
+                            $html .= '<br><br><div class="element-subTitle"><p>' . $subTypeName . '</p></div>';
+                            for( $i = 0; $i < $totalResults; $i++ ):
+                                foreach( $parsedElements as $parsedElement ):
+                                    if( $subTypeName === $parsedElement['name'] && $data[$hasSuperType][$i]['name'] === $hasSuperType ):
+                                        $html .= $this->buildForm( $parsedElement, $data[$hasSuperType][$i], $multiplicity, "advanced" );
+                                    break;
+                                    endif;
+                                endforeach;
+                            endfor;
+                        endif;
+                    endforeach;
+                endif;
+            endif;
         else:
-            $html .= $this->buildForm( $element, $multiplicity );
+            $html .= $this->buildForm( $element, $data, $multiplicity,  "normal" );
+
+            if( $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
+                if( !empty( $data ) ):
+                    $html .= '<br><br><div class="element-submitted"><p>Previously submitted ' . $elementName . '</p></div>';
+                    foreach( $data as $result ):
+                        $html .= $this->buildForm( $element, $result, $multiplicity, "advanced" );
+                    endforeach;
+                endif;
+            endif;
         endif;
 
         $html .= '</div>';
@@ -478,28 +586,178 @@ class IOXMLEAScreenFactory
     }
 
     /**
-     * @param $element
      * @return string
      */
-    private function buildForm ( $element, $multiplicity )
+    private function buildSuperElement()
     {
-        $elementName  = ( isset( $element['name'] ) ? $element['name'] : "" );
-        $target       = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
-        $targetFields = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
-        $fields       = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : "" );
+        $element         = $this->xmlModelId;
+        $modelId         = ( isset( $element['model_id'] ) ? $element['model_id'] : "" );
+        $parsedElements  = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
+        $elementName     = ( isset( $element['name'] ) ? $element['name'] : "" );
+        $title           = ( !empty( $element['header_txt'] ) ? $element['header_txt'] : ( !empty( $element['name'] ) ? $element['name'] : "" ) );
+        $documentation   = ( isset( $element['formDetails']['elementDocumentation'] ) ? $element['formDetails']['elementDocumentation'] : "" );
+        $multiplicity    = ( isset( $element['multiplicity'] ) ? $element['multiplicity'] : "" );
 
-        $form = '<form action="' . APPLICATION_HOME . '" method="post" class="element-form">';
+        $params['element_name'] = $elementName;
+        $params['elements']     = $parsedElements;
+        $params['multiplicity'] = $multiplicity;
+        $data = ( new XMLDBController( "read" ) )->request( $params );
+
+        $html = '<div class="element-title">'. $title .'</div>';
+        $html .= '<div class="element-documentation"><p>'. $documentation .'</p></div>';
+
+        $html .= $this->buildForm( $element, $data, $multiplicity,  "normal" );
+
+        return( $html );
+    }
+
+    /**
+     * @param $element
+     * @param $result
+     * @param $multiplicity
+     * @param $type
+     * @return string
+     */
+    private function buildForm ( $element, $result, $multiplicity, $type )
+    {
         /**
-         * Target
+         * Collect all data for form building.
+         */
+        $parsedElements = $this->extractAndOrderElements();
+        $elementName    = ( isset( $element['name'] ) ? $element['name'] : "" );
+        $target         = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
+        $targetFields   = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
+        $fields         = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : "" );
+
+        $elementPrintOrder = ( $element['printOrder'] !== "noPrint" ? $element['printOrder'] : ( isset( $_GET['page'] ) ? $_GET['page'] : "" ) );
+        /**
+         * Set standard hidden input fields
+         */
+        $hiddenInputData = '<input type="hidden" name="elementName" value="' . $elementName . '">';
+        $hiddenInputData .= '<input type="hidden" name="modelId" value="' . $element['model_id'] . '">';
+        $hiddenInputData .= '<input type="hidden" name="elementOrder" value="' . ( $elementPrintOrder + 1 ) . '">';
+        $hiddenInputData .= '<input type="hidden" name="path" value="screenFactory">';
+        $hiddenInputData .= '<input type="hidden" name="attr" value="elementControl">';
+        $hiddenInputData .= '<input type="hidden" name="multiplicity" value="' . $multiplicity . '">';
+        /**
+         * Set params for data collection
+         */
+        $params['element_name'] = $elementName;
+        $params['elements']     = $parsedElements;
+        $params['multiplicity'] = $multiplicity;
+        /**
+         * - Set data equal to result if the multiplicity is 1.
+         * - Set data equal to an array with key 0 and value result when the multiplicity is other then 1.
+         */
+        if( $multiplicity === "1" || $multiplicity === "" ):
+            $data = $result;
+        else:
+            $data = array("0" => $result);
+        endif;
+        /**
+         * Get the id from the result. (for edit and delete)
+         */
+        $resultId = ( isset( $data[0]['id'] ) ? $data[0]['id'] : "" );
+        /**
+         * Start the normal form.
+         *
+         * ############################################################
+         *
+         * - The normal form does not contain any data and has normal buttons depending on multiplicity.
+         *
+         * [FIELDS]
+         * - The normal form has fields created from the element attributes.
+         * - Attributes inherited from their parent/super type will be displayed first.
+         * - Attributes specific to the current element (child/sub type) will be displayed after.
+         * - Submit buttons will be displayed according to the elements multiplicity.
+         * - Set the input name(attribute name), the hover information(attribute documentation), the placeholder(attribute initial value).
+         *
+         * ############################################################
+         *
+         * [DATA TYPES]
+         * - Set the data type and build input type accordingly:
+         *  - input type txt = PrimitiveType and DataType
+         *  - select         = Enumeration
+         */
+        $form = '<div class="element-form">';
+
+        switch( $type ):
+            case"normal":
+                $form .= '<div class="element-form-intro">Fill in the form below to add another ' . $elementName . '</div>';
+                break;
+            case"advanced":
+                $form .= '<div class="element-form-intro">Edit or delete this ' . $elementName . '</div>';
+                break;
+        endswitch;
+
+        $form .= '<form action="' . APPLICATION_HOME . '" method="post">';
+        /**
+         * Parent/super type fields
          */
         if( !empty( $targetFields ) ):
             foreach( $targetFields as $targetField ):
                 if( !empty( $targetField ) ):
-
                     $inputName        = ( isset( $targetField['input_name'] ) ? $targetField['input_name'] : "" );
                     $inputInfo        = ( isset( $targetField['documentation'] ) ? $targetField['documentation'] : "" );
                     $inputPlaceholder = ( isset( $targetField['initialValue'] ) ? $targetField['initialValue'] : "" );
                     $inputDataType    = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
+                    $inputFieldType   = ( new IOXMLEAAttributeTypes( $element['model_id'], $inputDataType ) )->fieldType();
+                    /**
+                     * Start of the input box, i.e. field name, input field based on data type, placeholder based on attribute documentation and data type format.
+                     */
+                    $form .= '<div class="element-input-box">';
+                    if( !empty( $inputName ) ):
+                        $form .= '<div class="element-input-name">' . $inputName . '</div>';
+                        if( !empty( $inputFieldType ) ):
+                            switch( $inputFieldType ):
+                                case"PrimitiveType":
+                                case"DataType":
+                                    $formattedInputName = strtolower( str_replace( " ", "_", $inputName ) );
+                                    $inputValue         = ( $multiplicity === "" ? "" : ( isset( $data[0][$formattedInputName] ) ? $data[0][$formattedInputName] : "" ) );
+                                    $form .= '<input type="text" name="' . $inputName . '" value="' . $inputValue . '" placeholder="' . $inputPlaceholder . '">';
+                                    break;
+                                case"Enumeration":
+                                    $params['model_id'] = $element['model_id'];
+                                    $enumerations       = ( new IOXMLEAEnumerations( "getEnumerations", $inputDataType ) )->request( $params );
+                                    $formattedInputName = strtolower( str_replace( " ", "_", $inputName ) );
+                                    $inputValue         = ( $multiplicity === "" ? "" : ( isset( $data[0][$formattedInputName] ) ? $data[0][$formattedInputName] : "" ) );
+                                    $form .= '<select name="' . $inputName . '">';
+                                    if( !empty( $inputValue ) ):
+                                        $form .= '<option name="enum" value="' . $inputValue . '">' . $inputValue . '</option>';
+                                    endif;
+                                    $form .= '<option name="enum" value="">Choose ' . $inputName . '</option>';
+                                    foreach( $enumerations as $enumeration ):
+                                        $form .= '<option name="enum" value="' . $enumeration['input_name'] . '">' . $enumeration['input_name'] . '</option>';
+                                    endforeach;
+                                    $form .= '</select>';
+                                    break;
+                            endswitch;
+                        endif;
+                    endif;
+                    /**
+                     * Display hover information if available (attribute documentation)
+                     */
+                    if( !empty( $inputInfo ) ):
+                        $form .= '<div class="element-input-hoverImg"><img src="images/icons/info_icon_blue.png"></div>';
+                        $form .= '<div class="element-input-hover">' . $inputInfo . '</div>';
+                    endif;
+                    /**
+                     * End of the input box.
+                     */
+                    $form .= '</div>';
+                endif;
+            endforeach;
+        endif;
+        /**
+         * Child/sub type fields
+         */
+        if( !empty( $fields ) ):
+            foreach( $fields as $field ):
+                if( !empty( $field ) ):
+                    $inputName        = ( isset( $field['name'] ) ? $field['name'] : "" );
+                    $inputInfo        = ( isset( $field['documentation'] ) ? $field['documentation'] : "" );
+                    $inputPlaceholder = ( isset( $field['initialValue'] ) ? $field['initialValue'] : "" );
+                    $inputDataType    = ( isset( $field['data_type'] ) ? $field['data_type'] : "" );
                     $inputFieldType   = ( new IOXMLEAAttributeTypes( $element['model_id'], $inputDataType ) )->fieldType();
 
                     $form .= '<div class="element-input-box">';
@@ -510,14 +768,25 @@ class IOXMLEAScreenFactory
                             switch( $inputFieldType ):
                                 case"PrimitiveType":
                                 case"DataType":
-                                    $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
+                                    $formattedInputName = strtolower( str_replace( " ", "_", $inputName ) );
+                                    $inputValue         = ( $multiplicity === "" ? "" : ( isset( $data[0][$formattedInputName] ) ? $data[0][$formattedInputName] : "" ) );
+
+                                    $form .= '<input type="text" name="' . $inputName . '" value="' . $inputValue . '" placeholder="' . $inputPlaceholder . '">';
                                     break;
                                 case"Enumeration":
 
                                     $params['model_id'] = $element['model_id'];
                                     $enumerations       = ( new IOXMLEAEnumerations( "getEnumerations", $inputDataType ) )->request( $params );
+                                    $formattedInputName = strtolower( str_replace( " ", "_", $inputName ) );
+                                    $inputValue         = ( $multiplicity === "" ? "" : ( isset( $data[0][$formattedInputName] ) ? $data[0][$formattedInputName] : "" ) );
 
                                     $form .= '<select name="' . $inputName . '">';
+
+                                    if( !empty( $inputValue ) ):
+                                        $form .= '<option name="enum" value="' . $inputValue . '">' . $inputValue . '</option>';
+                                    endif;
+
+                                    $form .= '<option name="enum" value="">Choose ' . $inputName . '</option>';
 
                                     foreach( $enumerations as $enumeration ):
                                         $form .= '<option name="enum" value="' . $enumeration['input_name'] . '">' . $enumeration['input_name'] . '</option>';
@@ -539,75 +808,92 @@ class IOXMLEAScreenFactory
                 endif;
             endforeach;
         endif;
-        /**
-         * Element
-         */
-        if( !empty( $fields ) ):
-            foreach( $fields as $field ):
-                if( !empty( $field ) ):
-                    $inputName        = ( isset( $field['name'] ) ? $field['name'] : "" );
-                    $inputInfo        = ( isset( $field['documentation'] ) ? $field['documentation'] : "" );
-                    $inputPlaceholder = ( isset( $field['initialValue'] ) ? $field['initialValue'] : "" );
-                    $inputDataType    = ( isset( $field['data_type'] ) ? $field['data_type'] : "" );
-                    $inputFieldType   = ( new IOXMLEAAttributeTypes( $element['model_id'], $inputDataType ) )->fieldType();
 
-                    $form .= '<div class="element-input-box">';
+        $form .= '<div class="element-input-box-submit">';
 
-                    if( !empty( $inputName ) ):
-                        $form .= '<div class="element-input-name">' . $inputName . '</div>';
-                        if( !empty( $inputFieldType ) ):
-                            switch( $inputFieldType ):
-                                case"PrimitiveType":
-                                case"DataType":
-                                    $form .= '<input type="text" name="' . $inputName . '" value="" placeholder="' . $inputPlaceholder . '">';
-                                    break;
-                                case"Enumeration":
-                                    $params['model_id'] = $element['model_id'];
-                                    $enumerations       = ( new IOXMLEAEnumerations( "getEnumerations", $inputDataType ) )->request( $params );
+        if( $type === "normal" ):
 
-                                    $form .= '<select name="' . $inputName . '">';
+            if( $type === "normal" && $multiplicity === "1..*" || $multiplicity === "0..*" ):
 
-                                    foreach( $enumerations as $enumeration ):
-                                        $form .= '<option name="' . $inputName . '" value="' . $enumeration['input_name'] . '">' . $enumeration['input_name'] . '</option>';
-                                    endforeach;
+                $form .= '<div class="element-input-submit">';
+                $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder + 1 ) . '" class="button">next</a>';
+                $form .= '</div>';
 
-                                    $form .= '</select>';
-                                    break;
-                            endswitch;
-                        endif;
-                    endif;
-
-                    if( !empty( $inputInfo ) ):
-                        $form .= '<div class="element-input-hoverImg"><img src="images/icons/info_icon_blue.png"></div>';
-                        $form .= '<div class="element-input-hover">' . $inputInfo . '</div>';
-                    endif;
-
+                if( $element['printOrder'] > 1 ):
+                    $form .= '<div class="element-input-submit">';
+                    $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder - 1 ) . '" class="button">previous</a>';
                     $form .= '</div>';
-
                 endif;
-            endforeach;
+            endif;
+
+            $form .= $hiddenInputData;
+
+            if( $type === "normal" && $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
+                $form .= '<div class="element-input-submit">';
+                $form .= '<input type="hidden" name="action" value="create">';
+                $form .= '<input type="submit" name="submit" value="add" class="button">';
+                $form .= '</div>';
+
+                $form .= '<div class="element-input-info">';
+                if( $multiplicity === "" ):
+                    $form .= 'Press add to add ' . $elementName . '.';
+                else:
+                    $form .= 'Press add to add ' . $elementName . ', press next to continue.';
+                endif;
+                $form .= '</div>';
+            else:
+                $form .= '<div class="element-input-submit">';
+                $form .= '<input type="hidden" name="action" value="create">';
+                $form .= '<input type="submit" name="submit" value="next" class="button">';
+                $form .= '</div>';
+
+                if( $element['printOrder'] > 1 ):
+                    $form .= '<div class="element-input-submit">';
+                    $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder - 1 ) . '" class="button">previous</a>';
+                    $form .= '</div>';
+                endif;
+
+                $form .= '<div class="element-input-info">';
+                if( !empty( $data ) ):
+                    $form .= 'Press next to update ' . $elementName . ' and continue.';
+                else:
+                    $form .= 'Press next to add ' . $elementName . ' and continue.';
+                endif;
+                $form .= '</div>';
+            endif;
+
+            $form .= '</form>';
+            $form .= '</div>';
+
+        else:
+            if( $type === "advanced" ):
+                $form .= '<div class="element-input-submit">';
+                $form .= '<form action="' . APPLICATION_HOME . '" method="post">';
+                $form .= $hiddenInputData;
+                $form .= '<input type="hidden" name="resultId" value="' . $resultId . '">';
+                $form .= '<input type="hidden" name="action" value="edit">';
+                $form .= '<input type="submit" name="submit" value="edit" class="button">';
+                $form .= '</form>';
+                $form .= '</div>';
+
+                $form .= '<div class="element-input-submit">';
+                $form .= '<form action="' . APPLICATION_HOME . '" method="post">';
+                $form .= $hiddenInputData;
+                $form .= '<input type="hidden" name="resultId" value="' . $resultId . '">';
+                $form .= '<input type="hidden" name="action" value="delete">';
+                $form .= '<input type="submit" name="submit" value="delete" class="button">';
+                $form .= '</div>';
+
+                $form .= '<div class="element-input-info">';
+                $form .= 'Press delete to remove ' . $elementName . ', press edit to change this ' . $elementName . '.';
+                $form .= '</div>';
+                $form .= '</form>';
+
+                $form .= '</div>';
+            endif;
         endif;
 
-        $form .= '<div class="element-input-box">';
-        $form .= '<div class="element-input-submit">';
-        /**
-         * TODO: Get the highest order to determine the max element to display previous button
-         * Display previous button if the class order is bigger then one
-         */
-        if( $element['printOrder'] > 1 ):
-            $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $element['printOrder'] - 1 ) . '" class="button">previous</a>';
-        endif;
-        $form .= '<input type="hidden" name="elementName" value="' . $elementName . '">';
-        $form .= '<input type="hidden" name="modelId" value="' . $element['model_id'] . '">';
-        $form .= '<input type="hidden" name="elementOrder" value="' . ($element['printOrder'] + 1) . '">';
-        $form .= '<input type="hidden" name="path" value="screenFactory">';
-        $form .= '<input type="hidden" name="attr" value="addElement">';
-        $form .= '<input type="hidden" name="multiplicity" value="' . $multiplicity . '">';
-        $form .= '<input type="submit" name="submit" value="next" class="button">';
         $form .= '</div>';
-        $form .= '</div>';
-
-        $form .= '</form>';
 
         return( $form );
 
@@ -618,7 +904,11 @@ class IOXMLEAScreenFactory
         $elementName  = ( isset( $element['name'] ) ? $element['name'] : "" );
         $superTypes   = ( isset( $element['super_types'] ) ? $element['super_types'] : "" );
 
-        $form = '<form action="' . APPLICATION_HOME . '" method="post" class="element-form">';
+        $form = '<div class="element-form">';
+
+        $form .= '<div class="element-form-intro">Choose and add ' . $elementName . '</div>';
+
+        $form .= '<form action="' . APPLICATION_HOME . '" method="post">';
 
         /**
          * Super types drop down
@@ -627,8 +917,8 @@ class IOXMLEAScreenFactory
             foreach( $superTypes as $superTypeName => $subTypes ):
                 $form .= '<div class="element-input-box">';
                 $form .= '<div class="element-input-name">' . $superTypeName . '</div>';
-                $form .= '<select name="' . $superTypeName . '">';
-                $form .= '<option name="" value="">Choose an option</option>';
+                $form .= '<select name="subElement">';
+                $form .= '<option name="" value="">Choose ' . $elementName . '</option>';
                 foreach( $subTypes as $subType ):
                     $form .= '<option name=" ' . $subType . '">' . $subType . '</option>';
                 endforeach;
@@ -638,25 +928,54 @@ class IOXMLEAScreenFactory
         endif;
 
         $form .= '<div class="element-input-box">';
-        $form .= '<div class="element-input-submit">';
         /**
-         * TODO: Get the highest order to determine the max element to display previous button
          * Display previous button if the class order is bigger then one
          */
+
+        $form .= '<div class="element-input-submit">';
+        $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $element['printOrder'] + 1 ) . '" class="button">next</a>';
+        $form .= '</div>';
+
         if( $element['printOrder'] > 1 ):
+            $form .= '<div class="element-input-submit">';
             $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $element['printOrder'] - 1 ) . '" class="button">previous</a>';
+            $form .= '</div>';
         endif;
+
+        $form .= '<div class="element-input-submit">';
         $form .= '<input type="hidden" name="elementName" value="' . $elementName . '">';
         $form .= '<input type="hidden" name="modelId" value="' . $element['model_id'] . '">';
         $form .= '<input type="hidden" name="elementOrder" value="' . ($element['printOrder'] + 1) . '">';
-        $form .= '<input type="hidden" name="superForm" value="true">';
         $form .= '<input type="hidden" name="path" value="screenFactory">';
-        $form .= '<input type="hidden" name="attr" value="addElement">';
-        $form .= '<input type="submit" name="submit" value="next" class="button">';
+        $form .= '<input type="hidden" name="attr" value="elementControl">';
+        $form .= '<input type="hidden" name="action" value="addForm">';
+        $form .= '<input type="submit" name="submit" value="add" class="button">';
         $form .= '</div>';
+
+
+        $form .= '<div class="element-input-info">';
+        $form .= 'Press add to add ' . $elementName . ', press next to continue.';
+        $form .= '</div>';
+
         $form .= '</div>';
 
         $form .= '</form>';
+
+        $form .= '</div>';
+
+        if( !empty( $_GET['addForm'] ) ):
+            $className = $_GET['addForm'];
+            $modelId = $element['model_id'];
+            $parsedElements  = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
+            foreach($parsedElements as $parsedElement):
+                if( $parsedElement['name'] === $className ):
+                    $params['element_name'] = $className;
+                    $params['elements']     = $parsedElements;
+                    $params['multiplicity'] = $multiplicity;
+                    $form .= ( new IOXMLEAScreenFactory( "buildSuperElement", $parsedElement ) )->request( $params );
+                endif;
+            endforeach;
+        endif;
 
         return( $form );
 

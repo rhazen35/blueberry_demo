@@ -48,7 +48,7 @@ if( !class_exists( "XMLEATableFactory" ) ):
             $dbName           = $this->createDatabase( $params );
             $params['dbName'] = $dbName;
 
-            $this->createTables( $params );
+            $this->createDatabaseStructure( $params );
         }
 
         /**
@@ -56,21 +56,8 @@ if( !class_exists( "XMLEATableFactory" ) ):
          */
         private function delete( $params )
         {
-            $dbInfo = $this->getModelDatabaseInfo( $params );
-            foreach( $dbInfo as $db ):
-
-                $type = ( isset( $db['type'] ) ? $db['type'] : "" );
-                $name = ( isset( $db['name'] ) ? $db['name'] : "" );
-
-                if( $type === "database" ):
-                    $params['dbName'] = $name;
-                elseif( $type === "table" && !empty( $name ) ):
-                    $params['tableName'] = $name;
-                    $this->dropTable( $params );
-                endif;
-
-            endforeach;
-
+            $dbName =  $params['name'];
+            $params['dbName'] = $dbName;
             $this->dropDatabase( $params );
         }
 
@@ -90,11 +77,6 @@ if( !class_exists( "XMLEATableFactory" ) ):
 
             ( new Service( $type, "" ) )->dbAction( $sql, $data, $format );
 
-            $params['type'] = "database";
-            $params['name'] = $dbName;
-
-            $this->newDbType( $params );
-
             return( $dbName );
 
         }
@@ -103,8 +85,14 @@ if( !class_exists( "XMLEATableFactory" ) ):
         /**
          * @param $params
          */
-        private function createTables($params )
+        private function createDatabaseStructure($params )
         {
+            /**
+             * Database structure building
+             * Create tables for all extracted and ordered elements.
+             */
+            $queries      = array();
+
             $elements      = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $params['model_id'] ) )->request( $params );
             $totalElements = count( $elements );
 
@@ -112,7 +100,6 @@ if( !class_exists( "XMLEATableFactory" ) ):
 
                 $data     = array();
                 $format   = array();
-                $type     = "create";
                 $database = ( isset( $params['dbName'] ) ? $params['dbName'] : "" );
 
                 for( $i = 0; $i < $totalElements; $i++ ):
@@ -124,8 +111,6 @@ if( !class_exists( "XMLEATableFactory" ) ):
                             $elementName    = ( isset( $elements[$i]['name'] ) ? $elements[$i]['name'] : "" );
                             $tableName      = ( isset( $elements[$i]['name'] ) ? $elements[$i]['name'] : "" );
                             $tableName      = strtolower( str_replace( " ", "_", $tableName ) );
-                            $params['type'] = "table";
-                            $params['name'] = $tableName;
 
                             $columnsSuper   = ( isset( $elements[$i]['supertype']['attributes'] ) ? $elements[$i]['supertype']['attributes'] : "" );
                             $columns        = array();
@@ -142,12 +127,17 @@ if( !class_exists( "XMLEATableFactory" ) ):
                             /**
                              * * * START OF TABLE * * *
                              */
-                            $sql  = "CREATE TABLE IF NOT EXISTS " . $tableName ." ( ";
+                            $sql = " CREATE TABLE IF NOT EXISTS " . $tableName ." ( ";
                             $sql .= " id INT(11) NOT NULL AUTO_INCREMENT, ";
                             $sql .= " user_id INT(11) NOT NULL, ";
 
+                            $totalColumnsSuper = count($columnsSuper);
+                            $totalColumns      = count($columns);
+
                             if( !empty( $columnsSuper ) ):
+                                $countColumnsSuper = 0;
                                 foreach( $columnsSuper as $columnSuper ):
+                                    $countColumnsSuper++;
                                     $columnName = ( isset( $columnSuper['input_name'] ) ? $columnSuper['input_name'] : "" );
                                     if( !empty( $columnName ) ):
                                         $columnName = strtolower( str_replace( " ", "_", $columnName ) );
@@ -157,8 +147,10 @@ if( !class_exists( "XMLEATableFactory" ) ):
                             endif;
 
                             if( !empty( $columns ) ):
+                                $countColumns = 0;
                                 foreach( $columns as $column ):
                                     $columnName = strtolower( str_replace( " ", "_", $column ) );
+                                    $countColumns++;
                                     $sql .= " " . $columnName . " VARCHAR(150) NOT NULL, ";
                                 endforeach;
                             endif;
@@ -167,17 +159,24 @@ if( !class_exists( "XMLEATableFactory" ) ):
                             $sql .= " time TIME NOT NULL, ";
                             $sql .= " PRIMARY KEY(id) ";
                             $sql .= " ) ENGINE=InnoDB DEFAULT CHARSET=utf8; ";
+
                             /**
                              * * * END OF TABLE * * *
                              */
-                            $this->newDbType( $params );
-                            ( new Service( $type, $database ) )->dbAction( $sql, $data, $format );
+
+                            $queries[] = $sql;
 
                         endif;
 
                     endif;
 
                 endfor;
+
+                $type     = "create";
+
+                foreach($queries as $query):
+                    ( new Service( $type, $database ) )->dbAction( $query, $data, $format );
+                endforeach;
 
             endif;
         }
@@ -202,30 +201,6 @@ if( !class_exists( "XMLEATableFactory" ) ):
                 return( $returnData );
 
             endif;
-        }
-
-        /**
-         * @param $params
-         */
-        private function newDbType( $params )
-        {
-            $date       = date("Y-m-d");
-            $time       = date("H:i:s");
-            $id         = "";
-
-            $sql        = "CALL proc_newModelDbType(?,?,?,?,?,?)";
-            $data       = array(
-                            "id" => $id,
-                            "model_id" => $params['model_id'],
-                            "type" => $params['type'],
-                            "name" => $params['name'],
-                            "date" => $date,
-                            "time" => $time
-                        );
-            $format     = array("iissss");
-            $type       = "create";
-
-            ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
         }
 
         private function dropTable( $params )

@@ -116,7 +116,6 @@ CREATE PROCEDURE
     DELETE FROM projects_models WHERE project_id = projectId;
     DELETE FROM projects_calculators WHERE project_id = projectId;
     DELETE FROM calculators WHERE id = calculatorId;
-    DELETE FROM xml_models_db WHERE model_id = modelId;
     DELETE FROM xml_models WHERE id = modelId;
     DELETE FROM projects WHERE id = projectId;
   END $$
