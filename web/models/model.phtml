@@ -18,6 +18,8 @@ $totalElements   = count( $orderedElements );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
 $highestOrder    = $orderedElements['highest_order'];
 
+$params['elements'] = $orderedElements;
+
 
 ?>
     <div class="newModel-head">
@@ -56,9 +58,9 @@ if( !empty( $orderedElements ) ):
                     <?php
                     $root = ( isset( $orderedElements[$i]['isRoot'] ) ? $orderedElements[$i]['isRoot'] : "" );
                     if( $root === "true" ):
-                        print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElements[$i] ) )->request( $params = null ) );
+                        print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElements[$i] ) )->request( $params ) );
                     else:
-                        print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params = null ) );
+                        print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params ) );
                     endif;
                     ?>
                     <div class="element-Footer">

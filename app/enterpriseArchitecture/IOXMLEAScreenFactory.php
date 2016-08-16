@@ -25,28 +25,31 @@ namespace app\enterpriseArchitecture;
  * - The extract and order elements function will gather all needed data for screen processing.
  * - Data without a print order will be marked as noPrint.
  * - Extracted data will be ordered by the given print order.
- * - Attributes and operations will also be ordered per element.
- * - Parent/Super type attributes will be displayed before child/sub type attributes.
+ * - Attributes and operations will also be ordered per element and type/super type.
+ * - Parent/super type attributes/operations will be displayed before child/sub type attributes/operations.
  *
- * TODO: Order element result data by last item added.
  * TODO: Operations, inheritance, extract and order, handling/display of operations.
  * TODO: Form validation: which fields are required, what is the maximum multiplicity.
  * TODO: Handle constants, arrays and lists, display constant in a grayed/unchangeable field.
+ * TODO: Optimize code.
  *
  * ##### [SCREEN FACTORY] #####
  *
  * - Each model starts with an intro, created by the build element intro function.
  *  [note:] Each element that is a root is the intro.
- * - Elements that are of type uml:class and have a print will be created by the build element function.
+ * - Elements that are of type uml:class and with a print order will be created by the build element function.
  * - The build element function also creates the forms, which are handled based on multiplicity.
+ * - A super form is build if an element has super types.
  * - The build super element function builds a super element sub form.
  *
  * ** FORMS **
- *      - When the multiplicity is equal to 1 a basic (normal) form will be build.
+ *      - When the multiplicity is equal to 1 a basic (normal) form will be build, unless the element has (a) super type(s)
  *      - When the multiplicity is equal to 1..* or 0..* a basic (normal) form and advanced form(s) will be build.
- *      - Basic forms will contain input data if the multiplicity is equal to 1 and if any is available.
- *      - Basic forms will NOT contain input data if the multiplicity is equal to 1..* or 0..* and if any is available.
+ *      - Advanced forms can only be edited or deleted.
+ *      - Basic forms will contain previous submitted input data if the multiplicity is equal to 1 and if any data is available.
+ *      - Basic forms will NOT contain input data if the multiplicity is equal to 1..* and 0..* .
  *      - Advanced forms always contain available input data and can be edited/deleted.
+ *      - Each super form generates a normal form which only has add button control.
  *
  * ** SUPER FORMS **
  *      - When a class is a supertype and has sub types, a super form will be displayed.
@@ -87,10 +90,10 @@ class IOXMLEAScreenFactory
                 return( $this->buildElementIntro() );
                 break;
             case"buildElement":
-                return( $this->buildElement() );
+                return( $this->buildElement( $params ) );
                 break;
             case"buildSuperElement":
-                return( $this->buildSuperElement() );
+                return( $this->buildSuperElement( $params ) );
                 break;
         endswitch;
     }
@@ -136,8 +139,11 @@ class IOXMLEAScreenFactory
      *
      * - Get the matching target connector and add the super type if available.
      * - Add all super and sub types if available.
-     * - Extract and order attributes, super types first, if avilable.
+     * - Extract and order attributes, super types first, if available.
      * - Extract and order operations, super types first, if available.
+     *
+     * - Keep track of the highest print order.
+     * - Sort the array by print order.
      */
     private function extractAndOrderElements()
     {
@@ -148,16 +154,12 @@ class IOXMLEAScreenFactory
 
         if (!empty($modelData)):
             if (!empty($modelData['hash'])):
-                /**
-                 * Get the xml file, pass it to the model parser and extract element names.
-                 */
+
                 $xmlFile        = 'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
                 $parsedElements = ( new IOXMLEAModelParser($xmlFile))->parseXMLClasses();
                 $params         = array( "elements" => $parsedElements );
                 $elementNames   = $this->extractElementNames ( $params );
-                /**
-                 * Start extraction.
-                 */
+
                 $i = 0;
                 foreach( $elementNames as $elementName ):
                     /**
@@ -180,26 +182,27 @@ class IOXMLEAScreenFactory
                     /**
                      * Element data collection
                      */
-                    $element          = ( isset( $parsedElements[$elementName] ) && $parsedElements[$elementName]['type'] === "uml:Class" ? $parsedElements[$elementName] : "" );
-                    $idref            = ( isset( $element['idref'] ) ? $element['idref'] : "" );
-                    $root             = ( isset( $element['root'] ) ? $element['root'] : false );
-                    $abstract         = ( isset( $element['abstract'] ) ? $element['abstract'] : false );
-                    $name             = ( isset( $element['name'] ) ? $element['name'] : "" );
-                    $tags             = ( isset( $element['tags'] ) ? $element['tags'] : false );
-                    $order            = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "noPrint");
-                    $highestOrder     = ( $order !== "noPrint" ? $highestOrder + 1 : $highestOrder );
+                    $element              = ( isset( $parsedElements[$elementName] ) && $parsedElements[$elementName]['type'] === "uml:Class" ? $parsedElements[$elementName] : "" );
+                    $idref                = ( isset( $element['idref'] ) ? $element['idref'] : "" );
+                    $root                 = ( isset( $element['root'] ) ? $element['root'] : false );
+                    $abstract             = ( isset( $element['abstract'] ) ? $element['abstract'] : false );
+                    $name                 = ( isset( $element['name'] ) ? $element['name'] : "" );
+                    $tags                 = ( isset( $element['tags'] ) ? $element['tags'] : false );
+                    $order                = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "noPrint");
+                    $highestOrder         = ( $order !== "noPrint" ? $highestOrder + 1 : $highestOrder );
                     /**
                      * Element documentation, attributes, operations, target(collected by the matching connector, if available)
                      */
-                    $elementDocumentation  = ( isset( $element['documentation'] ) ? $element['documentation'] : "" );
-                    $elementAttributes     = ( isset( $element['attributes'] ) ? $element['attributes'] : false );
-                    $elementOperations     = ( isset( $element['operations'] ) ? $element['operations'] : "" );
+                    $elementDocumentation = ( isset( $element['documentation'] ) ? $element['documentation'] : "" );
+                    $elementAttributes    = ( isset( $element['attributes'] ) ? $element['attributes'] : false );
+                    $elementOperations    = ( isset( $element['operations'] ) ? $element['operations'] : "" );
                     /**
                      * Element target i.e. parent/super type
                      */
                     $target = $this->getMatchingConnector( $idref, "target" );
                     /**
                      * Only create element array if the element has a relation.
+                     * TODO: Ask Bart if this is a valid criteria for extracting and thus showing elements
                      */
                     if( $name === $relationName ):
                         $orderedElements[$i]['model_id']             = $this->xmlModelId;
@@ -209,10 +212,10 @@ class IOXMLEAScreenFactory
                         $orderedElements[$i]['isRoot']               = $root;
                         $orderedElements[$i]['isAbstract']           = $abstract;
                         /**
-                         * Get element multiplicity, set to 1 if none is provided.
+                         * Get element multiplicity.
                          */
-                        $orderedElements[$i]['multiplicity']  = $relationMultiplicity;
-                        $orderedElements[$i]['header_txt']  = $relationMultiHead;
+                        $orderedElements[$i]['multiplicity']         = $relationMultiplicity;
+                        $orderedElements[$i]['header_txt']           = $relationMultiHead;
                         /**
                          * Get the parent, child, super type and sub type
                          */
@@ -251,7 +254,7 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['supertype']['labels']             = $labels;
                         endif;
                         /**
-                         * Select the sub types for each super type.
+                         * Select the sub types for each super type and add each super/sub combination to the array.
                          */
                         if( !empty( $superTypes ) ):
                             for( $j = 0; $j < $totalSuperTypes; $j++ ):
@@ -263,15 +266,15 @@ class IOXMLEAScreenFactory
                             endfor;
                         endif;
                         /**
-                         * Add form details
+                         * Add form details.
                          */
                         $orderedElements[$i]['formDetails'] = array();
                         /**
-                         * Element documentation
+                         * Element documentation.
                          */
-                        $orderedElements[$i]['formDetails']['elementDocumentation']     = $elementDocumentation;
+                        $orderedElements[$i]['formDetails']['elementDocumentation'] = $elementDocumentation;
                         /**
-                         * Element Attributes
+                         * Element Attributes.
                          */
                         if( !empty( $elementAttributes ) ):
                             $orderedElements[$i]['formDetails']['elementAttributes'][$name] = ( !empty( $elementAttributes ) ? $this->extractAndOrderAttributes( $elementAttributes ) : "" );
@@ -305,8 +308,10 @@ class IOXMLEAScreenFactory
                             $orderedElements[$i]['formDetails']['elementOperations'][$name] = ( !empty( $elementOperations ) ? $this->extractAndOrderOperations( $elementOperations ) : "" );
                         endif;
                     endif;
-
-                $i++;
+                    /**
+                     * Increment looping trough the elements.
+                     */
+                    $i++;
                 endforeach;
             endif;
         endif;
@@ -325,144 +330,165 @@ class IOXMLEAScreenFactory
     {
         $modelData          = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
         $xmlFile            =  'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
-        $parsedConnectors   = ( new IOXMLEAModelParser( $xmlFile) )->parseConnectors();
+        $parsedConnectors   = ( new IOXMLEAModelParser( $xmlFile ) )->parseConnectors();
         $totalConnectors    = count( $parsedConnectors['connectors'] );
 
-        for( $j = 0; $j < $totalConnectors; $j++ ):
-            if( $idref === $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'] ):
-                if( $parsedConnectors['connectors']['connector'.($j+1)]['properties']['ea_type'] === "Generalization" ):
-
-                    $source                  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'];
-                    $sourceName              = $parsedConnectors['connectors']['connector'.($j+1)]['source']['name'];
-                    $sourceModelType         = $parsedConnectors['connectors']['connector'.($j+1)]['source']['type'];
-                    $sourceModelEALocalId    = $parsedConnectors['connectors']['connector'.($j+1)]['source']['ea_localid'];
-                    $sourceModeMultiplicity  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['multiplicity'];
-                    $sourceModelAggregation  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['aggregation'];
-                    $sourceArray             = array(
-                        "id"            => $source,
-                        "name"          => $sourceName,
-                        "type"          => $sourceModelType,
-                        "ea_localId"    => $sourceModelEALocalId,
-                        "multiplicity"  => $sourceModeMultiplicity,
-                        "aggregation"   => $sourceModelAggregation
-                    );
-
-                    $target                  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['idref'];
-                    $targetName              = $parsedConnectors['connectors']['connector'.($j+1)]['target']['name'];
-                    $targetModelType         = $parsedConnectors['connectors']['connector'.($j+1)]['target']['type'];
-                    $targetModelEALocalId    = $parsedConnectors['connectors']['connector'.($j+1)]['target']['ea_localid'];
-                    $targetModeMultiplicity  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['multiplicity'];
-                    $targetModelAggregation  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['aggregation'];
-                    $labels                  = $parsedConnectors['connectors']['connector'.($j+1)]['labels'];
-                    $targetArray             = array(
-                        "id"            => $target,
-                        "name"          => $targetName,
-                        "type"          => $targetModelType,
-                        "ea_localId"    => $targetModelEALocalId,
-                        "multiplicity"  => $targetModeMultiplicity,
-                        "aggregation"   => $targetModelAggregation,
-                        "labels"        => $labels
-                    );
-
-                    if( $type === "source" ):
-                        return( $sourceArray );
-                    elseif( $type === "target" ):
-                        return( $targetArray );
+        if( $totalConnectors > 0 ):
+            for( $j = 0; $j < $totalConnectors; $j++ ):
+                if( $idref === $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'] ):
+                    if( $parsedConnectors['connectors']['connector'.($j+1)]['properties']['ea_type'] === "Generalization" ):
+                        /**
+                         * Extract the source.
+                         */
+                        $source                  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['idref'];
+                        $sourceName              = $parsedConnectors['connectors']['connector'.($j+1)]['source']['name'];
+                        $sourceModelType         = $parsedConnectors['connectors']['connector'.($j+1)]['source']['type'];
+                        $sourceModelEALocalId    = $parsedConnectors['connectors']['connector'.($j+1)]['source']['ea_localid'];
+                        $sourceModeMultiplicity  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['multiplicity'];
+                        $sourceModelAggregation  = $parsedConnectors['connectors']['connector'.($j+1)]['source']['aggregation'];
+                        $sourceArray             = array(
+                            "id"            => $source,
+                            "name"          => $sourceName,
+                            "type"          => $sourceModelType,
+                            "ea_localId"    => $sourceModelEALocalId,
+                            "multiplicity"  => $sourceModeMultiplicity,
+                            "aggregation"   => $sourceModelAggregation
+                        );
+                        /**
+                         * Extract the target
+                         */
+                        $target                  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['idref'];
+                        $targetName              = $parsedConnectors['connectors']['connector'.($j+1)]['target']['name'];
+                        $targetModelType         = $parsedConnectors['connectors']['connector'.($j+1)]['target']['type'];
+                        $targetModelEALocalId    = $parsedConnectors['connectors']['connector'.($j+1)]['target']['ea_localid'];
+                        $targetModeMultiplicity  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['multiplicity'];
+                        $targetModelAggregation  = $parsedConnectors['connectors']['connector'.($j+1)]['target']['aggregation'];
+                        $labels                  = $parsedConnectors['connectors']['connector'.($j+1)]['labels'];
+                        $targetArray             = array(
+                            "id"            => $target,
+                            "name"          => $targetName,
+                            "type"          => $targetModelType,
+                            "ea_localId"    => $targetModelEALocalId,
+                            "multiplicity"  => $targetModeMultiplicity,
+                            "aggregation"   => $targetModelAggregation,
+                            "labels"        => $labels
+                        );
+                        /**
+                         * Return array based on type.
+                         */
+                        if( $type === "source" ):
+                            return( $sourceArray );
+                        elseif( $type === "target" ):
+                            return( $targetArray );
+                        endif;
+                        /**
+                         * Break the loop if the idref matched and the ea_type equals Generalization.
+                         */
+                        break;
                     endif;
-
-
-                    break;
-
                 endif;
-            endif;
-        endfor;
-
+            endfor;
+        endif;
     }
-
+    /**
+     * @param $operations
+     * @return array
+     */
     private function extractAndOrderOperations( $operations )
     {
         $operationsArray = array();
         $totalOperations = count( $operations );
+        if( $totalOperations > 0 ):
+            for( $i = 0; $i < $totalOperations; $i++ ):
+                $operationName          = ( !empty( $operations['operation'.($i+1)]['name'] ) ? $operations['operation'.($i+1)]['name'] : "" );
+                $operationDocumentation = ( !empty( $operations['operation'.($i+1)]['documentation'] ) ? $operations['operation'.($i+1)]['documentation'] : "" );
+                $operationTags          = ( !empty( $operations['operation'.($i+1)]['tags'] ) ? $operations['operation'.($i+1)]['tags'] : "" );
+                $totalTags              = count( $operationTags );
+                /**
+                 * Operation name and documentation
+                 */
+                $operationsArray[$operationName]['name']          = $operationName;
+                $operationsArray[$operationName]['documentation'] = $operationDocumentation;
+                /**
+                 * Extract the operation tags
+                 */
+                for( $j = 0; $j < $totalTags; $j++ ):
+                    if( !empty( $operations['operation'.($i+1)]['tags'][$j] ) ):
+                        $operationTagName    = ( !empty( $operations['operation'.($i+1)]['tags'][$j]['name'] ) ? $operations['operation'.($i+1)]['tags'][$j]['name'] : "" );
+                        $operationTagCell    = ( !empty( $operations['operation'.($i+1)]['tags'][$j]['cell'] ) ? $operations['operation'.($i+1)]['tags'][$j]['cell'] : "" );
+                        $operationTagOrder   = ( $operations['operation'.($i+1)]['tags'][$j]['name'] === "QR-PrintOrder" ? $operationTagCell : "" );
+                        $operationTagFile    = ( !empty( $operations['operation'.($i+1)]['tags'][$j]['file'] ) ? $operations['operation'.($i+1)]['tags'][$j]['file'] : "" );
+                        $operationTagTab     = ( !empty( $operations['operation'.($i+1)]['tags'][$j]['tab'] ) ? $operations['operation'.($i+1)]['tags'][$j]['tab'] : "" );
 
-        for( $i = 0; $i < $totalOperations; $i++ ):
-            $operationName          = ( !empty( $operations['operation'.($i+1)]['name'] ) ? $operations['operation'.($i+1)]['name'] : "" );
-            $operationDocumentation = ( !empty( $operations['operation'.($i+1)]['documentation'] ) ? $operations['operation'.($i+1)]['documentation'] : "" );
-            $operationTags          = ( !empty( $operations['operation'.($i+1)]['tags'] ) ? $operations['operation'.($i+1)]['tags'] : "" );
-            $totalTags              = count( $operationTags );
-
-            $operationsArray[$operationName]['name']          = $operationName;
-            $operationsArray[$operationName]['documentation'] = $operationDocumentation;
-
-            for( $j = 0; $j < $totalTags; $j++ ):
-                if( !empty( $operations['operation'.($i+1)]['tags'][$j] ) ):
-
-                    $operationTagName    = ( !empty( $operations['operation'.($i+1)]['tags'][$j]['name'] ) ? $operations['operation'.($i+1)]['tags'][$j]['name'] : "" );
-                    $operationTagCell    = ( !empty( $operations['operation'.($i+1)]['tags'][$j]['cell'] ) ? $operations['operation'.($i+1)]['tags'][$j]['cell'] : "" );
-                    $operationTagOrder   = ( $operations['operation'.($i+1)]['tags'][$j]['name'] === "QR-PrintOrder" ? $operationTagCell : "" );
-                    $operationTagFile    = ( !empty( $operations['operation'.($i+1)]['tags'][$j]['file'] ) ? $operations['operation'.($i+1)]['tags'][$j]['file'] : "" );
-                    $operationTagTab     = ( !empty( $operations['operation'.($i+1)]['tags'][$j]['tab'] ) ? $operations['operation'.($i+1)]['tags'][$j]['tab'] : "" );
-
-                    $operationsArray[$operationName]['printOrder'] = $operationTagOrder;
-
-                    if( $operationTagName !== "QR-PrintOrder" ):
-
-                        $operationsArray[$operationName][$operationTagName]['name']       = $operationTagName;
-
-                        $operationsArray[$operationName][$operationTagName]['file']       = $operationTagFile;
-                        $operationsArray[$operationName][$operationTagName]['tab']        = $operationTagTab;
-                        $operationsArray[$operationName][$operationTagName]['cell']       = $operationTagCell;
-
-                    endif;
-
-                endif;
-
-            endfor;
-        endfor;
-
-        usort( $operationsArray, array( $this,'sortByPrintOrder' ) );
-
-        return( $operationsArray );
-
-    }
-
-    private function extractAndOrderAttributes( $attributes )
-    {
-        $attributesArray = array();
-
-        foreach( $attributes as $attribute => $array ):
-            $attributesArray[$attribute]['name'] = $attribute;
-            $attributeDocumentation = $array['documentation'];
-            $attributeDataType      = $array['data_type'];
-            $attributeInitialValue  = $array['initialValue'];
-
-            $attributesArray[$attribute]['data_type']     = $attributeDataType;
-            $attributesArray[$attribute]['initialValue']  = $attributeInitialValue;
-            $attributesArray[$attribute]['documentation'] = $attributeDocumentation;
-
-            $tags      = ( !empty( $array['tags'] ) ? $array['tags'] : "" );
-            $totalTags = count( $tags );
-
-            if( $totalTags > 0 ):
-                for( $i = 0; $i < $totalTags; $i++ ):
-                    $tagName = ( !empty( $tags[$i]['name'] ) ? $tags[$i]['name'] : "" );
-                    if( $tagName === "QR-PrintOrder" ):
-                        $attributesArray[$attribute]['printOrder'] = $tags[$i]['cell'];
-                    else:
-                        $attributesArray[$attribute]['file']    = ( !empty( $tags[$i]['file'] ) ? $tags[$i]['file'] : "" );
-                        $attributesArray[$attribute]['tab']     = ( !empty( $tags[$i]['tab'] ) ? $tags[$i]['tab'] : "" );
-                        $attributesArray[$attribute]['cell']    = ( !empty( $tags[$i]['cell'] ) ? $tags[$i]['cell'] : "" );
+                        $operationsArray[$operationName]['printOrder'] = ( !empty( $operationTagOrder ) ? $operationTagOrder : "" );
+                        /**
+                         * Only add name, file, tab and cell if the operation is other then QR-PrintOrder.
+                         */
+                        if( $operationTagName !== "QR-PrintOrder" ):
+                            $operationsArray[$operationName][$operationTagName]['name'] = $operationTagName;
+                            $operationsArray[$operationName][$operationTagName]['file'] = $operationTagFile;
+                            $operationsArray[$operationName][$operationTagName]['tab']  = $operationTagTab;
+                            $operationsArray[$operationName][$operationTagName]['cell'] = $operationTagCell;
+                        endif;
                     endif;
                 endfor;
-            endif;
-
-        endforeach;
-
-        usort( $attributesArray, array( $this,'sortByPrintOrder' ) );
-
+            endfor;
+            usort( $operationsArray, array( $this,'sortByPrintOrder' ) );
+        endif;
+        return( $operationsArray );
+    }
+    /**
+     * @param $attributes
+     * @return array
+     */
+    private function extractAndOrderAttributes($attributes )
+    {
+        $attributesArray = array();
+        if( !empty( $attributes ) ):
+            foreach( $attributes as $attribute => $array ):
+                $attributesArray[$attribute]['name'] = $attribute;
+                $attributeDocumentation = $array['documentation'];
+                $attributeDataType      = $array['data_type'];
+                $attributeInitialValue  = $array['initialValue'];
+                /**
+                 * Add data type, initial value and documentation.
+                 */
+                $attributesArray[$attribute]['data_type']     = $attributeDataType;
+                $attributesArray[$attribute]['initialValue']  = $attributeInitialValue;
+                $attributesArray[$attribute]['documentation'] = $attributeDocumentation;
+                /**
+                 * Add the attribute tags
+                 */
+                $tags      = ( !empty( $array['tags'] ) ? $array['tags'] : "" );
+                $totalTags = count( $tags );
+                if( $totalTags > 0 ):
+                    for( $i = 0; $i < $totalTags; $i++ ):
+                        $tagName = ( !empty( $tags[$i]['name'] ) ? $tags[$i]['name'] : "" );
+                        if( $tagName === "QR-PrintOrder" ):
+                            $attributesArray[$attribute]['printOrder'] = $tags[$i]['cell'];
+                        else:
+                            $attributesArray[$attribute]['file'] = ( !empty( $tags[$i]['file'] ) ? $tags[$i]['file'] : "" );
+                            $attributesArray[$attribute]['tab']  = ( !empty( $tags[$i]['tab'] ) ? $tags[$i]['tab'] : "" );
+                            $attributesArray[$attribute]['cell'] = ( !empty( $tags[$i]['cell'] ) ? $tags[$i]['cell'] : "" );
+                        endif;
+                    endfor;
+                endif;
+            endforeach;
+            usort( $attributesArray, array( $this,'sortByPrintOrder' ) );
+        endif;
         return( $attributesArray );
     }
-
     /**
+     * #####################################################################
+     * ##              START OF ELEMENT AND FORM BUILD                    ##
+     * #####################################################################
+     *
+     * Build the intro.
+     * - The intro is always the root element.
+     * - Title and intro txt are extracted from the element.
+     * - Sub titles and sub txt are extracted from the element operations.
+     *
+     * @param $params
      * @return string
      */
     private function buildElementIntro()
@@ -471,41 +497,36 @@ class IOXMLEAScreenFactory
         $elementName = ( !empty( $element['name'] ) ? $element['name'] : "" );
         $title       = $elementName;
         $intro       = ( isset( $element['formDetails']['elementDocumentation'] ) ? $element['formDetails']['elementDocumentation'] : "" );
-
-        $html = '<div class="element">';
-
+        $html        = '<div class="element">';
         if( !empty( $element['formDetails'] ) ):
-
-            $formOperations = $element['formDetails']['elementOperations'][$elementName];
-
-            $html .= '<div class="elementIntro-title">'. $title .'</div>';
-            $html .= '<div class="elementIntro-txt"><p>'. $intro .'<p></div>';
-
+            $formOperations      = $element['formDetails']['elementOperations'][$elementName];
+            $html               .= '<div class="elementIntro-title">'. $title .'</div>';
+            $html               .= '<div class="elementIntro-txt"><p>'. $intro .'<p></div>';
             $totalFormOperations = count( $formOperations );
-
-            for( $i = 0; $i < $totalFormOperations; $i++ ):
-                $html .= '<div class="elementIntro-subTitle">'. $formOperations[$i]['name'] .'</div>';
-                $html .= '<div class="elementIntro-subIntro"><p>'. $formOperations[$i]['documentation'] .'</p></div>';
-            endfor;
-
-            $html .= '<div class="elementIntro-next"><a href="' . APPLICATION_HOME . '?model&page=' . ( ($element['printOrder'] + 1) ) . '" class="button">Next</a></div>';
-
+            if( $totalFormOperations > 0 ):
+                for( $i = 0; $i < $totalFormOperations; $i++ ):
+                    $html .= '<div class="elementIntro-subTitle">'. $formOperations[$i]['name'] .'</div>';
+                    $html .= '<div class="elementIntro-subIntro"><p>'. $formOperations[$i]['documentation'] .'</p></div>';
+                endfor;
+                $html .= '<div class="elementIntro-next"><a href="' . APPLICATION_HOME . '?model&page=' . ( $element['printOrder'] + 1 ) . '" class="button">Next</a></div>';
+            endif;
         endif;
-
         $html .= '</div>';
-
         return( $html );
-
     }
-
     /**
+     * Build a basic element.
+     * - Each element has a form (or super form).
+     * - Super forms are created when an element has super and sub types.
+     * - Super forms always result in super elements, which are placed inside a basic element.
+     *
+     * @param $params
      * @return string
      */
-    private function buildElement()
+    private function buildElement( $params )
     {
         $element         = $this->xmlModelId;
-        $modelId         = ( isset( $element['model_id'] ) ? $element['model_id'] : "" );
-        $parsedElements  = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
+        $parsedElements  = $params['elements'];
         $elementName     = ( isset( $element['name'] ) ? $element['name'] : "" );
         $title           = ( !empty( $element['header_txt'] ) ? $element['header_txt'] : ( !empty( $element['name'] ) ? $element['name'] : "" ) );
         $documentation   = ( isset( $element['formDetails']['elementDocumentation'] ) ? $element['formDetails']['elementDocumentation'] : "" );
@@ -515,66 +536,99 @@ class IOXMLEAScreenFactory
         $params['element_name'] = $elementName;
         $params['elements']     = $parsedElements;
         $params['multiplicity'] = $multiplicity;
-
+        /**
+         * Check if an element has super types, if so get their sub types results.
+         * Add the name of the sub type as an identifier to the result array.
+         */
         if( !empty( $hasSuperTypes ) ):
             $data = array();
-            foreach( $hasSuperTypes[$elementName] as $hasSuperType ):
-                $params['element_name'] = $hasSuperType;
-                $params['elements']     = $parsedElements;
-                $params['multiplicity'] = $multiplicity;
-                $results[$hasSuperType] = ( new XMLDBController( "read" ) )->request( $params );
-
-                $totalResults = count($results[$hasSuperType]);
-                for( $i = 0; $i < $totalResults; $i++ ):
-                    if( !empty(  $results[$hasSuperType][$i]['id'] ) ):
-                        $results[$hasSuperType][$i]['name'] = $hasSuperType;
-                        $data[$hasSuperType] =  $results[$hasSuperType];
+            if( !empty( $hasSuperTypes[$elementName] ) ):
+                foreach( $hasSuperTypes[$elementName] as $hasSuperType ):
+                    $params['element_name'] = $hasSuperType;
+                    $params['elements']     = $parsedElements;
+                    $params['multiplicity'] = $multiplicity;
+                    $results[$hasSuperType] = ( new XMLDBController( "read" ) )->request( $params );
+                    $totalResults           = count($results[$hasSuperType]);
+                    if( $totalResults > 0 ):
+                        for( $i = 0; $i < $totalResults; $i++ ):
+                            /**
+                             * Only continue if the result set has an id (is not empty)
+                             */
+                            if( !empty(  $results[$hasSuperType][$i]['id'] ) ):
+                                $results[$hasSuperType][$i]['name'] = $hasSuperType;
+                                $data[$hasSuperType]                =  $results[$hasSuperType];
+                            endif;
+                        endfor;
                     endif;
-                endfor;
-
-            endforeach;
+                endforeach;
+            endif;
+        /**
+         * Get the results when an element does not have super type(s)
+         */
         else:
             $params['element_name'] = $elementName;
             $params['elements']     = $parsedElements;
             $params['multiplicity'] = $multiplicity;
-            $data = ( new XMLDBController( "read" ) )->request( $params );
+            $data                   = ( new XMLDBController( "read" ) )->request( $params );
         endif;
-
         $html  = '<div class="element">';
         $html .= '<div class="element-title">'. $title .'</div>';
         $html .= '<div class="element-documentation"><p>'. $documentation .'</p></div>';
-
+        /**
+         * Create a super form if the element has super types and if the element has a multiplicity other then 1.
+         * - Get the sub types results and build an advanced form for every result.
+         * - Only build an advanced form if the sub type is available in the parsed xml array.
+         * - And only build an advanced form if the result set name equals the sub type's name.
+         */
         if( !empty( $hasSuperTypes ) ):
-            $html .= $this->buildSuperForm( $element, $multiplicity );
-
             if( $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
+                $params['element']      = $element;
+                $params['elements']     = $parsedElements;
+                $params['multiplicity'] = $multiplicity;
+                $html .= $this->buildSuperForm( $params );
                 if( !empty( $data ) ):
                     $html .= '<br><br><div class="element-submitted"><p>Previously submitted '. $elementName . '</p></div>';
-                    foreach( $hasSuperTypes[$elementName] as $hasSuperType ):
-                        if( !empty( $data[$hasSuperType] ) ):
-                            $totalResults = count( $data[$hasSuperType] );
-                            $subTypeName = $hasSuperType;
-                            $html .= '<br><br><div class="element-subTitle"><p>' . $subTypeName . '</p></div>';
-                            for( $i = 0; $i < $totalResults; $i++ ):
-                                foreach( $parsedElements as $parsedElement ):
-                                    if( $subTypeName === $parsedElement['name'] && $data[$hasSuperType][$i]['name'] === $hasSuperType ):
-                                        $html .= $this->buildForm( $parsedElement, $data[$hasSuperType][$i], $multiplicity, "advanced" );
-                                    break;
-                                    endif;
-                                endforeach;
-                            endfor;
-                        endif;
-                    endforeach;
+                    if( !empty( $hasSuperTypes[$elementName] ) ):
+                        foreach( $hasSuperTypes[$elementName] as $hasSuperType ):
+                            if( !empty( $data[$hasSuperType] ) ):
+                                $totalResults = count( $data[$hasSuperType] );
+                                $subTypeName  = $hasSuperType;
+                                $html        .= '<br><br><div class="element-subTitle"><p>' . $subTypeName . '</p></div>';
+                                for( $i = 0; $i < $totalResults; $i++ ):
+                                    foreach( $parsedElements as $parsedElement ):
+                                        if( $subTypeName === $parsedElement['name'] && $data[$hasSuperType][$i]['name'] === $hasSuperType ):
+                                            $params['element']      = $parsedElement;
+                                            $params['elements']     = $parsedElements;
+                                            $params['result']       = $data[$hasSuperType][$i];
+                                            $params['multiplicity'] = $multiplicity;
+                                            $params['type']         = "advanced";
+                                            $html .= $this->buildForm( $params );
+                                        break;
+                                        endif;
+                                    endforeach;
+                                endfor;
+                            endif;
+                        endforeach;
+                    endif;
                 endif;
             endif;
+        /**
+         * Create a normal form if the element does not have super types
+         */
         else:
-            $html .= $this->buildForm( $element, $data, $multiplicity,  "normal" );
-
-            if( $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
-                if( !empty( $data ) ):
+            if( !empty( $data ) ):
+                $params['element']      = $element;
+                $params['elements']     = $parsedElements;
+                $params['result']       = $data;
+                $params['multiplicity'] = $multiplicity;
+                $params['type']         = "normal";
+                $html .= $this->buildForm( $params );
+                if( $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
                     $html .= '<br><br><div class="element-submitted"><p>Previously submitted ' . $elementName . '</p></div>';
                     foreach( $data as $result ):
-                        $html .= $this->buildForm( $element, $result, $multiplicity, "advanced" );
+                        $params['result']       = $result;
+                        $params['type']         = "advanced";
+                        $html .= $this->buildForm( $params );
                     endforeach;
                 endif;
             endif;
@@ -584,15 +638,18 @@ class IOXMLEAScreenFactory
 
         return( $html );
     }
-
     /**
+     * Build a super element.
+     * - Super elements are encapsulated in a normal element. ( a super element does not have an element container div )
+     * - Super elements can only result in normal forms which may or may not have advanced forms.
+     *
+     * @param $params
      * @return string
      */
-    private function buildSuperElement()
+    private function buildSuperElement( $params )
     {
         $element         = $this->xmlModelId;
-        $modelId         = ( isset( $element['model_id'] ) ? $element['model_id'] : "" );
-        $parsedElements  = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
+        $parsedElements  = $params['elements'];
         $elementName     = ( isset( $element['name'] ) ? $element['name'] : "" );
         $title           = ( !empty( $element['header_txt'] ) ? $element['header_txt'] : ( !empty( $element['name'] ) ? $element['name'] : "" ) );
         $documentation   = ( isset( $element['formDetails']['elementDocumentation'] ) ? $element['formDetails']['elementDocumentation'] : "" );
@@ -601,39 +658,61 @@ class IOXMLEAScreenFactory
         $params['element_name'] = $elementName;
         $params['elements']     = $parsedElements;
         $params['multiplicity'] = $multiplicity;
-        $data = ( new XMLDBController( "read" ) )->request( $params );
 
-        $html = '<div class="element-title">'. $title .'</div>';
+        $data  = ( new XMLDBController( "read" ) )->request( $params );
+        $html  = '<div class="element-title">'. $title .'</div>';
         $html .= '<div class="element-documentation"><p>'. $documentation .'</p></div>';
 
-        $html .= $this->buildForm( $element, $data, $multiplicity,  "normal" );
+        $params['element']      = $element;
+        $params['elements']     = $parsedElements;
+        $params['result']       = $data;
+        $params['multiplicity'] = $multiplicity;
+        $params['type']         = "normal";
 
+        $html .= $this->buildForm( $params);
         return( $html );
     }
-
     /**
-     * @param $element
-     * @param $result
-     * @param $multiplicity
-     * @param $type
+     * Build a normal(standard) form.
+     *
+     * ##### [FIELDS] #####
+     * - The normal form has fields created from the element attributes.
+     * - Attributes inherited from their parent/super type will be displayed first.
+     * - Attributes specific to the current element (child/sub type) will be displayed after.
+     * - Submit buttons will be displayed according to the elements multiplicity.
+     * - Set the input name(attribute name), the hover information(attribute documentation), the placeholder(attribute initial value).
+     *
+     * ##### [DATA TYPES] #####
+     * Set the data type and build input type accordingly:
+     *  - input type txt = PrimitiveType and DataType
+     *  - select         = Enumeration
+     *
+     * @param $params
      * @return string
      */
-    private function buildForm ( $element, $result, $multiplicity, $type )
+    private function buildForm ( $params )
     {
+        $parsedElements     = $params['elements'];
+        $element            = $params['element'];
+        $result             = $params['result'];
+        $multiplicity       = $params['multiplicity'];
+        $type               = $params['type'];
+        $elementName        = ( isset( $element['name'] ) ? $element['name'] : "" );
+        $target             = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
+        $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
+        $fields             = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : "" );
+        $elementPrintOrder  = ( $element['printOrder'] !== "noPrint" ? $element['printOrder'] : ( isset( $_GET['page'] ) ? $_GET['page'] : "" ) );
         /**
-         * Collect all data for form building.
+         * Set standard hidden input fields.
+         * Hidden fields provide the following:
+         *      - element name
+         *      - model id
+         *      - element order (+1 for next page)
+         *      - path (destination folder)
+         *      - attr (destination file)
+         *      - multiplicity
          */
-        $parsedElements = $this->extractAndOrderElements();
-        $elementName    = ( isset( $element['name'] ) ? $element['name'] : "" );
-        $target         = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
-        $targetFields   = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
-        $fields         = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : "" );
-
-        $elementPrintOrder = ( $element['printOrder'] !== "noPrint" ? $element['printOrder'] : ( isset( $_GET['page'] ) ? $_GET['page'] : "" ) );
-        /**
-         * Set standard hidden input fields
-         */
-        $hiddenInputData = '<input type="hidden" name="elementName" value="' . $elementName . '">';
+        $hiddenInputData  = '<input type="hidden" name="elementName" value="' . $elementName . '">';
         $hiddenInputData .= '<input type="hidden" name="modelId" value="' . $element['model_id'] . '">';
         $hiddenInputData .= '<input type="hidden" name="elementOrder" value="' . ( $elementPrintOrder + 1 ) . '">';
         $hiddenInputData .= '<input type="hidden" name="path" value="screenFactory">';
@@ -646,8 +725,9 @@ class IOXMLEAScreenFactory
         $params['elements']     = $parsedElements;
         $params['multiplicity'] = $multiplicity;
         /**
-         * - Set data equal to result if the multiplicity is 1.
-         * - Set data equal to an array with key 0 and value result when the multiplicity is other then 1.
+         * - Set data equal to result if the multiplicity is 1 or empty.
+         * - Set data equal to an array with key 0 and value result when the multiplicity is other then 1 or empty.
+         * - An advanced form will be build for each result, the 0 key makes sure only 1 and only the first result is targeted.
          */
         if( $multiplicity === "1" || $multiplicity === "" ):
             $data = $result;
@@ -659,28 +739,12 @@ class IOXMLEAScreenFactory
          */
         $resultId = ( isset( $data[0]['id'] ) ? $data[0]['id'] : "" );
         /**
-         * Start the normal form.
-         *
-         * ############################################################
-         *
-         * - The normal form does not contain any data and has normal buttons depending on multiplicity.
-         *
-         * [FIELDS]
-         * - The normal form has fields created from the element attributes.
-         * - Attributes inherited from their parent/super type will be displayed first.
-         * - Attributes specific to the current element (child/sub type) will be displayed after.
-         * - Submit buttons will be displayed according to the elements multiplicity.
-         * - Set the input name(attribute name), the hover information(attribute documentation), the placeholder(attribute initial value).
-         *
-         * ############################################################
-         *
-         * [DATA TYPES]
-         * - Set the data type and build input type accordingly:
-         *  - input type txt = PrimitiveType and DataType
-         *  - select         = Enumeration
+         * Start form building
          */
         $form = '<div class="element-form">';
-
+        /**
+         * Display intro (specific form information) based on type.
+         */
         switch( $type ):
             case"normal":
                 $form .= '<div class="element-form-intro">Fill in the form below to add another ' . $elementName . '</div>';
@@ -691,8 +755,13 @@ class IOXMLEAScreenFactory
         endswitch;
 
         $form .= '<form action="' . APPLICATION_HOME . '" method="post">';
+
         /**
          * Parent/super type fields
+         *
+         * - Build the input fields, target first (parent/super type) then the element fields.
+         * - Field type is based on data type.
+         * - Placeholder is based on attribute documentation and data type.
          */
         if( !empty( $targetFields ) ):
             foreach( $targetFields as $targetField ):
@@ -703,7 +772,7 @@ class IOXMLEAScreenFactory
                     $inputDataType    = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
                     $inputFieldType   = ( new IOXMLEAAttributeTypes( $element['model_id'], $inputDataType ) )->fieldType();
                     /**
-                     * Start of the input box, i.e. field name, input field based on data type, placeholder based on attribute documentation and data type format.
+                     * Display each input field with input name, based on data type
                      */
                     $form .= '<div class="element-input-box">';
                     if( !empty( $inputName ) ):
@@ -714,20 +783,26 @@ class IOXMLEAScreenFactory
                                 case"DataType":
                                     $formattedInputName = strtolower( str_replace( " ", "_", $inputName ) );
                                     $inputValue         = ( $multiplicity === "" ? "" : ( isset( $data[0][$formattedInputName] ) ? $data[0][$formattedInputName] : "" ) );
-                                    $form .= '<input type="text" name="' . $inputName . '" value="' . $inputValue . '" placeholder="' . $inputPlaceholder . '">';
+                                    $form              .= '<input type="text" name="' . $inputName . '" value="' . $inputValue . '" placeholder="' . $inputPlaceholder . '">';
                                     break;
                                 case"Enumeration":
                                     $params['model_id'] = $element['model_id'];
                                     $enumerations       = ( new IOXMLEAEnumerations( "getEnumerations", $inputDataType ) )->request( $params );
                                     $formattedInputName = strtolower( str_replace( " ", "_", $inputName ) );
                                     $inputValue         = ( $multiplicity === "" ? "" : ( isset( $data[0][$formattedInputName] ) ? $data[0][$formattedInputName] : "" ) );
-                                    $form .= '<select name="' . $inputName . '">';
+                                    $form              .= '<select name="' . $inputName . '">';
+                                    /**
+                                     * Show input data if available
+                                     */
                                     if( !empty( $inputValue ) ):
-                                        $form .= '<option name="enum" value="' . $inputValue . '">' . $inputValue . '</option>';
+                                        $form          .= '<option name="enum" value="' . $inputValue . '">' . $inputValue . '</option>';
                                     endif;
-                                    $form .= '<option name="enum" value="">Choose ' . $inputName . '</option>';
+                                    /**
+                                     * Populate the select box with the enumerations
+                                     */
+                                    $form              .= '<option name="enum" value="">Choose ' . $inputName . '</option>';
                                     foreach( $enumerations as $enumeration ):
-                                        $form .= '<option name="enum" value="' . $enumeration['input_name'] . '">' . $enumeration['input_name'] . '</option>';
+                                        $form          .= '<option name="enum" value="' . $enumeration['input_name'] . '">' . $enumeration['input_name'] . '</option>';
                                     endforeach;
                                     $form .= '</select>';
                                     break;
@@ -899,8 +974,10 @@ class IOXMLEAScreenFactory
 
     }
 
-    private function buildSuperForm( $element, $multiplicity )
+    private function buildSuperForm( $params )
     {
+        $element      = $params['element'];
+        $multiplicity = $params['multiplicity'];
         $elementName  = ( isset( $element['name'] ) ? $element['name'] : "" );
         $superTypes   = ( isset( $element['super_types'] ) ? $element['super_types'] : "" );
 
@@ -964,15 +1041,15 @@ class IOXMLEAScreenFactory
         $form .= '</div>';
 
         if( !empty( $_GET['addForm'] ) ):
-            $className = $_GET['addForm'];
-            $modelId = $element['model_id'];
-            $parsedElements  = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
+            $className              = $_GET['addForm'];
+            $parsedElements         = $params['elements'];
+            $params['element_name'] = $className;
+            $params['elements']     = $parsedElements;
+            $params['multiplicity'] = $multiplicity;
             foreach($parsedElements as $parsedElement):
                 if( $parsedElement['name'] === $className ):
-                    $params['element_name'] = $className;
-                    $params['elements']     = $parsedElements;
-                    $params['multiplicity'] = $multiplicity;
                     $form .= ( new IOXMLEAScreenFactory( "buildSuperElement", $parsedElement ) )->request( $params );
+                    break;
                 endif;
             endforeach;
         endif;
