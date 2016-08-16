@@ -140,7 +140,7 @@ else:
         ( new Service( $type, $database ) )->dbAction( $sql, $data, $format );
 
         if( $multiplicity === "1..*" ):
-            header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) ."&add" );
+            header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) ."&add" );
             exit();
         else:
             header( "Location: " . APPLICATION_HOME . "?model&page=" .$elementOrder );
