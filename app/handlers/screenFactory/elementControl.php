@@ -38,16 +38,17 @@ if( !empty( $action ) ):
 
     switch( $action ):
         case"create":
-            ( new XMLDBController( "create" ) )->request( $params );
+            $returnMessage = ( new XMLDBController( "create" ) )->request( $params );
+            $returnMessage = ( !empty( $returnMessage ) ? $returnMessage : "" );
             switch( $multiplicity ):
                 case"1":
-                    header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) . "&created" );
+                    header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) . "&".$returnMessage );
                     exit();
                     break;
                 case"1..*":
                 case"0..*":
                 case"":
-                    header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&created" );
+                    header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
                     exit();
                     break;
             endswitch;
@@ -56,7 +57,7 @@ if( !empty( $action ) ):
             if( !empty( $resultId ) ):
                 $params['result_id'] = $resultId;
                 ( new XMLDBController( "update" ) )->request( $params );
-                header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&updated" );
+                header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&edited" );
                 exit();
             endif;
             break;

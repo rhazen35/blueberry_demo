@@ -21,13 +21,15 @@
 .element-Header-img
 {
     float:right;
+    width:180px;
+    height:90px;
+    margin-top:1em;
     margin-right:1em;
 }
 
 .element-Header-img img
 {
-    width:180px;
-    height:90px;
+    max-width:100%;
 }
 
 .element
@@ -184,7 +186,7 @@
     position:relative;
     float:right;
     width:5%;
-    margin-top:1.25em;
+    margin-top:1.65em;
 }
 
 .element-input-hoverImg:hover

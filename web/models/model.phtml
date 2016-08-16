@@ -19,28 +19,22 @@ $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
 $highestOrder    = $orderedElements['highest_order'];
 
 $params['elements'] = $orderedElements;
-
-
 ?>
     <div class="newModel-head">
     <div class="title">Model Preview <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
     </div>
 <?php
-
 if( !empty( $orderedElements ) ):
-
     if( $currentPage <= $highestOrder ):
-
         for( $i = 0; $i < $totalElements; $i++ ):
-
             if( !empty( $orderedElements[$i] ) ):
                 /**
                  * Only print element if there is a print order, if the print order is a digit and if the print order equals the current page.
                  */
                 $printOrder = ( isset( $orderedElements[$i]['printOrder'] ) ? $orderedElements[$i]['printOrder'] : "" );
-
                 if( $orderedElements[$i]['printOrder'] !== "noPrint" && ctype_digit( $orderedElements[$i]['printOrder'] ) && $printOrder === $currentPage ):
-
+                    $elementNameBefore = ( isset( $orderedElements[($i-1)]['name'] ) ?  $orderedElements[($i-1)]['name'] : "" );
+                    $_SESSION['elementNameBefore'] = $elementNameBefore;
                     /**
                      * Print root first, always contains the intro element
                      * Each element printed after the root contains a form.
@@ -74,15 +68,10 @@ if( !empty( $orderedElements ) ):
                         </div>
                     </div>
                     <?php
-
                 endif;
-
             endif;
-
         endfor;
-
     else:
-
         ?>
         <div class="model-noPreview">
             <div class="model-noPreview-title">End of the line</div>
@@ -93,9 +82,6 @@ if( !empty( $orderedElements ) ):
             </div>
         </div>
         <?php
-
     endif;
-
 endif;
-
 ?>

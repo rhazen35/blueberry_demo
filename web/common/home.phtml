@@ -1,3 +1,14 @@
 <div class="home">
     Welcome to blueberry. - homepage
 </div>
+
+<?php
+
+use app\api\ea\EAApi;
+
+    $type = "get_all_models";
+    $params['db_name'] = "blueberry";
+    $data = ( new EAApi( $type ) )->request( $params );
+
+    var_dump($data);
+?>

@@ -96,7 +96,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                      */
                     move_uploaded_file( $_FILES['xmlFile']['tmp_name'], sprintf( APPLICATION_ROOT.'/web/files/xml_models_tmp/%s.%s', sha1_file( $_FILES['xmlFile']['tmp_name'] ), $extension ) );
                     /**
-                     * Create tables for the elements with the type of uml:Class
+                     * Create database and tables for the elements with the type of uml:Class
                      */
                     if( !empty( $name ) ):
                         $params = array( "model_id" => $lastInsertedID, "model_name" => $name );

@@ -6,6 +6,9 @@
  * Time: 11:10
  */
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 
 // Set proper internal encoding

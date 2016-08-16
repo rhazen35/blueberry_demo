@@ -52,8 +52,8 @@ if(!class_exists( "Read" )):
 
                 $result  = $stmt->get_result();
                 $results = array();
-                
-                while ($row = $result->fetch_array()):
+
+                while ($row = $result->fetch_assoc()):
                     $results[] = $row;
                 endwhile;
 
