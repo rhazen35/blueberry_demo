@@ -103,9 +103,9 @@ class XMLDBController
                     $database = strtolower( str_replace( " ", "_", $database ) );
                 endif;
                 if( $parsedElement['name'] === $elementName ):
-                    $elementAttributes      = ( isset( $parsedElement['formDetails']['elementAttributes'][$elementName] ) ? $parsedElement['formDetails']['elementAttributes'][$elementName] : ""  );
+                    $elementAttributes      = ( !empty( $parsedElement['formDetails']['elementAttributes'][$elementName] ) ? $parsedElement['formDetails']['elementAttributes'][$elementName] : ""  );
                     $totalElementAttributes = count($elementAttributes);
-                    $superAttributes        = ( isset( $parsedElement['supertype']['attributes'] ) ? $parsedElement['supertype']['attributes'] : "" );
+                    $superAttributes        = ( !empty( $parsedElement['supertype']['attributes'] ) ? $parsedElement['supertype']['attributes'] : "" );
                     $totalSuperAttributes   = count( $superAttributes );
                     /**
                      * Super type attributes
@@ -115,8 +115,8 @@ class XMLDBController
                         foreach( $superAttributes as $attribute => $array ):
                             if( !empty( $array ) ):
                                 $countAttributes++;
-                                $attributeName  = ( isset( $array['input_name'] ) ? str_replace( " ", "_", $array['input_name'] ) : "" );
-                                $attributeValue = ( isset( $_POST[$attributeName] ) ? $_POST[$attributeName] : "" );
+                                $attributeName  = ( !empty( $array['input_name'] ) ? str_replace( " ", "_", $array['input_name'] ) : "" );
+                                $attributeValue = ( !empty( $_POST[$attributeName] ) ? $_POST[$attributeName] : "" );
                                 $attributeName = strtolower( $attributeName );
                                 /**
                                  * Create query

@@ -65,3 +65,11 @@ CREATE PROCEDURE
     DELETE FROM projects_models WHERE model_id = modelId;
     DELETE FROM xml_models WHERE id = modelId;
   END $$
+
+CREATE PROCEDURE
+`proc_getModelNameById`(
+  IN modelId INT(11)
+)
+  BEGIN
+    SELECT name FROM xml_models WHERE id = modelId;
+  END $$

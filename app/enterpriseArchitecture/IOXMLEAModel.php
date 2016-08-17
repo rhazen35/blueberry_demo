@@ -91,6 +91,28 @@ if( !class_exists( "IOXMLEAModel" ) ):
 
         }
 
+        public function getModelNameById()
+        {
+            $sql        = "CALL proc_getModelNameById(?)";
+            $data       = array("id" => $this->modelId);
+            $format     = array('s');
+            $type       = "read";
+
+            $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            $returnArray = "";
+            if( !empty( $returnData ) ):
+
+                foreach( $returnData as $data ):
+                    $returnArray = array( 'name' => $data['name']);
+                endforeach;
+
+                return( $returnArray );
+            else:
+                return( false );
+            endif;
+        }
+
         public function getModelArray()
         {
             $sql        = "CALL proc_getModelArray(?)";

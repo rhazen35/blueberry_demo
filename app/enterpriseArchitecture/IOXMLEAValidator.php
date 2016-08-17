@@ -14,7 +14,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
     {
 
         protected $xmlFile;
-        protected $matchExcelFormat = '/^[A-Za-z]+[0-9]+(\:)?(?(1)[A-Za-z]+[0-9]+|[0-9]?)$/';
+        protected $matchExcelFormat = '/^[A-Za-z]{1,2}[0-9]{0,6}(\:)?(?(1)([A-Za-z]{1,2})?(?(2)([0-9]{0,6})))$/';
 
         /**
          * IOXMLEAValidator constructor.
@@ -660,7 +660,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                                          */
                                         elseif( !empty( $tag['cell'] && $tag['name'] !== "QR-PrintOrder" ) ):
 
-                                            $excelCell = str_replace( $tag['cell'], " ", "" );
+                                            $excelCell = $tag['cell'];
 
                                             if( !preg_match( $this->matchExcelFormat , $excelCell) ):
 

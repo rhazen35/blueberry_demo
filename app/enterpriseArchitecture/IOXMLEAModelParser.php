@@ -273,6 +273,8 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                                             if( !empty( $tagValue ) ):
                                                 list($cell, $tab, $file) = array_pad(explode(",", $tagValue, 3),3, null);
 
+                                                $cell = preg_replace('/\s/', '', $cell);
+
                                                 $classArray[$className]['operations']['operation'.($i+1)]['tags'][$l]['operation'] = trim($operationName);
                                                 $classArray[$className]['operations']['operation'.($i+1)]['tags'][$l]['name'] = trim($tagName);
                                                 $classArray[$className]['operations']['operation'.($i+1)]['tags'][$l]['file'] = trim($file);
@@ -341,6 +343,8 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
 
                                     if( !empty( $tagValue ) ):
                                         list($cell, $tab, $file) = array_pad(explode(",", $tagValue, 3),3, null);
+
+                                        $cell = preg_replace('/\s/', '', $cell);
 
                                         $classArray[$className]['attributes'][$inputName]['tags'][$j]['attribute'] = $inputName;
                                         $classArray[$className]['attributes'][$inputName]['tags'][$j]['name'] = $tagName;
