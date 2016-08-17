@@ -170,7 +170,7 @@ if( !class_exists( 'Login' ) ):
         public function getUserPass()
         {
 
-            $sql        = "SELECT f_checkEmailPass(?)";
+            $sql        = "CALL proc_getUserPass(?)";
             $data       = array("email" => $this->email);
             $format     = array('s');
 
@@ -179,7 +179,9 @@ if( !class_exists( 'Login' ) ):
             $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
             if( !empty( $returnData ) ):
-                return( $returnData );
+               foreach( $returnData as $returnDat ):
+                    return($returnDat);
+               endforeach;
             else:
                 return( false );
             endif;
@@ -193,7 +195,7 @@ if( !class_exists( 'Login' ) ):
         public function loginId()
         {
 
-            $sql        = "SELECT f_getUserId(?)";
+            $sql        = "CALL proc_getUserId(?)";
             $data       = array("email" => $this->email);
             $format     = array('s');
 
@@ -202,7 +204,9 @@ if( !class_exists( 'Login' ) ):
             $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
             if( !empty( $returnData ) ):
-                return( $returnData );
+                foreach( $returnData as $returnDat ):
+                    return( $returnDat );
+                endforeach;
             else:
                 return( false );
             endif;

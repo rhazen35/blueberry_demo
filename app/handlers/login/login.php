@@ -21,23 +21,14 @@ if( $_SERVER['REQUEST_METHOD'] === 'POST' ):
         header("Location: index.php?loginFailed");
         exit();
     else:
-        $results = ( new Login( $email, " " ) )->getUserPass();
+        $returnPass = ( new Login( $email, " " ) )->getUserPass();
 
-        foreach( $results as $result ):
-            $returnPass = $result[0];
-        endforeach;
-
-        $verify = !empty( $returnPass ) ? password_verify( $password, $returnPass ) : "";
+        $verify = !empty( $returnPass['password'] ) ? password_verify( $password, $returnPass['password'] ) : "";
 
         if( $verify ):
 
             $results = ( new Login( $email, " " ) )->loginId();
-
-            foreach( $results as $result ):
-
-                $userId = $result[0];
-
-            endforeach;
+            $userId  = ( !empty( $results['id'] ) ? $results['id'] : "" );
 
             $_SESSION['login']  = true;
             $_SESSION['userId'] = isset($userId) ? $userId : "";

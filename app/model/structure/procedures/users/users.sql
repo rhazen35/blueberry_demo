@@ -73,3 +73,11 @@ CREATE PROCEDURE
   BEGIN
     SELECT email FROM users WHERE id = userId;
   END $$
+
+CREATE PROCEDURE
+`proc_getUserId`(
+  IN userEmail VARCHAR(150)
+)
+  BEGIN
+     SELECT id FROM users WHERE email = userEmail;
+  END $$

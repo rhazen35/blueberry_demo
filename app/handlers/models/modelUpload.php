@@ -54,7 +54,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
              */
             $returnData = ( new IOXMLEAModelUpload( "matchHash", $newFile, $uploadedAt ) )->request( $params = null );
             if( !empty( $returnData ) ):
-                $matchHash = $returnData[0];
+                $matchHash = $returnData['hash'];
             else:
                 $matchHash = "";
             endif;
@@ -72,6 +72,9 @@ if( isset($_FILES) && !empty( $_FILES ) ):
              */
             $report['originalFileName'] = $fileName;
 
+            echo $newFile.'<br>';
+            echo $matchHash;
+
             if( !hash_equals( $newFile, $matchHash ) ):
 
                 $report['file_exists'] = false;
@@ -80,6 +83,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                  */
                 $name                   = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
                 $nameExists             = ( new IOXMLEAModel( $name ) )->checkModelNameExists();
+
                 if( $nameExists === false ):
 
                     $valid                  = ( $report['validation']['valid'] === true ? "yes" : "no" );
@@ -112,6 +116,8 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 $report['file_exists']  = true;
                 $returnData             = ( new IOXMLEAModel( $matchHash ) )->getModelIdByHash();
                 $_SESSION['xmlModelId'] = ( !empty( $returnData['model_id'] ) ? $returnData['model_id'] : "" );
+                header("Location: index.php?modelExists");
+                exit();
             endif;
 
             header("Location: index.php?xmlEAValidatorReport");
