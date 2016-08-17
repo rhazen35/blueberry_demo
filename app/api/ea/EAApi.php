@@ -35,7 +35,7 @@ class EAApi
 
     private function get_all_models( $params )
     {
-        $dbName      = ( !empty( $params['db_name'] ) ? $params['db_name'] : $this->dbName );
+        $dbName      = ( !empty( $params['model'] ) ? $params['model'] : $this->dbName );
         $sql         = "CALL proc_ea_api_get_all_models()";
         $data        = array();
         $format      = array();
