@@ -43,4 +43,12 @@ class EAApi
         $returnData  = ( new Service( $type, $dbName ) )->dbAction( $sql, $data, $format );
         return( $returnData );
     }
+
+    private function get_all_models_detailed()
+    {
+        $models = $this->get_all_models( $params = null );
+        foreach( $models as $model ):
+
+        endforeach;
+    }
 }
