@@ -20,6 +20,14 @@
         use app\lib\Login;
         use app\lib\ViewController;
 
+        if( isset( $_GET['hideMenu'] ) ):
+            $_SESSION['menu_toggle'] = "hide";
+            ?> <script>window.history.back()</script><?php
+        elseif( isset( $_GET['showMenu'] ) ):
+        unset($_SESSION['menu_toggle']);
+        ?> <script>window.history.back()</script><?php
+        endif;
+
         /**
          * Header
          */

@@ -56,18 +56,6 @@ if( !empty( $orderedElements ) ):
                     else:
                         print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params ) );
                     endif;
-                    ?>
-                    <div class="element-Footer">
-                        <div class="element-Footer-copy">
-                            &copy; Copyright 2016 QuaRatio B.V.
-                        </div>
-                        <div class="element-Footer-info">
-                            Powered by QuaRatio
-                            <br>
-                            Blueberry ProductSuite
-                        </div>
-                    </div>
-                    <?php
                 endif;
             endif;
         endfor;

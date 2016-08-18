@@ -48,7 +48,7 @@ $originalFileName = ( !empty( $report['originalFileName'] ) ? $report['originalF
 
         <div class="modelReport-validationInfo">
             <div class="modelReport-FileName">
-                <strong>Validated model:</strong> <?= $modelName; ?>
+                <strong>Validated model:</strong> <?= ( !empty( $modelName ) ? $modelName : "<span>No name found</span>" ); ?>
             </div>
 
             <?php if( isset( $report['validationDuration'] ) && $report['validationDuration'] !== 0 ): ?>
@@ -56,10 +56,34 @@ $originalFileName = ( !empty( $report['originalFileName'] ) ? $report['originalF
                     <strong>Validation duration:</strong> <?= $report['validationDuration'].' seconds'; ?>
                 </div>
                 <div class="modelReport-validationDuration">
-                    <a href="<?= APPLICATION_HOME; ?>?model" class="button">go to the preview</a>
+                    <a href="<?= APPLICATION_HOME; ?>?model" class="button">preview</a>
                 </div>
             <?php endif; ?>
         </div>
+
+        <?php if( $report['validation']['value'] === false ): ?>
+        <div class="modelReport-notification">
+            <div class="modelReport-notification-title">Report notification:</div>
+            <div class="modelReport-notification-msg">
+                <p>
+                    The model could not be processed, the database and preview could not be generated.
+                    <br>
+                    Go to <a href="<?= APPLICATION_HOME; ?>?models&model_id=<?= $xmlModelId; ?>">models</a> to change this model.
+                </p>
+            </div>
+        </div>
+       <?php else: ?>
+            <div class="modelReport-notification">
+                <div class="modelReport-notification-title">Report notification:</div>
+                <div class="modelReport-notification-msg">
+                    <p>
+                        Model validation succeeded! A database has been created and the preview is available.
+                        <br>
+                        Go to <a href="<?= APPLICATION_HOME; ?>?models&model_id=<?= $xmlModelId; ?>">models</a> to change this model.
+                    </p>
+                </div>
+            </div>
+        <?php endif;?>
 
         <div class="modelReport-totalErrorTypes">
 

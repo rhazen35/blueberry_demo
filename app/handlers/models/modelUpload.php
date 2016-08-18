@@ -102,7 +102,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                     /**
                      * Create database and tables for the elements with the type of uml:Class
                      */
-                    if( !empty( $name ) ):
+                    if( !empty( $name ) && $report['validation']['value'] === true ):
                         $params = array( "model_id" => $lastInsertedID, "model_name" => $name );
                         ( new XMLEATableFactory( "create" ) )->request( $params );
                     endif;

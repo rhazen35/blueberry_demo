@@ -259,29 +259,3 @@
     margin-top:2.5em;
     margin-right:1em;
 }
-
-.element-Footer
-{
-    clear:both;
-    position:fixed;
-    bottom:5.5em;
-    width:74%;
-    padding-top:1em;
-    padding-bottom:1em;
-    font-size:90%;
-    background-color:#FFFFFF;
-    border-top:1px solid #96C761;
-}
-
-.element-Footer-copy
-{
-    float:left;
-    line-height:2.5em;
-    margin-left:1em;
-}
-
-.element-Footer-info {
-    float: right;
-    margin-right:1em;
-    font-style: italic;
-}

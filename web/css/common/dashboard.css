@@ -1,42 +1,9 @@
-menu
+.dashboard
 {
-    width:25.5%;
+    flex: 1;
     min-height:900px;
     font-family: "Verdana", "serif";
     font-size:90%;
-}
-
-menu nav
-{
-    margin-top:1em;
-}
-
-menu nav ul
-{
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-
-menu nav ul li
-{
-    margin: 0 0 1em 0.5em;
-    list-style-type: none;
-}
-
-menu nav ul li a
-{
-    padding:0.25rem 0.5rem;
-    color:#FFFFFF;
-    font-size:80%;
-    text-decoration:none;
-    background-color:#8597AD;
-    border-radius:3px;
-}
-
-menu nav ul li a:hover
-{
-
 }
 
 .border

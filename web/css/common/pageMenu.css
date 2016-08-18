@@ -8,19 +8,39 @@
 
 .pageMenu .title
 {
-    margin-top:0.5em;
-    margin-left:1em;
-    margin-bottom:0.5em;
+    padding:1rem;
 }
 
 .pageMenu-image
 {
     float:left;
-    padding:0 0 0 1em;
+    padding-left:1rem;
 }
 
 .pageMenu-image img
 {
     width:50px;
     height:50px;
+}
+
+.pageMenu nav
+{
+    padding:1rem;
+}
+
+.pageMenu nav ul
+{
+
+}
+
+.pageMenu nav ul li
+{
+   list-style-type: none;
+}
+
+.pageMenu nav ul li a
+{
+    margin-left:1rem;
+    text-decoration:none;
+    font-size:80%;
 }

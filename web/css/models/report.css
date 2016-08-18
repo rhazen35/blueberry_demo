@@ -45,8 +45,14 @@
     font-style: italic;
 }
 
+.modelReport-FileName span
+{
+    color:red;
+}
+
 .modelReport-validationDuration a
 {
+    margin-top:-1rem;
     text-decoration:none;
     font-style: normal;
 }
@@ -102,6 +108,28 @@
     padding-bottom:0.5em;
 }
 
+.modelReport-notification
+{
+    clear:both;
+    width:100%;
+    margin: 0 auto;
+    padding:0.5rem;
+    font-size:80%;
+    text-align:left;
+    border-top:1px solid #CCCCCC;
+}
+
+.modelReport-notification-title
+{
+    width:100%;
+    font-weight:bold;
+}
+
+.modelReport-notification-msg
+{
+    width:100%;
+}
+
 .modelReport-totalErrorTypes
 {
     clear:both;
@@ -110,7 +138,7 @@
     justify-content: flex-start;
     width:100%;
     margin: 0 auto;
-    margin-left:1em;
+    padding-left:1em;
     text-align:left;
     border-top:1px solid #CCCCCC;
 }

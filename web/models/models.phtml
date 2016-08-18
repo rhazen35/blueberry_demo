@@ -11,6 +11,7 @@ use app\lib\Project;
 
 $models         = ( new Models( "getAllModelsByUser" ) )->request( $params = null );
 $sessionModelId = ( isset( $_SESSION['model_id'] ) ? $_SESSION['model_id'] : "" );
+$getModelId     = ( isset( $_GET['model_id'] ) ? $_GET['model_id']: "" );
 
 unset($_SESSION['project_id']);
 unset($_SESSION['model_id']);
@@ -32,7 +33,7 @@ unset($_SESSION['model_id']);
                 $projectName    = ( !empty( $project['name'] ) ? $project['name'] : "<span>Name not found</span>" );
                 $modelName      = ( !empty( $model['name'] ) ? $model['name'] : "<span>Name not found</span>" );
                 ?>
-                <div class="projects-item">
+                <?= ( $modelId ==$getModelId ? '<div class="projects-item-selected">' : '<div class="projects-item">' ); ?>
                     <div class="model-item-model">
                         <div class="projects-item-img"><img src="./images/icons/model_icon.png"></div>
                         <div class="projects-item-project"><?= $modelName; ?></div>

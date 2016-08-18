@@ -124,78 +124,82 @@ class EAApi
     private function get_all_models_elements_extracted_and_ordered_attributes( $params )
     {
         $extractedAndOrderedAttributes = array();
-        $extractedAndOrderedModel = $this->get_all_models_detailed_extracted_and_ordered( $params );
+        $extractedAndOrderedModels = $this->get_all_models_detailed_extracted_and_ordered( $params );
 
-        $a = 0;
-        foreach( $extractedAndOrderedModel as $extractedAndOrderedElements ):
-            $modelName = $extractedAndOrderedElements[$a]['name'];
-            foreach( $extractedAndOrderedElements as $extractedAndOrderedElement ):
-                $elementName        = ( isset( $extractedAndOrderedElement['name'] ) ? $extractedAndOrderedElement['name'] : "" );
-                $target             = ( isset( $extractedAndOrderedElement['supertype'] ) ? $extractedAndOrderedElement['supertype'] : "" );
-                $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
-                $fields             = ( isset( $extractedAndOrderedElement['formDetails']['elementAttributes'][$elementName] ) ? $extractedAndOrderedElement['formDetails']['elementAttributes'][$elementName] : "" );
+        if( !empty( $extractedAndOrderedModels ) ):
+            $a = 0;
+            foreach( $extractedAndOrderedModels as $extractedAndOrderedElements ):
+                if( !empty( $extractedAndOrderedElements[$a] ) ):
+                    $modelName = $extractedAndOrderedElements[$a]['name'];
+                    foreach( $extractedAndOrderedElements as $extractedAndOrderedElement ):
+                        $elementName        = ( isset( $extractedAndOrderedElement['name'] ) ? $extractedAndOrderedElement['name'] : "" );
+                        $target             = ( isset( $extractedAndOrderedElement['supertype'] ) ? $extractedAndOrderedElement['supertype'] : "" );
+                        $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
+                        $fields             = ( isset( $extractedAndOrderedElement['formDetails']['elementAttributes'][$elementName] ) ? $extractedAndOrderedElement['formDetails']['elementAttributes'][$elementName] : "" );
 
-                $i = 0;
-                /**
-                 * Super type attributes
-                 */
-                if( !empty( $targetFields ) ):
-                    $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i] = array();
-                    foreach( $targetFields as $targetField ):
-                        if( !empty( $targetField ) ):
-                            $name      = ( isset( $targetField['input_name'] ) ? $targetField['input_name'] : "" );
-                            $dataType  = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
-                            $tags      = ( isset( $targetField['tags'] ) ? $targetField['tags'] : "" );
-                            if( !empty( $name ) ):
-                                $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['name']      = $name;
-                                $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['data_type'] = $dataType;
-                            endif;
-                            $totalTags = count( $tags );
-                            if( !empty( $tags ) && $totalTags > 0 ):
-                                for( $j = 0; $j < $totalTags; $j++ ):
-                                    $file      = ( isset( $tags[$j]['file'] ) ? $tags[$j]['file'] : "" );
-                                    $tab       = ( isset( $tags[$j]['tab'] ) ? $tags[$j]['tab'] : "" );
-                                    $cell      = ( isset( $tags[$j]['cell'] ) ? $tags[$j]['cell'] : "" );
-                                    $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['file'] = $file;
-                                    $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['tab']  = $tab;
-                                    $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['cell'] = $cell;
-                                endfor;
-                            endif;
+                        $i = 0;
+                        /**
+                         * Super type attributes
+                         */
+                        if( !empty( $targetFields ) ):
+                            $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i] = array();
+                            foreach( $targetFields as $targetField ):
+                                if( !empty( $targetField ) ):
+                                    $name      = ( isset( $targetField['input_name'] ) ? $targetField['input_name'] : "" );
+                                    $dataType  = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
+                                    $tags      = ( isset( $targetField['tags'] ) ? $targetField['tags'] : "" );
+                                    if( !empty( $name ) ):
+                                        $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['name']      = $name;
+                                        $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['data_type'] = $dataType;
+                                    endif;
+                                    $totalTags = count( $tags );
+                                    if( !empty( $tags ) && $totalTags > 0 ):
+                                        for( $j = 0; $j < $totalTags; $j++ ):
+                                            $file      = ( isset( $tags[$j]['file'] ) ? $tags[$j]['file'] : "" );
+                                            $tab       = ( isset( $tags[$j]['tab'] ) ? $tags[$j]['tab'] : "" );
+                                            $cell      = ( isset( $tags[$j]['cell'] ) ? $tags[$j]['cell'] : "" );
+                                            $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['file'] = $file;
+                                            $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['tab']  = $tab;
+                                            $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['cell'] = $cell;
+                                        endfor;
+                                    endif;
+                                endif;
+                                $i++;
+                            endforeach;
+                         endif;
+                        /**
+                         * Element attributes
+                         */
+                        if( !empty( $fields ) ):
+                            foreach( $fields as $field ):
+                                if( !empty( $field ) ):
+                                    $name      = ( isset( $field['name'] ) ? $field['name'] : "" );
+                                    $dataType  = ( isset( $field['data_type'] ) ? $field['data_type'] : "" );
+                                    $tags      = ( isset( $field['tags'] ) ? $field['tags'] : "" );
+                                    if( !empty( $name ) ):
+                                        $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['name']      = $name;
+                                        $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['data_type'] = $dataType;
+                                    endif;
+                                    $totalTags = count( $tags );
+                                    if( !empty( $tags ) && $totalTags > 0 ):
+                                        for( $j = 0; $j < $totalTags; $j++ ):
+                                            $file      = ( isset( $tags[$j]['file'] ) ? $tags[$j]['file'] : "" );
+                                            $tab       = ( isset( $tags[$j]['tab'] ) ? $tags[$j]['tab'] : "" );
+                                            $cell      = ( isset( $tags[$j]['cell'] ) ? $tags[$j]['cell'] : "" );
+                                            $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['file'] = $file;
+                                            $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['tab']  = $tab;
+                                            $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['cell'] = $cell;
+                                        endfor;
+                                    endif;
+                                endif;
+                                $i++;
+                            endforeach;
                         endif;
-                        $i++;
-                    endforeach;
-                 endif;
-                /**
-                 * Element attributes
-                 */
-                if( !empty( $fields ) ):
-                    foreach( $fields as $field ):
-                        if( !empty( $field ) ):
-                            $name      = ( isset( $field['name'] ) ? $field['name'] : "" );
-                            $dataType  = ( isset( $field['data_type'] ) ? $field['data_type'] : "" );
-                            $tags      = ( isset( $field['tags'] ) ? $field['tags'] : "" );
-                            if( !empty( $name ) ):
-                                $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['name']      = $name;
-                                $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['data_type'] = $dataType;
-                            endif;
-                            $totalTags = count( $tags );
-                            if( !empty( $tags ) && $totalTags > 0 ):
-                                for( $j = 0; $j < $totalTags; $j++ ):
-                                    $file      = ( isset( $tags[$j]['file'] ) ? $tags[$j]['file'] : "" );
-                                    $tab       = ( isset( $tags[$j]['tab'] ) ? $tags[$j]['tab'] : "" );
-                                    $cell      = ( isset( $tags[$j]['cell'] ) ? $tags[$j]['cell'] : "" );
-                                    $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['file'] = $file;
-                                    $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['tab']  = $tab;
-                                    $extractedAndOrderedAttributes[$modelName][$elementName]['attributes'][$i]['cell'] = $cell;
-                                endfor;
-                            endif;
-                        endif;
-                        $i++;
                     endforeach;
                 endif;
+                $a++;
             endforeach;
-            $a++;
-        endforeach;
+        endif;
 
         return( $extractedAndOrderedAttributes );
     }
@@ -205,31 +209,33 @@ class EAApi
         $modelsDatabaseData = array();
         $models = $this->get_all_models_detailed_extracted_and_ordered( $params );
 
-        foreach( $models as $model ):
-            $totalElements = count( $model );
-            if( !empty( $model ) && $totalElements > 0 ):
-                for( $i = 0; $i < $totalElements; $i++ ):
-                    if( !empty( $model[$i] )):
-                        if( $model[$i]['isRoot'] !== "true" ):
-                            $modelId = $model[$i]['model_id'];
-                            $modelName = ( new IOXMLEAModel( $modelId ) )->getModelNameById();
-                            $elementName = ( !empty( $model[$i]['name'] ) ? $model[$i]['name'] : "" );
-                            if( !empty( $modelName ) ):
-                                $params['elements'] = $model;
-                                $params['element_name'] = $model[$i]['name'];
-                                $params['multiplicity'] = $model[$i]['multiplicity'];
-                                $data = ( new XMLDBController( "read" ) )->request( $params );
-                                if( !empty( $data ) ):
-                                    $modelsDatabaseData[$modelName['name']][$i]['element_name'] = $elementName;
-                                    $modelsDatabaseData[$modelName['name']][$i]['element_data']['table'] = strtolower( $elementName );
-                                    $modelsDatabaseData[$modelName['name']][$i]['element_data']['columns'] = $data[0];
+        if( !empty( $models ) ):
+            foreach( $models as $model ):
+                $totalElements = count( $model );
+                if( !empty( $model ) && $totalElements > 0 ):
+                    for( $i = 0; $i < $totalElements; $i++ ):
+                        if( !empty( $model[$i] )):
+                            if( $model[$i]['isRoot'] !== "true" ):
+                                $modelId = $model[$i]['model_id'];
+                                $modelName = ( new IOXMLEAModel( $modelId ) )->getModelNameById();
+                                $elementName = ( !empty( $model[$i]['name'] ) ? $model[$i]['name'] : "" );
+                                if( !empty( $modelName['name'] ) ):
+                                    $params['elements'] = $model;
+                                    $params['element_name'] = $model[$i]['name'];
+                                    $params['multiplicity'] = $model[$i]['multiplicity'];
+                                    $data = ( new XMLDBController( "read" ) )->request( $params );
+                                    if( !empty( $data ) ):
+                                        $modelsDatabaseData[$modelName['name']][$i]['element_name'] = $elementName;
+                                        $modelsDatabaseData[$modelName['name']][$i]['element_data']['table'] = strtolower( $elementName );
+                                        $modelsDatabaseData[$modelName['name']][$i]['element_data']['columns'] = $data[0];
+                                    endif;
                                 endif;
                             endif;
                         endif;
-                    endif;
-                endfor;
-            endif;
-        endforeach;
+                    endfor;
+                endif;
+            endforeach;
+        endif;
         return($modelsDatabaseData);
     }
 

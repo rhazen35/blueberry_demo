@@ -9,6 +9,7 @@
 ?>
 
 <div class="login">
+    <div class="home-hero">
     <div class="title"><h1>Login</h1></div>
     <form action="<?= APPLICATION_HOME; ?>" method="post" id="login">
         <input type="email" name="email" value="" title="Enter your email address." placeholder="Email address">
@@ -19,9 +20,9 @@
         <input type="hidden" name="attr" value="login">
         <input type="submit" name="loginSubmit" value="Login">
     </form>
-
     <?php if( isset( $_GET['loginFailed'] ) ): ?>
         <div class="message">Incorrect username/password combination</div>
     <?php endif; ?>
+</div>
 </div>
 

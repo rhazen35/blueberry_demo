@@ -699,6 +699,7 @@ class IOXMLEAScreenFactory
         $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
         $fields             = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : "" );
         $elementPrintOrder  = ( $element['printOrder'] !== "noPrint" ? $element['printOrder'] : ( isset( $_GET['page'] ) ? $_GET['page'] : "" ) );
+        $elementsuperType   = ( !empty( $element['super_type'] ) ? $element['super_type'] : "" );
         /**
          * Set standard hidden input fields.
          * Hidden fields provide the following:

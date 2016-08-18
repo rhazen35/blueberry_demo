@@ -8,12 +8,18 @@
     justify-content: flex-start;
 }
 
-.projects-item
+.projects-item,
+.projects-item-selected
 {
     clear:both;
     font-size:80%;
     border-bottom:1px solid #CCCCCC;
     overflow:hidden;
+}
+
+.projects-item-selected
+{
+    background: rgba(150, 199, 97, 0.5);
 }
 
 .projects-head
@@ -134,6 +140,7 @@
     line-height:1.25em;
     padding:0.25rem 0.5rem;
     color:#FFFFFF;
+    letter-spacing: 0.05rem;
     background-color:#8597AD;
     border:none;
     border-radius:3px;

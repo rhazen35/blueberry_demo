@@ -400,7 +400,7 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                     $value     = $totalTrueRoots;
                     $s_valid   = ( $totalTrueRoots !== 0 && $totalTrueRoots === 1 ? true : false );
                     $message   = ( $totalTrueRoots !== 0 && $totalTrueRoots === 1 ? $totalTrueRoots.' root found' : ( $totalTrueRoots > 1 ? $totalTrueRoots.' roots found' : 'No roots found' ) );
-                    $s_info    = "A root is needed to define the starting point, only one root is allowed.";
+                    $s_info    = "A root is needed to define the preview starting point, only one root is allowed.";
 
                     $totalRootsArray = $this->generateArray( "totalRoots", $name, $type, $value, $s_valid, $message, $s_info );
                     $report = array_merge($report, $totalRootsArray);

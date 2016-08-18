@@ -1,12 +1,4 @@
-<menu>
-    <nav>
-        <ul>
-            <li><a href="<?= APPLICATION_HOME; ?>" class="button">Home</a></li>
-            <li><a href="<?= APPLICATION_HOME; ?>?projects" class="button">Projects</a></li>
-            <li><a href="<?= APPLICATION_HOME; ?>?models" class="button">Models</a></li>
-            <li><a href="<?= APPLICATION_HOME; ?>?calculators" class="button">Calculators</a></li>
-        </ul>
-    </nav>
+<?= ( isset( $_SESSION['menu_toggle'] ) ? '<div class="dashboard menuToggled">' : '<div class="dashboard">' ); ?>
 
     <?php if( isset( $_GET ) && !empty( $_GET ) ): ?>
         <div class="pageMenu">
@@ -79,7 +71,11 @@
                     break;
             endswitch; ?>
         </div>
+    <?php else: ?>
+        <div class="pageInfo">
+            <?php require_once "web/pageInfo/home.phtml"; ?>
+        </div>
     <?php endif; ?>
 
-</menu>
+</div>
 <div class="border"></div>

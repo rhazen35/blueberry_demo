@@ -7,6 +7,7 @@ header
     color:#FFFFFF;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
     background-color:#404B66;
+    overflow:hidden;
 }
 
 header .title
@@ -15,16 +16,72 @@ header .title
     line-height:0.5em;
     padding:1em;
     font-size:110%;
+    overflow:hidden;
+}
+
+.title a
+{
+    float:right;
+    margin:0;
+    margin-top:-0.40em;
+    margin-left:1em;
+    font-size:70%;
 }
 
 header a
 {
     float:right;
-    margin-top:0.75em;
-    margin-right:0.5em;
+    margin-top:0.7rem;
+    margin-right:1rem;
     padding:0.25em 1em 0.25em 1em;
     color:#000000;
-    font-size:90%;
+    font-size:80%;
     text-decoration:none;
     background-color:#FFFFFF;
+}
+
+menu
+{
+    float:left;
+    min-height:900px;
+    font-family: "Verdana", "serif";
+    font-size:90%;
+}
+
+menu nav
+{
+    margin-top:0.25rem;
+}
+
+menu nav ul
+{
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+menu nav ul li
+{
+    margin: 0 0 1em 0.5em;
+    list-style-type: none;
+}
+
+menu nav ul li a
+{
+    padding:0.25rem 0.5rem;
+    color:#FFFFFF;
+    font-size:80%;
+    text-decoration:none;
+    background-color:#8597AD;
+    border-radius:3px;
+}
+
+menu nav ul li a:hover
+{
+
+}
+
+.menuToggled
+{
+    display:none;
 }

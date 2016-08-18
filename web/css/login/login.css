@@ -1,16 +1,16 @@
 .login
 {
-    width:75%;
-    height:auto;
+    width:100%;
     margin: 0 auto;
-    margin-top:10%;
     text-align: center;
 }
 
 .login .title
 {
-    margin-top: 1em;
     padding:1em;
+    padding-top:4em;
+    color:#FFFFFF;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
 .login .title h1
@@ -34,22 +34,39 @@
 .login form
 {
     margin: 0 auto;
+    margin-top:10%;
     padding:1em;
     color:#000000;
+    background-color: rgba(0,0,0,0.6);
 }
 
 .login form input
 {
-    width:60%;
-    min-width:15em;
-    max-width:40em;
+    width:25rem;
+    height:2rem;
     margin-top:1em;
     padding:0.5em;
+    border:none;
+}
+
+.login form input:-webkit-autofill
+{
+    box-shadow: 0 0 0px 1000px #d1d1d1 inset;
+}
+
+.login form input:focus
+{
+    box-shadow: 0 0 0px 1000px #FFFFFF inset;
 }
 
 .login form input[type="submit"]
 {
+    cursor:pointer;
+    width:10rem;
     margin-top:2em;
+    padding:0.5rem;
+
+
 }
 
 .login .message
