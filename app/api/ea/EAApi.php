@@ -244,6 +244,21 @@ class EAApi
         $orderedAttributes  = $this->get_all_models_elements_extracted_and_ordered_attributes( $params );
         $modelsDatabaseData = $this->get_all_models_database_data( $params );
 
-        return($modelsDatabaseData);
+        $dataWithDestinations = array();
+
+        foreach( $modelsDatabaseData as $model => $array ):
+            if( !empty( $model ) && !empty( $array ) ):
+                $modelName = $model;
+                $dataWithDestinations[$model]['name'] = $modelName;
+
+                $totalElements = count( $array );
+                for( $i = 0; $i < $totalElements; $i++ ):
+                    $dataWithDestinations[$model]['name'] = $array;
+                endfor;
+
+            endif;
+        endforeach;
+
+        return($dataWithDestinations);
     }
 }

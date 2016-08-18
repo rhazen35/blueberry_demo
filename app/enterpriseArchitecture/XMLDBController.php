@@ -65,6 +65,7 @@ class XMLDBController
         $userId         = ( isset( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
         $tableName      = strtolower( str_replace( " ", "_", $elementName ) );
         $database       = "";
+        $dbConnection   = "";
         $date           = date( "Y-m-d" );
         $time           = date( "H:i:s" );
         /**
@@ -102,7 +103,14 @@ class XMLDBController
                     $database = $parsedElement['name'];
                     $database = strtolower( str_replace( " ", "_", $database ) );
                 endif;
-                if( $parsedElement['name'] === $elementName ):
+                /**
+                 * Only continue if the database exists.
+                 */
+                $dbSql = "CALL proc_checkDatabaseExists(?)";
+                $dbData = array( "db_name" => $database );
+                $dbFormat = array("s");
+                $dbConnection = ( new Service( "read", "blueberry" ) )->dbAction( $dbSql, $dbData, $dbFormat );
+                if( !empty($dbConnection) && $parsedElement['name'] === $elementName ):
                     $elementAttributes      = ( !empty( $parsedElement['formDetails']['elementAttributes'][$elementName] ) ? $parsedElement['formDetails']['elementAttributes'][$elementName] : ""  );
                     $totalElementAttributes = count($elementAttributes);
                     $superAttributes        = ( !empty( $parsedElement['supertype']['attributes'] ) ? $parsedElement['supertype']['attributes'] : "" );
@@ -193,9 +201,9 @@ class XMLDBController
             $updateFormat[]        = "i";
         endif;
         /**
-         * Execute read query if type is other then delete.
+         * Execute read query if type is other then delete and the database exists.
          */
-        if( $this->type !== "delete" ):
+        if( $this->type !== "delete" && !empty($dbConnection) ):
             $type = "read";
             $selectArray = ( new Service( $type, $database ) )->dbAction( $checkSql, $checkData, $checkFormat );
         endif;

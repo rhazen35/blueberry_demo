@@ -73,3 +73,11 @@ CREATE PROCEDURE
   BEGIN
     SELECT name FROM xml_models WHERE id = modelId;
   END $$
+
+CREATE PROCEDURE
+`proc_checkDatabaseExists`(
+  IN dbName VARCHAR(100)
+)
+  BEGIN
+    SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = dbName;
+  END $$
