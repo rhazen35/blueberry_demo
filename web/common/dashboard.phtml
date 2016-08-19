@@ -78,4 +78,4 @@
     <?php endif; ?>
 
 </div>
-<div class="border"></div>
+<?= ( !isset( $_SESSION['menu_toggle']) ? '<div class="border"></div>' : "" ); ?>
