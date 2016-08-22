@@ -59,7 +59,7 @@ class IOExcelCalculatorUpload
         $datetime    = new \DateTime( $this->uploadedAt );
         $upload_date = $datetime->format('Y-m-d');
         $upload_time = $datetime->format('H:i:s');
-        $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
+        echo $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
         $id          = $output = "";
 
         $sql        = "CALL proc_newCalculator(?,?,?,?,?,?,?)";

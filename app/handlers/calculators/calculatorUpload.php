@@ -23,6 +23,8 @@ if( isset( $_POST['project'] ) ):
     endif;
 endif;
 
+echo $_SESSION['userId'];
+
 if( isset($_FILES) && !empty( $_FILES ) ):
 
     if( isset( $_FILES['excelFile'] ) && ( $_FILES['excelFile']['error'] === UPLOAD_ERR_OK ) ):
@@ -72,13 +74,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 /**
                  * Hash and save the file
                  */
-                move_uploaded_file(
-                    $_FILES['excelFile']['tmp_name'],
-                    sprintf(APPLICATION_ROOT.'/web/files/excel_calculators_tmp/%s.%s',
-                        sha1_file($_FILES['excelFile']['tmp_name']),
-                        $extension
-                    )) ;
-
+                move_uploaded_file( $_FILES['excelFile']['tmp_name'], sprintf(APPLICATION_ROOT.'/web/files/excel_calculators_tmp/%s.%s', sha1_file($_FILES['excelFile']['tmp_name']), $extension)) ;
                 $_SESSION['calculatorId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
 
             else:
@@ -89,7 +85,6 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 exit();
 
             endif;
-
             header("Location: index.php?calculators");
             exit();
         else:

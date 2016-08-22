@@ -250,14 +250,14 @@ class EAApi
                     foreach( $modelsDatabaseData[ $model ][ $elementName ] as $data_attributes ):
                         if( !empty( $data_attributes ) ):
                             foreach( $element['attributes'] as $attributes ):
-                              foreach( $attributes as $attribute ):
-                                  $i = 0;
-                                 foreach($data_attributes as $data_attribute_name => $data):
-                                     if( strtolower( str_replace( "_", " ", $attribute ) ) === $data_attribute_name ):
-                                         $orderedAttributes[$model][$elementName]['attributes'][$i]['value'] = $data;
-                                    endif;
-                                    $i++;
-                                 endforeach;
+                                $i = 0;
+                                foreach( $attributes as $attribute ):
+                                    foreach($data_attributes as $data_attribute_name => $data):
+                                        if( strtolower( str_replace( "_", " ", $attribute ) ) === $data_attribute_name ):
+                                            $orderedAttributes[$model][$elementName]['attributes'][$i]['value'] = $data;
+                                        endif;
+                                        $i++;
+                                    endforeach;
                                 endforeach;
                             endforeach;
                         endif;
