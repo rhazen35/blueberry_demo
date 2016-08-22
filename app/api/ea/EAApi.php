@@ -244,73 +244,28 @@ class EAApi
         $orderedAttributes  = $this->get_all_models_elements_extracted_and_ordered_attributes( $params );
         $modelsDatabaseData = $this->get_all_models_database_data( $params );
 
-
-        $dataWithDestinations = array();
-
         foreach($orderedAttributes as $model => $elements ):
             foreach ($elements as $elementName => $element ):
-                // Check if the $model is present in $modelsDatabaseData
-
                 if( !empty( $modelsDatabaseData[ $model ][ $elementName ] ) ):
                     foreach( $modelsDatabaseData[ $model ][ $elementName ] as $data_attributes ):
                         if( !empty( $data_attributes ) ):
-
                             foreach( $element['attributes'] as $attributes ):
                               foreach( $attributes as $attribute ):
-                                 foreach($data_attributes as $data_attribute):
-
+                                  $i = 0;
+                                 foreach($data_attributes as $data_attribute_name => $data):
+                                     if( strtolower( str_replace( "_", " ", $attribute ) ) === $data_attribute_name ):
+                                         $orderedAttributes[$model][$elementName]['attributes'][$i]['value'] = $data;
+                                    endif;
+                                    $i++;
                                  endforeach;
-
                                 endforeach;
                             endforeach;
                         endif;
-
                     endforeach;
                 endif;
-
-               //foreach( $modelsDatabaseData[ $model ][ $elementName ] as $data_elementName => $data_element ):
-
-
-
-                           // if(in_array( $query = preg_replace('\s', '_', strtolower($attribute['name'])), $modelsDatabaseData[ $model ][ $element ][ 'attributeValues'])):
-
-
-           // endforeach;
             endforeach;
         endforeach;
 
-
-//        foreach( $modelsDatabaseData as $model => $array ):
-//            if( !empty( $model ) && !empty( $array ) ):
-//                $modelName = $model;
-//                $dataWithDestinations[$model]['name'] = $modelName;
-//                foreach( $array as $table ):
-//                    $columns = $table['element_data']['columns'];
-//                    foreach( $orderedAttributes as $attributes ):
-//                        if( !empty( $attributes[$table['element_name']] ) ):
-//                            $elementAttributes = $attributes[$table['element_name']];
-//                            $dataWithDestinations[$model][$table['element_name']] = $table['element_name'];
-//
-//                            foreach( $elementAttributes as $elementAttribute ):
-//                                $totalElementAttributes = count( $elementAttribute );
-//                                for( $i = 0; $i < $totalElementAttributes; $i++ ):
-//                                    $elementAttributeName = ( !empty( $elementAttribute[$i]['name'] ) ? strtolower( str_replace( " ", "_", $elementAttribute[$i]['name'] ) ) : "" );
-//                                    if( !empty( $columns ) && !empty( $elementAttributeName ) ):
-//                                        foreach( $columns as $column => $value ):
-//                                            if( $column === $elementAttributeName ):
-//                                                $dataWithDestinations[$model]['attributes'][$table['element_name']] = $elementAttributeName;
-//                                            endif;
-//                                        endforeach;
-//                                    endif;
-//                                endfor;
-//                            endforeach;
-//                        endif;
-//                    endforeach;
-//
-//                endforeach;
-//            endif;
-//        endforeach;
-
-        //return($orderedAttributes);
+        return($orderedAttributes);
     }
 }
