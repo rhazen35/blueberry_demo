@@ -134,24 +134,6 @@
     line-height:2em;
 }
 
-.button
-{
-    display:inline-block;
-    line-height:1.25em;
-    padding:0.25rem 0.5rem;
-    color:#FFFFFF;
-    letter-spacing: 0.05rem;
-    background-color:#8597AD;
-    border:none;
-    border-radius:3px;
-}
-
-.button:hover
-{
-    cursor: pointer;
-    background: royalblue;
-}
-
 .project-itemNoModel
 {
     margin-left:1em;

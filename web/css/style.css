@@ -71,3 +71,19 @@ a
     margin-bottom:5rem;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 }
+.button
+{
+    display:inline-block;
+    line-height:1.25em;
+    padding:0.25rem 0.5rem;
+    color:#FFFFFF;
+    background-color:#8597AD;
+    border:none;
+    border-radius:3px;
+}
+
+.button:hover
+{
+    cursor: pointer;
+    background: royalblue;
+}

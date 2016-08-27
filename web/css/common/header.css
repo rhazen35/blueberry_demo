@@ -25,17 +25,17 @@ header .title
     margin:0;
     margin-top:-0.40em;
     margin-left:1em;
-    font-size:70%;
+    font-size:68%;
 }
 
 header a
 {
     float:right;
-    margin-top:0.7rem;
-    margin-right:1rem;
+    margin-top:0.6rem;
+    margin-right:0.5rem;
     padding:0.25em 1em 0.25em 1em;
     color:#000000;
-    font-size:80%;
+    font-size:75%;
     text-decoration:none;
     background-color:#FFFFFF;
 }
@@ -70,7 +70,6 @@ menu nav ul li a
 {
     padding:0.25rem 0.5rem;
     color:#FFFFFF;
-    font-size:80%;
     text-decoration:none;
     background-color:#8597AD;
     border-radius:3px;

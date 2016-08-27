@@ -60,16 +60,9 @@ if( !empty( $orderedElements ) ):
             endif;
         endfor;
     else:
-        ?>
-        <div class="model-noPreview">
-            <div class="model-noPreview-title">End of the line</div>
-            <div class="model-noPreview-message">
-                <b>Destination reached.</b>
-            <div class="model-noPreview-message">
-                <b>Project:</b> <?= $projectName; ?>
-            </div>
-        </div>
-        <?php
+        $_SESSION['project'] = ( !empty( $projectName ) ? $projectName : "" );
+        header("Location: index.php?projectResults");
+        exit();
     endif;
 endif;
 ?>

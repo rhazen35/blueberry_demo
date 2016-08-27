@@ -4,16 +4,3 @@
             <span>Middleware for math and data financiers</span>
     </div>
 </div>
-
-<?php
-
-use app\api\ea\EAApi;
-
-    $type = "get_all_models_data_with_excel_tags";
-    $params['model'] = "blueberry";
-   $data = ( new EAApi( $type ) )->request( $params );
-
-
-    echo'<pre>';
-    print_r($data);
-?>

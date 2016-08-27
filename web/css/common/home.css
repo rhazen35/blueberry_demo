@@ -11,7 +11,7 @@
     min-height:800px;
     background-image: url("../../images/hero/busoness.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 .home-hero-title
