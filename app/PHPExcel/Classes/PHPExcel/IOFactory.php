@@ -24,8 +24,7 @@
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    1.8.0, 2014-03-02
  */
-
-require('Autoloader.php');
+require_once('Autoloader.php');
 
 /**
  * PHPExcel_IOFactory

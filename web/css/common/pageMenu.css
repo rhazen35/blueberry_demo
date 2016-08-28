@@ -1,14 +1,15 @@
 .pageMenu
 {
     clear:both;
-    margin-bottom:1em;
+    margin-bottom:0.5rem;
     padding-top:0.25em;
     border-top:1px solid #CCCCCC;
 }
 
 .pageMenu .title
 {
-    padding:1rem;
+    padding:0.5rem;
+    padding-left:1rem;
 }
 
 .pageMenu-image

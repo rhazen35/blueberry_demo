@@ -1,0 +1,42 @@
+.newProject .image
+{
+    width:20%;
+    margin: 0 auto;
+    padding:2rem;
+}
+
+.newProject .image img
+{
+    min-width:100%;
+    max-width:100%;
+}
+
+.newProject form
+{
+    margin: 0 auto;
+    padding:3rem;
+    padding-bottom:4rem;
+    color:#000000;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.newProject form input[type="text"]
+{
+    width:50%;
+    margin-top:1rem;
+    padding:0.25rem;
+}
+
+.newProject form input[type="submit"]
+{
+    float:right;
+    width:25%;
+    margin-top:1rem;
+    padding:0.25rem;
+}
+
+.newProject form input[type="submit"]:hover
+{
+   cursor:pointer;
+}
+

@@ -8,13 +8,14 @@
 
 ?>
 
-<div class="login">
-    <div class="title">New project</div>
+<div class="newProject">
+    <div class="modelReport-Title">New project</div>
     <form action="<?= APPLICATION_HOME; ?>" method="post">
         <input type="text" name="name" value="" title="Enter a name" placeholder="Name">
         <input type="text" name="description" value="" title="Enter a description" placeholder="Description">
         <input type="hidden" name="path" value="projects">
         <input type="hidden" name="attr" value="newProject">
+        <br>
         <input type="submit" name="newProjectSubmit" value="Create project">
     </form>
 
