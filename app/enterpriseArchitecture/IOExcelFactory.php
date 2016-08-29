@@ -158,16 +158,18 @@ if( !class_exists( "IOExcelFactory" ) ):
             $objReader = Excel_Factory::createReader($fileType);
             $objPHPExcel = $objReader->load($fileName);
 
-            foreach( $data as $item ):
-                $sheet = ( !empty( $item['tab'] ) ? str_replace( " ", "", $item['tab'] ) : ""  );
+            foreach( $data as $sheetName => $sheet ):
+                foreach( $sheet as $item ):
+                    $sheet = ( !empty( $item['tab'] ) ? str_replace( " ", "", $item['tab'] ) : ""  );
 
-                $objPHPExcel->setActiveSheetIndexByName($sheet)->setCellValue($item['cell'], $item['value']);
+                    $objPHPExcel->setActiveSheetIndexByName($sheet)->setCellValue($item['cell'], $item['value']);
 
-                // Write the file
-                $objWriter = Excel_Factory::createWriter($objPHPExcel, 'Excel2007');
+                    // Write the file
+                    $objWriter = Excel_Factory::createWriter($objPHPExcel, 'Excel2007');
 
-                // Set calculate formula's false when using formulas to prevent PHPExcel from executing them.
-                $objWriter->setPreCalculateFormulas(false);
+                    // Set calculate formula's false when using formulas to prevent PHPExcel from executing them.
+                    $objWriter->setPreCalculateFormulas(false);
+                endforeach;
             endforeach;
 
             // Save the file

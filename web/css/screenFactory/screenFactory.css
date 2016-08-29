@@ -33,7 +33,7 @@
 
 .element
 {
-    width:80%;
+    width:90%;
     min-width:600px;
     height:auto;
     margin:0 auto;
@@ -79,49 +79,47 @@
 
 .element-title
 {
-    margin-top:1em;
+    width:90%;
+    margin: 0 auto;
+    margin-top:1rem;
     padding: 1rem 0 0 0;
     font-weight:bold;
 }
 
 .element-subTitle
 {
+    width:90%;
+    margin: 0 auto;
     font-weight:bold;
 }
 
 .element-submitted
 {
-    width:95%;
-    padding: 1rem 0 1rem 1rem;
+    width:90%;
+    margin: 0 auto;
+    padding: 1rem;
     color:#000000;
     font-weight:bold;
-    background-color:#C5DA3E;
+    background-color:#AAD400;
 }
 
 .element-documentation
 {
-    width:80%;
+    width:90%;
+    margin: 0 auto;
     font-size:90%;
-}
-
-.element-form-intro
-{
-    font-size:90%;
-    padding-bottom:1em;
-    border-bottom:1px solid #C5DA3E;
 }
 
 .element-form
 {
     width:90%;
-    margin-top:2em;
-    padding:2em;
+    margin: 0 auto;
+    margin-top:1rem;
+    padding:1rem;
+    padding-top:0;
     padding-bottom:2em;
     color:#000000;
-    border:1px solid #CCCCCC;
-    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
-    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
-    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    border-bottom:1px solid #AAD400;
 }
 
 .element-superForm
@@ -134,8 +132,8 @@
 {
     clear:both;
     width:100%;
-    height:3em;
     margin: 0 auto;
+    overflow:hidden;
 }
 
 .element-input-box-submit
@@ -150,12 +148,10 @@
 {
     float:left;
     width:45%;
-    height:2.5em;
-    line-height:2.5em;
-    padding-top:1em;
+    padding:0.25rem;
+    margin-top:0.5rem;
+    margin-bottom:0.5rem;
     font-size:90%;
-    border-right:10px solid #C5DA3E;
-    border-bottom:1px solid #C5DA3E;
 }
 
 .element-form input[type=text],
@@ -163,11 +159,12 @@
 {
     float:left;
     width:35%;
-    height:2.2em;
-    margin-top:1.5em;
+    margin-top:0.5rem;
+    margin-bottom:0.5rem;
+    padding:0.2rem;
     padding-left:1em;
-    border:1px solid #C5DA3E;
-    border-left:none;
+    border:1px solid #AAD400;
+    border-left:10px solid #AAD400;
     box-sizing: content-box;
     box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
     -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
@@ -182,9 +179,10 @@
 .element-input-hoverImg
 {
     position:relative;
-    float:right;
+    float:left;
     width:5%;
-    margin-top:1.65em;
+    margin-top:0.25rem;
+    margin-left:1rem;
 }
 
 .element-input-hoverImg:hover
@@ -236,9 +234,8 @@
 .element-input-submit input[type=submit]
 {
     display:block;
-    min-width:60px;
     padding:0.25rem 0.5rem;
-    font-size:100%;
+    font-size:90%;
     border:none;
     box-shadow: none;
 }
@@ -246,9 +243,10 @@
 .element-input-submit a
 {
     display:inline-block;
-    float:left;
+
     padding:0.25rem 0.5rem;
-    font-size:100%;
+    font-size:90%;
+    border:none;
     text-decoration:none;
 }
 

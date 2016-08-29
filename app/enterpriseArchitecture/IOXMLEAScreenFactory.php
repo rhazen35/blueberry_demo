@@ -586,7 +586,7 @@ class IOXMLEAScreenFactory
                 $params['multiplicity'] = $multiplicity;
                 $html .= $this->buildSuperForm( $params );
                 if( !empty( $data ) ):
-                    $html .= '<br><br><div class="element-submitted"><p>Previously submitted '. $elementName . '</p></div>';
+                    $html .= '<div class="element-submitted"></div>';
                     if( !empty( $hasSuperTypes[$elementName] ) ):
                         foreach( $hasSuperTypes[$elementName] as $hasSuperType ):
                             if( !empty( $data[$hasSuperType] ) ):
@@ -740,17 +740,6 @@ class IOXMLEAScreenFactory
          * Start form building
          */
         $form = '<div class="element-form">';
-        /**
-         * Display intro (specific form information) based on type.
-         */
-        switch( $type ):
-            case"normal":
-                $form .= '<div class="element-form-intro">Fill in the form below to add another ' . $elementName . '</div>';
-                break;
-            case"advanced":
-                $form .= '<div class="element-form-intro">Edit or delete this ' . $elementName . '</div>';
-                break;
-        endswitch;
 
         $form .= '<form action="' . APPLICATION_HOME . '" method="post">';
         /**
@@ -887,11 +876,6 @@ class IOXMLEAScreenFactory
                 $form     .= '<input type="submit" name="submit" value="add" class="button">';
                 $form     .= '</div>';
                 $form     .= '<div class="element-input-info">';
-                if( $multiplicity === "" ):
-                    $form .= 'Press add to add ' . $elementName . '.';
-                else:
-                    $form .= 'Press add to add ' . $elementName . ', press next to continue.';
-                endif;
                 $form     .= '</div>';
             else:
                 $form     .= '<div class="element-input-submit">';
@@ -903,13 +887,6 @@ class IOXMLEAScreenFactory
                     $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder - 1 ) . '" class="button">previous</a>';
                     $form .= '</div>';
                 endif;
-                $form .= '<div class="element-input-info">';
-                if( !empty( $data ) ):
-                    $form .= 'Press next to update ' . $elementName . ' and continue.';
-                else:
-                    $form .= 'Press next to add ' . $elementName . ' and continue.';
-                endif;
-                $form     .= '</div>';
             endif;
             $form         .= '</form>';
             $form         .= '</div>';
@@ -932,9 +909,6 @@ class IOXMLEAScreenFactory
                 $form .= '<input type="submit" name="submit" value="delete" class="button">';
                 $form .= '</div>';
 
-                $form .= '<div class="element-input-info">';
-                $form .= 'Press delete to remove ' . $elementName . ', press edit to change this ' . $elementName . '.';
-                $form .= '</div>';
                 $form .= '</form>';
 
                 $form .= '</div>';
@@ -958,7 +932,6 @@ class IOXMLEAScreenFactory
         $superTypes   = ( isset( $element['super_types'] ) ? $element['super_types'] : "" );
 
         $form              = '<div class="element-form">';
-        $form             .= '<div class="element-form-intro">Choose and add ' . $elementName . '</div>';
         $form             .= '<form action="' . APPLICATION_HOME . '" method="post">';
         /**
          * Super types drop down
@@ -999,9 +972,6 @@ class IOXMLEAScreenFactory
         $form             .= '<input type="hidden" name="attr" value="elementControl">';
         $form             .= '<input type="hidden" name="action" value="addForm">';
         $form             .= '<input type="submit" name="submit" value="add" class="button">';
-        $form             .= '</div>';
-        $form             .= '<div class="element-input-info">';
-        $form             .= 'Press add to add ' . $elementName . ', press next to continue.';
         $form             .= '</div>';
         $form             .= '</div>';
         $form             .= '</form>';
