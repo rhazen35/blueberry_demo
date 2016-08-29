@@ -282,13 +282,14 @@ class EAApi
                                     $j = 0;
                                     foreach( $dataAttributes as $dataAttributeKey => $dataAttributeValue ):
                                         if( $dataAttributeKey !== "id" && $dataAttributeKey !== "user_id" ):
-                                            $dataWithDestination[$model][$dataElementName][$i][$j]['value'] = $dataAttributeValue;
                                             if( !empty( $orderedElement[$dataElementName]['attributes'] ) ):
                                                 foreach( $orderedElement[$dataElementName]['attributes'] as $orderedAttribute ):
                                                     if( $dataAttributeKey === strtolower( str_replace( " ", "_", $orderedAttribute['name'] ) ) ):
-                                                        $dataWithDestination[$model][$dataElementName][$i][$j]['file'] = ( !empty( $orderedAttribute['file'] ) ? $orderedAttribute['file'] : "" );
-                                                        $dataWithDestination[$model][$dataElementName][$i][$j]['tab']  = ( !empty( $orderedAttribute['tab'] ) ? $orderedAttribute['tab'] : "" );
-                                                        $dataWithDestination[$model][$dataElementName][$i][$j]['cell'] = ( !empty( $orderedAttribute['cell'] ) ? $orderedAttribute['cell'] : "" );
+                                                        $tab = ( !empty( $orderedAttribute['tab'] ) ? $orderedAttribute['tab'] : "" );
+                                                        $dataWithDestination[$model][$tab][$dataElementName][$i][$j]['file']  = ( !empty( $orderedAttribute['file'] ) ? $orderedAttribute['file'] : "" );
+                                                        $dataWithDestination[$model][$tab][$dataElementName][$i][$j]['tab']   = $tab;
+                                                        $dataWithDestination[$model][$tab][$dataElementName][$i][$j]['cell']  = ( !empty( $orderedAttribute['cell'] ) ? $orderedAttribute['cell'] : "" );
+                                                        $dataWithDestination[$model][$tab][$dataElementName][$i][$j]['value'] = $dataAttributeValue;
                                                     endif;
                                                 endforeach;
                                             endif;

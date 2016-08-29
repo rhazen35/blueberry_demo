@@ -514,9 +514,6 @@ if( !class_exists( "IOXMLEAValidator" ) ):
                             $i++;
                         endforeach;
 
-                        /**
-                         * TODO: Be careful, we might run out of the alphabet. $jj ?
-                         */
                         $j = 0;
                         $k = 0;
                         $l = 0;

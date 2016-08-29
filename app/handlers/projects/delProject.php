@@ -37,7 +37,6 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
 
         /**
          * Delete the model database and it's table(s)
-         * TODO: get this model database and tables from blueberry db and delete everything!!
          */
         $dbName                 = strtolower( str_replace( " ", "_", $modelName ) );
         $params['name']         = $dbName;
