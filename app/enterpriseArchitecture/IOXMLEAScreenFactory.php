@@ -623,7 +623,7 @@ class IOXMLEAScreenFactory
             $html .= $this->buildForm( $params );
             if( !empty( $data ) ):
                 if( $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
-                    $html .= '<br><br><div class="element-submitted"><p>Previously submitted ' . $elementName . '</p></div>';
+                    $html .= '<div class="element-submitted"></div>';
                     foreach( $data as $result ):
                         $params['result']       = $result;
                         $params['type']         = "advanced";
