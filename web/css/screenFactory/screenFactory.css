@@ -229,11 +229,8 @@
 {
     float:right;
     margin-top:1rem;
-<<<<<<< HEAD
     margin-right:1em;
-=======
     margin-right:0.5rem;
->>>>>>> c0968785b5d3889988891a8bf0ae72112e0f9330
 }
 
 .element-input-submit input[type=submit]
@@ -247,10 +244,8 @@
 
 .element-input-submit a
 {
-    display:inline-block;
-
-    padding:0.25rem 0.5rem;
-    font-size:90%;
+    display:block;
+    line-height:1.15rem !important;
     border:none;
     text-decoration:none;
 }
