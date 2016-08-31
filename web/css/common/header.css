@@ -23,9 +23,9 @@ header .title
 {
     float:right;
     margin:0;
-    margin-top:-0.40em;
     margin-left:1em;
-    font-size:68%;
+    margin-bottom:0.6em;
+    font-size:78%;
 }
 
 header a
@@ -44,7 +44,7 @@ menu
 {
     float:left;
     font-family: "Verdana", "serif";
-    font-size:90%;
+    font-size:100%;
 }
 
 menu nav

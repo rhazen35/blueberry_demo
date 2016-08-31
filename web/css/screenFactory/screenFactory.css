@@ -227,8 +227,8 @@
 .element-input-submit
 {
     float:right;
-    margin-top:2em;
-    margin-right:1em;
+    margin-top:1rem;
+    margin-right:0.5rem;
 }
 
 .element-input-submit input[type=submit]

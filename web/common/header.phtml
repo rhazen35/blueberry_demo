@@ -1,13 +1,5 @@
 <header>
-    <div class="title">Blueberry
-        <?php if( isset( $_SESSION['userId'] ) ): ?>
-            <?php if( isset( $_SESSION['menu_toggle'] ) ): ?>
-                <a href=" <?= APPLICATION_HOME; ?>?showMenu" class="button">Show dashboard</a>
-            <?php else: ?>
-                <a href="<?= APPLICATION_HOME; ?>?hideMenu" class="button">Hide dashboard</a>
-            <?php endif; ?>
-        <?php endif; ?>
-    </div>
+    <div class="title">Blueberry</div>
     <?php if( isset( $_SESSION['userId'] ) ): ?>
     <menu>
     <nav>
@@ -26,6 +18,13 @@
         <a href="<?= APPLICATION_LOGOUT; ?>" class="button">Logout</a>
         <?php if( $_SESSION['userId'] === 22 ): ?>
             <a href="<?= APPLICATION_REGISTER; ?>" class="button">Register</a>
+                <?php if( isset( $_SESSION['userId'] ) ): ?>
+        <?php if( isset( $_SESSION['menu_toggle'] ) ): ?>
+            <a href=" <?= APPLICATION_HOME; ?>?showMenu" class="button">Show dashboard</a>
+        <?php else: ?>
+            <a href="<?= APPLICATION_HOME; ?>?hideMenu" class="button">Hide dashboard</a>
+        <?php endif; ?>
+    <?php endif; ?>
         <?php endif; ?>
     <?php endif; ?>
 </header>
