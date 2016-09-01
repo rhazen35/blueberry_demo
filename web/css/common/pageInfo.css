@@ -15,7 +15,7 @@
 
 .pageInfo p
 {
-    line-height:1rem;
+    line-height:1.25rem;
     padding:1.25em;
     font-size:80%;
 }
@@ -27,7 +27,7 @@
 
 .pageInfo p span
 {
-    padding:0.1rem 0.5rem;
+    padding:0.25rem 0.5rem;
     margin-right:0.2rem;
     color:#FFFFFF;
     background-color: #404B66;

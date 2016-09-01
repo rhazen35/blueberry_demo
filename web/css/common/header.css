@@ -49,7 +49,7 @@ menu
 
 menu nav
 {
-    margin-top:0.25rem;
+
 }
 
 menu nav ul
@@ -67,6 +67,7 @@ menu nav ul li
 
 menu nav ul li a
 {
+    margin-top:0.7rem;
     padding:0.25rem 0.5rem;
     color:#FFFFFF;
     text-decoration:none;
