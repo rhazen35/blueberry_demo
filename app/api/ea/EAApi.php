@@ -15,7 +15,6 @@ use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 use app\enterpriseArchitecture\XMLDBController;
 use app\model\Service;
 
-
 class EAApi
 {
     protected $type;
@@ -83,7 +82,7 @@ class EAApi
                     $modelHash = $model['hash'];
                     $modelExt  = $model['ext'];
                     if( !empty( $modelHash ) && !empty( $modelExt ) ):
-                        $xmlFile = "./web/files/xml_models_tmp/" . $modelHash . "." . $modelExt;
+                        $xmlFile = "./web/files/xml_models/" . $modelHash . "." . $modelExt;
                         $parsedElements = ( new IOXMLEAModelParser( $xmlFile ) )->parseXMLClasses();
                         $returnArray[$modelName] = $parsedElements;
                     endif;

@@ -59,7 +59,7 @@ if( !class_exists( "IOXMLEAInheritance" ) ):
                 /**
                  * Get the parsed classes.
                  */
-                $xmlFile = Library::path("web/files/xml_models_tmp/" . $modelHash . '.' . $modelExt);
+                $xmlFile = Library::path("web/files/xml_models/" . $modelHash . '.' . $modelExt);
             else:
                 return( false );
             endif;

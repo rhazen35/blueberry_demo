@@ -6,9 +6,22 @@
  * Time: 17:05
  */
 
+/**
+ * DB Control
+ *
+ * Handles the database actions called by handlers/elementControl.php
+ *
+ * - Builds CRUD queries with bind parameters.
+ * - Table and column names are based on the parsed xml model. (attributes)
+ * - Super type columns first, then sub types. (same as table creation on xml model upload)
+ * - Create will turn into an update if there already is data present in the database.
+ * - A return message will be added to the page redirect when the action has been executed.
+ */
+
 namespace app\enterpriseArchitecture;
 
 use app\model\Service;
+
 /**
  * Class XMLDBController
  * @package app\enterpriseArchitecture
@@ -44,12 +57,6 @@ class XMLDBController
         endswitch;
     }
     /**
-     * DB Control
-     *
-     * - Builds CRUD queries with bind parameters.
-     * - Table and column names are based on the parsed xml model. (attributes)
-     * - Super type columns first, then sub types. (same as table creation on xml model upload)
-     *
      * @param $params
      * @return bool|\mysqli_result
      */
@@ -106,9 +113,9 @@ class XMLDBController
                 /**
                  * Only continue if the database exists.
                  */
-                $dbSql = "CALL proc_checkDatabaseExists(?)";
-                $dbData = array( "db_name" => $database );
-                $dbFormat = array("s");
+                $dbSql        = "CALL proc_checkDatabaseExists(?)";
+                $dbData       = array( "db_name" => $database );
+                $dbFormat     = array("s");
                 $dbConnection = ( new Service( "read", "blueberry" ) )->dbAction( $dbSql, $dbData, $dbFormat );
                 if( !empty($dbConnection) && $parsedElement['name'] === $elementName ):
                     $elementAttributes      = ( !empty( $parsedElement['formDetails']['elementAttributes'][$elementName] ) ? $parsedElement['formDetails']['elementAttributes'][$elementName] : ""  );
@@ -125,7 +132,7 @@ class XMLDBController
                                 $countAttributes++;
                                 $attributeName  = ( !empty( $array['input_name'] ) ? str_replace( " ", "_", $array['input_name'] ) : "" );
                                 $attributeValue = ( !empty( $_POST[$attributeName] ) ? $_POST[$attributeName] : "" );
-                                $attributeName = strtolower( $attributeName );
+                                $attributeName  = strtolower( $attributeName );
                                 /**
                                  * Create query
                                  */
@@ -139,7 +146,7 @@ class XMLDBController
                                 /**
                                  * Update
                                  */
-                                $updateSql .= ( $countAttributes < $totalSuperAttributes ? $attributeName." = ?, " : ( !empty( $elementAttributes ) ? $attributeName." = ?," : $attributeName." = ?" ) );
+                                $updateSql                 .= ( $countAttributes < $totalSuperAttributes ? $attributeName." = ?, " : ( !empty( $elementAttributes ) ? $attributeName." = ?," : $attributeName." = ?" ) );
                                 $updateData[$attributeName] = $attributeValue;
                                 $updateFormat[]             = "s";
                             endif;
@@ -196,15 +203,15 @@ class XMLDBController
         $updateData["user_id"] = $userId;
         $updateFormat[]        = "i";
         if( !empty( $resultId ) ):
-            $updateSql .= " AND id = ?";
-            $updateData["id"]      = $resultId;
-            $updateFormat[]        = "i";
+            $updateSql        .= " AND id = ?";
+            $updateData["id"]  = $resultId;
+            $updateFormat[]    = "i";
         endif;
         /**
          * Execute read query if type is other then delete and the database exists.
          */
         if( $this->type !== "delete" && !empty($dbConnection) ):
-            $type = "read";
+            $type        = "read";
             $selectArray = ( new Service( $type, $database ) )->dbAction( $checkSql, $checkData, $checkFormat );
         endif;
         /**
@@ -233,7 +240,7 @@ class XMLDBController
             case"delete":
                 $type = "delete";
                 ( new Service( $type, $database ) )->dbAction( $deleteSql, $deleteData, $deleteFormat );
-                return("delete");
+                return("deleted");
                 break;
         endswitch;
     }

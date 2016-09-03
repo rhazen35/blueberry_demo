@@ -74,7 +74,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 /**
                  * Hash and save the file
                  */
-                move_uploaded_file( $_FILES['excelFile']['tmp_name'], sprintf(APPLICATION_ROOT.'/web/files/excel_calculators_tmp/%s.%s', sha1_file($_FILES['excelFile']['tmp_name']), $extension)) ;
+                move_uploaded_file( $_FILES['excelFile']['tmp_name'], sprintf(APPLICATION_ROOT.'/web/files/excel_calculators/%s.%s', sha1_file($_FILES['excelFile']['tmp_name']), $extension)) ;
                 $_SESSION['calculatorId'] = ( isset( $lastInsertedID ) ? $lastInsertedID : "" );
 
             else:

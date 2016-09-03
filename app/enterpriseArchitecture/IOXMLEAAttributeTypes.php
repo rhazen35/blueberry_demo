@@ -32,7 +32,7 @@ if( !class_exists( "IOXMLEAAttributeTypes" ) ):
             $modelExt       = ( !empty( $modelData['ext'] ) ? $modelData['ext'] : "" );
 
             if( !empty( $modelHash ) && !empty( $modelExt ) ):
-                $xmlFile        = Library::path( $_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models_tmp/' . $modelHash . '.' . $modelExt );
+                $xmlFile        = Library::path( $_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models/' . $modelHash . '.' . $modelExt );
                 $parsedClasses  = ( new IOXMLEAModelParser( $xmlFile ) )->parseXMLClasses();
             endif;
 

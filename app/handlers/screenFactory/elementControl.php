@@ -10,15 +10,13 @@ use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 use app\enterpriseArchitecture\XMLDBController;
 
 /**
- * Handle form based on the action and the multiplicity.
+ * Handle form based on the posted action and the posted multiplicity.
  *
  * - Actions are CRUD and will be handled according to their multiplicity.
- * - Delete actions will be handled without multiplicity and target one result.
+ * - Delete actions will be handled without multiplicity and target one specific row.
  *
- * - If the multiplicity is at least 1, the user will be redirected forward, one page.
- * - If the multiplicity is at least 1 and or more, the user will be redirected to the page he/she/it came from.
- * - If the multiplicity is 0 or more, the user will be redirected to the page he/she/it came from.
- *
+ * - If the multiplicity is at least 1 and 1, the user will be redirected forward, one page.
+ * - If the multiplicity is at least 1 or 0 and more, the user will be redirected to the page he/she/it came from
  */
 
 $action         = ( isset( $_POST['action'] ) ? $_POST['action'] : "" );
@@ -42,8 +40,9 @@ if( !empty( $action ) ):
             $returnMessage = ( !empty( $returnMessage ) ? $returnMessage : "" );
             switch( $multiplicity ):
                 case"1":
-                    header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) . "&".$returnMessage );
-                    exit();
+                   // header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) . "&".$returnMessage );
+                    //exit();
+                    echo'mkay';
                     break;
                 case"1..*":
                 case"0..*":
@@ -56,16 +55,17 @@ if( !empty( $action ) ):
         case"edit":
             if( !empty( $resultId ) ):
                 $params['result_id'] = $resultId;
-                ( new XMLDBController( "update" ) )->request( $params );
-                header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&edited" );
-                exit();
+                $returnMessage = ( new XMLDBController( "update" ) )->request( $params );
+                //header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
+                //exit();
+                echo'mkay';
             endif;
             break;
         case"delete":
             if( !empty( $resultId ) ):
                 $params['result_id'] = $resultId;
-                ( new XMLDBController( "delete" ) )->request( $params );
-                header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&deleted" );
+                $returnMessage = ( new XMLDBController( "delete" ) )->request( $params );
+                header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
                 exit();
             endif;
             break;

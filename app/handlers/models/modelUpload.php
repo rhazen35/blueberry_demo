@@ -79,7 +79,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
 
                 $report['file_exists'] = false;
                 /**
-                 * Save the model in the database and in the files/xml_models_tmp directory
+                 * Save the model in the database and in the files/xml_models directory
                  */
                 $name                   = ( isset( $report['trueRootClassName'] ) ? $report['trueRootClassName'] : "" );
                 $nameExists             = ( new IOXMLEAModel( $name ) )->checkModelNameExists();
@@ -98,7 +98,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                     /**
                      * Hash and save the file
                      */
-                    move_uploaded_file( $_FILES['xmlFile']['tmp_name'], sprintf( APPLICATION_ROOT.'/web/files/xml_models_tmp/%s.%s', sha1_file( $_FILES['xmlFile']['tmp_name'] ), $extension ) );
+                    move_uploaded_file( $_FILES['xmlFile']['tmp_name'], sprintf( APPLICATION_ROOT.'/web/files/xml_models/%s.%s', sha1_file( $_FILES['xmlFile']['tmp_name'] ), $extension ) );
                     /**
                      * Create database and tables for the elements with the type of uml:Class
                      */

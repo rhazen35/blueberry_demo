@@ -38,7 +38,7 @@ if( !empty( $modelId ) && $changeCheck === "accepted" ):
      * Check if the model hash and extension are available and delete the file
      */
     if( !empty( $modelHash ) && !empty( $modelExtension ) ):
-        unlink( $_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models_tmp/' . $modelHash . "." . $modelExtension);
+        unlink( $_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models/' . $modelHash . "." . $modelExtension);
     endif;
 
     /**

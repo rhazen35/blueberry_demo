@@ -18,7 +18,6 @@ $parsedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelI
 
 if( $superElement === "true" ):
     echo 'supershizzle here';
-
 else:
 
         $userId    = ( isset( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
@@ -140,13 +139,11 @@ else:
         ( new Service( $type, $database ) )->dbAction( $sql, $data, $format );
 
         if( $multiplicity === "1..*" ):
-            header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) ."&add" );
+            header( "Location: " . APPLICATION_HOME . "?model&page=" . $elementOrder ."&add" );
             exit();
         else:
             header( "Location: " . APPLICATION_HOME . "?model&page=" .$elementOrder );
             exit();
         endif;
-
-
 
 endif;

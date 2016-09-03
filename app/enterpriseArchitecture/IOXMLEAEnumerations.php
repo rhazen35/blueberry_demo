@@ -51,7 +51,7 @@ if( !class_exists( "IOXMLEAEnumerations" ) ):
             $modelExt   = ( !empty( $model['ext'] ) ? $model['ext'] : "" );
 
             if( !empty( $modelHash ) && !empty( $modelExt ) ):
-                $xmlFile        = 'web/files/xml_models_tmp/' . $modelHash . '.' . $modelExt;
+                $xmlFile        = 'web/files/xml_models/' . $modelHash . '.' . $modelExt;
                 $parsedClasses  = ( new IOXMLEAModelParser( $xmlFile ) )->parseXMLClasses();
 
                 foreach( $parsedClasses as $parsedClass ):

@@ -155,7 +155,7 @@ class IOXMLEAScreenFactory
         if (!empty($modelData)):
             if (!empty($modelData['hash'])):
 
-                $xmlFile        = 'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
+                $xmlFile        = 'web/files/xml_models/' . $modelData['hash'] . '.' . $modelData['ext'];
                 $parsedElements = ( new IOXMLEAModelParser($xmlFile))->parseXMLClasses();
                 $params         = array( "elements" => $parsedElements );
                 $elementNames   = $this->extractElementNames ( $params );
@@ -329,7 +329,7 @@ class IOXMLEAScreenFactory
     private function getMatchingConnector( $idref, $type )
     {
         $modelData          = ( new IOXMLEAModel( $this->xmlModelId ) )->getModel();
-        $xmlFile            =  'web/files/xml_models_tmp/' . $modelData['hash'] . '.' . $modelData['ext'];
+        $xmlFile            =  'web/files/xml_models/' . $modelData['hash'] . '.' . $modelData['ext'];
         $parsedConnectors   = ( new IOXMLEAModelParser( $xmlFile ) )->parseConnectors();
         $totalConnectors    = count( $parsedConnectors['connectors'] );
 
