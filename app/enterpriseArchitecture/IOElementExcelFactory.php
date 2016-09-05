@@ -258,9 +258,11 @@ if( !class_exists( "IOElementExcelFactory" ) ):
 
                     $i = 0;
                     foreach( $operations as $operation ):
-                        $operationArray[$i]['name'] = $operation['name'];
+
+                        $operationArray[$i]['name']          = $operation['name'];
                         $operationArray[$i]['documentation'] = $operation['documentation'];
-                        $operationArray[$i]['order'] = $operation['printOrder'];
+                        $operationArray[$i]['order']         = $operation['printOrder'];
+
                         $file  = $operation['QR-Excel output']['file'];
                         $tab   = $operation['QR-Excel output']['tab'];
                         $cell  = $operation['QR-Excel output']['cell'];
@@ -269,10 +271,10 @@ if( !class_exists( "IOElementExcelFactory" ) ):
                         if( !empty( $userExcel ) ):
                             $params['excelHash'] = $userExcel['hash'];
                             $params['excelExt']  = $userExcel['ext'];
-                            $params['file'] = $file;
-                            $params['tab']  = $tab;
-                            $params['cell'] = $cell;
-                            $excel = ( new IOExcelFactory( "read" ) )->request( $params );
+                            $params['file']      = $file;
+                            $params['tab']       = $tab;
+                            $params['cell']      = $cell;
+                            $excel               = ( new IOExcelFactory( "read" ) )->request( $params );
                             var_dump( $excel );
                         endif;
                         $i++;

@@ -36,6 +36,9 @@ if( !class_exists( "IOExcelFactory" ) ):
                 case"write":
                     return( $this->write( $params ) );
                     break;
+                case"read":
+                    return( $this->read( $params ) );
+                    break;
             endswitch;
         }
 
@@ -195,21 +198,29 @@ if( !class_exists( "IOExcelFactory" ) ):
             $returnData = array();
 
             $userId = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
+            $userExcelHash  = sha1( $userId );
+            $excelHash      = ( isset( $params['excelHash'] ) ?  $params['excelHash'] : "" );
+            $excelExt       = ( isset( $params['excelExt'] ) ?  $params['excelExt'] : "" );
 
-            // Set the filename and indentify the type with IOFactory->identify
-            $fileName = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
-            $fileType = Excel_Factory::identify($fileName);
+            if( $userExcelHash === $excelHash && !empty( $excelExt ) ):
 
-            // Read the file
-            $objReader = Excel_Factory::createReader( $fileType );
-            $objPHPExcel = $objReader->load( $fileName );
+                $tab  = ( !empty( $params['tab'] ) ? $params['tab'] : "" );
+                $cell = ( !empty( $params['cell'] ) ? $params['cell'] : "" );
 
-            // Read the file
-            $objPHPExcel->setActiveSheetIndex(0);
-            
-            foreach($params as $key => $value):
-                $returnData[$key] = $objPHPExcel->getActiveSheet()->getCell( $value )->getCalculatedValue();
-            endforeach;
+                $parts = explode( ":", $cell );
+
+                // Set the filename and indentify the type with IOFactory->identify
+                $fileName = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
+                $fileType = Excel_Factory::identify($fileName);
+
+                // Read the file
+                $objReader = Excel_Factory::createReader( $fileType );
+                $objPHPExcel = $objReader->load( $fileName );
+
+                // Read the file
+                $returnData[] = $objPHPExcel->setActiveSheetIndexByName($tab)->getCell($parts[0])->getCalculatedValue();
+
+            endif;
 
             return( $returnData );
         }
