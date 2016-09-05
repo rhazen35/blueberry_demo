@@ -18,7 +18,8 @@ $totalElements   = count( $orderedElements );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
 $highestOrder    = $orderedElements['highest_order'];
 
-$params['elements'] = $orderedElements;
+$_SESSION['project'] = ( !empty( $projectName ) ? $projectName : "" );
+$params['elements']  = $orderedElements;
 ?>
     <div class="newModel-head">
     <div class="title">Model Preview <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
@@ -59,7 +60,6 @@ if( !empty( $orderedElements ) ):
             endif;
         endfor;
     else:
-        $_SESSION['project'] = ( !empty( $projectName ) ? $projectName : "" );
         header("Location: index.php?projectResults");
         exit();
     endif;

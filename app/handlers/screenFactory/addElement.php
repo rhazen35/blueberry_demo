@@ -138,7 +138,7 @@ else:
 
         ( new Service( $type, $database ) )->dbAction( $sql, $data, $format );
 
-        if( $multiplicity === "1..*" ):
+        if( $multiplicity === "1..*" || $multiplicity === "0..*" ):
             header( "Location: " . APPLICATION_HOME . "?model&page=" . $elementOrder ."&add" );
             exit();
         else:

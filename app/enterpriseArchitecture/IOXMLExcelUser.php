@@ -35,6 +35,9 @@ if( !class_exists( "IOXMLExcelUser" ) ):
                 case"newUserExcelHash":
                     $this->newUserExcelHash( $params );
                     break;
+                case"getUserExcel":
+                    return( $this->getUserExcel() );
+                    break;
             endswitch;
         }
         /**
@@ -51,25 +54,47 @@ if( !class_exists( "IOXMLExcelUser" ) ):
 
             $userExcelHash = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
-            return( $userExcelHash );
+            if( !empty( $userExcelHash ) ):
+                return( $userExcelHash[0] );
+            else:
+                return( false );
+            endif;
         }
 
         private function newUserExcelHash( $params )
         {
             $userId     = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
             $hash       = ( !empty( $params['hash'] ) ? $params['hash'] : "" );
+            $ext        = ( !empty( $params['ext'] ) ? $params['ext'] : "" );
             $date       = date("Y-m-d");
             $time       = date("H:i:s");
             $emptyspace = "";
 
-            $sql    = "CALL proc_newUserExcelHash(?,?,?,?,?)";
-            $data   = array("id" => $emptyspace, "user_id" => $userId, "hash" => $hash, "date" => $date, "time" => $time);
-            $format = array("iisss");
+            $sql    = "CALL proc_newUserExcelHash(?,?,?,?,?,?)";
+            $data   = array("id" => $emptyspace, "user_id" => $userId, "hash" => $hash, "ext" => $ext, "date" => $date, "time" => $time);
+            $format = array("iissss");
             $type   = "create";
 
             ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
         }
 
+        private function getUserExcel()
+        {
+            $userId = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
+
+            $sql    = "CALL proc_getUserExcel(?)";
+            $data   = array("user_id" => $userId);
+            $format = array("i");
+            $type   = "read";
+
+            $userExcel = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
+
+            if( !empty( $userExcel ) ):
+                return( $userExcel[0] );
+            else:
+                return( false );
+            endif;
+        }
 
     }
 

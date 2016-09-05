@@ -12,58 +12,55 @@ use app\model\Service;
 
 class IOEAExcelCalculator
 {
-    protected $calculatorId;
+    protected $type;
     protected $database = "blueberry";
 
-    public function __construct( $calculatorId )
+    public function __construct( $type )
     {
-        $this->calculatorId = $calculatorId;
+        $this->type = $type;
     }
 
-    public function getCalculator()
+    public function request( $params )
     {
-        $sql        = "CALL proc_getCalculator(?)";
-        $data       = array("id" => $this->calculatorId);
+        switch( $this->type ):
+            case"getCalculator":
+                return( $this->getCalculator( $params ) );
+                break;
+        endswitch;
+    }
+
+    private function getCalculator( $params )
+    {
+        $calculatorId = $this->getCalculatorIdByProjectId( $params );
+        $sql          = "CALL proc_getCalculator(?)";
+        $data         = array("id" => $calculatorId['calculator_id']);
+        $format       = array('i');
+        $type         = "read";
+        $returnData   = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+        if( !empty( $returnData ) ):
+            return( $returnData[0] );
+        else:
+            return( false );
+        endif;
+    }
+
+    private function getCalculatorIdByProjectId( $params )
+    {
+        $sql        = "CALL proc_getCalculatorIdByProjectId(?)";
+        $data       = array("project_id" => $params['project_id']);
         $format     = array('i');
         $type       = "read";
 
-        $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+        $returnData    = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
-        $returnArray = "";
         if( !empty( $returnData ) ):
-            foreach( $returnData as $data ):
-                $returnArray = array(
-                    'user_id' => $data['user_id'],
-                    'hash'    => $data['hash'],
-                    'ext'     => $data['ext'],
-                    'date'    => $data['date'],
-                    'time'    => $data['time']
-                );
-            endforeach;
-            return( $returnArray );
+            $calculatorId = $returnData[0];
+            return( $calculatorId );
         else:
             return( false );
         endif;
     }
 
-    public function getCalculatorIdByHash()
-    {
-        $sql        = "CALL proc_getModelIdByHash(?)";
-        $data       = array("hash" => $this->calculatorId);
-        $format     = array('s');
-        $type       = "read";
 
-        $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
-
-        $returnArray = "";
-        if( !empty( $returnData ) ):
-            foreach( $returnData as $data ):
-                $returnArray = array( 'calculator_id' => $data['id']);
-            endforeach;
-            return( $returnArray );
-        else:
-            return( false );
-        endif;
-
-    }
 }

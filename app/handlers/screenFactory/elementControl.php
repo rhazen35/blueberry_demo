@@ -8,6 +8,7 @@
 
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 use app\enterpriseArchitecture\XMLDBController;
+use app\enterpriseArchitecture\IOElementExcelFactory;
 
 /**
  * Handle form based on the posted action and the posted multiplicity.
@@ -36,13 +37,26 @@ if( !empty( $action ) ):
 
     switch( $action ):
         case"create":
-            $returnMessage = ( new XMLDBController( "create" ) )->request( $params );
-            $returnMessage = ( !empty( $returnMessage ) ? $returnMessage : "" );
+            $returnMessage     = ( new XMLDBController( "create" ) )->request( $params );
+            $returnMessage     = ( !empty( $returnMessage ) ? $returnMessage : "" );
+            $elementData       = ( new XMLDBController( "read" ) )->request( $params );
+            $projectName       = ( !empty( $_SESSION['project'] ) ? $_SESSION['project'] : "" );
+            $params['project'] = $projectName;
+            $params['data']    = $elementData;
+
+            $excel = ( new IOElementExcelFactory( "dataToFile" ) )->request( $params );
+            if( $excel ):
+                $operations = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
+                if( !empty( $operations ) ):
+                    var_dump($operations);
+                endif;
+            endif;
+
             switch( $multiplicity ):
                 case"1":
                    // header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) . "&".$returnMessage );
                     //exit();
-                    echo'mkay';
+
                     break;
                 case"1..*":
                 case"0..*":
@@ -58,7 +72,6 @@ if( !empty( $action ) ):
                 $returnMessage = ( new XMLDBController( "update" ) )->request( $params );
                 //header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
                 //exit();
-                echo'mkay';
             endif;
             break;
         case"delete":

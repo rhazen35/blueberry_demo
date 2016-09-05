@@ -135,7 +135,7 @@ class EAApi
                     foreach( $extractedAndOrderedElements as $extractedAndOrderedElement ):
                         $elementName        = ( isset( $extractedAndOrderedElement['name'] ) ? $extractedAndOrderedElement['name'] : "" );
                         $target             = ( isset( $extractedAndOrderedElement['supertype'] ) ? $extractedAndOrderedElement['supertype'] : "" );
-                        $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
+                        $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : array() );
                         $fields             = ( isset( $extractedAndOrderedElement['formDetails']['elementAttributes'][$elementName] ) ? $extractedAndOrderedElement['formDetails']['elementAttributes'][$elementName] : "" );
 
                         $i = 0;
@@ -232,36 +232,6 @@ class EAApi
         endif;
         return($modelsDatabaseData);
     }
-
-//    private function get_all_models_data_with_excel_tags( $params )
-//    {
-//        $orderedAttributes  = $this->get_all_models_elements_extracted_and_ordered_attributes( $params );
-//        $modelsDatabaseData = $this->get_all_models_database_data( $params );
-//
-//        foreach($orderedAttributes as $model => $elements ):
-//            foreach( $elements as $elementName => $element ):
-//                if( !empty( $modelsDatabaseData[ $model ][ $elementName ] ) ):
-//                    foreach( $modelsDatabaseData[ $model ][ $elementName ] as $data_attributes ):
-//                        if( !empty( $data_attributes ) ):
-//                            foreach( $element['attributes'] as $attributes ):
-//                                foreach( $attributes as $attribute ):
-//                                    $i = 0;
-//                                    foreach( $data_attributes as $data_attribute_name => $data ):
-//                                        if( strtolower( str_replace( "_", " ", $attribute ) ) === $data_attribute_name ):
-//                                            $orderedAttributes[$model][$elementName]['attributes'][$i]['value'] = $data;
-//                                        endif;
-//                                        $i++;
-//                                    endforeach;
-//                                endforeach;
-//                            endforeach;
-//                        endif;
-//                    endforeach;
-//                endif;
-//            endforeach;
-//        endforeach;
-//
-//        return($orderedAttributes);
-//    }
 
     private function get_all_models_data_with_excel_tags( $params )
     {

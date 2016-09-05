@@ -33,6 +33,9 @@ if( !class_exists( "IOExcelFactory" ) ):
                 case"dataToFile":
                     return( $this->dataToFile( $params ) );
                     break;
+                case"write":
+                    return( $this->write( $params ) );
+                    break;
             endswitch;
         }
 
@@ -147,36 +150,43 @@ if( !class_exists( "IOExcelFactory" ) ):
 
         public function write( $params )
         {
-            $data   = $params['data'];
-            $userId = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
+            $data           = $params['data'];
+            $userId         = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
+            $userExcelHash  = sha1( $userId );
+            $excelHash      = ( isset( $params['excelHash'] ) ?  $params['excelHash'] : "" );
+            $excelExt       = ( isset( $params['excelExt'] ) ?  $params['excelExt'] : "" );
 
-            // Set the filename and indentify the type with IOFactory->identify
-            $fileName = APPLICATION_PATH . Library::path('web/files/xml_storage/simpel rekenmodel.xlsx');
-            $fileType = Excel_Factory::identify($fileName);
+            /**
+             * Check if the excel hash matches the user excel hash
+             */
+            if( $userExcelHash === $excelHash && !empty( $excelExt )):
 
-            // Read the file
-            $objReader = Excel_Factory::createReader($fileType);
-            $objPHPExcel = $objReader->load($fileName);
+                // Set the filename and identify the type with IOFactory->identify
+                $fileName = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
+                $fileType = Excel_Factory::identify($fileName);
 
-            foreach( $data as $sheetName => $sheet ):
-                foreach( $sheet as $item ):
-                    $sheet = ( !empty( $item['tab'] ) ? str_replace( " ", "", $item['tab'] ) : ""  );
+                // Read the file
+                $objReader = Excel_Factory::createReader($fileType);
+                $objPHPExcel = $objReader->load($fileName);
 
-                    $objPHPExcel->setActiveSheetIndexByName($sheet)->setCellValue($item['cell'], $item['value']);
+                foreach( $data as $sheetName => $sheet ):
+                    foreach( $sheet as $item ):
+                        $sheet = ( !empty( $item['tab'] ) ? str_replace( " ", "", $item['tab'] ) : ""  );
 
-                    // Write the file
-                    $objWriter = Excel_Factory::createWriter($objPHPExcel, 'Excel2007');
+                        $objPHPExcel->setActiveSheetIndexByName($sheet)->setCellValue($item['cell'], $item['value']);
 
-                    // Set calculate formula's false when using formulas to prevent PHPExcel from executing them.
-                    $objWriter->setPreCalculateFormulas(false);
+                    endforeach;
                 endforeach;
-            endforeach;
 
-            // Save the file
-            if( $objWriter->save( $fileName ) ):
-                return( true );
-            else:
-                return( false );
+                // Write the file
+                $objWriter = Excel_Factory::createWriter($objPHPExcel, 'Excel2007');
+
+                // Set calculate formula's false when using formulas to prevent PHPExcel from executing them.
+                $objWriter->setPreCalculateFormulas(false);
+
+                // Save the file
+                return( empty( $objWriter->save( $fileName ) ) ? true : false );
+
             endif;
         }
 
@@ -184,14 +194,14 @@ if( !class_exists( "IOExcelFactory" ) ):
         {
             $returnData = array();
 
-            $userId = ( !empty( $_SESSION['user_excel_id'] ) ? $_SESSION['user_excel_id'] : "" );
+            $userId = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
 
             // Set the filename and indentify the type with IOFactory->identify
-            $fileName = 'files/' . $userId . '.xlsx';
-            $fileType = \PHPExcel_IOFactory::identify( $fileName );
+            $fileName = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
+            $fileType = Excel_Factory::identify($fileName);
 
             // Read the file
-            $objReader = \PHPExcel_IOFactory::createReader( $fileType );
+            $objReader = Excel_Factory::createReader( $fileType );
             $objPHPExcel = $objReader->load( $fileName );
 
             // Read the file
