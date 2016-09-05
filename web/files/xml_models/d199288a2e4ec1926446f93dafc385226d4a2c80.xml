@@ -1461,7 +1461,7 @@
 						<code/>
 						<style/>
 						<styleex/>
-						<documentation/>
+						<documentation value="Uw leeftijd berekent in gebroken jaren."/>
 						<tags>
 							<tag xmi:id="EAID_6EA02EE6_0034_461b_B461_F3DC1A0C6448" name="QR-Excel output" value="    b4   :        , Output, simpel rekenmodel.xlsx"/>
 							<tag xmi:id="EAID_D62DA064_AACE_4dd9_96BB_25A8D643F701" name="QR-PrintOrder" value="4"/>

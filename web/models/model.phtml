@@ -55,6 +55,11 @@ if( !empty( $orderedElements ) ):
                         print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElements[$i] ) )->request( $params ) );
                     else:
                         print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params ) );
+
+                        if( !empty( $_SESSION['operations'] ) ):
+                            $operations = ( !empty( $_SESSION['operations'] ) ? $_SESSION['operations'] : "" );
+                            print_r( ( new IOXMLEAScreenFactory( "buildOperations", $operations ) )->request( $params ) );
+                        endif;
                     endif;
                 endif;
             endif;

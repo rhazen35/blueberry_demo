@@ -43,20 +43,13 @@ if( !empty( $action ) ):
             $projectName       = ( !empty( $_SESSION['project'] ) ? $_SESSION['project'] : "" );
             $params['project'] = $projectName;
             $params['data']    = $elementData;
-
-            $excel = ( new IOElementExcelFactory( "dataToFile" ) )->request( $params );
-            if( $excel ):
-                $operations = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
-                if( !empty( $operations ) ):
-                    var_dump($operations);
-                endif;
-            endif;
+            $excel             = ( new IOElementExcelFactory( "dataToFile" ) )->request( $params );
+            $operations        = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
 
             switch( $multiplicity ):
                 case"1":
-                   // header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) . "&".$returnMessage );
-                    //exit();
-
+                    header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) . "&" . $returnMessage );
+                    exit();
                     break;
                 case"1..*":
                 case"0..*":

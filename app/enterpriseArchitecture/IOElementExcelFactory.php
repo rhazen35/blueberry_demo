@@ -16,7 +16,6 @@ if( !class_exists( "IOElementExcelFactory" ) ):
     {
         protected $type;
 
-
         public function __construct($type)
         {
             $this->type = $type;
@@ -261,7 +260,7 @@ if( !class_exists( "IOElementExcelFactory" ) ):
 
                         $operationArray[$i]['name']          = $operation['name'];
                         $operationArray[$i]['documentation'] = $operation['documentation'];
-                        $operationArray[$i]['order']         = $operation['printOrder'];
+                        $operationArray[$i]['printOrder']    = $operation['printOrder'];
 
                         $file  = $operation['QR-Excel output']['file'];
                         $tab   = $operation['QR-Excel output']['tab'];
@@ -269,13 +268,13 @@ if( !class_exists( "IOElementExcelFactory" ) ):
 
                         $userExcel  = ( new IOXMLExcelUser( "getUserExcel" ) )->request( $params );
                         if( !empty( $userExcel ) ):
-                            $params['excelHash'] = $userExcel['hash'];
-                            $params['excelExt']  = $userExcel['ext'];
-                            $params['file']      = $file;
-                            $params['tab']       = $tab;
-                            $params['cell']      = $cell;
-                            $excel               = ( new IOExcelFactory( "read" ) )->request( $params );
-                            var_dump( $excel );
+                            $params['excelHash']         = $userExcel['hash'];
+                            $params['excelExt']          = $userExcel['ext'];
+                            $params['file']              = $file;
+                            $params['tab']               = $tab;
+                            $params['cell']              = $cell;
+                            $excel                       = ( new IOExcelFactory( "readCell" ) )->request( $params );
+                            $operationArray[$i]['value'] = ( !empty( $excel ) ? $excel : "" );
                         endif;
                         $i++;
                     endforeach;

@@ -36,8 +36,8 @@ if( !class_exists( "IOExcelFactory" ) ):
                 case"write":
                     return( $this->write( $params ) );
                     break;
-                case"read":
-                    return( $this->read( $params ) );
+                case"readCell":
+                    return( $this->readCell( $params ) );
                     break;
             endswitch;
         }
@@ -193,10 +193,8 @@ if( !class_exists( "IOExcelFactory" ) ):
             endif;
         }
 
-        public function read( $params )
+        public function readCell( $params )
         {
-            $returnData = array();
-
             $userId = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
             $userExcelHash  = sha1( $userId );
             $excelHash      = ( isset( $params['excelHash'] ) ?  $params['excelHash'] : "" );
@@ -208,21 +206,23 @@ if( !class_exists( "IOExcelFactory" ) ):
                 $cell = ( !empty( $params['cell'] ) ? $params['cell'] : "" );
 
                 $parts = explode( ":", $cell );
+                $cell  = ( !empty( $parts[0] ) ? strtoupper( $parts[0] ) : "" );
 
-                // Set the filename and indentify the type with IOFactory->identify
                 $fileName = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
                 $fileType = Excel_Factory::identify($fileName);
 
-                // Read the file
                 $objReader = Excel_Factory::createReader( $fileType );
                 $objPHPExcel = $objReader->load( $fileName );
 
-                // Read the file
-                $returnData[] = $objPHPExcel->setActiveSheetIndexByName($tab)->getCell($parts[0])->getCalculatedValue();
-
+                $objPHPExcel->setActiveSheetIndexByName( $tab );
+                $returnData = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
             endif;
 
-            return( $returnData );
+            if( !empty( $returnData ) ):
+                return( $returnData );
+            else:
+                return( false );
+            endif;
         }
 
     }
