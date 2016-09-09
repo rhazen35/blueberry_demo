@@ -32,6 +32,6 @@ define('APPLICATION_PATH', realpath( Lib::path(__DIR__ . '/../') ) . DIRECTORY_S
 // Require Auto-loader:
 require_once( APPLICATION_PATH . Lib::path('app/core/autoloader.php') );
 
-// All set! Init Application!
+// All set! Initialize Application!
 use app\core\Application;
 ( new Application() )->applicator();

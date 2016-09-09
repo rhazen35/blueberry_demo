@@ -8,6 +8,8 @@
 
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
+use app\enterpriseArchitecture\XMLDBController;
+use app\enterpriseArchitecture\IOElementExcelFactory;
 
 $modelId         = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
 $params          = array( "model_id" => $modelId );
@@ -34,7 +36,19 @@ if( !empty( $orderedElements ) ):
                  */
                 $printOrder = ( isset( $orderedElements[$i]['printOrder'] ) ? $orderedElements[$i]['printOrder'] : "" );
                 if( $orderedElements[$i]['printOrder'] !== "noPrint" && ctype_digit( $orderedElements[$i]['printOrder'] ) && $printOrder === $currentPage ):
-                    $elementNameBefore = ( isset( $orderedElements[($i-1)]['name'] ) ?  $orderedElements[($i-1)]['name'] : "" );
+
+                    $params['element_name']        = ( !empty( $orderedElements[$i]['name'] ) ? $orderedElements[$i]['name'] : "" );
+                    $params['multiplicity']        = ( !empty( $orderedElements[$i]['multiplicity'] ) ? $orderedElements[$i]['multiplicity'] : "" );
+                    if( !empty( $params['elements'] ) && !empty( $params['element_name'] ) && !empty( $params['multiplicity'] ) ):
+                        $elementData                   = ( new XMLDBController( "read" ) )->request( $params );
+                        $params['project']             = $projectName;
+                        $params['data']                = ( !empty( $elementData ) ? $elementData : "" );
+                        $excel                         = ( new IOElementExcelFactory( "dataToFile" ) )->request( $params );
+                        $elementOperations             = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
+                        $operations                    = ( !empty( $elementOperations ) ? $elementOperations : "" );
+                    endif;
+
+                    $elementNameBefore             = ( isset( $orderedElements[($i-1)]['name'] ) ?  $orderedElements[($i-1)]['name'] : "" );
                     $_SESSION['elementNameBefore'] = $elementNameBefore;
                     /**
                      * Print root first, always contains the intro element
@@ -56,8 +70,8 @@ if( !empty( $orderedElements ) ):
                     else:
                         print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params ) );
 
-                        if( !empty( $_SESSION['operations'] ) ):
-                            $operations = ( !empty( $_SESSION['operations'] ) ? $_SESSION['operations'] : "" );
+                        if( !empty( $elementData ) && !empty( $operations ) ):
+                            $params['operations'] = $operations;
                             print_r( ( new IOXMLEAScreenFactory( "buildOperations", $operations ) )->request( $params ) );
                         endif;
                     endif;

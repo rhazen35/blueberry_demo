@@ -86,7 +86,11 @@
 
 .login .message
 {
-    margin-top:0.5em;
+    position:absolute;
+    top:25%;
+    width:100%;
+    padding-top:1rem;
     color:firebrick;
     font-weight:bold;
+    border-top:1px solid firebrick;
 }

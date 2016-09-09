@@ -7,6 +7,7 @@ footer
     width:100%;
     padding-top:0.5rem;
     padding-bottom:0.5rem;
+    font-family: "Tahoma";
     font-size:100%;
     color:#FFFFFF;
     background-color:#404B66;
@@ -16,11 +17,11 @@ footer
 {
     float:left;
     margin-left:1rem;
-    font-size:85%;
+    font-size:90%;
 }
 
 .footer-info {
     float: right;
     margin-right:1rem;
-    font-size:85%;
+    font-size:90%;
 }

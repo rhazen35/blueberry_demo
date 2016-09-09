@@ -47,7 +47,6 @@ if( empty( $userExcelHash ) ):
         echo 'Error with the base file (excel)';
     endif;
 
-
 endif;
 
 if( isset( $modelId['model_id'] ) ):

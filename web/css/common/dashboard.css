@@ -4,6 +4,7 @@
     min-height:900px;
     font-family: "Verdana", "serif";
     font-size:90%;
+    overflow:hidden;
 }
 
 .border

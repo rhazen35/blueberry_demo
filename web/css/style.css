@@ -60,6 +60,7 @@ a
     display:flex;
     flex-flow:row wrap;
     justify-content:flex-start;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
     border-left: 10px solid #404B66;
     border-right: 10px solid #404B66;
 }
@@ -70,7 +71,6 @@ a
     height:100%;
     margin: 0 auto;
     margin-bottom:5rem;
-    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 }
 .button
 {

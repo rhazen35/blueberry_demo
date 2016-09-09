@@ -98,7 +98,7 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
                     return( $this->buildSuperElement( $params ) );
                     break;
                 case"buildOperations":
-                    return( $this->buildOperations() );
+                    return( $this->buildOperations( $params ) );
                     break;
             endswitch;
         }
@@ -864,35 +864,24 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
             endif;
             $form             .= '<div class="element-input-box-submit">';
             if( $type === "normal" ):
-                if( $type === "normal" && $multiplicity === "1..*" || $multiplicity === "0..*" ):
-                    $form     .= '<div class="element-input-submit">';
-                    $form     .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder + 1 ) . '" class="button">next</a>';
-                    $form     .= '</div>';
-                    if( $element['printOrder'] > 1 ):
-                        $form .= '<div class="element-input-submit">';
-                        $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder - 1 ) . '" class="button">previous</a>';
-                        $form .= '</div>';
-                    endif;
-                endif;
+
                 $form .= $hiddenInputData;
-                if( $type === "normal" && $multiplicity === "1..*" || $multiplicity === "0..*" || $multiplicity === "" ):
-                    $form     .= '<div class="element-input-submit">';
-                    $form     .= '<input type="hidden" name="action" value="create">';
-                    $form     .= '<input type="submit" name="submit" value="add" class="button">';
-                    $form     .= '</div>';
-                    $form     .= '<div class="element-input-info">';
-                    $form     .= '</div>';
-                else:
-                    $form     .= '<div class="element-input-submit">';
-                    $form     .= '<input type="hidden" name="action" value="create">';
-                    $form     .= '<input type="submit" name="submit" value="next" class="button">';
-                    $form     .= '</div>';
-                    if( $element['printOrder'] > 1 ):
-                        $form .= '<div class="element-input-submit">';
-                        $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder - 1 ) . '" class="button">previous</a>';
-                        $form .= '</div>';
-                    endif;
+
+                $form     .= '<div class="element-input-submit">';
+                $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder + 1 ) . '" class="button">next</a>';
+                $form     .= '</div>';
+
+                if( $element['printOrder'] > 1 ):
+                    $form .= '<div class="element-input-submit">';
+                    $form .= '<a href="' . APPLICATION_HOME . '?model&page=' . ( $elementPrintOrder - 1 ) . '" class="button">previous</a>';
+                    $form .= '</div>';
                 endif;
+
+                $form     .= '<div class="element-input-submit">';
+                $form     .= '<input type="hidden" name="action" value="create">';
+                $form     .= '<input type="submit" name="submit" value="add" class="button">';
+                $form     .= '</div>';
+
                 $form         .= '</form>';
                 $form         .= '</div>';
             else:
@@ -1000,21 +989,20 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
             return ($form);
         }
 
-        private function buildOperations()
+        private function buildOperations( $params )
         {
-            if( isset( $_SESSION['operations'] ) ):
+            if( !empty( $params['operations'] ) ):
 
-                $operations = $_SESSION['operations'];
-                unset( $_SESSION['operations'] );
+                $operations = $params['operations'];
                 usort( $operations, array( $this,'sortByPrintOrder' ) );
 
                 $operationsElement  = '';
-                $operationsElement .= '<div class="">';
+                $operationsElement .= '<div class="elementOperations">';
 
                 foreach( $operations as $operation ):
-                    $operationsElement .= '<div class="">';
-                    $operationsElement .= '<div class="">' . $operation['name'] . '</div>';
-                    $operationsElement .= '<div class="">' . $operation['documentation'] . '</div>';
+                    $operationsElement .= '<div class="elementOperation">';
+                    $operationsElement .= '<div class="elementOperation-name">' . $operation['name'] . '</div>';
+                    $operationsElement .= '<div class="elementOperations-documentation">' . $operation['documentation'] . '</div>';
                     $operationsElement .= '</div>';
                 endforeach;
 

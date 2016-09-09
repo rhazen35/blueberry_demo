@@ -41,16 +41,9 @@ if( !empty( $action ) ):
             $returnMessage     = ( !empty( $returnMessage ) ? $returnMessage : "" );
             $elementData       = ( new XMLDBController( "read" ) )->request( $params );
             $projectName       = ( !empty( $_SESSION['project'] ) ? $_SESSION['project'] : "" );
-            $params['project'] = $projectName;
-            $params['data']    = $elementData;
-            $excel             = ( new IOElementExcelFactory( "dataToFile" ) )->request( $params );
-            $operations        = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
 
             switch( $multiplicity ):
                 case"1":
-                    header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder ) . "&" . $returnMessage );
-                    exit();
-                    break;
                 case"1..*":
                 case"0..*":
                 case"":

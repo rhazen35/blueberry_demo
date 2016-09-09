@@ -257,3 +257,27 @@
     margin-top:2.5em;
     margin-right:1em;
 }
+
+.elementOperations
+{
+    width:90%;
+    margin: 0 auto;
+    margin-top:1rem;
+    padding:1rem;
+    padding-top:0;
+    padding-bottom:1rem;
+    color:#000000;
+    border-bottom:1px solid #AAD400;
+}
+
+.elementOperation
+{
+
+}
+
+.elementOperation-name
+{
+
+}
+
+.elementOperation-documentation
