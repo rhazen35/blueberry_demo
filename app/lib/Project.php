@@ -31,6 +31,9 @@ if( !class_exists( "Project" ) ):
                 case"newProject":
                     return( $this->newProject( $params ) );
                     break;
+                case"newProjectSettings":
+                    $this->newProjectSettings( $params );
+                    break;
                 case"getProjectById":
                     return( $this->getProjectById( $params ) );
                     break;
@@ -40,12 +43,17 @@ if( !class_exists( "Project" ) ):
                 case"getProjectByCalculatorId":
                     return( $this->getProjectByCalculatorId( $params ) );
                     break;
+                case"getProjectsSettings":
+                    return( $this->getProjectsSettings( $params ) );
+                    break;
                 case"saveModelJoinTable":
                     $this->saveModelJoinTable( $params );
                     break;
                 case"saveCalculatorJoinTable":
                     $this->saveCalculatorJoinTable( $params );
                     break;
+                case"getAllProjects":
+                    return( $this->getAllProjects() );
                     break;
                 case"getAllProjectsByUser":
                     return( $this->getAllProjectsByUser() );
@@ -67,6 +75,12 @@ if( !class_exists( "Project" ) ):
                     break;
                 case"countProjects":
                     return( $this->countProjects() );
+                    break;
+                case"getLastAddedProject":
+                    return( $this->getLastAddedProject() );
+                    break;
+                case"getLastAddedProjectByUser":
+                    return( $this->getLastAddedProjectByUser() );
                     break;
             endswitch;
         }
@@ -110,6 +124,29 @@ if( !class_exists( "Project" ) ):
             $lastInsertId = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
             return( $lastInsertId );
+        }
+
+        private function newProjectSettings( $params )
+        {
+            $date       = date( "Y-m-d" );
+            $time       = date( "H:i:s" );
+            $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
+            $id         = "";
+            $type       = ( !empty( $params['type'] ) ? $params['type'] : "" );
+            $projectId  = ( !empty( $params['projectId'] ) ? $params['projectId'] : "" );
+            $sql        = "CALL proc_newProjectSettings(?,?,?,?,?,?)";
+            $data       = array(
+                "id"            => $id,
+                "user_id"       => $userId,
+                "project_id"    => $projectId,
+                'type'          => $type,
+                "date"          => $date,
+                "time"          => $time
+            );
+            $format     = array("iiisss");
+            $type       = "create";
+
+            ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
         }
 
         private function getProjectById( $params )
@@ -175,6 +212,27 @@ if( !class_exists( "Project" ) ):
             return( $returnArray );
         }
 
+        private function getProjectsSettings( $params )
+        {
+            $sql         = "CALL proc_getProjectSettings(?)";
+            $data        = array("project_id" => $params['project_id']);
+            $format      = array("i");
+            $type        = "read";
+            $returnData  = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+            $returnArray = array();
+
+            foreach( $returnData as $returnDat ):
+                $returnArray['id']          = $returnDat['id'];
+                $returnArray['user_id']     = $returnDat['user_id'];
+                $returnArray['project_id']  = $returnDat['project_id'];
+                $returnArray['type']        = $returnDat['type'];
+                $returnArray['date']        = $returnDat['date'];
+                $returnArray['time']        = $returnDat['time'];
+            endforeach;
+
+            return( $returnArray );
+        }
+
         private function saveModelJoinTable( $params )
         {
             $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
@@ -217,6 +275,18 @@ if( !class_exists( "Project" ) ):
             $sql        = "CALL proc_getAllProjectsByUser(?)";
             $data       = array( "user_id" => $userId );
             $format     = array("i");
+            $type       = "read";
+
+            $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            return( $returnData );
+        }
+
+        private function getAllProjects()
+        {
+            $sql        = "CALL proc_getAllProjects()";
+            $data       = array();
+            $format     = array();
             $type       = "read";
 
             $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
@@ -309,6 +379,39 @@ if( !class_exists( "Project" ) ):
             endforeach;
 
             return( $count );
+        }
+
+        private function getLastAddedProject()
+        {
+            $sql         = "CALL proc_getLastAddedProject()";
+            $data        = array();
+            $format      = array();
+            $type        = "read";
+            $returnData  = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            $project = "";
+            foreach( $returnData[0] as $key => $value ):
+                $project = $value;
+            endforeach;
+
+            return( $project );
+        }
+        private function getLastAddedProjectByUser()
+        {
+            $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
+
+            $sql         = "CALL proc_getLastAddedProjectByUser(?)";
+            $data        = array("user_id" => $userId);
+            $format      = array("i");
+            $type        = "read";
+            $returnData  = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            $project = "";
+            foreach( $returnData[0] as $key => $value ):
+                $project = $value;
+            endforeach;
+
+            return( $project );
         }
 
     }

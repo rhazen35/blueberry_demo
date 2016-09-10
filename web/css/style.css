@@ -6,6 +6,7 @@
 
 @import "projects/projects.css";
 @import "projects/newProject.css";
+@import "projects/projectsSettings.css";
 
 @import "models/models.css";
 @import "models/newModel.css";

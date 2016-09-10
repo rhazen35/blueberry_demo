@@ -1,7 +1,42 @@
-.newModel-head
+.newModel
 {
+    height:100%;
+    min-height:875px;
+    background-image: url("../../images/hero/atom_red.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.newModel form
+{
+    width:100%;
+    margin-top:10%;
+    padding:3rem;
+    padding-bottom:4rem;
+    color:#000000;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.newModel form input[type="text"]
+{
+    display:block;
+    width:70%;
+    max-width:30rem;
+    margin-top:1rem;
     padding:0.5rem;
-    color:#FFFFFF;
+}
+
+.newModel form input[type="submit"]
+{
+    float:right;
+    width:20%;
+    margin-top:1rem;
+    margin-right:10%;
+    padding:0.5rem;
     font-size:90%;
-    background-color:#404040;
+}
+
+.newModel form input[type="submit"]:hover
+{
+    cursor:pointer;
 }

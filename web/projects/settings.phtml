@@ -1,0 +1,103 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ruben Hazenbosch
+ * Date: 10-9-2016
+ * Time: 19:39
+ */
+
+use app\lib\Project;
+
+$sessionProjectId   = ( isset( $_SESSION['delProjectId'] ) ? $_SESSION['delProjectId'] : "" );
+$projectId          = ( !empty( $_GET['project_settings'] ) ? $_GET['project_settings'] : "" );
+
+unset($_SESSION['delProjectId']);
+unset($_SESSION['project_id']);
+
+$params           = array( "project_id" => $projectId );
+$projectData      = ( new Project( "getProjectById" ) )->request( $params );
+$projectsSettings = ( new Project( "getProjectsSettings" ) )->request( $params );
+$projectName      = ( isset( $projectData['name'] ) ? $projectData['name'] : "" );
+
+?>
+<div class="modelReport-Title">Project Settings <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
+
+<div class="projectsSettings">
+
+    <div class="projectsSettings-delete">
+
+        <?php if( $projectId != $sessionProjectId ): ?>
+            <div class="projects-item-modelLink">
+                <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                    <input type="hidden" name="projectId" value="<?= $projectId; ?>">
+                    <input type="hidden" name="path" value="projects">
+                    <input type="hidden" name="attr" value="delProject">
+                    <input type="hidden" name="deleteCheck" value="deleteCheck">
+                    <input type="submit" name="delProjectSubmit" class="button" value="delete project">
+                </form>
+            </div>
+
+        <?php elseif( $projectId === $sessionProjectId ): ?>
+            <div class="projects-item-modelLink"><b>Delete this project?</b></div>
+            <div class="projects-item-modelLink">
+                <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                    <input type="hidden" name="projectId" value="<?= $projectId; ?>">
+                    <input type="hidden" name="deleteCheck" value="accepted">
+                    <input type="hidden" name="path" value="projects">
+                    <input type="hidden" name="attr" value="delProject">
+                    <button name="delProjectSubmit" type="submit" class="button">yes</button>
+                </form>
+            </div>
+
+            <div class="projects-item-modelLink">
+                <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                    <input type="hidden" name="projectId" value="<?= $projectId; ?>">
+                    <input type="hidden" name="deleteCheck" value="declined">
+                    <input type="hidden" name="path" value="projects">
+                    <input type="hidden" name="attr" value="delProject">
+                    <button name="delProjectSubmit" type="submit" class="button">no</button>
+                </form>
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+
+    <h5>Name and description</h5>
+
+    <?php if( !empty( $projectData ) ): ?>
+        <div class="projectsSettings-naw">
+            <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                <input type="hidden" name="projectId" value="<?= $projectId; ?>">
+                <input type="hidden" name="path" value="projects">
+                <input type="hidden" name="attr" value="editProject">
+
+                <div class="projectsSettings-inputBox">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" value="<?= $projectData['name'] ?>">
+                </div>
+                <div class="projectsSettings-inputBox">
+                    <label for="descr">Description</label>
+                    <input type="text" name="descr" value="<?= $projectData['description'] ?>">
+                </div>
+
+                <div class="projectsSettings-inputBox">
+                    <br><br>
+                    <h5>Type</h5>
+                    <?php if( !empty( $projectsSettings ) ): ?>
+                        <?php if( !empty( $projectsSettings['type'] ) ): ?>
+                            <div class="projectsSettings-type">
+                                <label><input type="radio" name="type" value="public" <?= ( $projectsSettings['type'] === "public" ? 'checked="checked"' : "" ) ?>>Public</label>
+                                <label><input type="radio" name="type" value="private" <?= ( $projectsSettings['type'] === "private" ? 'checked="checked"' : "" ) ?>>Private</label>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="projectsSettings-inputBox">
+                    <input type="submit" name="editProjectSubmit" class="button" value="edit">
+                </div>
+            </form>
+        </div>
+    <?php endif; ?>
+
+</div>

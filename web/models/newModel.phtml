@@ -55,18 +55,12 @@ endforeach;
  * Display the project name when available
  */
 ?>
-<div class="newModel-head">
-    <div class="title">Model Upload <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
-</div>
-<div class="newProject">
-    <div class="image"><img src="images/icons/xml_file_icon.png"></div>
+<div class="newModel">
+    <div class="modelReport-Title">New model <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
     <?php
     /**
      * Display a message when all projects have a model and disable the form
      */
-        if( empty( $projectSelectArray ) && empty( $projectName ) ):
-            ?><div class="login">All projects have a model, go to projects to start a new one.</div><?php
-        endif;
     ?>
     <form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data">
         <?php

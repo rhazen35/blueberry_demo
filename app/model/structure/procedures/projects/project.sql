@@ -81,6 +81,12 @@ CREATE PROCEDURE
   END $$
 
 CREATE PROCEDURE
+`proc_getAllProjects`()
+  BEGIN
+    SELECT id, name, description, status, date, time FROM projects ORDER BY date DESC,time DESC;
+END $$
+
+CREATE PROCEDURE
 `proc_getAllProjectsByUser`(
   IN userID INT(11)
 )
@@ -121,6 +127,7 @@ CREATE PROCEDURE
   BEGIN
     DELETE FROM projects_models WHERE project_id = projectId;
     DELETE FROM projects_calculators WHERE project_id = projectId;
+    DELETE FROM projects_settings WHERE project_id = projectId;
     DELETE FROM calculators WHERE id = calculatorId;
     DELETE FROM xml_models WHERE id = modelId;
     DELETE FROM projects WHERE id = projectId;
@@ -133,3 +140,38 @@ CREATE PROCEDURE
     BEGIN
       SELECT id FROM projects WHERE name = projectName;
     END $$
+
+CREATE PROCEDURE
+`proc_getLastAddedProject`()
+  BEGIN
+    SELECT MAX(id) FROM projects;
+  END $$
+
+CREATE PROCEDURE
+`proc_getLastAddedProjectByUser`(
+  IN userId INT(11)
+)
+  BEGIN
+    SELECT MAX(id) FROM projects WHERE user_id = userId;
+  END $$
+
+CREATE PROCEDURE
+`proc_newProjectSettings`(
+  IN id INT(11),
+  IN userId INT(11),
+  IN projectId INT(11),
+  IN type VARCHAR(10),
+  IN date DATE,
+  IN time TIME
+)
+  BEGIN
+    INSERT INTO projects_settings VALUES(id, userId, projectId, type, date, time);
+  END $$
+
+CREATE PROCEDURE
+`proc_getProjectSettings`(
+  IN projectId INT(11)
+)
+  BEGIN
+    SELECT * FROM projects_settings WHERE project_id = projectId;
+  END $$

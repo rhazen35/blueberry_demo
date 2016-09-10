@@ -41,8 +41,7 @@ class ViewController
             /**
              * Projects
              */
-            case (isset($get["projects"])
-                || isset($get['deleteProjectAccept'])):
+            case (isset($get["projects"])):
                 $args = array("projects", "projects");
                 ( new ViewController( ...$args ) )->request();
                 break;
@@ -50,6 +49,11 @@ class ViewController
                 || isset($get['newProjectEmptyFields'])
                 || isset($get['projectExists'])):
                 $args = array("newProject", "projects");
+                ( new ViewController( ...$args ) )->request();
+                break;
+            case (isset($get["project_settings"])
+                || isset($get['deleteProjectAccept'])):
+                $args = array("settings", "projects");
                 ( new ViewController( ...$args ) )->request();
                 break;
             /**

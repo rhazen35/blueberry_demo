@@ -701,8 +701,8 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
             $type               = $params['type'];
             $elementName        = ( isset( $element['name'] ) ? $element['name'] : "" );
             $target             = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
-            $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : "" );
-            $fields             = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : "" );
+            $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : array() );
+            $fields             = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : array() );
             $elementPrintOrder  = ( $element['printOrder'] !== "noPrint" ? $element['printOrder'] : ( isset( $_GET['page'] ) ? $_GET['page'] : "" ) );
             $elementsuperType   = ( !empty( $element['super_type'] ) ? $element['super_type'] : "" );
             /**

@@ -20,7 +20,7 @@ $modelExtension         = ( isset( $model['ext'] ) ? $model['ext'] : "" );
 
 if( !empty( $modelHash ) ):
 
-    $xmlFile = Library::path('web/files/xml_models_tmp/' . $modelHash . '.' . $modelExtension);
+    $xmlFile = Library::path('web/files/xml_models/' . $modelHash . '.' . $modelExtension);
     $report  = ( new IOXMLEAModelUpload( "validateModel", $xmlFile, $uploadedAt = null ) )->request( $params = null );
 
     $validationEndTime              = Library::microtimeFormat( $validationStartTime );
@@ -29,5 +29,4 @@ if( !empty( $modelHash ) ):
 
     header("Location: index.php?xmlEAValidatorReport");
     exit();
-
 endif;

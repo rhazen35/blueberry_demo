@@ -28,3 +28,15 @@ CREATE TABLE `projects_calculators`(
   FOREIGN KEY (project_id) REFERENCES projects(id),
   FOREIGN KEY (calculator_id) REFERENCES calculators(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `projects_settings`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `project_id` INT(11) NOT NULL,
+  `type` VARCHAR(10) NOT NULL,
+  `date` DATE,
+  `time` TIME,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (project_id) REFERENCES projects(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

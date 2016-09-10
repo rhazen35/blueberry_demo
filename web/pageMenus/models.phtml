@@ -1,7 +1,18 @@
-<div class="title">Models</div>
+<?php if( !isset( $_GET['newModel'] ) ): ?>
+    <div class="pageInfo-titleHead">Models</div>
+<?php else: ?>
+    <div class="pageInfo-titleHead">New model</div>
+<?php endif; ?>
+<?php if( !isset( $_SESSION['menu_toggle'] ) ): ?>
+    <div class="pageInfo-dashControl"><a href="<?= APPLICATION_HOME; ?>?hideMenu" class="button">Hide dashboard</a></div>
+<?php endif; ?>
 <div class="pageMenu-image"><img src="./images/icons/model_icon.png"></div>
 <nav>
     <ul>
-        <li><a href="<?= APPLICATION_HOME; ?>?newModel" class="button">New model</a></li>
+        <?php if( !isset( $_GET['newModel'] ) ): ?>
+            <li><a href="<?= APPLICATION_HOME; ?>?newModel" class="button">New model</a></li>
+        <?php else: ?>
+            <li><span>New model</span></li>
+        <?php endif; ?>
     </ul>
 </nav>

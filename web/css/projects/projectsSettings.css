@@ -1,0 +1,81 @@
+.projectsSettings
+{
+    padding:1rem;
+}
+
+.projectsSettings-delete
+{
+    clear:both;
+    float:right;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    width:20rem;
+    text-align:right;
+}
+
+.projectsSettings h5
+{
+
+}
+
+.projectsSettings p
+{
+
+}
+
+.projectsSettings-naw
+{
+    padding:1rem;
+}
+
+.projectsSettings-inputBox
+{
+    clear:both;
+    margin:1rem;
+}
+
+.projectsSettings-inputBox label,
+.projectsSettings-inputBox input[type="text"]
+{
+    float:left;
+}
+
+.projectsSettings-inputBox label
+{
+    width:10rem;
+    line-height:2rem;
+}
+
+.projectsSettings-inputBox input[type="text"]
+{
+    width:30rem;
+    margin-top:0.25rem;
+    padding:0.25rem;
+}
+
+.projectsSettings-inputBox input[type="submit"]
+{
+    float:left;
+    margin-top:1rem;
+    font-size:100%;
+}
+
+.projectsSettings-type
+{
+    padding-top:1rem;
+}
+
+.projectsSettings-type label
+{
+    color:#000000;
+}
+
+.projectsSettings-type input[type="radio"]
+{
+    vertical-align: middle;
+    width:1rem;
+    height:1rem;
+    margin-left:0.5rem;
+    margin-right:0.25rem;
+}

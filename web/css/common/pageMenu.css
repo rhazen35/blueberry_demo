@@ -1,6 +1,7 @@
 .pageMenu
 {
     clear:both;
+    margin-bottom:0.5rem;
 }
 
 .pageMenu .title
@@ -27,6 +28,7 @@
     margin-top:0.25rem;
     margin-bottom:0.25rem;
     padding:1rem;
+    overflow:hidden;
 }
 
 .pageMenu nav ul
@@ -39,9 +41,14 @@
    list-style-type: none;
 }
 
+.pageMenu nav ul li span
+{
+    line-height:1.4rem;
+    font-size:80%;
+}
+
 .pageMenu nav ul li a
 {
-    margin-left:1rem;
     text-decoration:none;
     font-size:80%;
 }

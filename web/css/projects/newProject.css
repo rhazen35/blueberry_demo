@@ -1,3 +1,31 @@
+.newProject
+{
+    height:100%;
+    min-height:875px;
+    background-image: url("../../images/hero/factory_landscape.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.newProject-type
+{
+    margin-top:1rem;
+}
+
+.newProject-type label
+{
+    color:#FFFFFF;
+}
+
+.newProject-type input[type="radio"]
+{
+    vertical-align: middle;
+    width:1rem;
+    height:1rem;
+    margin-left:0.5rem;
+    margin-right:0.25rem;
+}
+
 .newProject .image
 {
     width:20%;
@@ -13,26 +41,31 @@
 
 .newProject form
 {
-    margin: 0 auto;
+    width:100%;
+    margin-top:10%;
     padding:3rem;
     padding-bottom:4rem;
     color:#000000;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.5);
 }
 
 .newProject form input[type="text"]
 {
-    width:50%;
+    display:block;
+    width:70%;
+    max-width:30rem;
     margin-top:1rem;
-    padding:0.25rem;
+    padding:0.5rem;
 }
 
 .newProject form input[type="submit"]
 {
     float:right;
-    width:25%;
+    width:20%;
     margin-top:1rem;
-    padding:0.25rem;
+    margin-right:10%;
+    padding:0.5rem;
+    font-size:90%;
 }
 
 .newProject form input[type="submit"]:hover

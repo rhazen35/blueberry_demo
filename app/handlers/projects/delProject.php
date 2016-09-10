@@ -45,7 +45,8 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
         ( new XMLEATableFactory( "delete" ) )->request( $params );
 
         if( !empty( $modelHash ) && !empty( $modelExtension ) ):
-            unlink( Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models_tmp/' . $modelHash . '.' . $modelExtension));
+            $path = Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models_tmp/' . $modelHash . '.' . $modelExtension);
+            if( file_exists( $path ) ): unlink( $path ); endif;
         endif;
 
     endif;
@@ -54,20 +55,19 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
      * Check if there is a calculator id and delete the file
      */
     if( !empty( $calculatorId ) ):
-        $calculator          = ( new IOEAExcelCalculator( $calculatorId ))->getCalculator();
-        $calculatorHash      = ( isset( $calculator['hash'] ) ? $calculator['hash'] : "" );
-        $calculatorExtension = ( isset( $calculator['ext'] ) ? $calculator['ext'] : "" );
-
         $params['calculator_id'] = $calculatorId;
+        $calculator              = ( new IOEAExcelCalculator( "getCalculator" ))->request( $params );
+        $calculatorHash          = ( isset( $calculator['hash'] ) ? $calculator['hash'] : "" );
+        $calculatorExtension     = ( isset( $calculator['ext'] ) ? $calculator['ext'] : "" );
 
         if( !empty( $calculatorHash ) && !empty( $calculatorExtension ) ):
-            unlink( Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/excel_calculators_tmp/' . $calculatorHash . '.' . $calculatorExtension));
+            $path = Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/excel_calculators_tmp/' . $calculatorHash . '.' . $calculatorExtension);
+            if( file_exists( $path ) ): unlink( $path ); endif;
         endif;
 
     endif;
-
     ( new Project( "deleteProject" ) )->request( $params );
-    header("Location: index.php?projects");
+    header("Location: index.php?projects&deleted");
     exit();
 
 /**
@@ -75,13 +75,13 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
  */
 elseif( $deleteCheck === "declined" ):
     unset($_SESSION['delProjectId']);
-    header("Location: index.php?projects");
+    header("Location: index.php?project_settings=" . $projectId . "");
     exit();
 /**
  * Redirect and ask for permission to the delete the project
  */
 else:
     $_SESSION['delProjectId'] = $projectId;
-    header("Location: index.php?deleteProjectAccept");
+    header("Location: index.php?project_settings=" . $projectId . "&deleteProjectAccept");
     exit();
 endif;

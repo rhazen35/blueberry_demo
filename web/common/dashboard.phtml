@@ -7,7 +7,7 @@
                 || isset($_GET['newProject'])
                 || isset($_GET['newProjectEmptyFields'])
                 || isset($_GET['projectExists'])
-                || isset($_GET['deleteProjectAccept'])):
+                || isset($_GET['project_settings'])):
                 require_once "web/pageMenus/projects.phtml";
                 break;
             case (isset($_GET['models'])
@@ -39,9 +39,11 @@
                     || isset($_GET['modelUploadNoProject'])):
                     require_once "web/pageInfo/newProject.phtml";
                     break;
-                case (isset( $_GET['projects'] )
-                    || isset($_GET['deleteProjectAccept'])):
+                case (isset( $_GET['projects'] )):
                     require_once "web/pageInfo/projects.phtml";
+                    break;
+                case (isset( $_GET['project_settings'] )):
+                    require_once "web/pageInfo/projectsSettings.phtml";
                     break;
                 case (isset($_GET['newModel'])
                     || isset($_GET['modelUploadNameExists'])

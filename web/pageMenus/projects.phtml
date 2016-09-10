@@ -1,10 +1,20 @@
-<div class="pageInfo-titleHead">Projects</div>
+<?php if( !isset( $_GET['newProject'] ) && !isset( $_GET['project_settings'] ) ): ?>
+    <div class="pageInfo-titleHead">Projects</div>
+<?php elseif(isset( $_GET['project_settings'] )): ?>
+    <div class="pageInfo-titleHead">Project settings</div>
+<?php else: ?>
+<div class="pageInfo-titleHead">New project</div>
+<?php endif; ?>
 <?php if( !isset( $_SESSION['menu_toggle'] ) ): ?>
     <div class="pageInfo-dashControl"><a href="<?= APPLICATION_HOME; ?>?hideMenu" class="button">Hide dashboard</a></div>
 <?php endif; ?>
 <div class="pageMenu-image"><img src="./images/icons/project_icon.png"></div>
 <nav>
     <ul>
-        <li><a href="<?= APPLICATION_NEW_PROJECT; ?>" class="button">New project</a></li>
+        <?php if( !isset( $_GET['newProject'] ) ): ?>
+            <li><a href="<?= APPLICATION_NEW_PROJECT; ?>" class="button">New project</a></li>
+        <?php else: ?>
+            <li><span>New project</span></li>
+        <?php endif; ?>
     </ul>
 </nav>

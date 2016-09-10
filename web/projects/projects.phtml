@@ -9,24 +9,32 @@
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAModel;
 
-$sessionProjectId = ( isset( $_SESSION['delProjectId'] ) ? $_SESSION['delProjectId'] : "" );
-$projects         = ( new Project( "getAllProjectsByUser" ) )->request( $params = null );
+$projects               = ( new Project( "getAllProjects" ) )->request( $params = null );
+$projectsByUser         = ( new Project( "getAllProjectsByUser" ) )->request( $params = null );
+$newProject             = ( !empty( $_GET['project'] ) ? $_GET['project'] : "" );
+$lastAddedProject       = ( new Project( "getLastAddedProject" ) )->request( $params = null );
+$lastAddedProjectByUser = ( new Project( "getLastAddedProjectByUser" ) )->request( $params = null );
 
 unset($_SESSION['xmlModelId']);
-unset($_SESSION['delProjectId']);
-unset($_SESSION['project_id']);
+
+$userProjectIds = array();
+if( !empty( $projectsByUser ) ):
+    foreach( $projectsByUser as $projectByUser ):
+        $userProjectIds[] = $projectByUser['id'];
+    endforeach;
+endif;
 
 ?>
 
 <div class="projects">
 
     <div class="projects-item projects-head">
-        <div class="projects-item-name">Project</div>
-        <div class="projects-item-descr">Status</div>
-        <div class="projects-item-date">Date</div>
-        <div class="projects-item-model">Model</div>
-        <div class="projects-item-calculator">Calculator</div>
-        <div class="projects-item-active">Active</div>
+        <div class="projects-item-name head">Project</div>
+        <div class="projects-item-model head">Model</div>
+        <div class="projects-item-calculator head">Calculator</div>
+        <div class="projects-item-descr head">Status</div>
+        <div class="projects-item-date head">Created</div>
+        <div class="projects-item-info head">Info</div>
     </div>
 
     <?php
@@ -56,11 +64,14 @@ unset($_SESSION['project_id']);
                     <div class="projects-item-img"><img src="./images/icons/project_icon.png"></div>
                     <div class="projects-item-project"><?= $projectName; ?></div>
                 </div>
-                <div class="projects-item-descr"><?= $project['status']; ?></div>
-                <div class="projects-item-date"><?= $project['date']." ".$project['time']; ?></div>
                 <div class="projects-item-model"><?= ( $hasModel === true ? "yes" : "no" ); ?></div>
                 <div class="projects-item-calculator"><?= ( !empty( $calculatorId ) ? "yes" : "no" ); ?></div>
-                <div class="projects-item-active">no</div>
+                <div class="projects-item-descr"><?= $project['status']; ?></div>
+                <div class="projects-item-date"><?= $project['date']." ".$project['time']; ?></div>
+                <div class="projects-item-info">
+                    <?= ( in_array( $projectId, $userProjectIds ) ? "<div class=\"projects-item-myNew\">my project</div>" : "" ); ?>
+                    <?= ( !empty( $lastAddedProject ) && $lastAddedProject == $projectId ? " <div class=\"projects-item-newest\">new</div>" : "" ); ?>
+                </div>
 
                 <div class="projects-item-control">
 
@@ -84,40 +95,25 @@ unset($_SESSION['project_id']);
                         </form>
                     </div>
 
-                    <?php if( $projectId != $sessionProjectId ): ?>
                     <div class="projects-item-modelLink">
                         <form action="<?= APPLICATION_HOME; ?>" method="POST">
                             <input type="hidden" name="projectId" value="<?= $projectId; ?>">
                             <input type="hidden" name="path" value="projects">
-                            <input type="hidden" name="attr" value="delProject">
-                            <input type="hidden" name="deleteCheck" value="deleteCheck">
-                            <input type="submit" name="delProjectSubmit" class="button" value="delete project">
+                            <input type="hidden" name="attr" value="documents">
+                            <input type="submit" name="projectDocumentsSubmit" class="button" value="Documents">
                         </form>
                     </div>
 
-                    <?php elseif( $projectId == $sessionProjectId ): ?>
-                        <div class="projects-item-modelLink"><b>Delete this project?</b></div>
-                        <div class="projects-item-modelLink">
-                            <form action="<?= APPLICATION_HOME; ?>" method="POST">
-                                <input type="hidden" name="projectId" value="<?= $projectId; ?>">
-                                <input type="hidden" name="deleteCheck" value="accepted">
-                                <input type="hidden" name="path" value="projects">
-                                <input type="hidden" name="attr" value="delProject">
-                                <button name="modelProjectSubmit" type="submit" class="button">yes</button>
-                            </form>
-                        </div>
+                    <div class="projects-item-modelLink">
+                        <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                            <input type="hidden" name="projectId" value="<?= $projectId; ?>">
+                            <input type="hidden" name="path" value="projects">
+                            <input type="hidden" name="attr" value="settings">
+                            <input type="submit" name="projectSettingsSubmit" class="button" value="Settings">
+                        </form>
+                    </div>
 
-                        <div class="projects-item-modelLink">
-                            <form action="<?= APPLICATION_HOME; ?>" method="POST">
-                                <input type="hidden" name="projectId" value="<?= $projectId; ?>">
-                                <input type="hidden" name="deleteCheck" value="declined">
-                                <input type="hidden" name="path" value="projects">
-                                <input type="hidden" name="attr" value="delProject">
-                                <button name="modelProjectSubmit" type="submit" class="button">no</button>
-                            </form>
-                        </div>
 
-                    <?php endif; ?>
 
                     <?php if( $hasModel === false && empty( $calculatorId ) ): ?>
                         <div class="project-itemNoModel">This project has no model and no calculator</div>
@@ -131,8 +127,8 @@ unset($_SESSION['project_id']);
 
             <?php endforeach;
         else: ?>
-            <div class="projects-message">No projects available, create a new project in the left panel.</div>
+            <div class="projects-message-title">No projects available, create a new project in the left panel.</div>
         <?php endif; ?>
-
 </div>
+
 

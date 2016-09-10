@@ -23,9 +23,7 @@ $highestOrder    = $orderedElements['highest_order'];
 $_SESSION['project'] = ( !empty( $projectName ) ? $projectName : "" );
 $params['elements']  = $orderedElements;
 ?>
-    <div class="newModel-head">
-    <div class="title">Model Preview <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
-    </div>
+<div class="modelReport-Title">Model Preview <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
 <?php
 if( !empty( $orderedElements ) ):
     if( $currentPage <= $highestOrder ):

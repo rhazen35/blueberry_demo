@@ -18,3 +18,25 @@
         Blueberry ProductSuite
     </div>
 </footer>
+<?php
+    if( isset( $_GET['new'] )
+        || isset( $_GET['deleted'] )): ?>
+    <div class="projects-message">
+        <span>
+            <?php
+                if( isset( $_GET['new'] ) ):
+                    echo "New project has been created.";
+                else:
+                    if( isset( $_GET['deleted'] ) ):
+                        echo "Project is deleted.";
+                    endif;
+                endif;
+            ?>
+        </span>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $(".projects-message").delay(5000).animate({ height: 0, opacity: 0 }, 'fast');
+        });
+    </script>
+<?php endif;
