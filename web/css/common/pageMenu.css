@@ -1,8 +1,6 @@
 .pageMenu
 {
     clear:both;
-    padding-top:0.25em;
-    border-top:1px solid #CCCCCC;
 }
 
 .pageMenu .title
@@ -14,17 +12,20 @@
 .pageMenu-image
 {
     float:left;
+    margin-top:0.5rem;
     padding-left:1rem;
 }
 
 .pageMenu-image img
 {
-    width:40px;
-    height:40px;
+    width:50px;
+    height:50px;
 }
 
 .pageMenu nav
 {
+    margin-top:0.25rem;
+    margin-bottom:0.25rem;
     padding:1rem;
 }
 

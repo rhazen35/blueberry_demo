@@ -1,4 +1,7 @@
-<div class="title">Projects</div>
+<div class="pageInfo-titleHead">Projects</div>
+<?php if( !isset( $_SESSION['menu_toggle'] ) ): ?>
+    <div class="pageInfo-dashControl"><a href="<?= APPLICATION_HOME; ?>?hideMenu" class="button">Hide dashboard</a></div>
+<?php endif; ?>
 <div class="pageMenu-image"><img src="./images/icons/project_icon.png"></div>
 <nav>
     <ul>

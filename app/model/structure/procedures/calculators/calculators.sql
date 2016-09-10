@@ -63,3 +63,9 @@ CREATE PROCEDURE
     DELETE FROM projects_calculators WHERE calculator_id = calculatorId;
     DELETE FROM calculators WHERE id = calculatorId;
   END $$
+
+CREATE PROCEDURE
+`proc_countCalculators`()
+  BEGIN
+    SELECT COUNT(id) FROM calculators;
+  END $$

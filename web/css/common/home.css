@@ -14,30 +14,43 @@
     background-size: cover;
 }
 
-.home-hero-title
+.home-hero-overview
 {
     position:absolute;
-    top: 10%;
-    left: 40%;
+    width:50%;
+    right:7%;
+    height:auto;
+    margin: 0 auto;
+    margin-top: 3rem;
     padding:1em;
     color:#FFFFFF;
-    font-size:125%;
-    background: rgba(0,0,0, 0.9);
+    font-size:100%;
+    background: rgba(0,0,0, 0.8);
     -webkit-box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.75);
 }
 
-.home-hero span
+.home-hero-overview h2 small
 {
-    position:absolute;
-    top: 65%;
-    right: 10px;
-    padding:1em;
-    color:#FFFFFF;
-    font-size:125%;
-    background: rgba(0,0,0, 0.9);
-    -webkit-box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.75);
+    float:right;
+    font-size:60%;
+}
+
+.home-hero-overview table
+{
+    width:50%;
+    margin-top:2rem;
+    padding:1rem;
+    border:1px solid #FFFFFF;
+}
+
+.home-hero-overview table td
+{
+
+}
+
+.home-hero-overview table td hr
+{
+    margin:1rem;
 }

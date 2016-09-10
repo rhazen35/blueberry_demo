@@ -12,23 +12,22 @@ use app\lib\Calculator;
 $changeCheck  = ( isset( $_POST['changeCheck'] ) ? $_POST['changeCheck'] : "" );
 $projectId    = ( isset( $_POST['projectId'] ) ? $_POST['projectId'] : "" );
 $calculatorId = ( isset( $_POST['calculatorId'] ) ? $_POST['calculatorId'] : "" );
+$params       = array("calculator_id" => $calculatorId);
 
 /**
  * Check if the calculator id is available and if the deletion check is accepeted
  */
 if( !empty( $calculatorId ) && $changeCheck === "accepted" ):
-    $calculator              = ( new IOEAExcelCalculator( $calculatorId ))->getCalculator();
+    $calculator              = ( new IOEAExcelCalculator( "getCalculator" ))->request( $params );
     $calculatorHash          = ( isset( $calculator['hash'] ) ? $calculator['hash'] : "" );
     $calculatorExtension     = ( isset( $calculator['ext'] ) ? $calculator['ext'] : "" );
     $_SESSION['project_id']  = ( !empty( $projectId ) ? $projectId : "" );
-
-    $params['calculator_id'] = $calculatorId;
 
     /**
      * Check if the calculator hash and extension are available and delete the file
      */
     if( !empty( $calculatorHash ) && !empty( $calculatorExtension ) ):
-        unlink( $_SERVER['DOCUMENT_ROOT'] . '/web/files/excel_calculators_tmp/' . $calculatorHash . "." . $calculatorExtension);
+        unlink( $_SERVER['DOCUMENT_ROOT'] . '/web/files/excel_calculators/' . $calculatorHash . "." . $calculatorExtension);
     endif;
 
     /**

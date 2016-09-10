@@ -1,8 +1,8 @@
-<div class="pageInfo-title">Welcome</div>
+<div class="pageInfo-titleHead">Home</div>
 <?php if( !isset( $_SESSION['menu_toggle'] ) ): ?>
     <div class="pageInfo-dashControl"><a href="<?= APPLICATION_HOME; ?>?hideMenu" class="button">Hide dashboard</a></div>
 <?php endif; ?>
-<h3>Welcome to Blueberry</h3>
+<h4>Welcome to Blueberry</h4>
 <h5>Blueberry is a middleware service between the model, calculation kernel and the end-user.</h5>
 <div class="pageInfo-header">
     <div class="left"><img src="images/icons/middleware.png"></div>
@@ -10,19 +10,19 @@
 </div>
 <div class="pageInfo-process">
     <div class="pageInfo-process-item">
-        <div class="pageInfo-process-item-number">1</div>
-        <div class="pageInfo-process-item-img"><img src="images/icons/project_icon.png"></div>
+        <div class="pageInfo-process-item-number"><img src="images/icons/1_icon.png"></div>
         <div class="pageInfo-process-item-name"><a class="button" href="<?= APPLICATION_HOME; ?>?newProject">Start a new project</a></div>
+        <div class="pageInfo-process-item-img"><img src="images/icons/project_icon.png"></div>
     </div>
     <div class="pageInfo-process-item">
-        <div class="pageInfo-process-item-number">2</div>
-        <div class="pageInfo-process-item-img"><img src="images/icons/model_icon.png"></div>
+        <div class="pageInfo-process-item-number"><img src="images/icons/2_icon.png"></div>
         <div class="pageInfo-process-item-name"><a class="button" href="<?= APPLICATION_HOME; ?>?newModel">Upload a model</a></div>
+        <div class="pageInfo-process-item-img"><img src="images/icons/model_icon.png"></div>
     </div>
     <div class="pageInfo-process-item">
-        <div class="pageInfo-process-item-number">3</div>
-        <div class="pageInfo-process-item-img"><img src="images/icons/calculator_icon.png"></div>
+        <div class="pageInfo-process-item-number"><img src="images/icons/3_icon.png"></div>
         <div class="pageInfo-process-item-name"><a class="button" href="<?= APPLICATION_HOME; ?>?newCalculator">Upload a calculator</a></div>
+        <div class="pageInfo-process-item-img"><img src="images/icons/calculator_icon.png"></div>
     </div>
 </div>
 

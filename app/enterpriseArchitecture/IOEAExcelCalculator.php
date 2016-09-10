@@ -31,9 +31,8 @@ class IOEAExcelCalculator
 
     private function getCalculator( $params )
     {
-        $calculatorId = $this->getCalculatorIdByProjectId( $params );
         $sql          = "CALL proc_getCalculator(?)";
-        $data         = array("id" => $calculatorId['calculator_id']);
+        $data         = array("id" => $params['calculator_id']);
         $format       = array('i');
         $type         = "read";
         $returnData   = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );

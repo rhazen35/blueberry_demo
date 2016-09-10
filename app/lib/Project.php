@@ -65,6 +65,9 @@ if( !class_exists( "Project" ) ):
                 case"deleteProject":
                     $this->deleteProject( $params );
                     break;
+                case"countProjects":
+                    return( $this->countProjects() );
+                    break;
             endswitch;
         }
 
@@ -290,6 +293,22 @@ if( !class_exists( "Project" ) ):
             $type         = "delete";
 
             ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+        }
+
+        private function countProjects()
+        {
+            $sql         = "CALL proc_countProjects()";
+            $data        = array();
+            $format      = array();
+            $type        = "read";
+            $returnData  = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+            $count = 0;
+            foreach( $returnData[0] as $key => $value ):
+                $count = $value;
+            endforeach;
+
+            return( $count );
         }
 
     }

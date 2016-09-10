@@ -98,12 +98,11 @@ if( !class_exists( 'Login' ) ):
             $sql        = "CALL proc_getLastLogin(?)";
             $data       = array("user_id" => $userId);
             $format     = array("i");
-
             $type       = "read";
 
             $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
-            return( $returnData );
+            return( $returnData[0]['current'] );
         }
 
         /**
@@ -123,11 +122,7 @@ if( !class_exists( 'Login' ) ):
 
             $returnData = ( new Service( $type, "blueberry" ) )->dbAction( $sql, $data, $format );
 
-            foreach( $returnData as $data ):
-                $previousLogin = $data['previous'];
-            endforeach;
-
-            return(  $previousLogin );
+            return( $returnData[0]['previous'] );
         }
 
         public function updateLogin()

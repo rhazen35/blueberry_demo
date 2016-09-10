@@ -75,6 +75,12 @@ CREATE PROCEDURE
   END $$
 
 CREATE PROCEDURE
+`proc_countProjects`()
+  BEGIN
+    SELECT COUNT(id) FROM projects;
+  END $$
+
+CREATE PROCEDURE
 `proc_getAllProjectsByUser`(
   IN userID INT(11)
 )

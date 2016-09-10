@@ -24,6 +24,9 @@ class Models
     public function request( $params )
     {
         switch( $this->type ):
+            case"countModels":
+                return( $this->countModels() );
+                break;
             case"getAllModelsByUser":
                 return( $this->getAllModelsByUser() );
                 break;
@@ -34,6 +37,22 @@ class Models
                 ( $this->deleteModel( $params ) );
                 break;
         endswitch;
+    }
+
+    private function countModels()
+    {
+        $sql         = "CALL proc_countModels()";
+        $data        = array();
+        $format      = array();
+        $type        = "read";
+        $returnData  = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+        $count = 0;
+        foreach( $returnData[0] as $key => $value ):
+            $count = $value;
+        endforeach;
+
+        return( $count );
     }
 
     private function getAllModelsByUser()

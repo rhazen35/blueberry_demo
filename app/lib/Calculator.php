@@ -24,6 +24,9 @@ class Calculator
     public function request( $params )
     {
         switch( $this->type ):
+            case"countCalculators":
+                return( $this->countCalculators() );
+                break;
             case"getCalculatorIdByProjectId":
                 return( $this->getCalculatorIdByProjectId( $params ) );
                 break;
@@ -31,7 +34,7 @@ class Calculator
                 return( $this->getAllCalculatorsByUser( $params ) );
                 break;
             case"deleteCalculator":
-                return( $this->deleteCalculator( $params ) );
+                $this->deleteCalculator( $params );
                 break;
         endswitch;
     }
@@ -75,6 +78,22 @@ class Calculator
         $type         = "delete";
 
         ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+    }
+
+    private function countCalculators()
+    {
+        $sql         = "CALL proc_countCalculators()";
+        $data        = array();
+        $format      = array();
+        $type        = "read";
+        $returnData  = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+
+        $count = 0;
+        foreach( $returnData[0] as $key => $value ):
+            $count = $value;
+        endforeach;
+
+        return( $count );
     }
 
 }
