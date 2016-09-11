@@ -22,15 +22,19 @@ $projectId              = ( isset( $_POST['projectId'] ) ? $_POST['projectId'] :
 $userId                 = ( isset( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
 $params                 = array("project_id" => $projectId);
 $modelId                = ( new Project( "getModelIdByProjectId" ) )->request( $params );
-$userExcelHash          = ( new IOXMLExcelUser( "getUserExcelHash" ) )->request( $params = null );
+$userExcelHash          = ( new IOXMLExcelUser( "getUserExcelHash" ) )->request( $params );
+$getCalculatorId        = ( new IOEAExcelCalculator( "getCalculatorIdByProjectId" ) )->request( $params );
+$calculatorId           = ( !empty( $getCalculatorId ) ? $getCalculatorId['calculator_id'] : "" );
+
+
 $_SESSION['project_id'] = $projectId;
 
-if( empty( $userExcelHash ) ):
-    $userExcelHash        = sha1( $userId );
-    $params['hash']       = $userExcelHash;
-    $params['project_id'] = $projectId;
-    $calculator           = ( new IOEAExcelCalculator( "getCalculator" ) )->request( $params );
-    $params['ext']        = ( isset( $calculator['ext'] ) ? $calculator['ext'] : "" );
+if( empty( $userExcelHash ) && !empty( $calculatorId ) ):
+    $userExcelHash           = sha1( $userId );
+    $params['hash']          = $userExcelHash;
+    $params['calculator_id'] = $calculatorId;
+    $calculator              = ( new IOEAExcelCalculator( "getCalculator" ) )->request( $params );
+    $params['ext']           = ( isset( $calculator['ext'] ) ? $calculator['ext'] : "" );
 
     if(!empty( $calculator )):
         $baseFile   = Library::path( APPLICATION_PATH . "web/files/excel_calculators/" . $calculator['hash'] . "." . $calculator['ext'] );

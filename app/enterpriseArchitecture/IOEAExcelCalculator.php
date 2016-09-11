@@ -26,6 +26,9 @@ class IOEAExcelCalculator
             case"getCalculator":
                 return( $this->getCalculator( $params ) );
                 break;
+            case"getCalculatorIdByProjectId":
+                return( $this->getCalculatorIdByProjectId( $params ) );
+                break;
         endswitch;
     }
 
