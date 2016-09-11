@@ -20,6 +20,7 @@
 </footer>
 <?php
     if( isset( $_GET['new'] )
+        || isset( $_GET['edited'] )
         || isset( $_GET['deleted'] )): ?>
     <div class="projects-message">
         <span>
@@ -27,8 +28,12 @@
                 if( isset( $_GET['new'] ) ):
                     echo "New project has been created.";
                 else:
-                    if( isset( $_GET['deleted'] ) ):
-                        echo "Project is deleted.";
+                    if( isset( $_GET['edited'] ) ):
+                        echo "Project is edited.";
+                    else:
+                        if( isset( $_GET['deleted'] ) ):
+                            echo "Project is deleted.";
+                        endif;
                     endif;
                 endif;
             ?>

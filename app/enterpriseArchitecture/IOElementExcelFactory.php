@@ -253,7 +253,7 @@ if( !class_exists( "IOElementExcelFactory" ) ):
             foreach( $elements as $element ):
                 if( $elementName === $element['name'] ):
 
-                    $operations = ( !empty( $element['formDetails']['elementOperations'][$elementName] ) ? $element['formDetails']['elementOperations'][$elementName] : "" );
+                    $operations = ( !empty( $element['formDetails']['elementOperations'][$elementName] ) ? $element['formDetails']['elementOperations'][$elementName] : array() );
 
                     if( !empty( $operations ) ):
                         $i = 0;

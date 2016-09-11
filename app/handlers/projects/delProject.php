@@ -66,6 +66,11 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
         endif;
 
     endif;
+
+    $path = Library::path( APPLICATION_ROOT . "/web/files/project_documents/" . $projectId . "/" );
+    array_map('unlink', glob($path . "*.*"));
+    rmdir($path);
+
     ( new Project( "deleteProject" ) )->request( $params );
     header("Location: index.php?projects&deleted");
     exit();

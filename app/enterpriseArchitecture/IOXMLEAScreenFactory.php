@@ -994,16 +994,26 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
             if( !empty( $params['operations'] ) ):
 
                 $operations = $params['operations'];
+                $getOperationData = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
+                $operationData    = ( !empty( $getOperationData ) ? $getOperationData : array() );
                 usort( $operations, array( $this,'sortByPrintOrder' ) );
 
                 $operationsElement  = '';
                 $operationsElement .= '<div class="elementOperations">';
 
+                $i = 0;
                 foreach( $operations as $operation ):
                     $operationsElement .= '<div class="elementOperation">';
                     $operationsElement .= '<div class="elementOperation-name">' . $operation['name'] . '</div>';
+
+                    if( !empty( $operationData[$i]['name'] ) && !empty( $operationData[$i]['value'] ) ):
+                        if( $operation['name'] === $operationData[$i]['name'] ):
+                            $operationsElement .= '<div class="elementOperation-value">' . $operationData[$i]['value'] . '</div>';
+                        endif;
+                    endif;
                     $operationsElement .= '<div class="elementOperations-documentation">' . $operation['documentation'] . '</div>';
                     $operationsElement .= '</div>';
+                    $i++;
                 endforeach;
 
                 $operationsElement .= '</div>';
