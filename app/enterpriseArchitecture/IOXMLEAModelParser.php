@@ -184,11 +184,26 @@ if( !class_exists( "IOXMLEAModelParser" ) ):
                                 for($l = 0; $l < $totalTags; $l++):
 
                                     $tagName = (string) $element->tags->tag[$l]->attributes()->name;
-                                    $order   = (string) $element->tags->tag[$l]->attributes()->value;
 
-                                    if( !empty( $order ) ):
-                                        $classArray[$className]['tags'][$tagName]['order']      = trim( $order );
+                                    if( $tagName === "QR-PrintOrder" ):
+
+                                        $order   = (string) $element->tags->tag[$l]->attributes()->value;
+
+                                        if( !empty( $order ) ):
+                                            $classArray[$className]['tags'][$tagName]['order']      = trim( $order );
+                                            $classArray[$className]['tags'][$tagName]['className']  = trim( $className );
+                                        endif;
+
+                                    elseif( $tagName === "QR-Excel subtypes" ):
+
+                                        $ExcelTypeRange          = (string) $element->tags->tag[$l]->attributes()->value;
+                                        list($cell, $tab, $file) = array_pad(explode(",", $ExcelTypeRange, 3),3, null);
+                                        $cell                    = preg_replace('/\s/', '', $cell);
+
                                         $classArray[$className]['tags'][$tagName]['className']  = trim( $className );
+                                        $classArray[$className]['tags'][$tagName]['file']       = trim( $file );
+                                        $classArray[$className]['tags'][$tagName]['tab']        = trim( $tab );
+                                        $classArray[$className]['tags'][$tagName]['cell']       = trim( $cell );
                                     endif;
 
                                 endfor;

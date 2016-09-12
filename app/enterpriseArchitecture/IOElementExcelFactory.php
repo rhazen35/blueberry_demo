@@ -94,9 +94,16 @@ if( !class_exists( "IOElementExcelFactory" ) ):
                         $elementName        = $params['element_name'];
                         $target             = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
                         $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : array() );
-                        $fields             = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : "" );
+                        $fields             = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : array() );
+                        $excelTypeFile      = ( isset( $element['tags']['QR-Excel subtypes']['file'] ) ? $element['tags']['QR-Excel subtypes']['file'] : "" );
+                        $excelTypeTab       = ( isset( $element['tags']['QR-Excel subtypes']['tab'] ) ? $element['tags']['QR-Excel subtypes']['tab'] : "" );
+                        $excelTypeCell      = ( isset( $element['tags']['QR-Excel subtypes']['cell'] ) ? $element['tags']['QR-Excel subtypes']['cell'] : "" );
 
                         $i = 0;
+
+                        $extractedAndOrderedAttributes[$i]['excelTypeFile'] = $excelTypeFile;
+                        $extractedAndOrderedAttributes[$i]['excelTypeTab']  = $excelTypeTab;
+                        $extractedAndOrderedAttributes[$i]['excelTypeCell'] = $excelTypeCell;
                         /**
                          * Super type attributes
                          */

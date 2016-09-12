@@ -26,7 +26,6 @@ $userExcelHash          = ( new IOXMLExcelUser( "getUserExcelHash" ) )->request(
 $getCalculatorId        = ( new IOEAExcelCalculator( "getCalculatorIdByProjectId" ) )->request( $params );
 $calculatorId           = ( !empty( $getCalculatorId ) ? $getCalculatorId['calculator_id'] : "" );
 
-
 $_SESSION['project_id'] = $projectId;
 
 if( empty( $userExcelHash ) && !empty( $calculatorId ) ):

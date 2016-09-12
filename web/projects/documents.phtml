@@ -1,0 +1,52 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ruben Hazenbosch
+ * Date: 12-Sep-16
+ * Time: 10:34
+ */
+
+use app\lib\ProjectDocuments;
+
+$projectId        = ( !empty( $_GET['projectDocuments'] ) ? $_GET['projectDocuments'] : "" );
+$params           = array("project_id" => $projectId);
+$documents        = ( new ProjectDocuments( "getDocuments" ) )->request( $params );
+$documents_groups = ( new ProjectDocuments( "getDocumentsGroups" ) )->request( $params );
+
+?>
+<form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <input type="hidden" name="projectId" value="<?= $projectId; ?>">
+        <input type="hidden" name="path" value="projects">
+        <input type="hidden" name="attr" value="documents">
+
+        <label for="name">File name</label>
+        <input type="text" name="name" value="">
+
+        <label for="groupName">Group</label>
+        <input type="text" name="groupName" value="">
+
+        <?php
+            if( !empty( $documents_groups ) ):
+                ?>
+                <select name="group">
+                    <option name="" value="">Select a group</option>
+                <?php
+                foreach( $documents_groups as $documents_group ):
+                    echo '<option name="documentGroup" value="' . $documents_group['group_name'] . '">' . $documents_group['group_name'] . '</option>';
+                endforeach;
+                ?> </select> <?php
+            endif;
+        ?>
+
+        <input type="file" name="document" id="document" value="" title="Kies een bestand.">
+
+        <input type="submit" name="projectDocumentUploadSubmit" value="Uploaden" title="Upload a document.">
+    </fieldset>
+</form>
+
+<?php
+    foreach( $documents_groups as $documents_group ):
+        var_dump( $documents_group );
+    endforeach;
+?>

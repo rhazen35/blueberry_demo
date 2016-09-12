@@ -46,5 +46,24 @@ CREATE TABLE `project_documents`(
   `user_id` INT(11) NOT NULL,
   `project_id` INT(11) NOT NULL,
   `hash` VARCHAR(256) NOT NULL,
-  `name` VARCHAR(100)
-)
+  `name` VARCHAR(100),
+  `group_name` VARCHAR(100),
+  `ext` VARCHAR(10),
+  `date` DATE,
+  `time` TIME,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (project_id) REFERENCES projects(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `project_documents_groups`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `project_id` INT(11) NOT NULL,
+  `group_name` VARCHAR(100),
+  `date` DATE,
+  `time` TIME,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (project_id) REFERENCES projects(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

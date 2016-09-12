@@ -96,12 +96,7 @@ endif;
                     </div>
 
                     <div class="projects-item-modelLink">
-                        <form action="<?= APPLICATION_HOME; ?>" method="POST">
-                            <input type="hidden" name="projectId" value="<?= $projectId; ?>">
-                            <input type="hidden" name="path" value="projects">
-                            <input type="hidden" name="attr" value="documents">
-                            <input type="submit" name="projectDocumentsSubmit" class="button" value="Documents">
-                        </form>
+                        <a href="<?= APPLICATION_HOME; ?>?projectDocuments=<?= $projectId ?>" class="button">Documents</a>
                     </div>
 
                     <div class="projects-item-modelLink">

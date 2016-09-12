@@ -20,6 +20,8 @@ $totalElements   = count( $orderedElements );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
 $highestOrder    = $orderedElements['highest_order'];
 
+var_dump( $orderedElements );
+
 $_SESSION['project'] = ( !empty( $projectName ) ? $projectName : "" );
 $params['elements']  = $orderedElements;
 ?>
@@ -35,15 +37,16 @@ if( !empty( $orderedElements ) ):
                 $printOrder = ( isset( $orderedElements[$i]['printOrder'] ) ? $orderedElements[$i]['printOrder'] : "" );
                 if( $orderedElements[$i]['printOrder'] !== "noPrint" && ctype_digit( $orderedElements[$i]['printOrder'] ) && $printOrder === $currentPage ):
 
-                    $params['element_name']        = ( !empty( $orderedElements[$i]['name'] ) ? $orderedElements[$i]['name'] : "" );
-                    $params['multiplicity']        = ( !empty( $orderedElements[$i]['multiplicity'] ) ? $orderedElements[$i]['multiplicity'] : "" );
+                    $params['element_name'] = ( !empty( $orderedElements[$i]['name'] ) ? $orderedElements[$i]['name'] : "" );
+                    $params['multiplicity'] = ( !empty( $orderedElements[$i]['multiplicity'] ) ? $orderedElements[$i]['multiplicity'] : "" );
+
                     if( !empty( $params['elements'] ) && !empty( $params['element_name'] ) && !empty( $params['multiplicity'] ) ):
-                        $elementData                   = ( new XMLDBController( "read" ) )->request( $params );
-                        $params['project']             = $projectName;
-                        $params['data']                = ( !empty( $elementData ) ? $elementData : "" );
-                        $excel                         = ( new IOElementExcelFactory( "dataToFile" ) )->request( $params );
-                        $elementOperations             = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
-                        $operations                    = ( !empty( $elementOperations ) ? $elementOperations : "" );
+                        $elementData        = ( new XMLDBController( "read" ) )->request( $params );
+                        $params['project']  = $projectName;
+                        $params['data']     = ( !empty( $elementData ) ? $elementData : "" );
+                        $excel              = ( new IOElementExcelFactory( "dataToFile" ) )->request( $params );
+                        $elementOperations  = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
+                        $operations         = ( !empty( $elementOperations ) ? $elementOperations : "" );
                     endif;
 
                     $elementNameBefore             = ( isset( $orderedElements[($i-1)]['name'] ) ?  $orderedElements[($i-1)]['name'] : "" );

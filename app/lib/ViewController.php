@@ -56,6 +56,10 @@ class ViewController
                 $args = array("settings", "projects");
                 ( new ViewController( ...$args ) )->request();
                 break;
+            case ( isset( $get["projectDocuments"] ) ):
+                $args = array("documents", "projects");
+                ( new ViewController( ...$args ) )->request();
+                break;
             /**
              * Models
              */

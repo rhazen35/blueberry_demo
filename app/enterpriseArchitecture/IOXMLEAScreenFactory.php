@@ -194,6 +194,7 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
                         $name                 = ( isset( $element['name'] ) ? $element['name'] : "" );
                         $tags                 = ( isset( $element['tags'] ) ? $element['tags'] : false );
                         $order                = ( isset( $tags['QR-PrintOrder']['order'] ) ? $tags['QR-PrintOrder']['order'] : "noPrint");
+                        $excelTypes           = ( isset( $tags['QR-Excel subtypes'] ) ? $tags['QR-Excel subtypes'] : "");
                         $highestOrder         = ( $order !== "noPrint" ? $highestOrder + 1 : $highestOrder );
                         /**
                          * Element documentation, attributes, operations, target(collected by the matching connector, if available)
@@ -228,6 +229,7 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
                             $orderedElements[$i]['isChild']              = $relationIsChild;
                             $orderedElements[$i]['isSuperType']          = $relationIsSuperType;
                             $orderedElements[$i]['isSubType']            = $relationIsSubType;
+                            $orderedElements[$i]['excelTypeLocation']    = $excelTypes;
                             /**
                              * Add the super type if the target is available
                              */
@@ -248,15 +250,18 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
                                 $attributes     = ( isset( $targetClass['attributes'] ) ? $targetClass['attributes'] : false );
                                 $attributesTags = ( isset( $targetClass['attributes']['tags'] ) ? $targetClass['attributes']['tags'] : false );
                                 $operations     = ( isset( $targetClass['operations'] ) ? $targetClass['operations'] : "" );
-                                $labels         = ( isset( $target['labels'] ) ? $target['labels'] : "" );
+                                $labels         = ( isset( $targetClass['labels'] ) ? $targetClass['labels'] : "" );
+                                $excelTypes     = ( isset( $targetClass['tags']['QR-Excel subtypes'] ) ? $targetClass['tags']['QR-Excel subtypes'] : "" );
 
                                 $orderedElements[$i]['supertype']['idref']              = $idref;
                                 $orderedElements[$i]['supertype']['order']              = $order;
                                 $orderedElements[$i]['supertype']['documentation']      = $documentation;
+                                $orderedElements[$i]['supertype']['excelTypeLocation']  = $excelTypes;
                                 $orderedElements[$i]['supertype']['attributes']         = $attributes;
                                 $orderedElements[$i]['supertype']['attributes']['tags'] = $attributesTags;
                                 $orderedElements[$i]['supertype']['operations']         = $operations;
                                 $orderedElements[$i]['supertype']['labels']             = $labels;
+                                $orderedElements[$i]['supertype']['excelTypes']         = $excelTypes;
                             endif;
                             /**
                              * Select the sub types for each super type and add each super/sub combination to the array.
