@@ -9,7 +9,7 @@
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 use app\enterpriseArchitecture\XMLDBController;
-use app\enterpriseArchitecture\IOElementExcelFactory;
+use app\enterpriseArchitecture\IOExcelFactory;
 
 $modelId         = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
 $params          = array( "model_id" => $modelId );
@@ -19,8 +19,6 @@ $orderedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $model
 $totalElements   = count( $orderedElements );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
 $highestOrder    = $orderedElements['highest_order'];
-
-var_dump( $orderedElements );
 
 $_SESSION['project'] = ( !empty( $projectName ) ? $projectName : "" );
 $params['elements']  = $orderedElements;
@@ -44,9 +42,12 @@ if( !empty( $orderedElements ) ):
                         $elementData        = ( new XMLDBController( "read" ) )->request( $params );
                         $params['project']  = $projectName;
                         $params['data']     = ( !empty( $elementData ) ? $elementData : "" );
-                        $excel              = ( new IOElementExcelFactory( "dataToFile" ) )->request( $params );
-                        $elementOperations  = ( new IOElementExcelFactory( "getOperations" ) )->request( $params );
-                        $operations         = ( !empty( $elementOperations ) ? $elementOperations : "" );
+                        $excel              = ( new IOExcelFactory( "dataToFile" ) )->request( $params );
+
+                        var_dump( $excel );
+
+                        //$elementOperations  = ( new IOExcelFactory( "getOperations" ) )->request( $params );
+                        //$operations         = ( !empty( $elementOperations ) ? $elementOperations : "" );
                     endif;
 
                     $elementNameBefore             = ( isset( $orderedElements[($i-1)]['name'] ) ?  $orderedElements[($i-1)]['name'] : "" );

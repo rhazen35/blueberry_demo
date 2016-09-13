@@ -2,13 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: Ruben Hazenbosch
- * Date: 4-7-2016
- * Time: 14:47
+ * Date: 13-Sep-16
+ * Time: 10:14
  */
 
 namespace app\enterpriseArchitecture;
-
-use app\api\ea\EAApi;
 
 require_once( $_SERVER['DOCUMENT_ROOT'].'/app/PHPExcel/Classes/PHPExcel.php');
 
@@ -19,7 +17,6 @@ if( !class_exists( "IOExcelFactory" ) ):
 
     class IOExcelFactory
     {
-
         protected $type;
 
         public function __construct( $type )
@@ -30,193 +27,99 @@ if( !class_exists( "IOExcelFactory" ) ):
         public function request( $params )
         {
             switch( $this->type ):
+                case"getUserFile":
+                    return( $this->getUserFile() );
+                    break;
                 case"dataToFile":
                     return( $this->dataToFile( $params ) );
                     break;
-                case"write":
-                    return( $this->write( $params ) );
-                    break;
-                case"readCell":
-                    return( $this->readCell( $params ) );
+                case"readCellRange":
+                    return( $this->readCellRange( $params ) );
                     break;
             endswitch;
         }
 
+        private function getUserFile()
+        {
+            $userExcel  = ( new IOXMLExcelUser( "getUserExcel" ) )->request( $params = null );
+            if( !empty( $userExcel ) ):
+                $excelHash = $userExcel['hash'];
+                $excelExt  = $userExcel['ext'];
+                $fileName  = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
+                return( $fileName );
+            endif;
+        }
+
         private function dataToFile( $params )
         {
-            $dataWithCell = $this->dataToCell( $params );
-            $params['data'] = $dataWithCell;
-            $this->write( $params );
-            return($dataWithCell);
+            $extractedAndOrderedAttributes = $this->extractedAndOrderedAttributes( $params );
+            $dataWithDestination           = $this->dataWithDestination( $extractedAndOrderedAttributes, $params['data'], $params );
+            $rangeData                     = $this->readDataSetCells($dataWithDestination);
+            return( $rangeData );
         }
 
-        private function dataToCell( $params )
+        private function getCellRange( $params )
         {
-            $projectName         = $params['project'];
-            $type                = "get_model_data_with_destination";
-            $params['dbName']    = "blueberry";
-            $params['modelName'] = $projectName;
-            $data                = ( new EAApi( $type ) )->request( $params );
 
-            $ranges = $this->getCellRangesByTab( $data );
-            $dataWithCell = array();
-
-            $k = 0;
-            foreach( $data as $sheetName => $sheet ):
-                $i = 0;
-                $sheetName = ( !empty( $sheetName ) ? trim($sheetName) : "" );
-                foreach( $sheet as $elements ):
-                    foreach( $elements as $element ):
-                       $totalAttributes = count( $element );
-                        for( $j = 0; $j < $totalAttributes; $j++ ):
-
-                            $file     = ( isset( $element[$j]['file'] ) ? trim( $element[$j]['file'] ) : "" );
-                            $tab      = ( isset( $element[$j]['tab'] ) ? trim( $element[$j]['tab'] ) : "" );
-                            $cell     = ( isset( $element[$j]['cell'] ) ? trim( $element[$j]['cell'] ) : "" );
-                            $startStr = ( isset( $ranges[$sheetName][$cell]['start_str'] ) ? $ranges[$sheetName][$cell]['start_str'] : "" );
-                            $startNum = ( isset( $ranges[$sheetName][$cell]['start_num'] ) ? $ranges[$sheetName][$cell]['start_num'] : "" );
-
-                            if( !empty( $file ) && !empty( $tab ) && !empty( $cell ) ):
-                                $dataWithCell[$sheetName][$k]['file']   = $file;
-                                $dataWithCell[$sheetName][$k]['tab']    = $tab;
-                                $dataWithCell[$sheetName][$k]['cell']   = $startStr.($startNum+$i);
-                                $dataWithCell[$sheetName][$k]['value']  = $element[$j]['value'];
-                                $k++;
-                            endif;
-
-                        endfor;
-                        $i++;
-                    endforeach;
-                endforeach;
-            endforeach;
-
-            return( $dataWithCell );
         }
 
-        private function getCellRangesByTab( $data )
-        {
-            $tabs        = $this->extractTabsOrCells( "tabs", $data );
-            $cells       = $this->extractTabsOrCells( "cells", $data );
-            $uniqueCells = array_unique( $cells );
-
-            $range = array();
-            $i = 0;
-            foreach( $tabs as $tab ):
-                foreach( $uniqueCells as $uniqueCell ):
-                    $parts = explode(':', $uniqueCell);
-                    $start = ( isset( $parts[0] ) ? $parts[0] : "" );
-                    $end   = ( isset( $parts[1] ) ? $parts[1] : "" );
-                    $tab   = ( trim( $tab ) );
-
-                    $range[$tab][$uniqueCell]['start_str'] = preg_replace("/[^a-zA-Z]+/", "", $start);
-                    $range[$tab][$uniqueCell]['start_num'] = ( preg_match_all( '/\d+/', $start, $matches ) ? $matches[0][0] : "" );
-                    $range[$tab][$uniqueCell]['end_str']   = preg_replace("/[^a-zA-Z]+/", "", $end);
-                    $range[$tab][$uniqueCell]['end_num']   = ( preg_match_all( '/\d+/', $end, $matches ) ? $matches[0][0] : "" );
-                    $i++;
-                endforeach;
-            endforeach;
-
-            return( $range );
-        }
-
-        private function extractTabsOrCells( $type, $data )
-        {
-            $returnData = array();
-            if( !empty( $data ) ):
-                foreach( $data as  $sheetName => $sheet ):
-                    foreach( $sheet as $elements ):
-                        if( !empty( $elements ) ):
-                            foreach( $elements as $element ):
-                                if( !empty( $element ) ):
-                                    foreach( $element as $array ):
-                                        if( $type === "cells" ):
-                                            if( !empty( $array['cell'] ) ):
-                                                $returnData[] = $array['cell'];
-                                            endif;
-                                        else:
-                                            if( $type === "tabs" ):
-                                                if( !empty( $array['tab'] ) ):
-                                                    $returnData[] = $array['tab'];
-                                                endif;
-                                            endif;
-                                        endif;
-                                    endforeach;
-                                endif;
-                            endforeach;
-                        endif;
-                    endforeach;
-                endforeach;
-            endif;
-
-            return($returnData);
-        }
-
-        public function write( $params )
+        private function write( $params )
         {
             $data           = $params['data'];
             $userId         = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
             $userExcelHash  = sha1( $userId );
             $excelHash      = ( isset( $params['excelHash'] ) ?  $params['excelHash'] : "" );
             $excelExt       = ( isset( $params['excelExt'] ) ?  $params['excelExt'] : "" );
+            $fileName       = $this->getUserFile( $params );
 
             /**
              * Check if the excel hash matches the user excel hash
              */
             if( $userExcelHash === $excelHash && !empty( $excelExt )):
 
-                // Set the filename and identify the type with IOFactory->identify
-                $fileName = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
-                $fileType = Excel_Factory::identify($fileName);
+                $fileType = Excel_Factory::identify( $fileName );
 
-                // Read the file
-                $objReader = Excel_Factory::createReader($fileType);
-                $objPHPExcel = $objReader->load($fileName);
+                $objReader = Excel_Factory::createReader( $fileType );
+                $objPHPExcel = $objReader->load( $fileName );
 
                 foreach( $data as $sheetName => $sheet ):
                     foreach( $sheet as $item ):
                         $sheet = ( !empty( $item['tab'] ) ? str_replace( " ", "", $item['tab'] ) : ""  );
-
                         $objPHPExcel->setActiveSheetIndexByName($sheet)->setCellValue($item['cell'], $item['value']);
-
                     endforeach;
                 endforeach;
 
-                // Write the file
                 $objWriter = Excel_Factory::createWriter($objPHPExcel, 'Excel2007');
-
-                // Set calculate formula's false when using formulas to prevent PHPExcel from executing them.
                 $objWriter->setPreCalculateFormulas(false);
 
-                // Save the file
                 return( empty( $objWriter->save( $fileName ) ) ? true : false );
 
             endif;
         }
 
-        public function readCell( $params )
+        private function readDataSetCells( $data )
         {
-            $userId = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
-            $userExcelHash  = sha1( $userId );
-            $excelHash      = ( isset( $params['excelHash'] ) ?  $params['excelHash'] : "" );
-            $excelExt       = ( isset( $params['excelExt'] ) ?  $params['excelExt'] : "" );
+            $returnArray = array();
+            $returnData  = array();
+            $fileName    = $this->getUserFile();
 
-            if( $userExcelHash === $excelHash && !empty( $excelExt ) ):
+            $fileType    = Excel_Factory::identify( $fileName );
+            $objReader   = Excel_Factory::createReader( $fileType );
+            $objPHPExcel = $objReader->load( $fileName );
 
-                $tab  = ( !empty( $params['tab'] ) ? $params['tab'] : "" );
-                $cell = ( !empty( $params['cell'] ) ? $params['cell'] : "" );
+            foreach( $data as $sheet => $set ):
+                $totalSets = count( $set );
 
-                $parts = explode( ":", $cell );
-                $cell  = ( !empty( $parts[0] ) ? strtoupper( $parts[0] ) : "" );
+                for( $i = 0; $i < $totalSets; $i++ ):
+                    if( !empty( $set[$i] ) ):
 
-                $fileName = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
-                $fileType = Excel_Factory::identify($fileName);
+                        $objPHPExcel->setActiveSheetIndexByName( trim( $set[$i]['tab'] ) );
+                        $returnData[] = $objPHPExcel->getActiveSheet()->rangeToArray( $set[$i]['cell'] );
+                    endif;
+                endfor;
+                //$returnData = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
 
-                $objReader = Excel_Factory::createReader( $fileType );
-                $objPHPExcel = $objReader->load( $fileName );
-
-                $objPHPExcel->setActiveSheetIndexByName( $tab );
-                $returnData = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
-            endif;
+            endforeach;
 
             if( !empty( $returnData ) ):
                 return( $returnData );
@@ -225,6 +128,116 @@ if( !class_exists( "IOExcelFactory" ) ):
             endif;
         }
 
+        private function extractedAndOrderedAttributes( $params )
+        {
+            if( !empty( $params['elements'] ) && !empty( $params['element_name'] ) ):
+
+                $extractedAndOrderedAttributes = array();
+                foreach( $params['elements'] as $element ):
+                    if( $params['element_name'] === $element['name'] ):
+                        $elementName        = $params['element_name'];
+                        $target             = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
+                        $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : array() );
+                        $fields             = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : array() );
+                        $excelTypeFile      = ( isset( $element['tags']['QR-Excel subtypes']['file'] ) ? $element['tags']['QR-Excel subtypes']['file'] : "" );
+                        $excelTypeTab       = ( isset( $element['tags']['QR-Excel subtypes']['tab'] ) ? $element['tags']['QR-Excel subtypes']['tab'] : "" );
+                        $excelTypeCell      = ( isset( $element['tags']['QR-Excel subtypes']['cell'] ) ? $element['tags']['QR-Excel subtypes']['cell'] : "" );
+
+                        $i = 0;
+
+                        $extractedAndOrderedAttributes[$i]['excelTypeFile'] = $excelTypeFile;
+                        $extractedAndOrderedAttributes[$i]['excelTypeTab']  = $excelTypeTab;
+                        $extractedAndOrderedAttributes[$i]['excelTypeCell'] = $excelTypeCell;
+                        /**
+                         * Super type attributes
+                         */
+                        if( !empty( $targetFields ) ):
+                            $extractedAndOrderedAttributes[$i] = array();
+                            foreach( $targetFields as $targetField ):
+                                if( !empty( $targetField ) ):
+                                    $name      = ( isset( $targetField['input_name'] ) ? $targetField['input_name'] : "" );
+                                    $dataType  = ( isset( $targetField['data_type'] ) ? $targetField['data_type'] : "" );
+                                    $tags      = ( isset( $targetField['tags'] ) ? $targetField['tags'] : "" );
+                                    if( !empty( $name ) ):
+                                        $extractedAndOrderedAttributes[$i]['name']      = $name;
+                                        $extractedAndOrderedAttributes[$i]['data_type'] = $dataType;
+                                    endif;
+                                    $totalTags = count( $tags );
+                                    if( !empty( $tags ) && $totalTags > 0 ):
+                                        for( $j = 0; $j < $totalTags; $j++ ):
+                                            $file      = ( isset( $tags[$j]['file'] ) ? $tags[$j]['file'] : "" );
+                                            $tab       = ( isset( $tags[$j]['tab'] ) ? $tags[$j]['tab'] : "" );
+                                            $cell      = ( isset( $tags[$j]['cell'] ) ? $tags[$j]['cell'] : "" );
+                                            $extractedAndOrderedAttributes[$i]['file'] = $file;
+                                            $extractedAndOrderedAttributes[$i]['tab']  = $tab;
+                                            $extractedAndOrderedAttributes[$i]['cell'] = $cell;
+                                        endfor;
+                                    endif;
+                                    $i++;
+                                endif;
+                            endforeach;
+                        endif;
+                        /**
+                         * Element attributes
+                         */
+                        if( !empty( $fields ) ):
+                            foreach( $fields as $field ):
+                                if( !empty( $field ) ):
+                                    $name      = ( isset( $field['name'] ) ? $field['name'] : "" );
+                                    $dataType  = ( isset( $field['data_type'] ) ? $field['data_type'] : "" );
+                                    if( !empty( $name ) ):
+                                        $extractedAndOrderedAttributes[$i]['name']      = $name;
+                                        $extractedAndOrderedAttributes[$i]['data_type'] = $dataType;
+                                    endif;
+
+                                    $file      = ( isset( $field['file'] ) ? $field['file'] : "" );
+                                    $tab       = ( isset( $field['tab'] ) ? $field['tab'] : "" );
+                                    $cell      = ( isset( $field['cell'] ) ? $field['cell'] : "" );
+                                    $extractedAndOrderedAttributes[$i]['file'] = $file;
+                                    $extractedAndOrderedAttributes[$i]['tab']  = $tab;
+                                    $extractedAndOrderedAttributes[$i]['cell'] = $cell;
+                                endif;
+                                $i++;
+                            endforeach;
+                        endif;
+                    endif;
+                endforeach;
+
+                return($extractedAndOrderedAttributes);
+            endif;
+        }
+
+        private function dataWithDestination( $attributes, $data, $params )
+        {
+            $elementName         = ( !empty( $params['element_name'] ) ? $params['element_name'] : "" );
+            $dataWithDestination = array();
+
+            if( !empty( $attributes ) && !empty( $data[0] ) ):
+                $i = 0;
+                foreach( $data[0] as $key => $value ):
+                    if( $key !== "id" && $key !== "user_id" ):
+                        foreach( $attributes as $attribute ):
+                            if( $key === strtolower( str_replace( " ", "_", $attribute['name'] ) ) ):
+                                $tab  = ( isset( $attribute['tab'] ) ? $attribute['tab'] : "" );
+                                $file = ( isset( $attribute['file'] ) ? $attribute['file'] : "" );
+                                $cell = ( isset( $attribute['cell'] ) ? $attribute['cell'] : "" );
+
+                                $dataWithDestination[$tab][$i]['name']  = $key;
+                                $dataWithDestination[$tab][$i]['file']  = $file;
+                                $dataWithDestination[$tab][$i]['tab']   = $tab;
+                                $dataWithDestination[$tab][$i]['cell']  = $cell;
+                                $dataWithDestination[$tab][$i]['value'] = $value;
+                                $dataWithDestination[$tab][$i]['type']  = $elementName;
+
+                                $i++;
+                            endif;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+
+            return($dataWithDestination);
+        }
     }
 
 endif;
