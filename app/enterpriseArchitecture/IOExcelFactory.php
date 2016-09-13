@@ -33,8 +33,8 @@ if( !class_exists( "IOExcelFactory" ) ):
                 case"dataToFile":
                     return( $this->dataToFile( $params ) );
                     break;
-                case"readCellRange":
-                    return( $this->readCellRange( $params ) );
+                case"getAllDataSetCells":
+                    return( $this->getAllDataSetCells( $params ) );
                     break;
             endswitch;
         }
@@ -54,13 +54,9 @@ if( !class_exists( "IOExcelFactory" ) ):
         {
             $extractedAndOrderedAttributes = $this->extractedAndOrderedAttributes( $params );
             $dataWithDestination           = $this->dataWithDestination( $extractedAndOrderedAttributes, $params['data'], $params );
-            $rangeData                     = $this->readDataSetCells($dataWithDestination);
-            return( $rangeData );
-        }
-
-        private function getCellRange( $params )
-        {
-
+            $dataSetCells                  = $this->getAllDataSetCells( $dataWithDestination );
+            $emptyDataSetCells             = $this->getEmptyDataSetCells( $dataSetCells );
+            return( $emptyDataSetCells );
         }
 
         private function write( $params )
@@ -97,35 +93,91 @@ if( !class_exists( "IOExcelFactory" ) ):
             endif;
         }
 
-        private function readDataSetCells( $data )
+        /**
+         * @param $data
+         * @return array|bool
+         *
+         * Reads the entire data set specified by excel ranges and specific to the element and sheet.
+         */
+        private function getAllDataSetCells( $data )
         {
-            $returnArray = array();
             $returnData  = array();
             $fileName    = $this->getUserFile();
-
             $fileType    = Excel_Factory::identify( $fileName );
             $objReader   = Excel_Factory::createReader( $fileType );
             $objPHPExcel = $objReader->load( $fileName );
 
             foreach( $data as $sheet => $set ):
+                /**
+                 * - Get the excel type tab and cell.
+                 * - Prepare if for reading
+                 */
+                $excelType       = $set[0]['excelTypeCell'];
+                $excelTab        = $set[0]['excelTypeTab'];
+                $typeRange       = explode( ":", $excelType );
+                $typeStart       = $typeRange[0];
+                $typeEnd         = $typeRange[1];
+                $typeStartStr    = strtoupper( preg_replace( "/[^a-zA-Z]+/", "", $typeStart ) );
+                $typeEndStr      = strtoupper( preg_replace( "/[^A-Z]+/", "", $typeEnd ) );
+                $typeStartNumber = (int) filter_var($typeStart, FILTER_SANITIZE_NUMBER_INT);
+                $typeEndNumber   = (int) filter_var($typeEnd, FILTER_SANITIZE_NUMBER_INT);
+
+                for( $k = $typeStartNumber; $k <= $typeEndNumber; $k++ ):
+                    $cell = $typeStartStr . $k;
+                    $objPHPExcel->setActiveSheetIndexByName( $excelTab );
+                    $returnData[$typeStartStr][$k] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
+                endfor;
+
+                /**
+                 * Prepare each data set for reading
+                 */
                 $totalSets = count( $set );
-
                 for( $i = 0; $i < $totalSets; $i++ ):
-                    if( !empty( $set[$i] ) ):
 
-                        $objPHPExcel->setActiveSheetIndexByName( trim( $set[$i]['tab'] ) );
-                        $returnData[] = $objPHPExcel->getActiveSheet()->rangeToArray( $set[$i]['cell'] );
+                    if( !empty( $set[$i] ) && !empty( $set[$i]['tab'] ) && !empty( $set[$i]['cell'] ) ):
+                        $tab         = trim( $set[$i]['tab'] );
+                        $range       = explode( ":", $set[$i]['cell'] );
+                        $rangeStart  = $range[0];
+                        $rangeEnd    = $range[1];
+                        $startStr    = strtoupper( preg_replace( "/[^a-zA-Z]+/", "", $rangeStart ) );
+                        $EndStr      = strtoupper( preg_replace( "/[^A-Z]+/", "", $rangeEnd ) );
+                        $startNumber = (int) filter_var($rangeStart, FILTER_SANITIZE_NUMBER_INT);
+                        $endNumber   = (int) filter_var($rangeEnd, FILTER_SANITIZE_NUMBER_INT);
+
+                        for( $j = $startNumber; $j <= $endNumber; $j++ ):
+                            $cell = $startStr . $j;
+                            $objPHPExcel->setActiveSheetIndexByName( $tab );
+                            $returnData[$startStr][$j] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
+                        endfor;
+
                     endif;
                 endfor;
-                //$returnData = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
 
             endforeach;
 
             if( !empty( $returnData ) ):
+                ksort($returnData);
                 return( $returnData );
             else:
                 return( false );
             endif;
+        }
+
+        private function getEmptyDataSetCells( $dataSetCells )
+        {
+            $returnData = array();
+            $maxCells   = array();
+            foreach( $dataSetCells as $cellString => $cellNumbers ):
+                $maxCells[$cellString] = max(array_keys($cellNumbers));
+            endforeach;
+
+            foreach( $maxCells as $cellString => $maxNumber ):
+                for( $i = 0; $i <= $maxCells[$cellString]; $i-- ):
+                    echo $i;
+                endfor;
+            endforeach;
+
+            return( $maxCells );
         }
 
         private function extractedAndOrderedAttributes( $params )
@@ -139,15 +191,11 @@ if( !class_exists( "IOExcelFactory" ) ):
                         $target             = ( isset( $element['supertype'] ) ? $element['supertype'] : "" );
                         $targetFields       = ( isset( $target['attributes'] ) ? $target['attributes'] : array() );
                         $fields             = ( isset( $element['formDetails']['elementAttributes'][$elementName] ) ? $element['formDetails']['elementAttributes'][$elementName] : array() );
-                        $excelTypeFile      = ( isset( $element['tags']['QR-Excel subtypes']['file'] ) ? $element['tags']['QR-Excel subtypes']['file'] : "" );
-                        $excelTypeTab       = ( isset( $element['tags']['QR-Excel subtypes']['tab'] ) ? $element['tags']['QR-Excel subtypes']['tab'] : "" );
-                        $excelTypeCell      = ( isset( $element['tags']['QR-Excel subtypes']['cell'] ) ? $element['tags']['QR-Excel subtypes']['cell'] : "" );
+                        $excelTypeFile      = ( isset( $element['supertype']['excelTypeLocation']['file'] ) ? $element['supertype']['excelTypeLocation']['file'] : "" );
+                        $excelTypeTab       = ( isset( $element['supertype']['excelTypeLocation']['tab'] ) ? $element['supertype']['excelTypeLocation']['tab'] : "" );
+                        $excelTypeCell      = ( isset( $element['supertype']['excelTypeLocation']['cell'] ) ? $element['supertype']['excelTypeLocation']['cell'] : "" );
 
                         $i = 0;
-
-                        $extractedAndOrderedAttributes[$i]['excelTypeFile'] = $excelTypeFile;
-                        $extractedAndOrderedAttributes[$i]['excelTypeTab']  = $excelTypeTab;
-                        $extractedAndOrderedAttributes[$i]['excelTypeCell'] = $excelTypeCell;
                         /**
                          * Super type attributes
                          */
@@ -165,12 +213,21 @@ if( !class_exists( "IOExcelFactory" ) ):
                                     $totalTags = count( $tags );
                                     if( !empty( $tags ) && $totalTags > 0 ):
                                         for( $j = 0; $j < $totalTags; $j++ ):
-                                            $file      = ( isset( $tags[$j]['file'] ) ? $tags[$j]['file'] : "" );
-                                            $tab       = ( isset( $tags[$j]['tab'] ) ? $tags[$j]['tab'] : "" );
-                                            $cell      = ( isset( $tags[$j]['cell'] ) ? $tags[$j]['cell'] : "" );
+
+                                            $file = ( isset( $tags[$j]['file'] ) ? $tags[$j]['file'] : "" );
+                                            $tab  = ( isset( $tags[$j]['tab'] ) ? $tags[$j]['tab'] : "" );
+                                            $cell = ( isset( $tags[$j]['cell'] ) ? $tags[$j]['cell'] : "" );
+
                                             $extractedAndOrderedAttributes[$i]['file'] = $file;
                                             $extractedAndOrderedAttributes[$i]['tab']  = $tab;
                                             $extractedAndOrderedAttributes[$i]['cell'] = $cell;
+
+                                            /**
+                                             * Type
+                                             */
+                                            $extractedAndOrderedAttributes[$i]['excelTypeFile'] = $excelTypeFile;
+                                            $extractedAndOrderedAttributes[$i]['excelTypeTab']  = $excelTypeTab;
+                                            $extractedAndOrderedAttributes[$i]['excelTypeCell'] = $excelTypeCell;
                                         endfor;
                                     endif;
                                     $i++;
@@ -190,9 +247,10 @@ if( !class_exists( "IOExcelFactory" ) ):
                                         $extractedAndOrderedAttributes[$i]['data_type'] = $dataType;
                                     endif;
 
-                                    $file      = ( isset( $field['file'] ) ? $field['file'] : "" );
-                                    $tab       = ( isset( $field['tab'] ) ? $field['tab'] : "" );
-                                    $cell      = ( isset( $field['cell'] ) ? $field['cell'] : "" );
+                                    $file = ( isset( $field['file'] ) ? $field['file'] : "" );
+                                    $tab  = ( isset( $field['tab'] ) ? $field['tab'] : "" );
+                                    $cell = ( isset( $field['cell'] ) ? $field['cell'] : "" );
+
                                     $extractedAndOrderedAttributes[$i]['file'] = $file;
                                     $extractedAndOrderedAttributes[$i]['tab']  = $tab;
                                     $extractedAndOrderedAttributes[$i]['cell'] = $cell;
@@ -217,10 +275,14 @@ if( !class_exists( "IOExcelFactory" ) ):
                 foreach( $data[0] as $key => $value ):
                     if( $key !== "id" && $key !== "user_id" ):
                         foreach( $attributes as $attribute ):
-                            if( $key === strtolower( str_replace( " ", "_", $attribute['name'] ) ) ):
-                                $tab  = ( isset( $attribute['tab'] ) ? $attribute['tab'] : "" );
-                                $file = ( isset( $attribute['file'] ) ? $attribute['file'] : "" );
-                                $cell = ( isset( $attribute['cell'] ) ? $attribute['cell'] : "" );
+                            if( $key === strtolower( str_replace( " ", "_", trim( $attribute['name'] ) ) ) ):
+                                $tab  = ( isset( $attribute['tab'] ) ? trim( $attribute['tab'] ) : "" );
+                                $file = ( isset( $attribute['file'] ) ? trim( $attribute['file'] ) : "" );
+                                $cell = ( isset( $attribute['cell'] ) ? trim( $attribute['cell'] ) : "" );
+
+                                $excelFile  = ( isset( $attribute['excelTypeFile'] ) ? trim( $attribute['excelTypeFile'] ) : "" );
+                                $excelTab = ( isset( $attribute['excelTypeTab'] ) ? trim( $attribute['excelTypeTab'] ) : "" );
+                                $excelCell = ( isset( $attribute['excelTypeCell'] ) ? trim( $attribute['excelTypeCell'] ) : "" );
 
                                 $dataWithDestination[$tab][$i]['name']  = $key;
                                 $dataWithDestination[$tab][$i]['file']  = $file;
@@ -228,6 +290,10 @@ if( !class_exists( "IOExcelFactory" ) ):
                                 $dataWithDestination[$tab][$i]['cell']  = $cell;
                                 $dataWithDestination[$tab][$i]['value'] = $value;
                                 $dataWithDestination[$tab][$i]['type']  = $elementName;
+
+                                $dataWithDestination[$tab][$i]['excelTypeFile']  = $excelFile;
+                                $dataWithDestination[$tab][$i]['excelTypeTab']   = $excelTab;
+                                $dataWithDestination[$tab][$i]['excelTypeCell']  = $excelCell;
 
                                 $i++;
                             endif;

@@ -11,7 +11,7 @@ CREATE PROCEDURE
   IN projectId INT(11)
 )
   BEGIN
-    SELECT id, user_id, group, date, time FROM project_documents_groups WHERE project_id = projectId
+    SELECT id, user_id, group_name, date, time FROM project_documents_groups WHERE project_id = projectId;
   END $$
 
 CREATE PROCEDURE
