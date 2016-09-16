@@ -55,8 +55,10 @@ if( !class_exists( "IOExcelFactory" ) ):
             $extractedAndOrderedAttributes = $this->extractedAndOrderedAttributes( $params );
             $dataWithDestination           = $this->dataWithDestination( $extractedAndOrderedAttributes, $params['data'], $params );
             $dataSetCells                  = $this->getAllDataSetCells( $dataWithDestination );
-            $emptyDataSetCells             = $this->getEmptyDataSetCells( $dataSetCells );
-            return( $emptyDataSetCells );
+
+            /** TODO: Insert in excel */
+
+            return( $dataSetCells );
         }
 
         private function write( $params )
@@ -125,7 +127,7 @@ if( !class_exists( "IOExcelFactory" ) ):
                 for( $k = $typeStartNumber; $k <= $typeEndNumber; $k++ ):
                     $cell = $typeStartStr . $k;
                     $objPHPExcel->setActiveSheetIndexByName( $excelTab );
-                    $returnData[$typeStartStr][$k] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
+                    $returnData[$k][$typeStartStr] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
                 endfor;
 
                 /**
@@ -147,7 +149,7 @@ if( !class_exists( "IOExcelFactory" ) ):
                         for( $j = $startNumber; $j <= $endNumber; $j++ ):
                             $cell = $startStr . $j;
                             $objPHPExcel->setActiveSheetIndexByName( $tab );
-                            $returnData[$startStr][$j] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
+                            $returnData[$j][$startStr] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
                         endfor;
 
                     endif;
@@ -161,23 +163,6 @@ if( !class_exists( "IOExcelFactory" ) ):
             else:
                 return( false );
             endif;
-        }
-
-        private function getEmptyDataSetCells( $dataSetCells )
-        {
-            $returnData = array();
-            $maxCells   = array();
-            foreach( $dataSetCells as $cellString => $cellNumbers ):
-                $maxCells[$cellString] = max(array_keys($cellNumbers));
-            endforeach;
-
-            foreach( $maxCells as $cellString => $maxNumber ):
-                for( $i = 0; $i <= $maxCells[$cellString]; $i-- ):
-                    echo $i;
-                endfor;
-            endforeach;
-
-            return( $maxCells );
         }
 
         private function extractedAndOrderedAttributes( $params )

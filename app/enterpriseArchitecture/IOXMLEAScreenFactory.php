@@ -20,10 +20,10 @@ namespace app\enterpriseArchitecture;
  * - IOXMLEAAttributeTypes --> returns the attribute data type (a.k.a field type)
  * - IOXMLEAEnumerations --> returns a list of all attribute enumerations
  *
- * ##### [EXTRACT AND ORDER] #####
+ * ##### EXTRACT AND ORDER #####
  *
  * - The extract and order elements function will gather all needed data for screen processing.
- * - Data without a print order will be marked as noPrint.
+ * - Data without a print order will be marked as "noPrint".
  * - Extracted data will be ordered by the given print order.
  * - Attributes and operations will also be ordered per element and type/super type.
  * - Parent/super type attributes/operations will be displayed before child/sub type attributes/operations.
@@ -33,11 +33,11 @@ namespace app\enterpriseArchitecture;
  * TODO: Handle constants, arrays and lists, display constant in a grayed/unchangeable field.
  * TODO: Optimize code.
  *
- * ##### [SCREEN FACTORY] #####
+ * ##### SCREEN FACTORY #####
  *
  * - Each model starts with an intro, created by the build element intro function.
- *  [note:] Each element that is a root is the intro.
- * - Elements that are of type uml:class and with a print order will be created by the build element function.
+ *  [Note:] The element that is root is the intro.
+ * - Elements that are of type uml:class and have a print order will be created by the build element function.
  * - The build element function also creates the forms, which are handled based on multiplicity.
  * - A super form is build if an element has super types.
  * - The build super element function builds a super element sub form.
