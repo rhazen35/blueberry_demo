@@ -46,7 +46,9 @@ $documents_groups = ( new ProjectDocuments( "getDocumentsGroups" ) )->request( $
 </form>
 
 <?php
+if( !empty( $documents_groups ) ):
     foreach( $documents_groups as $documents_group ):
         var_dump( $documents_group );
     endforeach;
+endif;
 ?>

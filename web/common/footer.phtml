@@ -21,27 +21,31 @@
 <?php
     if( isset( $_GET['new'] )
         || isset( $_GET['edited'] )
-        || isset( $_GET['deleted'] )): ?>
+        || isset( $_GET['deleted'] )
+        || isset( $_GET['modelUploaded'] )): ?>
     <div class="projects-message">
         <span>
             <?php
-                if( isset( $_GET['new'] ) ):
+            switch( $_GET ):
+                case( isset( $_GET['new'] ) ):
                     echo "New project has been created.";
-                else:
-                    if( isset( $_GET['edited'] ) ):
-                        echo "Project is edited.";
-                    else:
-                        if( isset( $_GET['deleted'] ) ):
-                            echo "Project is deleted.";
-                        endif;
-                    endif;
-                endif;
+                    break;
+                case( isset( $_GET['modelUploaded'] ) ):
+                    echo "Model upload successful, report is generated.";
+                    break;
+                case( isset( $_GET['edited'] ) ):
+                    echo "Project is edited.";
+                    break;
+                case( isset( $_GET['deleted'] ) ):
+                    echo "Project is deleted.";
+                    break;
+            endswitch;
             ?>
         </span>
     </div>
     <script>
         $(document).ready(function(){
-            $(".projects-message").delay(5000).animate({ height: 0, opacity: 0 }, 'fast');
+            $(".projects-message").delay(4000).animate({ height: 0, opacity: 0 }, 'fast');
         });
     </script>
 <?php endif;

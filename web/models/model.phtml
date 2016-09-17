@@ -10,16 +10,19 @@ use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 use app\enterpriseArchitecture\XMLDBController;
 use app\enterpriseArchitecture\IOExcelFactory;
+use app\enterpriseArchitecture\IOEAExcelCalculator;
 
 $modelId         = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
 $params          = array( "model_id" => $modelId );
 $project         = ( new Project( "getProjectByModelId" ) )->request( $params );
 $projectName     = ( isset( $project['name'] ) ? $project['name'] : "" );
+$projectId       = ( isset( $project['id'] ) ? $project['id'] : "" );
 $orderedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
 $totalElements   = count( $orderedElements );
 $currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
 $highestOrder    = $orderedElements['highest_order'];
-$action          = ( isset( $_POST['action'] ) ? $_POST['action'] : "" );
+$params          = array('project_id' => $projectId);
+$calculator      = ( new IOEAExcelCalculator( "getCalculatorIdByProjectId" ) )->request( $params );
 
 $_SESSION['project'] = ( !empty( $projectName ) ? $projectName : "" );
 $params['elements']  = $orderedElements;
@@ -50,14 +53,18 @@ if( !empty( $orderedElements ) ):
                             $elementData = ( new XMLDBController( "read" ) )->request( $params );
                         endif;
 
-                        $params['data']  = ( !empty( $elementData ) ? $elementData : "" );
-                        $excel           = ( new IOExcelFactory( "dataToFile" ) )->request( $params );
+                        if( !empty( $elementData ) ):
+                            $params['data']  = ( !empty( $elementData ) ? $elementData : "" );
+                            $excel           = ( new IOExcelFactory( "dataToFile" ) )->request( $params );
+                        endif;
                     endif;
 
-                    $elementOperations   = ( new IOExcelFactory( "getOperations" ) )->request( $params );
-                    $operations          = ( !empty( $elementOperations ) ? $elementOperations : "" );
-                    $elementNameBefore   = ( isset( $orderedElements[($i-1)]['name'] ) ?  $orderedElements[($i-1)]['name'] : "" );
+                    if( !empty( $elementData ) ):
+                        $elementOperations   = ( new IOExcelFactory( "getOperations" ) )->request( $params );
+                        $operations          = ( !empty( $elementOperations ) ? $elementOperations : "" );
+                    endif;
 
+                    $elementNameBefore             = ( isset( $orderedElements[($i-1)]['name'] ) ?  $orderedElements[($i-1)]['name'] : "" );
                     $_SESSION['elementNameBefore'] = $elementNameBefore;
                     /**
                      * Print root first, always contains the intro element
@@ -67,6 +74,11 @@ if( !empty( $orderedElements ) ):
                     <div class="element-Header">
                         <div class="element-Header-link">
                             <a href="http://www.quaratio.com/wordpress" class="button" title="Go to quaratio.com">www.quaratio.com</a>
+                            <?php
+                                if( empty( $calculator ) || $calculator === false ):
+                                    echo '<span>This model has no calculator, please upload a calculator.</span>';
+                                endif;
+                            ?>
                         </div>
                         <div class="element-Header-img">
                             <img src="images/icons/quaratio_logo.svg">

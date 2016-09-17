@@ -120,7 +120,7 @@ if( isset($_FILES) && !empty( $_FILES ) ):
                 exit();
             endif;
 
-            header("Location: index.php?xmlEAValidatorReport");
+            header("Location: index.php?xmlEAValidatorReport&modelUploaded");
             exit();
 
         else:

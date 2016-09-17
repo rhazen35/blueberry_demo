@@ -96,19 +96,22 @@ endforeach;
          */
         if( !empty( $projectName ) || !empty( $projectSelectArray ) ): ?>
             <input type="submit" name="xmlFileUploadSubmit" value="Uploaden" title="Upload an xml file.">
+        <?php else: ?>
+            <span>All projects have a model.</span>
         <?php endif; ?>
+
+        <?php
+            if( isset( $_GET['modelUploadNoFile'] ) ):
+                ?><div class="message">Please choose a file.</div><?php
+            else:
+                if( isset( $_GET['modelUploadNoProject'] ) ):
+                    ?><div class="message">Please choose a project.</div><?php
+                elseif( isset( $_GET['modelUploadNameExists'] ) ):
+                        ?><div class="message">Model name is already in use.</div><?php
+                endif;
+            endif;
+        ?>
 
     </form>
 
-    <?php
-        if( isset( $_GET['modelUploadNoFile'] ) ):
-            ?><div class="message">Please choose a file.</div><?php
-        else:
-            if( isset( $_GET['modelUploadNoProject'] ) ):
-                ?><div class="message">Please choose a project.</div><?php
-            elseif( isset( $_GET['modelUploadNameExists'] ) ):
-                    ?><div class="message">Model name is already in use.</div><?php
-            endif;
-        endif;
-    ?>
 </div>

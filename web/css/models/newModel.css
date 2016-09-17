@@ -7,7 +7,17 @@
     background-size: cover;
 }
 
-.newModel form
+.newCalculator
+{
+    height:100%;
+    min-height:875px;
+    background-image: url("../../images/hero/calculator.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.newModel form,
+.newCalculator form
 {
     width:100%;
     margin-top:10%;
@@ -17,7 +27,14 @@
     background-color: rgba(0,0,0,0.5);
 }
 
-.newModel form input[type="text"]
+.newModel form span,
+.newCalculator form span
+{
+    color:#FFFFFF;
+}
+
+.newModel form input[type="text"],
+.newCalculator form input[type="text"]
 {
     display:block;
     width:70%;
@@ -26,7 +43,15 @@
     padding:0.5rem;
 }
 
-.newModel form input[type="submit"]
+.newModel form input[type="file"],
+.newCalculator form input[type="file"]
+{
+    color:#FFFFFF;
+    margin-right:4rem;
+}
+
+.newModel form input[type="submit"],
+.newCalculator form input[type="submit"]
 {
     float:right;
     width:20%;
@@ -36,7 +61,14 @@
     font-size:90%;
 }
 
-.newModel form input[type="submit"]:hover
+.newModel form input[type="submit"]:hover,
+.newCalculator form input[type="submit"]:hover
 {
     cursor:pointer;
+}
+
+.message
+{
+    padding:1rem;
+    color:#FFFFFF;
 }
