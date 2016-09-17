@@ -260,19 +260,23 @@
 
 .elementOperations
 {
-    width:90%;
+    width:80%;
     margin: 0 auto;
     margin-top:1rem;
-    padding:1rem;
     padding-top:0;
     padding-bottom:1rem;
     color:#000000;
-    border-bottom:1px solid #AAD400;
 }
 
 .elementOperation
 {
+    padding:1rem;
+}
 
+.elementOperations-title
+{
+    padding-left:1rem;
+    font-weight:bold;
 }
 
 .elementOperation-name
@@ -281,3 +285,7 @@
 }
 
 .elementOperation-documentation
+{
+    padding-top:1rem;
+    font-size:90%;
+}

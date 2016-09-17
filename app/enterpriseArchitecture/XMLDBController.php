@@ -37,10 +37,7 @@ class XMLDBController
     {
         $this->type = $type;
     }
-    /**
-     * @param $params
-     * @return bool|\mysqli_result
-     */
+
     public function request( $params )
     {
         switch( $this->type ):
@@ -49,6 +46,17 @@ class XMLDBController
                 break;
             case"read":
                 return( $this->dbControl( $params ) );
+                break;
+            case"readSuperType":
+                $returnData = array();
+                $superType  = ( !empty( $params['element']['super_types'][$params['element_name']] ) ? $params['element']['super_types'][$params['element_name']] : array() );
+                if( !empty( $superType ) ):
+                    foreach( $superType as $subType ):
+                        $params['element_name'] = $subType;
+                        $returnData[$subType] = ( $this->dbControl( $params ) );
+                    endforeach;
+                endif;
+                return( $returnData );
                 break;
             case"update":
             case"delete":
@@ -118,9 +126,9 @@ class XMLDBController
                 $dbFormat     = array("s");
                 $dbConnection = ( new Service( "read", "blueberry" ) )->dbAction( $dbSql, $dbData, $dbFormat );
                 if( !empty($dbConnection) && $parsedElement['name'] === $elementName ):
-                    $elementAttributes      = ( !empty( $parsedElement['formDetails']['elementAttributes'][$elementName] ) ? $parsedElement['formDetails']['elementAttributes'][$elementName] : ""  );
+                    $elementAttributes      = ( !empty( $parsedElement['formDetails']['elementAttributes'][$elementName] ) ? $parsedElement['formDetails']['elementAttributes'][$elementName] : array()  );
                     $totalElementAttributes = count($elementAttributes);
-                    $superAttributes        = ( !empty( $parsedElement['supertype']['attributes'] ) ? $parsedElement['supertype']['attributes'] : "" );
+                    $superAttributes        = ( !empty( $parsedElement['supertype']['attributes'] ) ? $parsedElement['supertype']['attributes'] : array() );
                     $totalSuperAttributes   = count( $superAttributes );
                     /**
                      * Super type attributes
@@ -210,7 +218,7 @@ class XMLDBController
         /**
          * Execute read query if type is other then delete and the database exists.
          */
-        if( $this->type !== "delete" && !empty($dbConnection) ):
+        if( $this->type !== "delete" && !empty( $dbConnection ) ):
             $type        = "read";
             $selectArray = ( new Service( $type, $database ) )->dbAction( $checkSql, $checkData, $checkFormat );
         endif;
@@ -230,6 +238,7 @@ class XMLDBController
                 endif;
                 break;
             case"read":
+            case"readSuperType":
                 return( !empty( $selectArray ) ? $selectArray : false );
                 break;
             case"update":

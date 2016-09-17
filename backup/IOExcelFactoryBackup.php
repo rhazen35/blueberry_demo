@@ -15,9 +15,9 @@ require_once( $_SERVER['DOCUMENT_ROOT'].'/app/PHPExcel/Classes/PHPExcel.php');
 use app\core\Library;
 use PHPExcel_IOFactory as Excel_Factory;
 
-if( !class_exists( "IOExcelFactory" ) ):
+if( !class_exists( "IOExcelFactoryBackup" ) ):
 
-    class IOExcelFactory
+    class IOExcelFactoryBackup
     {
 
         protected $type;

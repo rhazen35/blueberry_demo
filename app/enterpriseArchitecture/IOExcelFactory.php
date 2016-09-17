@@ -34,7 +34,10 @@ if( !class_exists( "IOExcelFactory" ) ):
                     return( $this->dataToFile( $params ) );
                     break;
                 case"getAllDataSetCells":
-                    return( $this->getAllDataSetCells( $params ) );
+                    return( $this->getDataSetCells( $params ) );
+                    break;
+                case"getOperations":
+                    return( $this->getOperations( $params ) );
                     break;
             endswitch;
         }
@@ -42,49 +45,122 @@ if( !class_exists( "IOExcelFactory" ) ):
         private function getUserFile()
         {
             $userExcel  = ( new IOXMLExcelUser( "getUserExcel" ) )->request( $params = null );
+            $params     = array();
             if( !empty( $userExcel ) ):
-                $excelHash = $userExcel['hash'];
-                $excelExt  = $userExcel['ext'];
-                $fileName  = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
-                return( $fileName );
+                $excelHash      = $userExcel['hash'];
+                $excelExt       = $userExcel['ext'];
+                $fileName       = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
+                $params['hash'] = $excelHash;
+                $params['ext']  = $excelExt;
+                $params['file'] = $fileName;
             endif;
+            return( $params );
         }
 
         private function dataToFile( $params )
         {
-            $extractedAndOrderedAttributes = $this->extractedAndOrderedAttributes( $params );
-            $dataWithDestination           = $this->dataWithDestination( $extractedAndOrderedAttributes, $params['data'], $params );
-            $dataSetCells                  = $this->getAllDataSetCells( $dataWithDestination );
 
-            /** TODO: Insert in excel */
+            $totalDataSets = count($params['data']);
+            if( $totalDataSets > 1 ):
+                foreach( $params['data'] as $name => $data ):
+                    $params['element_name'] = $name;
+                    $params['data']         = $data;
+                    $this->insertIntoFile( $params );
+                endforeach;
+            else:
+                $this->insertIntoFile( $params );
+            endif;
 
-            return( $dataSetCells );
         }
 
-        private function write( $params )
+        private function insertIntoFile( $params )
         {
-            $data           = $params['data'];
+            $elementName                   = $params['element_name'];
+            $extractedAndOrderedAttributes = $this->extractedAndOrderedAttributes( $params );
+            $dataWithDestination           = $this->dataWithDestination( $extractedAndOrderedAttributes, $params['data'], $params );
+            $dataSetCells                  = $this->getDataSetCells( $dataWithDestination );
+            $elementMultiplicity           = $this->getElementMultiplicity( $params );
+            $elementTypeOccurrences        = $this->getElementOccurrences( $dataSetCells, $elementName );
+            $isAllowed                     = $this->matchOccurrencesWithMultiplicity( $elementMultiplicity, $elementTypeOccurrences );
+
+            if( $isAllowed === true ):
+
+                $emptyRow                      = $this->getEmptyRow( $dataSetCells );
+                $maxRow                        = $this->getMaxRowFromDataSet( $dataSetCells );
+
+                if( $emptyRow !== ( $maxRow + 1 ) ):
+                    $rowWithData                   = $this->populateEmptyRow( $dataWithDestination, $emptyRow );
+                    //$doesExists                    = $this->doesRowExists( $dataSetCells, $rowWithData );
+
+                    //var_dump( $doesExists );
+                    $doesExists = false;
+
+                    if( !empty( $rowWithData ) && $doesExists === false ):
+                        return( $this->dataToExcel( $rowWithData ) );
+                    endif;
+                else:
+                    echo "Max excel row reached! (Based on range)";
+                endif;
+
+            endif;
+        }
+
+        private function doesRowExists( $dataSetCells, $rowWithData )
+        {
+            $exists = array();
+            $totalColumns = 0;
+            $totalTrues   = 0;
+
+            $data = ( !empty( $rowWithData ) ? $rowWithData : "" );
+            if( !empty( $dataSetCells ) && !empty( $data ) ):
+                foreach( $dataSetCells as $dataCells ):
+                    foreach( $dataCells as $cell => $dataCell ):
+                        if( (string) $data['columns'][$cell] === (string) $dataCell ):
+                            $exists[$cell] = true;
+                        endif;
+                    endforeach;
+                endforeach;
+
+                $totalColumns = count( $data['columns'] );
+                foreach( $data['columns'] as $cell => $column ):
+                    if( !empty( $exists[$cell] ) && $exists[$cell] === true ):
+                        $totalTrues++;
+                    endif;
+                endforeach;
+
+            endif;
+
+            return( $exists );
+
+
+
+        }
+
+        private function dataToExcel( $data )
+        {
+            $fileInfo       = $this->getUserFile();
             $userId         = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
             $userExcelHash  = sha1( $userId );
-            $excelHash      = ( isset( $params['excelHash'] ) ?  $params['excelHash'] : "" );
-            $excelExt       = ( isset( $params['excelExt'] ) ?  $params['excelExt'] : "" );
-            $fileName       = $this->getUserFile( $params );
+            $excelHash      = ( isset( $fileInfo['hash'] ) ?  $fileInfo['hash'] : "" );
+            $excelExt       = ( isset( $fileInfo['ext'] ) ?  $fileInfo['ext'] : "" );
+            $fileName       = ( isset( $fileInfo['file'] ) ?  $fileInfo['file'] : "" );
 
             /**
              * Check if the excel hash matches the user excel hash
              */
             if( $userExcelHash === $excelHash && !empty( $excelExt )):
 
-                $fileType = Excel_Factory::identify( $fileName );
-
-                $objReader = Excel_Factory::createReader( $fileType );
+                $fileType    = Excel_Factory::identify( $fileName );
+                $objReader   = Excel_Factory::createReader( $fileType );
                 $objPHPExcel = $objReader->load( $fileName );
 
-                foreach( $data as $sheetName => $sheet ):
-                    foreach( $sheet as $item ):
-                        $sheet = ( !empty( $item['tab'] ) ? str_replace( " ", "", $item['tab'] ) : ""  );
-                        $objPHPExcel->setActiveSheetIndexByName($sheet)->setCellValue($item['cell'], $item['value']);
-                    endforeach;
+                $sheet   = ( !empty( $data['fileInfo']['sheet'] ) ? $data['fileInfo']['sheet'] : "" );
+                $row     = ( !empty( $data['fileInfo']['row'] ) ? $data['fileInfo']['row'] : "" );
+                $columns = ( !empty( $data['columns'] ) ? $data['columns'] : array() );
+
+                foreach( $columns as $column => $value ):
+                    $cell = $column.$row;
+                    $objPHPExcel->setActiveSheetIndexByName( $sheet )->setCellValue( $cell, $value );
                 endforeach;
 
                 $objWriter = Excel_Factory::createWriter($objPHPExcel, 'Excel2007');
@@ -92,7 +168,37 @@ if( !class_exists( "IOExcelFactory" ) ):
 
                 return( empty( $objWriter->save( $fileName ) ) ? true : false );
 
+
             endif;
+        }
+
+        private function matchOccurrencesWithMultiplicity( $elementMultiplicity, $elementTypeOccurrences )
+        {
+            switch( $elementTypeOccurrences ):
+                case"0":
+                    return( true );
+                    break;
+                case"1":
+                    $multiplicity = "1";
+                    $allowed      = ( $multiplicity === $elementMultiplicity && $multiplicity === (string) $elementTypeOccurrences ? false : true );
+                    return( $allowed );
+                    break;
+            endswitch;
+        }
+
+        private function getElementMultiplicity( $params )
+        {
+            $elementName = ( !empty( $params['element_name'] ) ? $params['element_name'] : "" );
+
+            $multiplicity = "";
+            foreach( $params['elements'] as $element  ):
+                if( $elementName === $element['name'] ):
+                    $multiplicity = ( !empty( $element['multiplicity'] ) ? $element['multiplicity'] : "" );
+                    break;
+                endif;
+            endforeach;
+
+            return( $multiplicity );
         }
 
         /**
@@ -101,10 +207,11 @@ if( !class_exists( "IOExcelFactory" ) ):
          *
          * Reads the entire data set specified by excel ranges and specific to the element and sheet.
          */
-        private function getAllDataSetCells( $data )
+        private function getDataSetCells( $data )
         {
-            $returnData  = array();
-            $fileName    = $this->getUserFile();
+            $dataSetCells  = array();
+            $fileInfo    = $this->getUserFile();
+            $fileName    = ( !empty( $fileInfo['file'] ) ? $fileInfo['file'] : "" );
             $fileType    = Excel_Factory::identify( $fileName );
             $objReader   = Excel_Factory::createReader( $fileType );
             $objPHPExcel = $objReader->load( $fileName );
@@ -114,26 +221,30 @@ if( !class_exists( "IOExcelFactory" ) ):
                  * - Get the excel type tab and cell.
                  * - Prepare if for reading
                  */
-                $excelType       = $set[0]['excelTypeCell'];
-                $excelTab        = $set[0]['excelTypeTab'];
-                $typeRange       = explode( ":", $excelType );
-                $typeStart       = $typeRange[0];
-                $typeEnd         = $typeRange[1];
-                $typeStartStr    = strtoupper( preg_replace( "/[^a-zA-Z]+/", "", $typeStart ) );
-                $typeEndStr      = strtoupper( preg_replace( "/[^A-Z]+/", "", $typeEnd ) );
-                $typeStartNumber = (int) filter_var($typeStart, FILTER_SANITIZE_NUMBER_INT);
-                $typeEndNumber   = (int) filter_var($typeEnd, FILTER_SANITIZE_NUMBER_INT);
+                if( !empty( $set[0]['excelTypeCell'] ) && !empty( $set[0]['excelTypeTab'] ) ):
+                    $excelType       = $set[0]['excelTypeCell'];
+                    $excelTab        = $set[0]['excelTypeTab'];
+                    $typeRange       = explode( ":", $excelType );
+                    $typeStart       = $typeRange[0];
+                    $typeEnd         = $typeRange[1];
+                    $typeStartStr    = strtoupper( preg_replace( "/[^a-zA-Z]+/", "", $typeStart ) );
+                    $typeEndStr      = strtoupper( preg_replace( "/[^A-Z]+/", "", $typeEnd ) );
+                    $typeStartNumber = (int) filter_var($typeStart, FILTER_SANITIZE_NUMBER_INT);
+                    $typeEndNumber   = (int) filter_var($typeEnd, FILTER_SANITIZE_NUMBER_INT);
 
-                for( $k = $typeStartNumber; $k <= $typeEndNumber; $k++ ):
-                    $cell = $typeStartStr . $k;
-                    $objPHPExcel->setActiveSheetIndexByName( $excelTab );
-                    $returnData[$k][$typeStartStr] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
-                endfor;
+                    for( $k = $typeStartNumber; $k <= $typeEndNumber; $k++ ):
+                        $cell = $typeStartStr . $k;
+                        $objPHPExcel->setActiveSheetIndexByName( $excelTab );
+                        $dataSetCells[$k][$typeStartStr] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
+                    endfor;
+
+                endif;
 
                 /**
                  * Prepare each data set for reading
                  */
                 $totalSets = count( $set );
+
                 for( $i = 0; $i < $totalSets; $i++ ):
 
                     if( !empty( $set[$i] ) && !empty( $set[$i]['tab'] ) && !empty( $set[$i]['cell'] ) ):
@@ -149,7 +260,7 @@ if( !class_exists( "IOExcelFactory" ) ):
                         for( $j = $startNumber; $j <= $endNumber; $j++ ):
                             $cell = $startStr . $j;
                             $objPHPExcel->setActiveSheetIndexByName( $tab );
-                            $returnData[$j][$startStr] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
+                            $dataSetCells[$j][$startStr] = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
                         endfor;
 
                     endif;
@@ -157,12 +268,105 @@ if( !class_exists( "IOExcelFactory" ) ):
 
             endforeach;
 
-            if( !empty( $returnData ) ):
-                ksort($returnData);
-                return( $returnData );
+            if( !empty( $dataSetCells ) ):
+                ksort( $dataSetCells );
+                return( $dataSetCells );
             else:
                 return( false );
             endif;
+        }
+
+        private function getElementOccurrences( $dataSetCells, $elementName )
+        {
+            $occurrences = 0;
+            if( !empty( $dataSetCells ) ):
+                foreach( $dataSetCells as $dataCells ):
+                    foreach( $dataCells as $dataCell ):
+                        if( $dataCell === $elementName ):
+                            $occurrences++;
+                        endif;
+                    endforeach;
+                endforeach;
+            endif;
+
+            return( $occurrences );
+        }
+
+        private function getMaxRowFromDataSet( $dataSet )
+        {
+            $rows   = array();
+            $maxRow = 0;
+            if( !empty( $dataSet ) ):
+                foreach( $dataSet as $row => $array ):
+                    $rows[] = $row;
+                endforeach;
+
+                $maxRow = max( $rows );
+            endif;
+
+            return( $maxRow );
+        }
+
+        private function populateEmptyRow( $data, $rowNumber )
+        {
+            $populated = array();
+
+            foreach( $data as $sheet => $array ):
+                foreach( $array as $item ):
+                    $sheetName   = ( !empty( $item['tab'] ) ? str_replace( " ", "", $item['tab'] ) : ""  );
+                    $typeValue   = ( !empty( $item['type'] ) ? $item['type'] : ""  );
+                    $cell        = ( !empty( $item['cell'] ) ? $item['cell'] : ""  );
+                    $typeCell    = ( !empty( $item['excelTypeCell'] ) ? $item['excelTypeCell'] : ""  );
+                    $value       = ( !empty( $item['value'] ) ? $item['value'] : ""  );
+
+                    $populated['fileInfo']['sheet'] = $sheetName;
+                    $populated['fileInfo']['row']   = $rowNumber;
+
+                    $range       = explode( ":", $typeCell );
+                    $rangeStart  = $range[0];
+                    $startStr    = strtoupper( preg_replace( "/[^a-zA-Z]+/", "", $rangeStart ) );
+
+                    if( !empty( $startStr ) && !empty( $typeValue ) ):
+                        $populated['columns'][$startStr] = $typeValue;
+                    endif;
+
+                    $range       = explode( ":", $cell );
+                    $rangeStart  = $range[0];
+                    $startStr    = strtoupper( preg_replace( "/[^a-zA-Z]+/", "", $rangeStart ) );
+
+                    if( !empty( $startStr ) && !empty( $value ) ):
+                        $populated['columns'][$startStr] = $value;
+                    endif;
+
+                endforeach;
+            endforeach;
+
+            if( !empty( $populated['columns'] ) ):
+                ksort( $populated['columns'] );
+            endif;
+
+            return( $populated );
+        }
+
+        private function getEmptyRow( $dataSetCells )
+        {
+            $emptyRow = 0;
+            if( !empty( $dataSetCells ) ):
+                foreach( $dataSetCells as $cell => $row ):
+                    $emptyRow = 0;
+                    foreach( $row as $item ):
+                        if( !empty( $item ) ):
+                            $emptyRow++;
+                        endif;
+                    endforeach;
+                    if( $emptyRow === 0 ):
+                        $emptyRow = $cell;
+                        break;
+                    endif;
+                endforeach;
+            endif;
+
+            return( $emptyRow );
         }
 
         private function extractedAndOrderedAttributes( $params )
@@ -288,6 +492,82 @@ if( !class_exists( "IOExcelFactory" ) ):
             endif;
 
             return($dataWithDestination);
+        }
+
+        private function readCell( $params )
+        {
+            $userId = ( !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
+            $userExcelHash  = sha1( $userId );
+            $excelHash      = ( isset( $params['excelHash'] ) ?  $params['excelHash'] : "" );
+            $excelExt       = ( isset( $params['excelExt'] ) ?  $params['excelExt'] : "" );
+
+            if( $userExcelHash === $excelHash && !empty( $excelExt ) ):
+
+                $tab  = ( !empty( $params['tab'] ) ? $params['tab'] : "" );
+                $cell = ( !empty( $params['cell'] ) ? $params['cell'] : "" );
+
+                $parts = explode( ":", $cell );
+                $cell  = ( !empty( $parts[0] ) ? strtoupper( $parts[0] ) : "" );
+
+                $fileName = APPLICATION_PATH . Library::path('web/files/excel_calculators_tmp/' . $excelHash . '.' . $excelExt);
+                $fileType = Excel_Factory::identify($fileName);
+
+                $objReader = Excel_Factory::createReader( $fileType );
+                $objReader->setReadDataOnly(true);
+                $objPHPExcel = $objReader->load( $fileName );
+
+                $objPHPExcel->setActiveSheetIndexByName( $tab );
+                $returnData = $objPHPExcel->getActiveSheet()->getCell( $cell )->getCalculatedValue();
+
+            endif;
+
+            if( !empty( $returnData ) ):
+                return( $returnData );
+            else:
+                return( false );
+            endif;
+        }
+
+        private function getOperations( $params )
+        {
+            $elements    = ( !empty( $params['elements'] ) ? $params['elements'] : array() );
+            $elementName = ( !empty( $params['element_name'] ) ? $params['element_name'] : "" );
+
+            $operationArray = array();
+            foreach( $elements as $element ):
+                if( $elementName === $element['name'] ):
+
+                    $operations = ( !empty( $element['formDetails']['elementOperations'][$elementName] ) ? $element['formDetails']['elementOperations'][$elementName] : array() );
+
+                    if( !empty( $operations ) ):
+                        $i = 0;
+                        foreach( $operations as $operation ):
+
+                            $operationArray[$i]['name']          = $operation['name'];
+                            $operationArray[$i]['documentation'] = $operation['documentation'];
+                            $operationArray[$i]['printOrder']    = $operation['printOrder'];
+
+                            $file  = $operation['QR-Excel output']['file'];
+                            $tab   = $operation['QR-Excel output']['tab'];
+                            $cell  = $operation['QR-Excel output']['cell'];
+
+                            $userExcel  = ( new IOXMLExcelUser( "getUserExcel" ) )->request( $params );
+                            if( !empty( $userExcel ) ):
+                                $params['excelHash']         = $userExcel['hash'];
+                                $params['excelExt']          = $userExcel['ext'];
+                                $params['file']              = $file;
+                                $params['tab']               = $tab;
+                                $params['cell']              = $cell;
+                                $excel                       = $this->readCell( $params );
+                                $operationArray[$i]['value'] = ( !empty( $excel ) ? $excel : "" );
+                            endif;
+                            $i++;
+                        endforeach;
+                    endif;
+                endif;
+            endforeach;
+
+            return( $operationArray );
         }
     }
 

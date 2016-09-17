@@ -1008,10 +1008,11 @@
 			<element xmi:idref="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090" xmi:type="uml:Class" name="Inkomen" scope="public">
 				<model package="EAPK_9A3E306B_DAE2_401b_BC64_40E1D04748C9" tpos="0" ea_localid="35" ea_eleType="element"/>
 				<properties isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="true" isActive="false"/>
-				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 14:59:17" modified="2016-09-12 12:29:39" complexity="1" status="Proposed"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 14:59:17" modified="2016-09-12 15:50:04" complexity="1" status="Proposed"/>
 				<code product_name="Java" gentype="Java"/>
 				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
 				<tags>
+					<tag xmi:id="EAID_29F52E03_9433_4cd4_9220_0FCBCB2B55C9" name="QR-Excel subtypes" value="   a30   :   a50  , Input, simpel rekenmodel.xlsx" modelElement="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
 					<tag xmi:id="EAID_1C606D43_8EAC_4136_BFB2_188D680EFBE6" name="QR-PrintOrder" value="4" modelElement="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090"/>
 				</tags>
 				<xrefs/>
@@ -1029,7 +1030,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_237E7A3E_5BEC_4304_AA31_1F75B2ADA4A9" name="QR-Excel input" value=" b30     : b50    , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 				</attributes>
@@ -1064,7 +1067,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_89C505E5_D176_44d3_850E_1862C1937FBC" name="QR-Excel input" value="   d30   :  d50   , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 					<attribute xmi:idref="EAID_D6AADC23_7A63_4462_A2A6_C31E3514B6A2" name="Vanaf Datum" scope="Private">
@@ -1079,7 +1084,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_5A517A0E_1DFC_42d0_99C0_DD7417C3D263" name="QR-Excel input" value="  c30    :  c50   , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 				</attributes>
@@ -1109,7 +1116,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_46401C17_9C6B_40c2_9741_04B03E9BC6EE" name="QR-Excel input" value="  d30    :   d50  , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 					<attribute xmi:idref="EAID_DAB313F8_1458_4f38_B7BA_44259ED5E1C9" name="Werkgever" scope="Private">
@@ -1124,7 +1133,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_9E7E2891_EC2E_4ab1_9AF0_5F983E75150E" name="QR-Excel input" value=" e30     :  e50   , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 				</attributes>
@@ -1169,7 +1180,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_AFD5400F_F4D5_4c64_861C_A82961D6DE25" name="QR-Excel input" value="  e30    :  e50   , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 				</attributes>
@@ -1340,7 +1353,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_7C97D83A_C2C3_48a2_9A24_ED63A979A962" name="QR-Excel input" value="    d30  :   d50  , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 					<attribute xmi:idref="EAID_D18AB40C_9399_4a0c_AC13_DF61D772375C" name="Wettelijke basis" scope="Private">
@@ -1355,7 +1370,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_1A9AFB68_AC2F_495e_AF47_F7F329DE50B0" name="QR-Excel input" value="    f30  :   f50  , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 				</attributes>
@@ -1416,7 +1433,7 @@
 			<element xmi:idref="EAID_2CF604C3_ED51_4c26_9128_88859ED29E42" xmi:type="uml:Class" name="Kostwinnaar" scope="public">
 				<model package="EAPK_6E32917C_2B73_4da5_BA28_B506A1A17E9A" tpos="0" ea_localid="34" ea_eleType="element"/>
 				<properties documentation="We beginnen bij U. Bij uw inkomens en uitgaven. Om een compleet beeld te krijgen, komen we daarna bij uw eventuele partner (en/of ex-partners) en eventuele kinderen. &#xA;" isSpecification="false" sType="Class" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"/>
-				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 10:11:38" modified="2016-07-29 09:13:34" complexity="1" status="Proposed"/>
+				<project author="bvdbu" version="1.0" phase="1.0" created="2016-07-08 10:11:38" modified="2016-09-12 12:41:08" complexity="1" status="Proposed"/>
 				<code product_name="Java" gentype="Java"/>
 				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
 				<tags>
@@ -1436,7 +1453,7 @@
 						<styleex value="ShowBeh=0;"/>
 						<documentation value="De eerste berekening. Het resultaat hiervan moet uit Excel komen. Er is nog geen Tagged Value of Stereotype gekoppeld. "/>
 						<tags>
-							<tag xmi:id="EAID_52B0C21B_F0B4_47fa_A84D_1B3184E3400A" name="QR-Excel output" value=" b8      :        , Output, simpel rekenmodel.xlsx"/>
+							<tag xmi:id="EAID_52B0C21B_F0B4_47fa_A84D_1B3184E3400A" name="QR-Excel output" value=" b9      :        , Output, simpel rekenmodel.xlsx"/>
 							<tag xmi:id="EAID_745CF1A9_79FA_46e5_B3FE_BAED43ABB4FA" name="QR-PrintOrder" value="5"/>
 						</tags>
 						<parameters>
@@ -1462,7 +1479,7 @@
 						<styleex/>
 						<documentation/>
 						<tags>
-							<tag xmi:id="EAID_6EA02EE6_0034_461b_B461_F3DC1A0C6448" name="QR-Excel output" value="    b6   :        , Output, simpel rekenmodel.xlsx"/>
+							<tag xmi:id="EAID_6EA02EE6_0034_461b_B461_F3DC1A0C6448" name="QR-Excel output" value="    b5   :        , Output, simpel rekenmodel.xlsx"/>
 							<tag xmi:id="EAID_D62DA064_AACE_4dd9_96BB_25A8D643F701" name="QR-PrintOrder" value="4"/>
 						</tags>
 						<parameters>
@@ -2151,6 +2168,13 @@
 	<thecustomprofile:QR-PrintOrder base_Operation="EAID_0D1B1E93_F9F0_495f_8E17_C873DAE4D80E" QR-PrintOrder="3"/>
 	<thecustomprofile:QR-PrintOrder base_Operation="EAID_065820D3_62C8_44ac_9D52_FB91BF5E8682" QR-PrintOrder="1"/>
 	<thecustomprofile:QR-PrintOrder base_Class="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090" QR-PrintOrder="4"/>
+	<thecustomprofile:QR-Excel_subtypes base_Class="EAID_A2F5A109_0E2E_4a99_97E1_6D9AF7930090" __EAStereoName="QR-Excel subtypes" QR-Excel_subtypes="   a30   :   a50  , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_6D342CC2_F40B_433c_8218_24968F78AD5E" __EAStereoName="QR-Excel input" QR-Excel_input=" b30     : b50    , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_F5752D94_D24C_4e5d_9FCF_DD96CA78E574" __EAStereoName="QR-Excel input" QR-Excel_input="   d30   :  d50   , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_D6AADC23_7A63_4462_A2A6_C31E3514B6A2" __EAStereoName="QR-Excel input" QR-Excel_input="  c30    :  c50   , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_A2FE1A1E_1B36_4d05_A4D6_028B3E7322BB" __EAStereoName="QR-Excel input" QR-Excel_input="  d30    :   d50  , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_DAB313F8_1458_4f38_B7BA_44259ED5E1C9" __EAStereoName="QR-Excel input" QR-Excel_input=" e30     :  e50   , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_C8B63185_1F16_4615_A4A5_9D1077FF4A97" __EAStereoName="QR-Excel input" QR-Excel_input="  e30    :  e50   , Input, simpel rekenmodel.xlsx"/>
 	<thecustomprofile:QR-PrintOrder base_Class="EAID_8FF8D983_4963_4da0_9D24_6BBFFBCF3406" QR-PrintOrder="3"/>
 	<thecustomprofile:QR-PrintOrder base_Property="EAID_05BBB8A5_F61A_42c2_A751_5A806617B1AD" QR-PrintOrder="2"/>
 	<thecustomprofile:QR-Excel_uitgaven base_Property="EAID_05BBB8A5_F61A_42c2_A751_5A806617B1AD" __EAStereoName="QR-Excel uitgaven" QR-Excel_uitgaven="  b3     :    b25 , Uitgaven, simpel rekenmodel.xlsx"/>
@@ -2160,6 +2184,8 @@
 	<thecustomprofile:QR-Excel_uitgaven base_Property="EAID_D399AF34_E00B_4f3f_B853_22EDBDD3D660" __EAStereoName="QR-Excel uitgaven" QR-Excel_uitgaven="     d3  :   d25  , Uitgaven, simpel rekenmodel.xlsx"/>
 	<thecustomprofile:QR-PrintOrder base_Property="EAID_080262C2_536C_4294_A54D_397EC5E0A8A7" QR-PrintOrder="3"/>
 	<thecustomprofile:QR-Excel_uitgaven base_Property="EAID_080262C2_536C_4294_A54D_397EC5E0A8A7" __EAStereoName="QR-Excel uitgaven" QR-Excel_uitgaven="   c3    :    c25 , Uitgaven, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_E62161E2_CB59_458e_AC5B_CE1C1B5E5E2A" __EAStereoName="QR-Excel input" QR-Excel_input="    d30  :   d50  , Input, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_input base_Property="EAID_D18AB40C_9399_4a0c_AC13_DF61D772375C" __EAStereoName="QR-Excel input" QR-Excel_input="    f30  :   f50  , Input, simpel rekenmodel.xlsx"/>
 	<thecustomprofile:QR-PrintOrder base_Class="EAID_836DA1D1_C427_4678_844E_8F4B835F979B" QR-PrintOrder="6"/>
 	<thecustomprofile:QR-PrintOrder base_Property="EAID_B50D7A68_6AAD_4023_BFE1_D36876F4A414" QR-PrintOrder="4"/>
 	<thecustomprofile:QR-Excel_input base_Property="EAID_B50D7A68_6AAD_4023_BFE1_D36876F4A414" __EAStereoName="QR-Excel input" QR-Excel_input="   f3    :  F5    , Input, simpel rekenmodel.xlsx"/>
@@ -2167,7 +2193,7 @@
 	<thecustomprofile:QR-PrintOrder base_Operation="EAID_726C976F_D647_40cd_9672_E55757662D54" QR-PrintOrder="5"/>
 	<thecustomprofile:QR-Excel_output base_Operation="EAID_726C976F_D647_40cd_9672_E55757662D54" __EAStereoName="QR-Excel output" QR-Excel_output=" b8      :        , Output, simpel rekenmodel.xlsx"/>
 	<thecustomprofile:QR-PrintOrder base_Operation="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" QR-PrintOrder="4"/>
-	<thecustomprofile:QR-Excel_output base_Operation="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" __EAStereoName="QR-Excel output" QR-Excel_output="    b6   :        , Output, simpel rekenmodel.xlsx"/>
+	<thecustomprofile:QR-Excel_output base_Operation="EAID_DE72033D_7FE7_47b1_BDAD_632913525D18" __EAStereoName="QR-Excel output" QR-Excel_output="    b4   :        , Output, simpel rekenmodel.xlsx"/>
 	<thecustomprofile:QR-PrintOrder base_Class="EAID_12551458_DFD9_49d3_9935_968806A1C98B" QR-PrintOrder="5"/>
 	<thecustomprofile:QR-PrintOrder base_Property="EAID_1A3885C9_4984_46d8_ACC4_2D246711F28E" QR-PrintOrder="4"/>
 	<thecustomprofile:QR-Excel_input base_Property="EAID_1A3885C9_4984_46d8_ACC4_2D246711F28E" __EAStereoName="QR-Excel input" QR-Excel_input="  e3     :   e25  , Input, simpel rekenmodel.xlsx"/>

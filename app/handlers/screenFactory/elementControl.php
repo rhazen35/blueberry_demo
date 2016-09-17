@@ -56,8 +56,8 @@ if( !empty( $action ) ):
             if( !empty( $resultId ) ):
                 $params['result_id'] = $resultId;
                 $returnMessage = ( new XMLDBController( "update" ) )->request( $params );
-                //header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
-                //exit();
+                header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
+                exit();
             endif;
             break;
         case"delete":

@@ -17,7 +17,7 @@ $multiplicity   = ( isset( $_POST['multiplicity'] ) ? $_POST['multiplicity'] : "
 $parsedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
 
 if( $superElement === "true" ):
-    echo 'supershizzle here';
+    echo 'super element here';
 else:
 
         $userId    = ( isset( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
