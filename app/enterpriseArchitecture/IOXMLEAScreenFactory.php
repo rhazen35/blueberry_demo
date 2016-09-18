@@ -1005,10 +1005,10 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
 
                 $operationsElement  = '';
                 $operationsElement .= '<div class="elementOperations">';
-                $operationsElement .= '<div class="elementOperations-title">Berekende resultaten</div>';
 
                 $i = 0;
                 $operationsElement .= '<div class="element-form">';
+                $operationsElement .= '<div class="elementOperations-title">Berekende resultaten</div>';
                 foreach( $operations as $operation ):
                     $operationsElement .= '<div class="elementOperation-documentation">' . $operation['documentation'] . '</div>';
                     $operationsElement .= '<div class="element-input-box">';
