@@ -17,12 +17,30 @@ class Library
     }
 
     public static function microtimeFormat( $data )
-        {
-            $duration   = microtime(true) - $data;
-            $hours      = (int)($duration/60/60);
-            $minutes    = (int)($duration/60)-$hours*60;
-            $seconds    = $duration-$hours*60*60-$minutes*60;
+    {
+        $duration   = microtime(true) - $data;
+        $hours      = (int)($duration/60/60);
+        $minutes    = (int)($duration/60)-$hours*60;
+        $seconds    = $duration-$hours*60*60-$minutes*60;
 
-            return( number_format((float)$seconds, 3, '.', '') );
-        }
+        return( number_format((float)$seconds, 3, '.', '') );
+    }
+
+    public static function removeDirRecursive( $dir )
+    {
+        if ( is_dir( $dir ) ):
+            $objects = scandir( $dir );
+            foreach( $objects as $object ):
+                if ($object != "." && $object != ".."):
+                    if(filetype($dir."/".$object) == "dir"):
+                        Library::removeDirRecursive($dir."/".$object);
+                    else:
+                        unlink($dir."/".$object);
+                    endif;
+                endif;
+            endforeach;
+            reset($objects);
+            rmdir($dir);
+        endif;
+    }
 }

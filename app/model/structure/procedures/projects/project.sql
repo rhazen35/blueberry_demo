@@ -128,6 +128,8 @@ CREATE PROCEDURE
     DELETE FROM projects_models WHERE project_id = projectId;
     DELETE FROM projects_calculators WHERE project_id = projectId;
     DELETE FROM projects_settings WHERE project_id = projectId;
+    DELETE FROM project_documents WHERE project_id = projectId;
+    DELETE FROM project_documents_groups WHERE project_id = projectId;
     DELETE FROM calculators WHERE id = calculatorId;
     DELETE FROM xml_models WHERE id = modelId;
     DELETE FROM projects WHERE id = projectId;

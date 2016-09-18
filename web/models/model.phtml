@@ -53,10 +53,6 @@ if( !empty( $orderedElements ) ):
                             $elementData = ( new XMLDBController( "read" ) )->request( $params );
                         endif;
 
-                        if( !empty( $elementData ) ):
-                            $params['data']  = ( !empty( $elementData ) ? $elementData : "" );
-                            $excel           = ( new IOExcelFactory( "dataToFile" ) )->request( $params );
-                        endif;
                     endif;
 
                     if( !empty( $elementData ) ):

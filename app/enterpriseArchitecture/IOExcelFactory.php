@@ -59,22 +59,6 @@ if( !class_exists( "IOExcelFactory" ) ):
 
         private function dataToFile( $params )
         {
-
-            $totalDataSets = count($params['data']);
-            if( $totalDataSets > 1 ):
-                foreach( $params['data'] as $name => $data ):
-                    $params['element_name'] = $name;
-                    $params['data']         = $data;
-                    $this->insertIntoFile( $params );
-                endforeach;
-            else:
-                $this->insertIntoFile( $params );
-            endif;
-
-        }
-
-        private function insertIntoFile( $params )
-        {
             $elementName                   = $params['element_name'];
             $extractedAndOrderedAttributes = $this->extractedAndOrderedAttributes( $params );
             $dataWithDestination           = $this->dataWithDestination( $extractedAndOrderedAttributes, $params['data'], $params );
@@ -88,14 +72,10 @@ if( !class_exists( "IOExcelFactory" ) ):
                 $emptyRow                      = $this->getEmptyRow( $dataSetCells );
                 $maxRow                        = $this->getMaxRowFromDataSet( $dataSetCells );
 
-                if( $emptyRow !== ( $maxRow + 1 ) ):
+                if( $emptyRow !== ( $maxRow + 1 ) && $emptyRow !== 0 ):
                     $rowWithData                   = $this->populateEmptyRow( $dataWithDestination, $emptyRow );
-                    //$doesExists                    = $this->doesRowExists( $dataSetCells, $rowWithData );
 
-                    //var_dump( $doesExists );
-                    $doesExists = false;
-
-                    if( !empty( $rowWithData ) && $doesExists === false ):
+                    if( !empty( $rowWithData ) ):
                         return( $this->dataToExcel( $rowWithData ) );
                     endif;
                 else:
@@ -105,36 +85,6 @@ if( !class_exists( "IOExcelFactory" ) ):
             endif;
         }
 
-        private function doesRowExists( $dataSetCells, $rowWithData )
-        {
-            $exists = array();
-            $totalColumns = 0;
-            $totalTrues   = 0;
-
-            $data = ( !empty( $rowWithData ) ? $rowWithData : "" );
-            if( !empty( $dataSetCells ) && !empty( $data ) ):
-                foreach( $dataSetCells as $dataCells ):
-                    foreach( $dataCells as $cell => $dataCell ):
-                        if( (string) $data['columns'][$cell] === (string) $dataCell ):
-                            $exists[$cell] = true;
-                        endif;
-                    endforeach;
-                endforeach;
-
-                $totalColumns = count( $data['columns'] );
-                foreach( $data['columns'] as $cell => $column ):
-                    if( !empty( $exists[$cell] ) && $exists[$cell] === true ):
-                        $totalTrues++;
-                    endif;
-                endforeach;
-
-            endif;
-
-            return( $exists );
-
-
-
-        }
 
         private function dataToExcel( $data )
         {
@@ -155,6 +105,7 @@ if( !class_exists( "IOExcelFactory" ) ):
                 $objPHPExcel = $objReader->load( $fileName );
 
                 $sheet   = ( !empty( $data['fileInfo']['sheet'] ) ? $data['fileInfo']['sheet'] : "" );
+
                 $row     = ( !empty( $data['fileInfo']['row'] ) ? $data['fileInfo']['row'] : "" );
                 $columns = ( !empty( $data['columns'] ) ? $data['columns'] : array() );
 
@@ -182,6 +133,9 @@ if( !class_exists( "IOExcelFactory" ) ):
                     $multiplicity = "1";
                     $allowed      = ( $multiplicity === $elementMultiplicity && $multiplicity === (string) $elementTypeOccurrences ? false : true );
                     return( $allowed );
+                    break;
+                case ( $elementTypeOccurrences > 1 ):
+                    return( true );
                     break;
             endswitch;
         }
@@ -352,16 +306,11 @@ if( !class_exists( "IOExcelFactory" ) ):
         {
             $emptyRow = 0;
             if( !empty( $dataSetCells ) ):
+
                 foreach( $dataSetCells as $cell => $row ):
-                    $emptyRow = 0;
-                    foreach( $row as $item ):
-                        if( !empty( $item ) ):
-                            $emptyRow++;
-                        endif;
-                    endforeach;
-                    if( $emptyRow === 0 ):
+                    $isEmpty = array_filter($row);
+                    if( empty( $isEmpty ) ):
                         $emptyRow = $cell;
-                        break;
                     endif;
                 endforeach;
             endif;

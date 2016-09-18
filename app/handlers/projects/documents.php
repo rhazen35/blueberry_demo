@@ -59,6 +59,8 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ):
                 if( $documentExists === false ):
                     ( new ProjectDocuments( "newProjectDocument" ) )->request( $params );
                     move_uploaded_file( $_FILES['document']['tmp_name'], sprintf( APPLICATION_ROOT.'/web/files/project_documents/'.$projectId.'/'.$group.'/%s.%s', sha1_file( $_FILES['document']['tmp_name'] ), $extension ) );
+                    header("Location: " . APPLICATION_HOME . "?projectDocuments");
+                    exit();
                 else:
                     echo "Document exists already!";
                 endif;

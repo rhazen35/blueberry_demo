@@ -45,7 +45,7 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
         ( new XMLEATableFactory( "delete" ) )->request( $params );
 
         if( !empty( $modelHash ) && !empty( $modelExtension ) ):
-            $path = Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models_tmp/' . $modelHash . '.' . $modelExtension);
+            $path = Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/xml_models/' . $modelHash . '.' . $modelExtension);
             if( file_exists( $path ) ): unlink( $path ); endif;
         endif;
 
@@ -66,11 +66,14 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
         endif;
 
     endif;
-
+    /**
+     * Recursivly remove the project documents directory
+     */
     $path = Library::path( APPLICATION_ROOT . "/web/files/project_documents/" . $projectId . "/" );
-    array_map('unlink', glob($path . "*.*"));
-    rmdir($path);
-
+    Library::removeDirRecursive( $path );
+    /**
+     * Delete the project from the database
+     */
     ( new Project( "deleteProject" ) )->request( $params );
     header("Location: index.php?projects&deleted");
     exit();

@@ -8,7 +8,7 @@
 
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 use app\enterpriseArchitecture\XMLDBController;
-use app\enterpriseArchitecture\IOElementExcelFactory;
+use app\enterpriseArchitecture\IOExcelFactory;
 
 /**
  * Handle form based on the posted action and the posted multiplicity.
@@ -37,20 +37,32 @@ if( !empty( $action ) ):
 
     switch( $action ):
         case"create":
-            $returnMessage     = ( new XMLDBController( "create" ) )->request( $params );
-            $returnMessage     = ( !empty( $returnMessage ) ? $returnMessage : "" );
-            $elementData       = ( new XMLDBController( "read" ) )->request( $params );
-            $projectName       = ( !empty( $_SESSION['project'] ) ? $_SESSION['project'] : "" );
-
-            switch( $multiplicity ):
-                case"1":
-                case"1..*":
-                case"0..*":
-                case"":
-                    header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
-                    exit();
-                    break;
-            endswitch;
+            /**
+             * Check if the data exists already, avoiding duplicate data rows in excel
+             */
+            $checkDataExists   = ( new XMLDBController( "readAttrOnly" ) )->request( $params );
+            /**
+             * Read and create if the data does not exists already
+             */
+            if( empty( $checkDataExists ) ):
+                $returnMessage     = ( new XMLDBController( "create" ) )->request( $params );
+                $elementData       = ( new XMLDBController( "read" ) )->request( $params );
+                $returnMessage     = ( !empty( $returnMessage ) ? $returnMessage : "" );
+                $projectName       = ( !empty( $_SESSION['project'] ) ? $_SESSION['project'] : "" );
+                /**
+                 * Insert data into excel file
+                 */
+                if( !empty( $elementData ) ):
+                    $params['data']  = ( !empty( $elementData ) ? $elementData : "" );
+                    $excel           = ( new IOExcelFactory( "dataToFile" ) )->request( $params );
+                endif;
+                header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
+                exit();
+            else:
+                $returnMessage = "dataExists";
+                header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
+                exit();
+            endif;
             break;
         case"edit":
             if( !empty( $resultId ) ):

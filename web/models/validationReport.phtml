@@ -7,6 +7,7 @@
  */
 
 use app\enterpriseArchitecture\IOXMLEAModel;
+use app\lib\Project;
 
 /**
  * Get the last inserted model id
@@ -15,6 +16,9 @@ use app\enterpriseArchitecture\IOXMLEAModel;
 $xmlModelId = ( !empty( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
 $model      = ( new IOXMLEAModel( $xmlModelId ) )->getModel();
 $modelName  = ( isset( $model['name'] ) ? $model['name'] : "No name found" );
+$params     = array("model_id" => $xmlModelId);
+$project    = ( new Project( "getProjectByModelId" ) )->request( $params );
+$projectID  = ( !empty( $project['id'] ) ? $project['id'] : "" );
 /**
  * Get the report session and unserialize it
  */
@@ -57,7 +61,12 @@ $originalFileName = ( !empty( $report['originalFileName'] ) ? $report['originalF
                     <strong>Validation duration:</strong> <?= $report['validationDuration'].' seconds'; ?>
                 </div>
                 <div class="modelReport-validationDuration">
-                    <a href="<?= APPLICATION_HOME; ?>?model" class="button">preview</a>
+                    <form action="<?= APPLICATION_HOME; ?>" method="POST">
+                        <input type="hidden" class="projectId" name="projectId" value="<?= $projectID; ?>">
+                        <input type="hidden" name="path" value="models">
+                        <input type="hidden" name="attr" value="model">
+                        <button name="modelProjectSubmit" type="submit" class="button">preview</button>
+                    </form>
                 </div>
             <?php endif; ?>
         </div>

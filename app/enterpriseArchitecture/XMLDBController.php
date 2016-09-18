@@ -58,6 +58,9 @@ class XMLDBController
                 endif;
                 return( $returnData );
                 break;
+            case"readAttrOnly":
+                return( $this->dbControl( $params ) );
+                break;
             case"update":
             case"delete":
                 return( $this->dbControl( $params ) );
@@ -97,6 +100,13 @@ class XMLDBController
         $checkSql = "SELECT id, user_id, ";
         $checkData     = array();
         $checkFormat   = array();
+        /**
+         * Attributes only read query
+         */
+        $attrOnlySql    = "SELECT ";
+        $attrOnlyWhere  = " WHERE ";
+        $attrOnlyData   = array();
+        $attrOnlyFormat = array();
         /**
          * Update query
          */
@@ -150,7 +160,11 @@ class XMLDBController
                                 /**
                                  * Read query
                                  */
-                                $checkSql .= ( $countAttributes < $totalSuperAttributes ? $attributeName.", " : ( !empty( $elementAttributes ) ? $attributeName.", " : $attributeName."" ) );
+                                $checkSql        .= ( $countAttributes < $totalSuperAttributes ? $attributeName.", " : ( !empty( $elementAttributes ) ? $attributeName.", " : $attributeName."" ) );
+                                $attrOnlySql     .= ( $countAttributes < $totalSuperAttributes ? $attributeName.", " : ( !empty( $elementAttributes ) ? $attributeName.", " : $attributeName."" ) );
+                                $attrOnlyWhere   .= ( $countAttributes < $totalSuperAttributes ? $attributeName." = ? AND " : ( !empty( $elementAttributes ) ? $attributeName." = ? AND " : $attributeName." = ?" ) );
+                                $attrOnlyData[$attributeName] = $attributeValue;
+                                $attrOnlyFormat[] = "s";
                                 /**
                                  * Update
                                  */
@@ -177,7 +191,11 @@ class XMLDBController
                             /**
                              * Read query
                              */
-                            $checkSql .= ( ($i+1) < $totalElementAttributes ? $attributeName.", " : $attributeName."" );
+                            $checkSql        .= ( ($i+1) < $totalElementAttributes ? $attributeName.", " : $attributeName."" );
+                            $attrOnlySql     .= ( ($i+1) < $totalElementAttributes ? $attributeName.", " : $attributeName."" );
+                            $attrOnlyWhere   .= ( ($i+1) < $totalElementAttributes ? $attributeName." = ? AND " : $attributeName." = ?"  );
+                            $attrOnlyData[$attributeName] = $attributeValue;
+                            $attrOnlyFormat[] = "s";
                             /**
                              * Update query
                              */
@@ -204,6 +222,12 @@ class XMLDBController
         $checkSql            .= " FROM " . $tableName . " WHERE user_id = ? ORDER BY date,time DESC ";
         $checkData["user_id"] = $userId;
         $checkFormat[]        = "i";
+        /**
+         * Attributes only read query
+         */
+        $attrOnlySql            .= " FROM " . $tableName . $attrOnlyWhere . " AND user_id = ? ";
+        $attrOnlyData["user_id"] = $userId;
+        $attrOnlyFormat[]        = "i";
         /**
          * Update query
          */
@@ -240,6 +264,11 @@ class XMLDBController
             case"read":
             case"readSuperType":
                 return( !empty( $selectArray ) ? $selectArray : false );
+                break;
+            case"readAttrOnly":
+                $type = "read";
+                $attrOnly = ( new Service( $type, $database ) )->dbAction( $attrOnlySql, $attrOnlyData, $attrOnlyFormat );
+                return( $attrOnly );
                 break;
             case"update":
                 $type = "update";

@@ -905,7 +905,9 @@
 						<options/>
 						<style/>
 						<styleex value="volatile=0;"/>
-						<tags/>
+						<tags>
+							<tag xmi:id="EAID_89C505E5_D176_44d3_850E_1862C1937FBC" name="QR-Excel input" value="   g30   :  g50   , Input, simpel rekenmodel.xlsx"/>
+						</tags>
 						<xrefs/>
 					</attribute>
 				</attributes>
