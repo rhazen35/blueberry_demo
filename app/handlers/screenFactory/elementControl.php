@@ -39,6 +39,7 @@ if( !empty( $action ) ):
         case"create":
             /**
              * Check if the data exists already, avoiding duplicate data rows in excel
+             * TODO: checl in the excel file too!
              */
             $checkDataExists   = ( new XMLDBController( "readAttrOnly" ) )->request( $params );
             /**

@@ -61,10 +61,9 @@ if( !empty( $projectId ) && $deleteCheck === "accepted" ):
         $calculatorExtension     = ( isset( $calculator['ext'] ) ? $calculator['ext'] : "" );
 
         if( !empty( $calculatorHash ) && !empty( $calculatorExtension ) ):
-            $path = Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/excel_calculators_tmp/' . $calculatorHash . '.' . $calculatorExtension);
+            $path = Library::path($_SERVER['DOCUMENT_ROOT'] . '/web/files/excel_calculators/' . $calculatorHash . '.' . $calculatorExtension);
             if( file_exists( $path ) ): unlink( $path ); endif;
         endif;
-
     endif;
     /**
      * Recursivly remove the project documents directory

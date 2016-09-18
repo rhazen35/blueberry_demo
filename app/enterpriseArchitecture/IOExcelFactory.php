@@ -311,6 +311,7 @@ if( !class_exists( "IOExcelFactory" ) ):
                     $isEmpty = array_filter($row);
                     if( empty( $isEmpty ) ):
                         $emptyRow = $cell;
+                        break;
                     endif;
                 endforeach;
             endif;
