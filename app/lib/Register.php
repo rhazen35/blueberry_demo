@@ -1,93 +1,74 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ruben Hazenbosch
- * Date: 2-8-2016
- * Time: 15:29
- */
 
 namespace app\lib;
 
 use app\model\Service;
+use app\core\Library as Lib;
 
-class Register
-{
-    protected $email;
-    protected $password;
-    protected $database = "blueberry";
+if( !class_exists( "Register" ) ):
 
-    /**
-     * RegisterUser constructor.
-     * @param $email
-     * @param $password
-     */
-
-    public function __construct( $email, $password )
+    class Register
     {
-        $this->email = $email;
-        $this->password = $password;
-    }
+        protected $type;
+        protected $database = "blueberry";
+        /**
+         * RegisterUser constructor.
+         * @param $type
+         */
+        public function __construct( $type )
+        {
+            $this->type = $type;
+        }
+        /**
+         * @param $params
+         * @return mixed
+         */
+        public function request($params )
+        {
+            switch( $this->type ):
+                case"register":
+                    $this->register( $params );
+                    break;
+                case"checkEmailExists":
+                    return( $this->checkEmailExists( $params ) );
+                    break;
+            endswitch;
+        }
+        /**
+         * @param $params
+         */
+        private function register( $params )
+        {
+            $emptyspace = '';
+            $date       = date('Y-m-d H:i:s');
+            $type       = 'verifyEmail';
+            $hash       = password_hash( $params['password'], PASSWORD_BCRYPT );
+            $email_code = Lib::randomPassword();
+            $sql        = "CALL proc_newUser(?,?,?,?,?,?)";
+            $data       = array("id" => $emptyspace, "email" => $params['email'], "email_code" => $email_code, "password" => $hash, "type" => $type, "timestamp" => $date);
+            $format     = array('isssss');
+            $type       = "create";
+            ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
+        }
+        /**
+         * @param $params
+         * @return mixed
+         */
+        private function checkEmailExists( $params )
+        {
+            $sql        = "SELECT f_checkEmailExists(?)";
+            $data       = array("email" => $params['email']);
+            $format     = array('s');
+            $type       = "read";
+            $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
-    /**
-     * Register a new user
-     */
-
-    public function register()
-    {
-        $emptyspace = '';
-        $date       = date('Y-m-d H:i:s');
-        $type       = 'verifyEmail';
-        $hash       = password_hash( $this->password, PASSWORD_BCRYPT );
-        $email_code = $this->randomPassword();
-
-        $sql        = "CALL proc_newUser(?,?,?,?,?,?)";
-        $data       = array("id" => $emptyspace, "email" => $this->email, "email_code" => $email_code, "password" => $hash, "type" => $type, "timestamp" => $date);
-        $format     = array('isssss');
-
-        $type       = "create";
-
-        ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
-
-    }
-
-    /**
-     * @return mixed
-     */
-
-    public function checkEmailExists()
-    {
-
-        $sql        = "SELECT f_checkEmailExists(?)";
-        $data       = array("email" => $this->email);
-        $format     = array('s');
-
-        $type       = "read";
-
-        $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
-
-        if( !empty( $returnData ) ):
-            return( $returnData );
-        else:
-            return( false );
-        endif;
-    }
-
-    /**
-     * @return string
-     */
-
-    private function randomPassword()
-    {
-
-        $alphabet    = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-        $pass        = array();
-        $alphaLength = strlen( $alphabet ) - 1;
-
-        for ($i = 0; $i < 8; $i++) {
-            $n = rand( 0, $alphaLength );
-            $pass[] = $alphabet[$n];
+            if( !empty( $returnData ) ):
+                return( $returnData );
+            else:
+                return( false );
+            endif;
         }
 
-        return( implode( $pass ) );
     }
-}
+
+endif;

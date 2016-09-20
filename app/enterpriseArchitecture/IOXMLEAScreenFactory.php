@@ -100,6 +100,9 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
                 case"buildOperations":
                     return( $this->buildOperations( $params ) );
                     break;
+                case"showElementView":
+                    return( $this->showElementView( $params ) );
+                    break;
             endswitch;
         }
         /**
@@ -1005,10 +1008,10 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
 
                 $operationsElement  = '';
                 $operationsElement .= '<div class="elementOperations">';
-                $operationsElement .= '<div class="elementOperations-title">Berekende resultaten</div>';
 
                 $i = 0;
                 $operationsElement .= '<div class="element-form">';
+                $operationsElement .= '<div class="elementOperations-title">Berekende resultaten</div>';
                 foreach( $operations as $operation ):
                     $operationsElement .= '<div class="elementOperation-documentation">' . $operation['documentation'] . '</div>';
                     $operationsElement .= '<div class="element-input-box">';
@@ -1029,6 +1032,20 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
             else:
                 return( false );
             endif;
+        }
+
+        private function showElementView( $params )
+        {
+            $elementView  = '<div class="element-view">';
+            $elementNames = $this->extractElementNames( $params );
+
+            foreach( $elementNames as $elementName ):
+                $elementView .= $elementName;
+            endforeach;
+
+            $elementView .= '</div>';
+
+            return( $elementView );
         }
     }
 endif;

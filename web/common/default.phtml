@@ -37,7 +37,7 @@
         /**
         * Login check
         */
-        $login = ( new Login( "", "" ) )->isLoggedIn();
+        $login = ( new Login( "isLoggedIn" ) )->request( $params = null );
 
         if( $login === false ):
             ( new ViewController( "login", "login" ) )->request();
@@ -47,8 +47,9 @@
             /**
              * Menu
              */
+            if( !isset( $_GET['register'] ) ):
                 ( new ViewController( "dashboard", "common" ) )->request();
-
+            endif;
             /**
              * Main content
              */
@@ -65,7 +66,6 @@
         </div>
 
             <?php
-
         endif;
 
         /**

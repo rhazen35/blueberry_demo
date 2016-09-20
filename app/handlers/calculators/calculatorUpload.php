@@ -1,19 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ruben Hazenbosch
- * Date: 2-8-2016
- * Time: 19:28
- */
 
 use app\enterpriseArchitecture\IOExcelCalculatorUpload;
 use app\enterpriseArchitecture\IOEAExcelCalculator;
 use app\lib\Project;
 
-/**
- * Check if a project has been posted.
- * If a projects has been posted, but is empty, redirect back to upload.
- */
 if( isset( $_POST['project'] ) ):
     if(!empty( $_POST['project'] )):
         $_SESSION['project_id'] = $_POST['project'];
@@ -22,8 +12,6 @@ if( isset( $_POST['project'] ) ):
         exit();
     endif;
 endif;
-
-echo $_SESSION['userId'];
 
 if( isset($_FILES) && !empty( $_FILES ) ):
 

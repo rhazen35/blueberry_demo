@@ -1,13 +1,14 @@
 <?php
-use app\Lib\Login;
-use app\Lib\Project;
-use app\Lib\Models;
-use app\Lib\Calculator;
+
+use app\lib\Login;
+use app\lib\Project;
+use app\lib\Models;
+use app\lib\Calculator;
 
 /**
  * Collect all data for overview
  */
-$getUserLastLogin          = ( new Login( "", "" ) )->getPreviousLogin();
+$getUserLastLogin          = ( new Login( "getPreviousLogin" ) )->request( $params = null );
 $getTotalProjects          = ( new Project( "countProjects" ) )->request( $params = null );
 $getTotalProjectsByUser    = ( new Project( "getAllProjectsByUser" ) )->request( $params = null );
 $getTotalModels            = ( new Models( "countModels" ) )->request( $params = null );

@@ -47,6 +47,11 @@
     padding:0.5rem;
 }
 
+.element-view
+{
+
+}
+
 .elementIntro-title
 {
     padding: 1rem 0 1rem 0;
@@ -266,7 +271,7 @@
 
 .elementOperations
 {
-    width:80%;
+    width:90%;
     margin: 0 auto;
     margin-top:1rem;
     padding-top:0;
@@ -276,12 +281,11 @@
 
 .elementOperation
 {
-    padding:1rem;
+
 }
 
 .elementOperations-title
 {
-    padding-left:1rem;
     font-weight:bold;
 }
 

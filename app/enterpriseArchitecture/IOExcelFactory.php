@@ -8,6 +8,9 @@
 
 namespace app\enterpriseArchitecture;
 
+/**
+ * PHP Excel Library
+ */
 require_once( $_SERVER['DOCUMENT_ROOT'].'/app/PHPExcel/Classes/PHPExcel.php');
 
 use app\core\Library;
@@ -18,8 +21,11 @@ if( !class_exists( "IOExcelFactory" ) ):
     class IOExcelFactory
     {
         protected $type;
-
-        public function __construct( $type )
+        /**
+         * IOExcelFactory constructor.
+         * @param $type
+         */
+        public function __construct($type )
         {
             $this->type = $type;
         }

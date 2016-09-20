@@ -9,6 +9,7 @@
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 use app\enterpriseArchitecture\XMLDBController;
 use app\enterpriseArchitecture\IOExcelFactory;
+use app\enterpriseArchitecture\IOXMLExcelUser;
 
 /**
  * Handle form based on the posted action and the posted multiplicity.
@@ -27,7 +28,7 @@ $modelId        = ( isset( $_POST['modelId'] ) ? $_POST['modelId'] : "" );
 $multiplicity   = ( isset( $_POST['multiplicity'] ) ? $_POST['multiplicity'] : "" );
 $resultId       = ( isset( $_POST['resultId'] ) ? $_POST['resultId'] : "" );
 $subElement     = ( isset( $_POST['subElement'] ) ? $_POST['subElement'] : "" );
-
+$userExcel      = ( new IOXMLExcelUser( "getUserExcel" ) )->request( $params = null );
 $parsedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
 
 if( !empty( $action ) ):
@@ -39,13 +40,13 @@ if( !empty( $action ) ):
         case"create":
             /**
              * Check if the data exists already, avoiding duplicate data rows in excel
-             * TODO: checl in the excel file too!
+             * TODO: check in the excel file too!
              */
             $checkDataExists   = ( new XMLDBController( "readAttrOnly" ) )->request( $params );
             /**
              * Read and create if the data does not exists already
              */
-            if( empty( $checkDataExists ) ):
+            if( empty( $checkDataExists ) && $userExcel !== false ):
                 $returnMessage     = ( new XMLDBController( "create" ) )->request( $params );
                 $elementData       = ( new XMLDBController( "read" ) )->request( $params );
                 $returnMessage     = ( !empty( $returnMessage ) ? $returnMessage : "" );
@@ -60,7 +61,7 @@ if( !empty( $action ) ):
                 header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
                 exit();
             else:
-                $returnMessage = "dataExists";
+                $returnMessage = ( $userExcel === false ? "noUserExcel" : ( !empty( $checkDataExists ) ? "dataExists" : "" ) );
                 header( "Location: " . APPLICATION_HOME . "?model&page=" . ( $elementOrder - 1 ) . "&".$returnMessage );
                 exit();
             endif;

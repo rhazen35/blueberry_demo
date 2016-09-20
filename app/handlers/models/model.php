@@ -36,13 +36,13 @@ if( empty( $userExcelHash ) && !empty( $calculatorId ) ):
     $params['ext']           = ( isset( $calculator['ext'] ) ? $calculator['ext'] : "" );
 
     if(!empty( $calculator )):
-        $baseFile   = Library::path( APPLICATION_PATH . "web/files/excel_calculators/" . $calculator['hash'] . "." . $calculator['ext'] );
+        $baseFile   = Library::path( $_SERVER['DOCUMENT_ROOT'] . "/web/files/excel_calculators/" . $calculator['hash'] . "." . $calculator['ext'] );
     else:
         $baseFile    = "";
     endif;
 
     if( !empty( $baseFile ) ):
-        $newFile = Library::path( APPLICATION_PATH . "web/files/excel_calculators_tmp/" . $userExcelHash . "." . $calculator['ext'] );
+        $newFile = Library::path( $_SERVER['DOCUMENT_ROOT'] . "/web/files/excel_calculators_tmp/" . $userExcelHash . "." . $calculator['ext'] );
         if( copy( $baseFile, $newFile ) ):
             ( ( new IOXMLExcelUser( "newUserExcelHash" ) )->request( $params ) );
         endif;

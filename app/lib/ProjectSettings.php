@@ -15,13 +15,18 @@ if( !class_exists( "ProjectSettings" ) ):
     class ProjectSettings
     {
         protected $type;
-
-        public function __construct( $type )
+        /**
+         * ProjectSettings constructor.
+         * @param $type
+         */
+        public function __construct($type )
         {
             $this->type = $type;
         }
-
-        public function request( $params )
+        /**
+         * @param $params
+         */
+        public function request($params )
         {
             switch( $this->type ):
                 case"updateSettings":
@@ -29,11 +34,13 @@ if( !class_exists( "ProjectSettings" ) ):
                     break;
             endswitch;
         }
-
-        private function updateSettings( $params )
+        /**
+         * @param $params
+         */
+        private function updateSettings($params )
         {
-            $sql    = "CALL proc_updateSettings(?,?,?,?)";
-            $data   = array(
+            $sql      = "CALL proc_updateSettings(?,?,?,?)";
+            $data     = array(
                             "project_id" => $params['project_id'],
                             "name"       => $params['name'],
                             "descr"      => $params['descr'],
@@ -42,7 +49,6 @@ if( !class_exists( "ProjectSettings" ) ):
             $format   = array("isss");
             $type     = "update";
             $database = "blueberry";
-
             ( new Service( $type, $database ) )->dbAction( $sql, $data, $format );
         }
     }
