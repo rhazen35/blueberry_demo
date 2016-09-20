@@ -280,6 +280,18 @@ $originalFileName = ( !empty( $report['originalFileName'] ) ? $report['originalF
          */
         if( !empty( $report ) ):
 
+            $icons = [
+                'model_validation' => [
+                    'warning'     => 'warning_icon.png',
+                    'info'        => 'info_icon_blue.png',
+                    'severe'      => 'severe_icon.png',
+                    'valid'       => 'checkgreen_icon.png',
+                    'error'       => 'error_icon.png'
+                ],
+
+                'other' => []
+            ];
+
             foreach( $report as $key => $v ):
 
                 if( !empty( $report[$key]['type'] ) && $key !== "validation" && $key !== 'totalErrorTypes' ):
@@ -293,7 +305,7 @@ $originalFileName = ( !empty( $report['originalFileName'] ) ? $report['originalF
                         <?php $type = $report[$key]['type']; ?>
                         <div class="modelReport-item">
                             <div class="modelReport-item-img">
-                                <img src="./images/icons/<?= ( $type === "warning" ? "warning_icon.png" : ( $type === "info" ? "info_icon_blue.png" : ( $type === "severe" ? "severe_icon.png" : ( $type === "error" ? "red_cross_icon.png" : "checkgreen_icon.png") ) ) ); ?>">
+                                <img src="./images/icons/<?= $icons['model_validation'][$type] ?>">
                                 <div class="modelReport-item-type"> <?= $report[$key]['type']; ?></div>
                             </div>
                             <div class="modelReport-item-name"><?= $report[$key]['name']; ?></div>

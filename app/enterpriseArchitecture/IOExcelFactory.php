@@ -25,11 +25,14 @@ if( !class_exists( "IOExcelFactory" ) ):
          * IOExcelFactory constructor.
          * @param $type
          */
-        public function __construct($type )
+        public function __construct( $type )
         {
             $this->type = $type;
         }
-
+        /** @descr API Adapter that forwards method requests to private procedures
+         * @param $params
+         * @return array|bool|null
+         */
         public function request( $params )
         {
             switch( $this->type ):
@@ -47,7 +50,9 @@ if( !class_exists( "IOExcelFactory" ) ):
                     break;
             endswitch;
         }
-
+        /**
+         * @return array|null
+         */
         private function getUserFile()
         {
             $userExcel  = ( new IOXMLExcelUser( "getUserExcel" ) )->request( $params = null );
@@ -62,7 +67,10 @@ if( !class_exists( "IOExcelFactory" ) ):
             endif;
             return( $params );
         }
-
+        /**
+         * @param $params
+         * @return bool
+         */
         private function dataToFile( $params )
         {
             $elementName                   = $params['element_name'];
@@ -91,7 +99,10 @@ if( !class_exists( "IOExcelFactory" ) ):
             endif;
         }
 
-
+        /**
+         * @param $data
+         * @return bool
+         */
         private function dataToExcel( $data )
         {
             $fileInfo       = $this->getUserFile();
@@ -100,20 +111,17 @@ if( !class_exists( "IOExcelFactory" ) ):
             $excelHash      = ( isset( $fileInfo['hash'] ) ?  $fileInfo['hash'] : "" );
             $excelExt       = ( isset( $fileInfo['ext'] ) ?  $fileInfo['ext'] : "" );
             $fileName       = ( isset( $fileInfo['file'] ) ?  $fileInfo['file'] : "" );
-
             /**
              * Check if the excel hash matches the user excel hash
              */
-            if( $userExcelHash === $excelHash && !empty( $excelExt )):
+            if( $userExcelHash === $excelHash && !empty( $excelExt ) ):
 
                 $fileType    = Excel_Factory::identify( $fileName );
                 $objReader   = Excel_Factory::createReader( $fileType );
                 $objPHPExcel = $objReader->load( $fileName );
-
-                $sheet   = ( !empty( $data['fileInfo']['sheet'] ) ? $data['fileInfo']['sheet'] : "" );
-
-                $row     = ( !empty( $data['fileInfo']['row'] ) ? $data['fileInfo']['row'] : "" );
-                $columns = ( !empty( $data['columns'] ) ? $data['columns'] : array() );
+                $sheet       = ( !empty( $data['fileInfo']['sheet'] ) ? $data['fileInfo']['sheet'] : "" );
+                $row         = ( !empty( $data['fileInfo']['row'] ) ? $data['fileInfo']['row'] : "" );
+                $columns     = ( !empty( $data['columns'] ) ? $data['columns'] : array() );
 
                 foreach( $columns as $column => $value ):
                     $cell = $column.$row;
@@ -128,8 +136,12 @@ if( !class_exists( "IOExcelFactory" ) ):
 
             endif;
         }
-
-        private function matchOccurrencesWithMultiplicity( $elementMultiplicity, $elementTypeOccurrences )
+        /**
+         * @param $elementMultiplicity
+         * @param $elementTypeOccurrences
+         * @return bool
+         */
+        private function matchOccurrencesWithMultiplicity($elementMultiplicity, $elementTypeOccurrences )
         {
             switch( $elementTypeOccurrences ):
                 case"0":
@@ -145,12 +157,15 @@ if( !class_exists( "IOExcelFactory" ) ):
                     break;
             endswitch;
         }
-
-        private function getElementMultiplicity( $params )
+        /**
+         * @param $params
+         * @return string
+         */
+        private function getElementMultiplicity($params )
         {
-            $elementName = ( !empty( $params['element_name'] ) ? $params['element_name'] : "" );
-
+            $elementName  = ( !empty( $params['element_name'] ) ? $params['element_name'] : "" );
             $multiplicity = "";
+
             foreach( $params['elements'] as $element  ):
                 if( $elementName === $element['name'] ):
                     $multiplicity = ( !empty( $element['multiplicity'] ) ? $element['multiplicity'] : "" );
@@ -160,7 +175,6 @@ if( !class_exists( "IOExcelFactory" ) ):
 
             return( $multiplicity );
         }
-
         /**
          * @param $data
          * @return array|bool
@@ -169,12 +183,12 @@ if( !class_exists( "IOExcelFactory" ) ):
          */
         private function getDataSetCells( $data )
         {
-            $dataSetCells  = array();
-            $fileInfo    = $this->getUserFile();
-            $fileName    = ( !empty( $fileInfo['file'] ) ? $fileInfo['file'] : "" );
-            $fileType    = Excel_Factory::identify( $fileName );
-            $objReader   = Excel_Factory::createReader( $fileType );
-            $objPHPExcel = $objReader->load( $fileName );
+            $dataSetCells = array();
+            $fileInfo     = $this->getUserFile();
+            $fileName     = ( !empty( $fileInfo['file'] ) ? $fileInfo['file'] : "" );
+            $fileType     = Excel_Factory::identify( $fileName );
+            $objReader    = Excel_Factory::createReader( $fileType );
+            $objPHPExcel  = $objReader->load( $fileName );
 
             foreach( $data as $sheet => $set ):
                 /**
@@ -235,8 +249,12 @@ if( !class_exists( "IOExcelFactory" ) ):
                 return( false );
             endif;
         }
-
-        private function getElementOccurrences( $dataSetCells, $elementName )
+        /**
+         * @param $dataSetCells
+         * @param $elementName
+         * @return int
+         */
+        private function getElementOccurrences($dataSetCells, $elementName )
         {
             $occurrences = 0;
             if( !empty( $dataSetCells ) ):

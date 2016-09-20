@@ -52,7 +52,7 @@ if( !empty( $orderedElements ) ):
                         endif;
                     endif;
 
-                    if( !empty( $elementData ) ):
+                    if( !empty( $elementData ) && !empty( $calculator ) && !empty( $userExcel ) ):
                         $elementOperations   = ( new IOExcelFactory( "getOperations" ) )->request( $params );
                         $operations          = ( !empty( $elementOperations ) ? $elementOperations : "" );
                     endif;
@@ -97,7 +97,7 @@ if( !empty( $orderedElements ) ):
                             print_r( ( new IOXMLEAScreenFactory( "buildOperations", $operations ) )->request( $params ) );
                         endif;
                     endif;
-                    print_r( ( new IOXMLEAScreenFactory( "showElementView", "" ) )->request( $params ) );
+                    print_r( ( new IOXMLEAScreenFactory( "showElementView", $modelId ) )->request( $params ) );
                 endif;
             endif;
         endfor;

@@ -14,7 +14,6 @@ $params                 = array("project_id" => $projectId);
 $calculatorId           = ( new Calculator( "getCalculatorIdByProjectId" ) )->request( $params );
 
 if( isset( $calculatorId['calculator_id'] ) ):
-    //$_SESSION['calculator_id'] = $calculatorId['calculator_id'];
     header("Location: index.php?calculators");
     exit();
 else:

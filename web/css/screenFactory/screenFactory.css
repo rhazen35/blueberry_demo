@@ -38,18 +38,37 @@
     max-width:100%;
 }
 
-.element
+.element,
+.elementIntro
 {
-    width:90%;
+    float:left;
+    width:75%;
     min-width:600px;
     height:auto;
     margin:0 auto;
     padding:0.5rem;
 }
 
+.elementIntro
+{
+    padding-left:1rem;
+}
+
 .element-view
 {
+    float:left;
+    width:20%;
+}
 
+.element-view-item
+{
+    font-size:90%;
+    text-align:right;
+}
+
+.element-view .highlighted
+{
+    color:#1896CC;
 }
 
 .elementIntro-title

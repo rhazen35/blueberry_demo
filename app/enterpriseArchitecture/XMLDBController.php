@@ -1,22 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ruben Hazenbosch
- * Date: 14-8-2016
- * Time: 17:05
- */
-
-/**
- * DB Control
- *
- * Handles the database actions called by handlers/elementControl.php
- *
- * - Builds CRUD queries with bind parameters.
- * - Table and column names are based on the parsed xml model. (attributes)
- * - Super type columns first, then sub types. (same as table creation on xml model upload)
- * - Create will turn into an update if there already is data present in the database.
- * - A return message will be added to the page redirect when the action has been executed.
- */
 
 namespace app\enterpriseArchitecture;
 
@@ -37,7 +19,10 @@ class XMLDBController
     {
         $this->type = $type;
     }
-
+    /**
+     * @param $params
+     * @return array|bool|\mysqli_result
+     */
     public function request( $params )
     {
         switch( $this->type ):
@@ -49,7 +34,7 @@ class XMLDBController
                 break;
             case"readSuperType":
                 $returnData = array();
-                $superType  = ( !empty( $params['element']['super_types'][$params['element_name']] ) ? $params['element']['super_types'][$params['element_name']] : array() );
+                $superType  = ( !empty( $param = $params['element']['super_types'][$params['element_name']] ) ? $param : array() );
                 if( !empty( $superType ) ):
                     foreach( $superType as $subType ):
                         $params['element_name'] = $subType;
