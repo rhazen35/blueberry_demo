@@ -1,0 +1,7 @@
+- Verander de naam Model naar uml class model.
+- Niets opslaan als er geen link is met een configuratie!
+- Tijdens preview tijdelijk opslaan, database gegevens verwijderen
+- Model preview, per stap info weergeven over de positie in het proces,
+de volgende class, etc.
+
+- Configuratie start na preview. !!!
