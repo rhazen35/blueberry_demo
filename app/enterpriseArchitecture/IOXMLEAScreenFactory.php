@@ -100,6 +100,9 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
                 case"buildOperations":
                     return( $this->buildOperations( $params ) );
                     break;
+                case"showElementView":
+                    return( $this->showElementView( $params ) );
+                    break;
             endswitch;
         }
         /**
@@ -1029,6 +1032,20 @@ if( !class_exists( "IOXMLEAScreenFactory" ) ):
             else:
                 return( false );
             endif;
+        }
+
+        private function showElementView( $params )
+        {
+            $elementView  = '<div class="element-view">';
+            $elementNames = $this->extractElementNames( $params );
+
+            foreach( $elementNames as $elementName ):
+                $elementView .= $elementName;
+            endforeach;
+
+            $elementView .= '</div>';
+
+            return( $elementView );
         }
     }
 endif;

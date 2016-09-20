@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ruben Hazenbosch
- * Date: 12-Sep-16
- * Time: 9:19
- */
 
 namespace app\lib;
 
@@ -16,14 +10,20 @@ if( !class_exists( "ProjectDocuments" ) ):
     {
         protected $type;
         protected $database;
-
-        public function __construct( $type )
+        /**
+         * ProjectDocuments constructor.
+         * @param $type
+         */
+        public function __construct($type )
         {
             $this->type     = $type;
             $this->database = "blueberry";
         }
-
-        public function request( $params )
+        /**
+         * @param $params
+         * @return bool|\mysqli_result
+         */
+        public function request($params )
         {
             switch( $this->type ):
                 case"getDocuments":
@@ -40,30 +40,31 @@ if( !class_exists( "ProjectDocuments" ) ):
                     break;
             endswitch;
         }
-
-        private function getDocuments( $params )
+        /**
+         * @param $params
+         * @return bool|\mysqli_result
+         */
+        private function getDocuments($params )
         {
-            $projectId = ( !empty( $params['project_id'] ) ? $params['project_id'] : "" );
-
-            $sql    = "CALL proc_getProjectDocuments(?)";
-            $data   = array("project_id" => $projectId);
-            $format = array("i");
-            $type   = "read";
-
+            $projectId  = ( !empty( $params['project_id'] ) ? $params['project_id'] : "" );
+            $sql        = "CALL proc_getProjectDocuments(?)";
+            $data       = array("project_id" => $projectId);
+            $format     = array("i");
+            $type       = "read";
             $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
-
             return( $returnData  );
         }
-
-        private function getDocumentsGroups( $params )
+        /**
+         * @param $params
+         * @return bool|\mysqli_result
+         */
+        private function getDocumentsGroups($params )
         {
-            $projectId = ( !empty( $params['project_id'] ) ? $params['project_id'] : "" );
-
-            $sql    = "CALL proc_getProjectDocumentsGroups(?)";
-            $data   = array("project_id" => $projectId);
-            $format = array("i");
-            $type   = "read";
-
+            $projectId  = ( !empty( $params['project_id'] ) ? $params['project_id'] : "" );
+            $sql        = "CALL proc_getProjectDocumentsGroups(?)";
+            $data       = array("project_id" => $projectId);
+            $format     = array("i");
+            $type       = "read";
             $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
             if( !empty( $returnData ) ):
@@ -72,7 +73,9 @@ if( !class_exists( "ProjectDocuments" ) ):
                 return( false );
             endif;
         }
-
+        /**
+         * @param $params
+         */
         private function newProjectDocumentGroup( $params )
         {
             $userId    = ( isset( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
@@ -81,9 +84,8 @@ if( !class_exists( "ProjectDocuments" ) ):
             $date      = date( "Y-m-d" );
             $time      = date( "H:i:s" );
             $id        = "";
-
-            $sql    = "CALL proc_newProjectDocumentGroup(?,?,?,?,?,?)";
-            $data   = array(
+            $sql       = "CALL proc_newProjectDocumentGroup(?,?,?,?,?,?)";
+            $data      = array(
                             "id"         => $id,
                             "user_id"    => $userId,
                             "project_id" => $projectId,
@@ -91,13 +93,15 @@ if( !class_exists( "ProjectDocuments" ) ):
                             "date"       => $date,
                             "time"       => $time
                             );
-            $format = array("iiisss");
-            $type   = "create";
-
+            $format    = array("iiisss");
+            $type      = "create";
             ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
         }
-
-        private function newProjectDocument( $params )
+        /**
+         * @param $params
+         * @return bool|\mysqli_result
+         */
+        private function newProjectDocument($params )
         {
             $userId    = ( isset( $_SESSION['userId'] ) ? $_SESSION['userId'] : "" );
             $projectId = ( !empty( $params['project_id'] ) ? $params['project_id'] : "" );
@@ -108,9 +112,8 @@ if( !class_exists( "ProjectDocuments" ) ):
             $date      = date( "Y-m-d" );
             $time      = date( "H:i:s" );
             $id        = $output = "";
-
-            $sql    = "CALL proc_newProjectDocument(?,?,?,?,?,?,?,?,?,?)";
-            $data   = array(
+            $sql       = "CALL proc_newProjectDocument(?,?,?,?,?,?,?,?,?,?)";
+            $data      = array(
                             "id"         => $id,
                             "user_id"    => $userId,
                             "project_id" => $projectId,
@@ -122,9 +125,8 @@ if( !class_exists( "ProjectDocuments" ) ):
                             "time"       => $time,
                             "output"     => $output
                             );
-            $format = array("iiissssssi");
-            $type   = "createWithOutput";
-
+            $format     = array("iiissssssi");
+            $type       = "createWithOutput";
             $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
             return( $returnData );

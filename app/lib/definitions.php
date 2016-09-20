@@ -1,7 +1,4 @@
 <?php
-/**
- * Global definitions
- */
 
 define("APPLICATION_ROOT", $_SERVER['DOCUMENT_ROOT']);
 define("APPLICATION_HOME", "index.php");

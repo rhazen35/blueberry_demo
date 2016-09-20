@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ruben Hazenbosch
- * Date: 28-7-2016
- * Time: 15:46
- */
 
 namespace app\lib;
 
@@ -14,15 +8,20 @@ if( !class_exists( "Project" ) ):
 
     class Project
     {
-
         protected $type;
         protected $database = "blueberry";
-
+        /**
+         * Project constructor.
+         * @param $type
+         */
         public function __construct( $type )
         {
             $this->type = $type;
         }
-
+        /**
+         * @param $params
+         * @return int|string
+         */
         public function request( $params )
         {
             switch( $this->type ):
@@ -70,9 +69,6 @@ if( !class_exists( "Project" ) ):
                 case"getCalculatorIdByProjectId":
                     return( $this->getCalculatorIdByProjectId( $params ) );
                     break;
-                case"deleteProject":
-                    $this->deleteProject( $params );
-                    break;
                 case"countProjects":
                     return( $this->countProjects() );
                     break;
@@ -82,9 +78,15 @@ if( !class_exists( "Project" ) ):
                 case"getLastAddedProjectByUser":
                     return( $this->getLastAddedProjectByUser() );
                     break;
+                case"deleteProject":
+                    $this->deleteProject( $params );
+                    break;
             endswitch;
         }
-
+        /**
+         * @param $params
+         * @return bool
+         */
         private function checkProjectExists( $params )
         {
             $sql         = "CALL proc_checkProjectExists(?)";
@@ -99,7 +101,10 @@ if( !class_exists( "Project" ) ):
 
             return( empty( $id ) ? false : true );
         }
-
+        /**
+         * @param $params
+         * @return bool|\mysqli_result
+         */
         private function newProject( $params )
         {
             $date       = date( "Y-m-d" );
@@ -118,15 +123,16 @@ if( !class_exists( "Project" ) ):
                 "time"          => $time,
                 "output"        => $output
             );
-            $format     = array("iisssssi");
-            $type       = "createWithOutput";
-
+            $format       = array("iisssssi");
+            $type         = "createWithOutput";
             $lastInsertId = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
             return( $lastInsertId );
         }
-
-        private function newProjectSettings( $params )
+        /**
+         * @param $params
+         */
+        private function newProjectSettings($params )
         {
             $date       = date( "Y-m-d" );
             $time       = date( "H:i:s" );
@@ -145,11 +151,13 @@ if( !class_exists( "Project" ) ):
             );
             $format     = array("iiisss");
             $type       = "create";
-
             ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
         }
-
-        private function getProjectById( $params )
+        /**
+         * @param $params
+         * @return array
+         */
+        private function getProjectById($params )
         {
             $sql         = "CALL proc_getProjectById(?)";
             $data        = array("project_id" => $params['project_id']);
@@ -168,8 +176,11 @@ if( !class_exists( "Project" ) ):
 
             return( $returnArray );
         }
-
-        private function getProjectByModelId( $params )
+        /**
+         * @param $params
+         * @return array
+         */
+        private function getProjectByModelId($params )
         {
             $sql         = "CALL proc_getProjectByModelId(?)";
             $data        = array("model_id" => $params['model_id']);
@@ -190,7 +201,10 @@ if( !class_exists( "Project" ) ):
 
             return( $returnArray );
         }
-
+        /**
+         * @param $params
+         * @return array
+         */
         private function getProjectByCalculatorId( $params )
         {
             $sql         = "CALL proc_getProjectByCalculatorId(?)";
@@ -211,8 +225,11 @@ if( !class_exists( "Project" ) ):
 
             return( $returnArray );
         }
-
-        private function getProjectsSettings( $params )
+        /**
+         * @param $params
+         * @return array
+         */
+        private function getProjectsSettings($params )
         {
             $sql         = "CALL proc_getProjectSettings(?)";
             $data        = array("project_id" => $params['project_id']);
@@ -232,8 +249,10 @@ if( !class_exists( "Project" ) ):
 
             return( $returnArray );
         }
-
-        private function saveModelJoinTable( $params )
+        /**
+         * @param $params
+         */
+        private function saveModelJoinTable($params )
         {
             $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
             $projectId   = !empty( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "";
@@ -247,11 +266,12 @@ if( !class_exists( "Project" ) ):
             );
             $format     = array("iiii");
             $type       = "create";
-
             ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
         }
-
-        private function saveCalculatorJoinTable( $params )
+        /**
+         * @param $params
+         */
+        private function saveCalculatorJoinTable($params )
         {
             $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
             $projectId   = !empty( $_SESSION['project_id'] ) ? $_SESSION['project_id'] : "";
@@ -265,10 +285,11 @@ if( !class_exists( "Project" ) ):
             );
             $format     = array("iiii");
             $type       = "create";
-
             ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
         }
-
+        /**
+         * @return bool|\mysqli_result
+         */
         private function getAllProjectsByUser()
         {
             $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
@@ -276,24 +297,25 @@ if( !class_exists( "Project" ) ):
             $data       = array( "user_id" => $userId );
             $format     = array("i");
             $type       = "read";
-
             $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
 
             return( $returnData );
         }
-
+        /**
+         * @return bool|\mysqli_result
+         */
         private function getAllProjects()
         {
             $sql        = "CALL proc_getAllProjects()";
             $data       = array();
             $format     = array();
             $type       = "read";
-
             $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
-
             return( $returnData );
         }
-
+        /**
+         * @return bool|\mysqli_result
+         */
         private function getAllProjectsModelsByUser()
         {
             $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
@@ -301,12 +323,12 @@ if( !class_exists( "Project" ) ):
             $data       = array( "user_id" => $userId );
             $format     = array("i");
             $type       = "read";
-
             $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
-
             return( $returnData );
         }
-
+        /**
+         * @return bool|\mysqli_result
+         */
         private function getAllProjectsCalculatorsByUser()
         {
             $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
@@ -314,12 +336,13 @@ if( !class_exists( "Project" ) ):
             $data       = array( "user_id" => $userId );
             $format     = array("i");
             $type       = "read";
-
             $returnData = ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
-
             return( $returnData );
         }
-
+        /**
+         * @param $params
+         * @return array
+         */
         private function getModelIdByProjectId( $params )
         {
             $sql         = "CALL proc_getModelIdByProjectId(?)";
@@ -335,7 +358,10 @@ if( !class_exists( "Project" ) ):
 
             return( $returnArray );
         }
-
+        /**
+         * @param $params
+         * @return array
+         */
         private function getCalculatorIdByProjectId( $params )
         {
             $sql         = "CALL proc_getCalculatorIdByProjectId(?)";
@@ -352,7 +378,10 @@ if( !class_exists( "Project" ) ):
             return( $returnArray );
         }
 
-        private function deleteProject( $params )
+        /**
+         * @param $params
+         */
+        private function deleteProject($params )
         {
             $projectId    = ( isset( $params['project_id'] ) ? $params['project_id'] : "" );
             $modelId      = ( isset( $params['model_id'] ) ? $params['model_id'] : "" );
@@ -361,10 +390,11 @@ if( !class_exists( "Project" ) ):
             $data         = array("project_id" => $projectId, "model_id" => $modelId, "calculator_id" => $calculatorId);
             $format       = array("iii");
             $type         = "delete";
-
             ( new Service( $type, $this->database ) )->dbAction( $sql, $data, $format );
         }
-
+        /**
+         * @return int
+         */
         private function countProjects()
         {
             $sql         = "CALL proc_countProjects()";
@@ -380,7 +410,9 @@ if( !class_exists( "Project" ) ):
 
             return( $count );
         }
-
+        /**
+         * @return string
+         */
         private function getLastAddedProject()
         {
             $sql         = "CALL proc_getLastAddedProject()";
@@ -396,10 +428,12 @@ if( !class_exists( "Project" ) ):
 
             return( $project );
         }
+        /**
+         * @return string
+         */
         private function getLastAddedProjectByUser()
         {
-            $userId     = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
-
+            $userId      = !empty( $_SESSION['userId'] ) ? $_SESSION['userId'] : "";
             $sql         = "CALL proc_getLastAddedProjectByUser(?)";
             $data        = array("user_id" => $userId);
             $format      = array("i");

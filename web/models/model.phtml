@@ -1,35 +1,34 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ruben Hazenbosch
- * Date: 03-Aug-16
- * Time: 20:57
- */
 
 use app\lib\Project;
 use app\enterpriseArchitecture\IOXMLEAScreenFactory;
 use app\enterpriseArchitecture\XMLDBController;
 use app\enterpriseArchitecture\IOExcelFactory;
 use app\enterpriseArchitecture\IOEAExcelCalculator;
+use app\enterpriseArchitecture\IOXMLExcelUser;
 
-$modelId         = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
-$params          = array( "model_id" => $modelId );
-$project         = ( new Project( "getProjectByModelId" ) )->request( $params );
-$projectName     = ( isset( $project['name'] ) ? $project['name'] : "" );
-$projectId       = ( isset( $project['id'] ) ? $project['id'] : "" );
-$orderedElements = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
-$totalElements   = count( $orderedElements );
-$currentPage     = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
-$highestOrder    = $orderedElements['highest_order'];
-$params          = array('project_id' => $projectId);
-$calculator      = ( new IOEAExcelCalculator( "getCalculatorIdByProjectId" ) )->request( $params );
-
+$modelId             = ( isset( $_SESSION['xmlModelId'] ) ? $_SESSION['xmlModelId'] : "" );
+$params              = array( "model_id" => $modelId );
+$project             = ( new Project( "getProjectByModelId" ) )->request( $params );
+$projectName         = ( isset( $project['name'] ) ? $project['name'] : "" );
+$projectId           = ( isset( $project['id'] ) ? $project['id'] : "" );
+$orderedElements     = ( new IOXMLEAScreenFactory( "extractAndOrderElements", $modelId ) )->request( $params = null );
+$totalElements       = count( $orderedElements );
+$currentPage         = ( isset( $_GET['page'] ) ? $_GET['page'] : '1' );
+$highestOrder        = $orderedElements['highest_order'];
+$params              = array('project_id' => $projectId);
+$calculator          = ( new IOEAExcelCalculator( "getCalculatorIdByProjectId" ) )->request( $params );
+$userExcel           = ( new IOXMLExcelUser( "getUserExcel" ) )->request( $params = null );
 $_SESSION['project'] = ( !empty( $projectName ) ? $projectName : "" );
 $params['elements']  = $orderedElements;
 $params['project']   = $projectName;
+
 ?>
+
 <div class="modelReport-Title">Model Preview <?= ( !empty( $projectName ) ? "for " . $projectName : "" ) ?></div>
+
 <?php
+
 if( !empty( $orderedElements ) ):
     if( $currentPage <= $highestOrder ):
         for( $i = 0; $i < $totalElements; $i++ ):
@@ -46,13 +45,11 @@ if( !empty( $orderedElements ) ):
                     $params['multiplicity'] = ( !empty( $orderedElements[$i]['multiplicity'] ) ? $orderedElements[$i]['multiplicity'] : "" );
 
                     if( !empty( $params['elements'] ) && !empty( $params['element_name'] ) && !empty( $params['multiplicity'] ) ):
-
                         if( !empty( $orderedElements[$i]['super_types'] ) ):
                             $elementData = ( new XMLDBController( "readSuperType" ) )->request( $params );
                         else:
                             $elementData = ( new XMLDBController( "read" ) )->request( $params );
                         endif;
-
                     endif;
 
                     if( !empty( $elementData ) ):
@@ -71,8 +68,16 @@ if( !empty( $orderedElements ) ):
                         <div class="element-Header-link">
                             <a href="http://www.quaratio.com/wordpress" class="button" title="Go to quaratio.com">www.quaratio.com</a>
                             <?php
-                                if( empty( $calculator ) || $calculator === false ):
-                                    echo '<span>This model has no calculator, please upload a calculator.</span>';
+                                if( isset( $_GET['noUserExcel'] ) ):
+                                    echo '<span>Could not save the data due to a missing excel file!</span>';
+                                else:
+                                    if( isset( $_GET['dataExists'] ) ):
+                                        echo '<span>The data you entered already exists.</span>';
+                                    else:
+                                        if( empty( $calculator ) || $calculator === false ):
+                                            echo '<span>This model has no calculator, please upload a calculator.</span>';
+                                        endif;
+                                    endif;
                                 endif;
                             ?>
                         </div>
@@ -87,11 +92,12 @@ if( !empty( $orderedElements ) ):
                     else:
                         print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params ) );
 
-                        if( !empty( $elementData ) && !empty( $operations ) ):
+                        if( !empty( $elementData ) && !empty( $operations ) && !empty( $calculator ) && !empty( $userExcel ) ):
                             $params['operations'] = $operations;
                             print_r( ( new IOXMLEAScreenFactory( "buildOperations", $operations ) )->request( $params ) );
                         endif;
                     endif;
+                    print_r( ( new IOXMLEAScreenFactory( "showElementView", "" ) )->request( $params ) );
                 endif;
             endif;
         endfor;

@@ -27,7 +27,21 @@
     text-align:center;
 }
 
-.login .title h1
+.login .registerTitle
+{
+    position:absolute;
+    top: 0.5rem;
+    left:50%;
+    transform: translateX(-50%);
+    width:10%;
+    margin: 0 auto;
+    color:#FFFFFF;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    text-align:center;
+}
+
+.login .title h1,
+.login .registerTitle h1
 {
     font-size:125%;
 }
