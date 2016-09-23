@@ -290,8 +290,9 @@
 
 .elementOperations
 {
-    width:90%;
-    margin: 0 auto;
+    float:left;
+    width:75%;
+    min-width:600px;
     margin-top:1rem;
     padding-top:0;
     padding-bottom:1rem;

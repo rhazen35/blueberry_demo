@@ -75,7 +75,7 @@ endif;
 
                 <div class="projects-item-control">
 
-                    <?php if( $hasModel === false ): $modelValue = "model upload"; else: $modelValue = "model preview"; endif; ?>
+                    <?php if( $hasModel === false ): $modelValue = "Uml class upload"; else: $modelValue = "Uml class preview"; endif; ?>
                     <div class="projects-item-modelLink">
                         <form action="<?= APPLICATION_HOME; ?>" method="POST">
                             <input type="hidden" name="projectId" value="<?= $projectId; ?>">
@@ -85,7 +85,7 @@ endif;
                         </form>
                     </div>
 
-                    <?php if( empty( $calculatorId ) ): $calculatorValue = "calculator upload"; else: $calculatorValue = "calculator preview"; endif; ?>
+                    <?php if( empty( $calculatorId ) ): $calculatorValue = "Excel calc upload"; else: $calculatorValue = "Excel calc preview"; endif; ?>
                     <div class="projects-item-modelLink">
                         <form action="<?= APPLICATION_HOME; ?>" method="POST">
                             <input type="hidden" name="projectId" value="<?= $projectId; ?>">

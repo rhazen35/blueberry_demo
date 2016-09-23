@@ -91,13 +91,12 @@ if( !empty( $orderedElements ) ):
                         print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElements[$i] ) )->request( $params ) );
                     else:
                         print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params ) );
-
+                        print_r( ( new IOXMLEAScreenFactory( "showElementView", $modelId ) )->request( $params ) );
                         if( !empty( $elementData ) && !empty( $operations ) && !empty( $calculator ) && !empty( $userExcel ) ):
                             $params['operations'] = $operations;
                             print_r( ( new IOXMLEAScreenFactory( "buildOperations", $operations ) )->request( $params ) );
                         endif;
                     endif;
-                    print_r( ( new IOXMLEAScreenFactory( "showElementView", $modelId ) )->request( $params ) );
                 endif;
             endif;
         endfor;
