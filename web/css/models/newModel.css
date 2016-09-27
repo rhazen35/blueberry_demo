@@ -16,8 +16,18 @@
     background-size: cover;
 }
 
+.newDocument
+{
+    height:100%;
+    min-height:875px;
+    background-image: url("../../images/hero/documents.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .newModel form,
-.newCalculator form
+.newCalculator form,
+.newDocument form
 {
     width:100%;
     margin-top:10%;
@@ -28,13 +38,15 @@
 }
 
 .newModel form span,
-.newCalculator form span
+.newCalculator form span,
+.newDocument form span
 {
     color:#FFFFFF;
 }
 
 .newModel form input[type="text"],
-.newCalculator form input[type="text"]
+.newCalculator form input[type="text"],
+.newDocument form input[type="text"]
 {
     display:block;
     width:70%;
@@ -44,14 +56,16 @@
 }
 
 .newModel form input[type="file"],
-.newCalculator form input[type="file"]
+.newCalculator form input[type="file"],
+.newDocument form input[type="file"]
 {
     color:#FFFFFF;
     margin-right:4rem;
 }
 
 .newModel form input[type="submit"],
-.newCalculator form input[type="submit"]
+.newCalculator form input[type="submit"],
+.newDocument form input[type="submit"]
 {
     float:right;
     width:20%;
@@ -62,7 +76,8 @@
 }
 
 .newModel form input[type="submit"]:hover,
-.newCalculator form input[type="submit"]:hover
+.newCalculator form input[type="submit"]:hover,
+.newDocument form input[type="submit"]:hover
 {
     cursor:pointer;
 }

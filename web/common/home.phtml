@@ -23,7 +23,7 @@ $userLastLogin          = ( !empty( $getUserLastLogin ) ? $getUserLastLogin : ""
 $totalProjects          = ( !empty( $getTotalProjects ) ? $getTotalProjects : 0 );
 $totalProjectsByUser    = ( !empty( $getTotalProjectsByUser ) ? count( $getTotalProjectsByUser ) : 0 );
 $totalModels            = ( !empty( $getTotalModels ) ? $getTotalModels : 0 );
-$totalModelsByUser      = ( !empty( $getTotalModelsByUser ) ? count( $getTotalModelsByUser ) : 0 );
+$totalModelsByUser      = ( !empty( $getTotalModelsByUser ) ? count( (array) $getTotalModelsByUser ) : 0 );
 $totalCalculators       = ( !empty( $getTotalCalculators ) ? $getTotalCalculators : 0 );
 $totalCalculatorsByUser = ( !empty( $getTotalCalculatorsByUser ) ? count( $getTotalCalculatorsByUser ) : 0 );
 ?>
@@ -33,7 +33,7 @@ $totalCalculatorsByUser = ( !empty( $getTotalCalculatorsByUser ) ? count( $getTo
             <div class="home-hero-overview">
                 <h2>Welcome to Blueberry
                     <?php if( !empty( $userLastLogin ) ): ?>
-                        <small>Your last visit was on: <?= $userLastLogin; ?></small>
+                        <small>Your last visit was on: <?= date( "d-m-Y H:i:s", strtotime( $userLastLogin ) ); ?></small>
                     <?php endif; ?>
                 </h2>
                 <h4>Middleware for math and data financiers</h4>

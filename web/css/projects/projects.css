@@ -196,3 +196,9 @@
     font-weight:bold;
     border-bottom: 1px solid firebrick;
 }
+
+.calcMessage
+{
+    color:#FFFFFF;
+    text-shadow: -2px -2px firebrick;
+}

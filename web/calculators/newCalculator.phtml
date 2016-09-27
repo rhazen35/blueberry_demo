@@ -68,15 +68,6 @@ endforeach;
     <form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data">
         <?php
         /**
-         * Only show file select when a project is without a calculator
-         */
-        if( !empty( $projectSelectArray )  ): ?>
-            <input type="file" name="excelFile" id="excelFile" value="" title="Kies een excel bestand." placeholder="Kies een excel bestand.">
-            <input type="hidden" name="path" value="calculators">
-            <input type="hidden" name="attr" value="calculatorUpload">
-            <?php
-        endif;
-        /**
          * Only show project select when a project name is empty and when a project is without a calculator
          */
         if( empty( $projectName ) && !empty( $projectSelectArray ) ): ?>
@@ -95,30 +86,38 @@ endforeach;
             <?php
         endif;
         /**
+         * Only show file select when a project is without a calculator
+         */
+        if( !empty( $projectSelectArray )  ): ?>
+            <input type="file" name="excelFile" id="excelFile" value="" title="Kies een excel bestand." placeholder="Kies een excel bestand.">
+            <input type="hidden" name="path" value="calculators">
+            <input type="hidden" name="attr" value="calculatorUpload">
+            <?php
+        endif;
+        /**
          * Only show submit when a project name isn't empty and when a project is without a calculator
          */
         if( !empty( $projectName ) || !empty( $projectSelectArray ) ): ?>
             <input type="submit" name="excelFileUploadSubmit" value="Uploaden" title="Upload an excel file.">
         <?php endif; ?>
 
+    </form>
 
         <?php
             if( isset( $_GET['calculatorUploadNoFile'] ) ):
-                ?><div class="message">Please choose a file.</div><?php
+                ?><div class="projects-message-title calcMessage">Please choose a file.</div><?php
             else:
                 if( isset( $_GET['calculatorUploadNoProject'] ) ):
-                    ?><div class="message">Please choose a project.</div> <?php
+                    ?><div class="projects-message-title calcMessage">Please choose a project.</div> <?php
                 else:
                     if( isset( $_GET['calculatorExists'] ) ):
-                        ?><div class="message">Calculator already exists.</div><?php
+                        ?><div class="projects-message-title calcMessage">Calculator already exists.</div><?php
                     else:
                         if( isset( $_GET['calculatorUploadInvalidFileExtension'] ) ):
-                            ?><div class="message">Extension not allowed, allowed: xls or xlsx file.</div><?php
+                            ?><div class="projects-message-title calcMessage">Extension not allowed, allowed: xls or xlsx file.</div><?php
                         endif;
                     endif;
                  endif;
             endif;
         ?>
-
-    </form>
 </div>

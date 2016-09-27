@@ -65,6 +65,24 @@ endforeach;
     <form action="<?= APPLICATION_HOME; ?>" method="post" enctype="multipart/form-data">
         <?php
         /**
+         * Only show project select when a project name is empty and when a project is without a model
+         */
+        if( empty( $projectName ) && !empty( $projectSelectArray ) ): ?>
+            <select name="project">
+                <option name="projectId" value="">Choose a project</option>
+                <?php
+                foreach( $projectsArray as $projectArray ):
+                    if( !in_array( $projectArray['id'], $projectsModelsArray ) ):
+                        ?>
+                        <option name="projectId" value="<?= $projectArray['id']; ?>"><?= $projectArray['name']; ?></option>
+                        <?php
+                    endif;
+                endforeach;
+                ?>
+            </select>
+            <?php
+        endif;
+        /**
          * Only show file select when a project is without a model
          */
             if( !empty( $projectSelectArray )  ): ?>
@@ -72,24 +90,6 @@ endforeach;
             <input type="hidden" name="path" value="models">
             <input type="hidden" name="attr" value="modelUpload">
         <?php
-            endif;
-            /**
-             * Only show project select when a project name is empty and when a project is without a model
-             */
-            if( empty( $projectName ) && !empty( $projectSelectArray ) ): ?>
-                <select name="project">
-                    <option name="projectId" value="">Choose a project</option>
-                <?php
-                    foreach( $projectsArray as $projectArray ):
-                        if( !in_array( $projectArray['id'], $projectsModelsArray ) ):
-                            ?>
-                            <option name="projectId" value="<?= $projectArray['id']; ?>"><?= $projectArray['name']; ?></option>
-                            <?php
-                        endif;
-                    endforeach;
-                ?>
-                </select>
-                <?php
             endif;
         /**
          * Only show submit when a project name isn't empty and when a project is without a model
@@ -100,18 +100,17 @@ endforeach;
             <span>All projects have a model.</span>
         <?php endif; ?>
 
-        <?php
-            if( isset( $_GET['modelUploadNoFile'] ) ):
-                ?><div class="message">Please choose a file.</div><?php
-            else:
-                if( isset( $_GET['modelUploadNoProject'] ) ):
-                    ?><div class="message">Please choose a project.</div><?php
-                elseif( isset( $_GET['modelUploadNameExists'] ) ):
-                        ?><div class="message">Model name is already in use.</div><?php
-                endif;
-            endif;
-        ?>
-
     </form>
+    <?php
+    if( isset( $_GET['modelUploadNoFile'] ) ):
+        ?><div class="projects-message-title">Please choose a file.</div><?php
+    else:
+        if( isset( $_GET['modelUploadNoProject'] ) ):
+            ?><div class="projects-message-title">Please choose a project.</div><?php
+        elseif( isset( $_GET['modelUploadNameExists'] ) ):
+            ?><div class="projects-message-title">Model name is already in use.</div><?php
+        endif;
+    endif;
+    ?>
 
 </div>

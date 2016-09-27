@@ -12,6 +12,3 @@ use app\api\ea\EAApi;
 $projectName        = ( !empty( $_SESSION['project'] ) ? $_SESSION['project'] : "" );
 $params['project']  = $projectName;
 
-//$data = ( new XMLEAExcelController( "getResults" ) )->request( $params );
-$array = ( new EAApi( "get_all_models_detailed_extracted_and_ordered" ) )->request( $params );
-var_dump( $array );

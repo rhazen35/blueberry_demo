@@ -89,6 +89,7 @@ if( !empty( $orderedElements ) ):
                     $root = ( isset( $orderedElements[$i]['isRoot'] ) ? $orderedElements[$i]['isRoot'] : "" );
                     if( $root === "true" ):
                         print_r( ( new IOXMLEAScreenFactory( "buildElementIntro", $orderedElements[$i] ) )->request( $params ) );
+                        print_r( ( new IOXMLEAScreenFactory( "showElementView", $modelId ) )->request( $params ) );
                     else:
                         print_r( ( new IOXMLEAScreenFactory( "buildElement", $orderedElements[$i] ) )->request( $params ) );
                         print_r( ( new IOXMLEAScreenFactory( "showElementView", $modelId ) )->request( $params ) );
